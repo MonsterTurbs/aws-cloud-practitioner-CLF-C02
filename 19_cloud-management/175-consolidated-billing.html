@@ -1,0 +1,359 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Consolidated Billing (AWS Organizations)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --border:#e5e5e5;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --accent2:#1a73e8;
+      --good:#0f7b0f;
+      --warn:#8a4b00;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      word-wrap:break-word;
+      overflow-wrap:anywhere;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 12px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .3px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      padding:10px 12px;
+      border-radius:10px;
+      font-weight:700;
+      cursor:pointer;
+      color: var(--text);
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .btn:focus{outline:3px solid rgba(26,115,232,.25); outline-offset:2px;}
+    .btn.primary{border-color: rgba(11,87,208,.35);}
+
+    main{margin-top: 16px;}
+
+    section{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 12px 0;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 14px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{margin: 8px 0;}
+
+    ul{margin: 8px 0 0 20px; padding:0;}
+    li{margin: 6px 0;}
+
+    .callout{
+      border:1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 12px 12px;
+      margin-top: 10px;
+    }
+
+    .callout.good{border-color: rgba(15,123,15,.25);}
+    .callout.warn{border-color: rgba(138,75,0,.25);}
+
+    .pill{
+      display:inline-block;
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 6px 6px 0 0;
+      white-space: nowrap;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .qa{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background:#fff;
+    }
+
+    .qa .q{font-weight: 800; margin:0 0 6px;}
+    .qa .a{margin:0; color: var(--text);}
+
+    .table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top: 8px;
+      font-size: 13.5px;
+    }
+
+    .table th, .table td{
+      border:1px solid var(--border);
+      padding: 10px;
+      vertical-align: top;
+      text-align:left;
+      word-break: break-word;
+    }
+
+    .table th{background: var(--panel);}
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    footer{
+      color: var(--muted);
+      font-size: 12.5px;
+      margin-top: 14px;
+      padding: 6px 2px 0;
+    }
+
+    /* Print styles */
+    @page{ size: A4; margin: 14mm; }
+
+    @media print{
+      body{background:#fff;}
+      .page{max-width:none; padding:0;}
+      header, section{border:1px solid #ddd; box-shadow:none;}
+      .toolbar{display:none !important;}
+      a{color: #000; text-decoration:none;}
+      .pill{border-color:#ddd;}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Cloud Management & Billing</p>
+      <h1>Consolidated Billing (AWS Organizations) 💳🏢</h1>
+      <p class="subtitle">
+        Beginner-friendly reviewer: what consolidated billing is, why it matters, and how it helps you manage costs across multiple AWS accounts.
+      </p>
+      <div class="toolbar">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <a class="btn" href="#quick-review">✅ Quick Review</a>
+        <a class="btn" href="#examples">🧪 Examples</a>
+        <a class="btn" href="#exam-tips">📝 Exam Tips</a>
+      </div>
+    </header>
+
+    <main>
+      <section id="quick-review">
+        <h2>1) Quick Review (What you must remember) ✅</h2>
+        <div class="callout good">
+          <p><strong>Consolidated billing</strong> means: <strong>one “central” (management/payer) account</strong> can see and manage the billing for <strong>multiple AWS accounts</strong> that belong to the same <strong>AWS Organization</strong>.</p>
+          <ul>
+            <li>📌 You get <strong>one bill</strong> for all accounts (centralized billing).</li>
+            <li>📊 You can use cost tools (e.g., <strong>Cost Explorer</strong>, <strong>Budgets</strong>, <strong>Cost & Usage Reports</strong>) across accounts.</li>
+            <li>💰 You can share certain discounts (e.g., <strong>Savings Plans</strong> and some <strong>volume/usage pricing benefits</strong>) across accounts.</li>
+          </ul>
+        </div>
+        <p class="pill">✨ Goal: easier cost management</p>
+        <p class="pill">🧾 One bill, many accounts</p>
+        <p class="pill">📈 Better cost visibility</p>
+        <p class="pill">💸 Discount sharing</p>
+      </section>
+
+      <section>
+        <h2>2) Why consolidated billing exists 🤝</h2>
+        <p>As your company grows, you often end up with <strong>multiple AWS accounts</strong> (by team, environment, or application). Without consolidated billing, you would have to:</p>
+        <ul>
+          <li>Log in to multiple accounts to review invoices 🔁</li>
+          <li>Manually compare costs across accounts 📉</li>
+          <li>Miss opportunities to optimize spending because usage is split up 💸</li>
+        </ul>
+        <p>Consolidated billing solves this by making billing and cost management <strong>centralized</strong> and easier to analyze.</p>
+      </section>
+
+      <section>
+        <h2>3) Consolidated billing vs. Service Control Policies 🧱</h2>
+        <p>AWS Organizations unlocks multiple organization-wide capabilities. Two common ones are:</p>
+        <table class="table" aria-label="Comparison table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>What it’s for</th>
+              <th>Key idea</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Service Control Policies (SCPs)</strong> 🛡️</td>
+              <td>Security & permission guardrails</td>
+              <td>Defines the <strong>maximum</strong> permissions an account can use.</td>
+            </tr>
+            <tr>
+              <td><strong>Consolidated Billing</strong> 💳</td>
+              <td>Cost & billing management</td>
+              <td>Centralizes bills + improves cost visibility across accounts.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout warn">
+          <p><strong>Important:</strong> SCPs control what actions are allowed. Consolidated billing controls how billing is <em>viewed and managed</em> (not permissions).</p>
+        </div>
+      </section>
+
+      <section id="examples">
+        <h2>4) Beginner-friendly examples 🧪</h2>
+
+        <h3>Example A: One bill for Dev + Prod 🧾</h3>
+        <p>You have two accounts:</p>
+        <ul>
+          <li>👩‍💻 <strong>Dev Account</strong> (testing resources)</li>
+          <li>🚀 <strong>Prod Account</strong> (real customer traffic)</li>
+        </ul>
+        <p>With consolidated billing, your finance/admin team can open <strong>one billing dashboard</strong> and see costs for <strong>both accounts</strong> without switching logins.</p>
+
+        <h3>Example B: Using Cost Explorer across accounts 📊</h3>
+        <p>You want to answer: “Which account is spending more in <strong>ap-southeast-1</strong> this month?”</p>
+        <p>With consolidated billing enabled, the payer/management account can use <strong>Cost Explorer</strong> to group/filter costs by account and region.</p>
+
+        <h3>Example C: Savings Plans shared across accounts 💰</h3>
+        <p>Imagine each account alone is too small to justify a Savings Plan:</p>
+        <ul>
+          <li>Dev spends small on EC2 🐣</li>
+          <li>Prod spends small-to-medium on EC2 📦</li>
+        </ul>
+        <p>But combined, total compute usage is steady enough to make a Savings Plan worth it. With consolidated billing, you can apply the benefit across the organization (instead of being forced to buy separate plans per account).</p>
+
+        <div class="mono" aria-label="Mini-scenario">
+Mini-scenario:
+- Account A: ~ $80/month steady compute
+- Account B: ~ $90/month steady compute
+Individually: might feel "too small" to commit.
+Together: ~ $170/month steady compute → Savings Plan may make sense.
+        </div>
+      </section>
+
+      <section>
+        <h2>5) What consolidated billing enables (in practice) 🔍</h2>
+        <div class="grid">
+          <div class="qa">
+            <p class="q">✅ Central billing visibility</p>
+            <p class="a">You can see costs from multiple accounts in one place, making reviews faster and more reliable.</p>
+          </div>
+          <div class="qa">
+            <p class="q">✅ Cross-account cost tooling</p>
+            <p class="a">Tools like Cost Explorer, Budgets, and Cost & Usage Reports become much more useful when costs are aggregated.</p>
+          </div>
+          <div class="qa">
+            <p class="q">✅ Better discount utilization</p>
+            <p class="a">Sharing certain discounts and aggregated usage can reduce overall spend (especially when workloads are spread across accounts).</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="exam-tips">
+        <h2>6) Exam tips (CLF-C02) 📝</h2>
+        <ul>
+          <li>When you see “<strong>one bill for many accounts</strong>” → think <strong>AWS Organizations + Consolidated Billing</strong> 💳</li>
+          <li>When you see “<strong>central guardrails / limit permissions across accounts</strong>” → think <strong>SCPs</strong> 🛡️</li>
+          <li>When you see “<strong>analyze costs across accounts</strong>” → think <strong>Cost Explorer / Budgets / Cost & Usage Reports</strong> 📊</li>
+          <li>When you see “<strong>share discounts/commitments</strong> across accounts” → think <strong>Savings Plans + aggregated usage</strong> 💰</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>7) One-minute recap ⏱️</h2>
+        <ul>
+          <li>🏢 AWS Organizations groups multiple AWS accounts.</li>
+          <li>💳 Consolidated billing gives you <strong>one central bill</strong> and <strong>cross-account cost visibility</strong>.</li>
+          <li>📊 You can use cost tools across accounts (Cost Explorer, Budgets, CUR).</li>
+          <li>💰 It can help you take advantage of discounts across accounts (like Savings Plans).</li>
+        </ul>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use the button at the top, then select <em>“Save as PDF”</em> for a clean A4 output.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

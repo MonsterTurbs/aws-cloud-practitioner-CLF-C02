@@ -1,0 +1,421 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 — Module 17: Cloud Migration & Hybrid Cloud (Introduction)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --callout: #f5f9ff;
+      --callout-border: #cfe3ff;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 18px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: -0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 5px 10px;
+      border-radius: 999px;
+    }
+
+    .toolbar {
+      margin: 14px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13.5px;
+    }
+
+    .btn.primary {
+      border-color: var(--accent);
+      color: #fff;
+      background: var(--accent);
+    }
+
+    .btn:focus {
+      outline: 2px solid rgba(11, 87, 208, 0.25);
+      outline-offset: 2px;
+    }
+
+    main {
+      margin-top: 16px;
+    }
+
+    h2 {
+      margin: 18px 0 8px;
+      font-size: 17px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin: 14px 0 6px;
+      font-size: 14.5px;
+      line-height: 1.35;
+    }
+
+    p { margin: 8px 0; }
+
+    ul, ol {
+      margin: 8px 0 10px;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      padding: 14px;
+      margin: 12px 0;
+    }
+
+    .callout {
+      border: 1px solid var(--callout-border);
+      background: var(--callout);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kv {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .k {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 12.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    code, .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    .tag {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      margin: 2px 6px 2px 0;
+      white-space: nowrap;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+      margin: 10px 0;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* Word wrapping (avoid cut-off in print) */
+    p, li, h1, h2, h3, .card, .callout, .pill {
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Print styles */
+    @media print {
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+
+      body {
+        font-size: 11.5pt;
+        line-height: 1.45;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      header, .card, .callout, details {
+        box-shadow: none !important;
+      }
+
+      .toolbar {
+        display: none !important;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* Keep key blocks together */
+      .no-break {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      details {
+        page-break-inside: avoid;
+      }
+
+      /* Ensure details print expanded */
+      details[open] summary { margin-bottom: 6px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header class="no-break">
+      <h1>☁️ Module 17 (Intro): Cloud Migration & Hybrid Cloud Solutions</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide (Beginner-Friendly)</p>
+      <div class="meta">
+        <span class="pill">🧠 Focus: Concepts + exam-style takeaways</span>
+        <span class="pill">🖨️ Print-ready: A4, single column</span>
+        <span class="pill">⏱️ Quick read: ~5–10 mins</span>
+      </div>
+      <div class="toolbar">
+        <button class="btn primary" type="button" onclick="window.print()">Print (A4)</button>
+        <button class="btn" type="button" onclick="toggleAllAnswers()">Toggle Answer Key</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card no-break">
+        <h2>🎯 What this module is about</h2>
+        <p>
+          Many companies didn’t start in the cloud (they’re not startups). They’ve been operating for years (or decades) and already
+          have systems running <span class="mono">on-premises</span> (in their own data centers). This module introduces how AWS helps
+          those companies <strong>migrate</strong> to the cloud—and how AWS supports <strong>hybrid environments</strong> where some workloads
+          stay on-premises while others run in AWS.
+        </p>
+
+        <div class="callout">
+          <strong>Key idea ✅</strong>
+          <p style="margin:6px 0 0;">
+            Migration can be gradual and may take years. During that time (or permanently), many companies run a <strong>hybrid setup</strong>:
+            some workloads in AWS, some on-prem.
+          </p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>🧩 Core terms you must know</h2>
+        <div class="grid">
+          <div class="kv">
+            <div class="k">On‑premises</div>
+            <div>🏢 Workloads running in a company’s own data center (not in a public cloud).</div>
+          </div>
+          <div class="kv">
+            <div class="k">Cloud migration</div>
+            <div>🚚 Moving applications, servers, databases, or data from on‑prem to AWS.</div>
+          </div>
+          <div class="kv">
+            <div class="k">Hybrid cloud</div>
+            <div>🔁 A mixed environment: some workloads stay on‑prem, others run in AWS (connected securely).</div>
+          </div>
+          <div class="kv">
+            <div class="k">Workload</div>
+            <div>⚙️ Any unit of compute work: an app, a service, a database, batch jobs, containers, etc.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>🧠 Why migration can be tricky</h2>
+        <ul>
+          <li>🧱 <strong>Legacy complexity:</strong> older apps may be tightly coupled (hard to move parts independently).</li>
+          <li>🗄️ <strong>Data gravity:</strong> large databases are hard/slow to move; downtime constraints matter.</li>
+          <li>🔒 <strong>Security & compliance:</strong> rules may require some data to stay on-premises.</li>
+          <li>⏳ <strong>Time:</strong> migration projects can take months/years; hybrid becomes the “bridge” during the journey.</li>
+          <li>🔌 <strong>Connectivity:</strong> hybrid requires reliable, secure connections between on‑prem and AWS.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>🧪 Beginner examples</h2>
+
+        <h3>Example A: Gradual migration (common) 🙂</h3>
+        <ul>
+          <li>Step 1: Keep the main database on‑prem (for now).</li>
+          <li>Step 2: Move the public web app to AWS (e.g., EC2 / containers) to reduce hosting burden.</li>
+          <li>Step 3: Connect the web app in AWS to the on‑prem database via secure networking.</li>
+          <li>Step 4: Later, migrate the database to AWS once ready (lower risk).</li>
+        </ul>
+
+        <h3>Example B: Permanent hybrid (by design) 🧩</h3>
+        <ul>
+          <li>Some sensitive systems must remain on‑prem (legal/compliance).</li>
+          <li>Analytics + reporting runs in AWS to scale easily.</li>
+          <li>Data sync happens securely between on‑prem and AWS.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>🧭 What to expect next in this module (high level)</h2>
+        <p>
+          This introduction sets the stage. In the next lessons, you’ll typically see services/tools that help with:
+        </p>
+        <ul>
+          <li>🛠️ <strong>Migration planning & tracking</strong> (visibility into what you’re moving)</li>
+          <li>🚚 <strong>Moving servers/apps</strong> (replication, cutover, minimal downtime)</li>
+          <li>🗃️ <strong>Moving databases & data</strong> (online migration, replication)</li>
+          <li>🔁 <strong>Hybrid connectivity</strong> (secure connections between on‑prem and AWS)</li>
+          <li>🏗️ <strong>Hybrid runtime options</strong> (AWS services that can extend into your data center)</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Exam mindset 📝</strong>
+          <p style="margin:6px 0 0;">
+            You usually don’t need deep setup steps for CLF-C02. You mainly need to recognize <em>what problem a service solves</em>
+            (migration vs hybrid vs monitoring vs security).
+          </p>
+        </div>
+      </section>
+
+      <section class="card no-break">
+        <h2>✅ Quick memory checklist</h2>
+        <ul>
+          <li>☁️ Migration = moving workloads to AWS.</li>
+          <li>🔁 Hybrid = split workloads (AWS + on‑prem) connected securely.</li>
+          <li>⏳ Hybrid is often temporary during multi‑year migrations—but can also be permanent.</li>
+          <li>🎯 AWS offers services specifically to reduce migration complexity and win enterprise customers.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>🧩 Mini Quiz (CLF-C02 style)</h2>
+
+        <ol>
+          <li>
+            A company has been running on-premises for 15 years and wants to move some services to AWS over the next 2 years.
+            What setup is most likely during the transition?
+            <details class="answer" data-answer>
+              <summary>Answer</summary>
+              <p><strong>Hybrid environment</strong> 🔁 — some workloads remain on-prem while others run in AWS during the migration.</p>
+            </details>
+          </li>
+
+          <li>
+            Why might a company keep some workloads on-prem even after adopting AWS?
+            <details class="answer" data-answer>
+              <summary>Answer</summary>
+              <p>Common reasons: <strong>compliance, latency, or legacy constraints</strong> 🛡️⏱️ — not everything is easy/allowed to move.</p>
+            </details>
+          </li>
+
+          <li>
+            True or False: Only startups benefit from AWS.
+            <details class="answer" data-answer>
+              <summary>Answer</summary>
+              <p><strong>False</strong> ❌ — AWS targets enterprises too and provides migration + hybrid tooling to help them adopt the cloud.</p>
+            </details>
+          </li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>📌 Key takeaway (one sentence)</h2>
+        <p>
+          <strong>AWS migration and hybrid services exist to help long‑running companies move to the cloud safely—often step‑by‑step—while keeping business running.</strong>
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function toggleAllAnswers() {
+      const nodes = document.querySelectorAll('details[data-answer]');
+      const anyClosed = Array.from(nodes).some(d => !d.open);
+      nodes.forEach(d => d.open = anyClosed);
+    }
+  </script>
+</body>
+
+</html>

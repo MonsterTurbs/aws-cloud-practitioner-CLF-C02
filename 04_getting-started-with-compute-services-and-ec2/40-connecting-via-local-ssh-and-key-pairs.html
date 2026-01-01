@@ -1,0 +1,326 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 40 Connecting via Local SSH & Key Pairs</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+      --ok:#0f7b0f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 10px;
+    }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    code{
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    pre{
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 10px;
+      overflow: auto;
+      margin: 10px 0 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    a{ color: var(--accent); }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      pre{ border-color:#cfcfcf; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • EC2 Connectivity</p>
+      <h1>40 — Connecting via Local SSH & Key Pairs 🔐💻</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 What You Must Understand</h2>
+        <p>
+          There are multiple ways to connect to an EC2 instance.
+          In the previous lecture you saw <strong>EC2 Instance Connect</strong> (browser-based).
+          In this lecture, the focus is on connecting from your <strong>local machine</strong> using <strong>SSH</strong> — which requires a <strong>Key Pair</strong>.
+        </p>
+        <div class="callout">
+          <p><strong>Exam-ready idea ✅</strong> Local SSH needs a key pair (private key file). Without it, SSH authentication won’t work.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔌 EC2 Instance Connect vs Local SSH</h2>
+        <div class="mini">
+          <h3>EC2 Instance Connect (browser) 🌐</h3>
+          <ul>
+            <li>Connect from inside the AWS console (no local terminal required)</li>
+            <li>Convenient when available</li>
+            <li><strong>Note from lecture:</strong> only available when using certain AMIs (e.g., Amazon Linux 2)</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <h3>Local SSH (your computer) 💻🔑</h3>
+          <ul>
+            <li>Connect using the <code>ssh</code> command (or an SSH client)</li>
+            <li>Requires a <strong>Key Pair</strong> created/selected in the Launch Wizard</li>
+            <li>Common for automation, scripting, and day-to-day admin workflows</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔑 Key Pairs: What They Are (Beginner Friendly)</h2>
+        <p>
+          A <strong>Key Pair</strong> is an authentication mechanism for SSH:
+        </p>
+        <ul>
+          <li><strong>Private key</strong> (a file downloaded to your machine) — keep it secret</li>
+          <li><strong>Public key</strong> (stored on/for the instance) — used to verify you</li>
+        </ul>
+        <div class="warning">
+          <p><strong>Security ⚠️</strong> If someone steals your private key file, they may be able to access your instance. Store it safely and never share it.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Requirements Checklist for Local SSH</h2>
+        <ul>
+          <li><strong>Key Pair assigned</strong> during launch (or you can’t authenticate) 🔑</li>
+          <li><strong>Security Group allows SSH</strong> inbound (port 22), at least from your IP 🔥</li>
+          <li>You know the instance’s <strong>Public IPv4</strong> or <strong>Public DNS</strong> 🌐</li>
+          <li>You have an SSH client installed (e.g., <code>ssh</code>) 🧰</li>
+        </ul>
+        <div class="good">
+          <p><strong>Best practice ✅</strong> For SSH, avoid “from anywhere” in real projects. Prefer restricting inbound SSH to your own IP address.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧪 Example SSH Command Pattern (Conceptual)</h2>
+        <p>
+          The exact user name depends on the AMI (for Amazon Linux, it’s commonly <code>ec2-user</code>).
+          AWS documentation provides the exact commands and OS-specific steps.
+        </p>
+        <pre>ssh -i /path/to/your-key.pem ec2-user@&lt;PUBLIC_DNS_OR_PUBLIC_IP&gt;</pre>
+        <div class="warning">
+          <p><strong>Reminder ⚠️</strong> This is a pattern for understanding. Always follow the official instructions for your OS/AMI and keep your key permissions secure.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧰 If You Don’t Have the <code>ssh</code> Command</h2>
+        <p>
+          If you can’t or don’t want to install SSH tools, you can use an alternative client.
+        </p>
+        <ul>
+          <li><strong>PuTTY</strong> (commonly used on Windows) 🪟</li>
+        </ul>
+        <div class="callout">
+          <p>
+            Official AWS docs (from the lecture):
+            <br />
+            <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">Accessing Linux instances</a>
+            <br />
+            <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html">Connecting with PuTTY</a>
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms to Remember</h2>
+        <span class="tag">SSH</span>
+        <span class="tag">Key Pair</span>
+        <span class="tag">Private Key</span>
+        <span class="tag">Public Key</span>
+        <span class="tag">Security Group</span>
+        <span class="tag">Inbound Rules</span>
+        <span class="tag">Port 22</span>
+        <span class="tag">Public DNS</span>
+        <span class="tag">Public IPv4</span>
+        <span class="tag">PuTTY</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="mini">
+          <h3>Answer fast ⚡</h3>
+          <ul>
+            <li>Why do you need a key pair for local SSH?</li>
+            <li>Which EC2 setting controls whether SSH traffic can reach the instance?</li>
+            <li>What’s a safer SSH practice than allowing “from anywhere”?</li>
+            <li>If you don’t have <code>ssh</code>, what’s a common alternative tool?</li>
+          </ul>
+          <div class="good">
+            <p><strong>Expected ✅</strong> Authentication via private key • Security Group inbound rules • Restrict to your IP • PuTTY.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

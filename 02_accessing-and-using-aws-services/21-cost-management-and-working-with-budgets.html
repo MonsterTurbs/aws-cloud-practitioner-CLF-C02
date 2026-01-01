@@ -1,0 +1,359 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 21 Cost Management & Budgets</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+      --ok:#0f7b0f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    a{ color: var(--accent); }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .qna strong{ display:block; margin: 10px 0 4px; }
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      white-space: pre-wrap;
+    }
+
+    .steps{
+      margin: 8px 0 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .steps li{
+      margin: 8px 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+      .steps li{ break-inside: avoid; page-break-inside: avoid; }
+      .mono{ font-size: 10.5pt; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Accessing & Using AWS Services</p>
+      <h1>21 — Cost Management & Working with Budgets 💳📊</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Lecture Goal</h2>
+        <p>Learn how to <strong>monitor</strong> AWS costs and avoid surprise charges using the <strong>Billing Dashboard</strong>, <strong>Bills</strong> view, <strong>Cost Explorer</strong>, and <strong>Budgets</strong>.</p>
+        <div class="callout">
+          <p><strong>Big idea ✅</strong> Pricing knowledge + Free Tier is helpful, but you must still <strong>monitor usage and costs</strong> regularly to avoid unexpected bills.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧭 Where to Monitor Costs in the Console</h2>
+        <p>In the AWS Management Console, you can open the billing area like this:</p>
+        <ol class="steps">
+          <li>1) Click your <strong>account name</strong> (top-right corner)</li>
+          <li>2) Click <strong>Billing Dashboard</strong></li>
+        </ol>
+        <div class="mini">
+          <p><strong>What you’ll see 💡</strong> Your current month bill information, even before the month ends.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>📌 Billing Dashboard (Your Monthly Snapshot)</h2>
+        <p>The lecture explains that the Billing Dashboard helps you track costs for the <strong>current month</strong> while the month is still ongoing.</p>
+        <ul>
+          <li>📈 View <strong>forecast</strong> for this month</li>
+          <li>💸 See costs incurred <strong>so far</strong></li>
+          <li>🏷️ Identify which service is costing the most</li>
+        </ul>
+        <div class="good">
+          <p><strong>Beginner reassurance ✅</strong> If you follow the course steps and stay within Free Tier limits, you should avoid large bills.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧾 Bills (Detailed Breakdown)</h2>
+        <p>To go deeper, you can click <strong>Bills</strong> in the billing area.</p>
+        <ul>
+          <li>📥 Download bills (when available)</li>
+          <li>🗓️ Choose a billing period (current month or past months)</li>
+          <li>🧩 Check <strong>Charges by service</strong> to see which services cost money</li>
+          <li>🌍 Drill down into cost details such as which <strong>regions</strong> incurred expenses</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Big value ✅</strong> “Charges by service” answers: <em>“Which AWS service is making my bill grow?”</em></p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🛠️ Other Cost Management Tools You’ll See</h2>
+        <p>The left-side billing menu includes more tools and settings, such as:</p>
+        <ul>
+          <li>💳 Payment details (update your credit card, etc.)</li>
+          <li>📊 Cost management tools (Cost Explorer, Budgets)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>📊 Cost Explorer (Know This for the Exam)</h2>
+        <p><strong>Cost Explorer</strong> helps you analyze and filter costs, especially when your AWS usage becomes more complex.</p>
+        <div class="grid">
+          <div class="mini">
+            <h3>✅ When it helps most</h3>
+            <ul>
+              <li>When you use multiple services</li>
+              <li>When you need to understand where money is being spent</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>🔎 What you can filter by</h3>
+            <ul>
+              <li>🌍 Region</li>
+              <li>🧩 Service type</li>
+              <li>🏷️ Tags (labels you can assign to resources/services)</li>
+              <li>➕ And more</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">
+          <p><strong>Exam focus ✅</strong> You don’t need to use Cost Explorer in detail, but you should recognize what it is and why it exists.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🎯 Budgets (Alerts for Spending)</h2>
+        <p><strong>Budgets</strong> let you define a target spending limit (e.g., $10/month) and get warned when you’re close to it.</p>
+
+        <div class="mini">
+          <h3>How it works (from the lecture) 🧪</h3>
+          <ol class="steps">
+            <li>1) Create a <strong>cost budget</strong> and give it a name</li>
+            <li>2) Set an amount you want to spend in a month (example: $10)</li>
+            <li>3) Configure alerts (example: email when you reach 80%)</li>
+            <li>4) If alerted, investigate via Cost Explorer or Bills</li>
+            <li>5) Stop the service that is driving costs</li>
+          </ol>
+        </div>
+
+        <div class="warning">
+          <p><strong>Important ⚠️</strong> Budgets do <strong>not</strong> automatically block spending. You can still exceed the budget—it’s an alert system, not a hard limit.</p>
+        </div>
+
+        <div class="callout">
+          <p><strong>Why budgets matter ✅</strong> Budgets help prevent surprise charges by warning you early, so you can take action.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Recommended Routine (Simple Habit)</h2>
+        <p>Based on the lecture’s guidance, a good habit is to check your costs regularly:</p>
+        <ul>
+          <li>📅 Open Billing Dashboard weekly (or even daily when experimenting)</li>
+          <li>🔎 If costs rise, use Bills → Charges by service</li>
+          <li>📊 Use Cost Explorer when the account becomes more complex</li>
+          <li>🎯 Use Budgets to receive email alerts before you overspend</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Exam Focus)</h2>
+        <span class="tag">Billing Dashboard</span>
+        <span class="tag">Bills</span>
+        <span class="tag">Forecast</span>
+        <span class="tag">Charges by service</span>
+        <span class="tag">Cost Explorer</span>
+        <span class="tag">Budgets</span>
+        <span class="tag">Tags</span>
+        <span class="tag">Cost Alerts</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="qna">
+          <strong>Q1: How do you open the Billing Dashboard?</strong>
+          <p>A: Click your account name (top-right) → Billing Dashboard.</p>
+
+          <strong>Q2: What does the Billing Dashboard show during the month?</strong>
+          <p>A: Forecast and costs incurred so far, plus which services are driving costs.</p>
+
+          <strong>Q3: Where can you see “Charges by service”?</strong>
+          <p>A: In the Bills section of the billing area.</p>
+
+          <strong>Q4: What is Cost Explorer used for?</strong>
+          <p>A: Deep cost analysis and filtering (by region, service, tags, etc.).</p>
+
+          <strong>Q5: Do AWS Budgets prevent spending automatically?</strong>
+          <p>A: No. Budgets alert you (e.g., email at 80%) but do not block charges.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

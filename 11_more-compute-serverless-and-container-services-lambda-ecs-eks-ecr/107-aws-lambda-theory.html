@@ -1,0 +1,454 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS Lambda (Theory) — Reviewer / Study Guide</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e5e5e5;
+      --soft: #f7f7f7;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    /* Single-column, print-friendly container */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 18px 16px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.6rem;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: var(--soft);
+      padding: 6px 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    nav {
+      margin-top: 14px;
+      border-top: 1px dashed var(--border);
+      padding-top: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    nav a:hover { text-decoration: underline; }
+
+    section {
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    section > .section-title {
+      padding: 12px 14px;
+      background: var(--soft);
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    section > .content {
+      padding: 14px;
+    }
+
+    p { margin: 10px 0; }
+
+    ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 8px 0; }
+
+    .note {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin-top: 12px;
+    }
+
+    .note strong { display: inline-block; margin-bottom: 4px; }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: #fbfbfb;
+      padding: 10px 12px;
+      margin-top: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.92rem;
+      padding: 2px 6px;
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background: #f6f6f6;
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    pre {
+      margin: 10px 0 0;
+      padding: 12px;
+      background: #f6f6f6;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    /* Prevent cut-off in print: wrap long tokens/URLs */
+    body, p, li, code, pre {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    .actions {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--soft);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    button:hover { border-color: #cfcfcf; }
+
+    footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      header, section { border-color: #d9d9d9; box-shadow: none; }
+      nav, .actions { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      pre { page-break-inside: avoid; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>⚡ AWS Lambda (Theory) — Reviewer / Study Guide</h1>
+      <p class="subtitle">Beginner-friendly notes on what Lambda is, how it runs code, how it connects to other AWS services, and what to remember for the exam.</p>
+      <div class="meta">
+        <span class="chip">📄 A4 Print-Ready</span>
+        <span class="chip">🧾 Single Column</span>
+        <span class="chip">🧠 Beginner Friendly</span>
+        <span class="chip">⏱️ Pay-per-execution</span>
+      </div>
+      <div class="actions">
+        <button type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+      </div>
+      <nav>
+        Jump to: 
+        <a href="#big-idea">Big Idea</a> ·
+        <a href="#how-it-works">How Lambda Works</a> ·
+        <a href="#code-packaging">How You Provide Code</a> ·
+        <a href="#events">Event Sources</a> ·
+        <a href="#config">Key Configuration</a> ·
+        <a href="#pricing">Pricing + Free Tier</a> ·
+        <a href="#iam">Execution Role</a> ·
+        <a href="#vpc">VPC Access</a> ·
+        <a href="#exam">Exam Tips</a>
+      </nav>
+    </header>
+
+    <section id="big-idea">
+      <div class="section-title">🌟 Big Idea: What is AWS Lambda?</div>
+      <div class="content">
+        <p><strong>AWS Lambda</strong> is a serverless compute service that runs your code <strong>when something happens</strong> (an <em>event</em>). 🧩</p>
+        <ul>
+          <li>✅ You focus on the <strong>code</strong> and the <strong>trigger</strong> (event source).</li>
+          <li>✅ You <strong>do not</strong> manage servers, operating systems, or manual scaling.</li>
+          <li>💡 Think: “<em>Run this function when X happens</em>.”</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Simple mental model:</strong> <br />
+          <span class="kbd">Event</span> ➜ triggers ➜ <span class="kbd">Lambda Function (your code)</span> ➜ does work (e.g., resize image, write to DB, send email).
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works">
+      <div class="section-title">🧭 How Lambda Works (End-to-End)</div>
+      <div class="content">
+        <ol>
+          <li><strong>You provide code</strong> (function) 📦</li>
+          <li><strong>You pick a trigger</strong> (event source) 🔔</li>
+          <li><strong>AWS runs your code</strong> when the event occurs ⚙️</li>
+          <li><strong>You pay only while it runs</strong> (milliseconds of execution) ⏱️💸</li>
+        </ol>
+
+        <div class="grid">
+          <div class="card">
+            <h3>🧪 Example scenario (S3 upload)</h3>
+            <ul>
+              <li>Event: user uploads an image to <strong>S3</strong> 🖼️</li>
+              <li>Lambda: resizes the image and saves a smaller copy 🪄</li>
+              <li>Result: your website loads thumbnails faster 🚀</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>🌐 Example scenario (HTTP request)</h3>
+            <ul>
+              <li>Event: an HTTP request hits an API endpoint 📬</li>
+              <li>Lambda: validates request, stores data, returns response ✅</li>
+              <li>Common use: lightweight APIs, webhooks, background tasks 🧰</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="code-packaging">
+      <div class="section-title">📦 How You Provide Code to Lambda</div>
+      <div class="content">
+        <p>You can get your code into Lambda in multiple ways:</p>
+        <ul>
+          <li>📝 <strong>Write/edit in the Lambda Console</strong> (good for demos and learning)</li>
+          <li>📁 <strong>Upload a ZIP file</strong> (common for real projects)</li>
+          <li>🐳 <strong>Provide a Docker container image</strong> (a packaging method)</li>
+        </ul>
+
+        <div class="note">
+          <strong>Important clarification ⚠️</strong>
+          <p>Even if you provide a <em>Docker container image</em>, Lambda is still mainly a <strong>code execution</strong> service (not a container platform like ECS/EKS). A container image here is just a convenient packaging format.</p>
+        </div>
+
+        <p><strong>Programming languages:</strong> AWS supports multiple runtimes out of the box (e.g., Node.js, Python, Java, etc.). In theory, you can support more using custom runtimes, but for the exam, remember: <strong>Lambda supports several common languages out of the box</strong>. ✅</p>
+      </div>
+    </section>
+
+    <section id="events">
+      <div class="section-title">🔔 Event Sources (Triggers)</div>
+      <div class="content">
+        <p>Lambda runs because an <strong>event source</strong> triggers it. You can have <strong>many kinds of triggers</strong> and even <strong>multiple triggers for the same function</strong>. 🔁</p>
+        <ul>
+          <li>🪣 S3 events (e.g., object uploaded / deleted)</li>
+          <li>🌐 HTTP/API events (often via API services)</li>
+          <li>📨 Messaging events (queues/streams, depending on architecture)</li>
+          <li>⏰ Scheduled events (run on a timer)</li>
+        </ul>
+
+        <div class="note">
+          <strong>Filtering 🎯</strong>
+          <p>You can often filter events so Lambda only runs for <em>some</em> cases (e.g., only when files with <code>.jpg</code> are uploaded, or only within a certain prefix/path).</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="config">
+      <div class="section-title">⚙️ Key Configuration Settings (What You Still Control)</div>
+      <div class="content">
+        <p>You don’t manage the server, but you <strong>do</strong> configure the execution environment and behavior.</p>
+        <ul>
+          <li>⏳ <strong>Timeout</strong>: maximum runtime before AWS stops the function (controls cost + runaway code).</li>
+          <li>🧠 <strong>Environment variables</strong>: dynamic values your code can read (e.g., <code>BUCKET_NAME</code>, <code>STAGE</code>).</li>
+          <li>🧱 <strong>Architecture</strong>: choose the processor type (high-level choice; not exact hardware).</li>
+          <li>🗂️ <strong>Attach file systems (EFS)</strong> if needed for shared file access.</li>
+          <li>🔐 <strong>Permissions</strong> via an execution role (covered below).</li>
+        </ul>
+
+        <div class="card">
+          <h3>🧩 Mini example: environment variables</h3>
+          <p>Instead of hardcoding values, set an environment variable:</p>
+          <pre><code>BUCKET_NAME = "my-app-uploads"
+THUMBNAIL_WIDTH = "300"</code></pre>
+          <p>Your function reads these values at runtime, so you can change behavior without changing code. ✅</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="section-title">💸 Pricing + Free Tier (High-Level)</div>
+      <div class="content">
+        <ul>
+          <li>✅ You pay for the <strong>time your code runs</strong> (per millisecond).</li>
+          <li>✅ If the function is idle (not running), you’re not paying for “a server waiting.”</li>
+          <li>🆓 Lambda has a <strong>monthly free tier</strong> that <strong>renews every month</strong> (useful for learning/testing).</li>
+        </ul>
+
+        <div class="note">
+          <strong>Exam-friendly wording 🧠</strong>
+          <p>Lambda follows a <strong>pay-per-use</strong> model: cost is tied to executions and execution duration, not to a continuously running instance.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="iam">
+      <div class="section-title">🪪 Execution Role (Permissions for Your Code)</div>
+      <div class="content">
+        <p>Lambda code often needs to call other AWS services. Example: write a file to S3, publish a message, read from a database, etc.</p>
+        <p>To allow that, you attach an <strong>execution role</strong> (an IAM role) to the function. 🔐</p>
+        <ul>
+          <li>✅ The function <em>assumes</em> the role while running.</li>
+          <li>✅ The role defines what the function is allowed to do.</li>
+          <li>⚠️ Best practice idea: grant <strong>least privilege</strong> (only the permissions needed).</li>
+        </ul>
+
+        <div class="card">
+          <h3>🧪 Example permission need</h3>
+          <ul>
+            <li>Lambda resizes an image</li>
+            <li>Then it must <strong>putObject</strong> into another S3 bucket</li>
+            <li>So the role must allow S3 write actions for that bucket ✅</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="vpc">
+      <div class="section-title">🕸️ VPC Access (When Lambda Must Reach Private Resources)</div>
+      <div class="content">
+        <p>Lambda does not “live inside” your VPC like an EC2 instance does, but you <strong>can connect</strong> a function to a VPC to reach private resources. 🧷</p>
+        <ul>
+          <li>✅ Useful when Lambda must talk to private EC2 instances or private databases.</li>
+          <li>✅ You configure which VPC/subnets/security controls apply for that access path.</li>
+          <li>💡 Key idea: this is about <strong>network access</strong>, not about you managing servers in a subnet.</li>
+        </ul>
+
+        <div class="note">
+          <strong>Beginner reminder 🙂</strong>
+          <p>If your database is in a private subnet, you typically don’t want the public internet talking to it directly. Lambda (or an app server) can talk to it over private networking when configured correctly.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="exam">
+      <div class="section-title">📝 Quick Exam Tips / Common Confusions</div>
+      <div class="content">
+        <ul>
+          <li>⚡ <strong>Lambda = event-driven serverless compute</strong> (runs code because something happened).</li>
+          <li>⏱️ <strong>Pay per execution time</strong>, not per running server.</li>
+          <li>🔔 <strong>Many triggers</strong> can invoke the same function (S3, HTTP, schedules, etc.).</li>
+          <li>🪪 If Lambda needs access to other AWS services, it needs an <strong>execution role</strong>.</li>
+          <li>🐳 Container image is just a <strong>packaging option</strong>; Lambda is not primarily a container orchestration service.</li>
+          <li>🕸️ Lambda can be configured for <strong>VPC access</strong> if it must reach private resources.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>One-liner to memorize 💡</strong><br />
+          “Lambda runs code on demand in response to events, with automatic scaling and pay-per-use billing.”
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>End of reviewer — AWS Lambda (Theory). Use your browser print dialog to save as PDF on A4.</p>
+    </footer>
+  </main>
+</body>
+</html>

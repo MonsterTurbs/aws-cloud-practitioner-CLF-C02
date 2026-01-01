@@ -1,0 +1,434 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Artificial Intelligence Services (AI)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#5a5a5a;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --link:#0b57d0;
+      --ink:#000;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column print-safe layout */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    /* Word wrapping to avoid print cut-offs */
+    body, p, li, td, th, code, pre, a, h1, h2, h3{
+      overflow-wrap:anywhere;
+      word-break: break-word;
+      hyphens:auto;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding:18px 16px;
+      border-radius:10px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      padding:8px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size: 13px;
+    }
+    .btn:hover{border-color:#cfcfcf}
+
+    a{color:var(--link); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    section{
+      margin-top:16px;
+      padding:14px 14px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      background:#fff;
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size: 17px;
+    }
+
+    h3{
+      margin:14px 0 8px;
+      font-size: 15px;
+    }
+
+    .note{
+      background:var(--panel);
+      border:1px dashed var(--border);
+      padding:10px 12px;
+      border-radius:10px;
+      color:#222;
+    }
+
+    .grid{
+      display:block; /* keep single column */
+    }
+
+    .tag{
+      display:inline-block;
+      font-size: 12px;
+      padding:2px 8px;
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius:999px;
+      margin-left:6px;
+      color:var(--muted);
+      vertical-align:middle;
+    }
+
+    ul{margin:8px 0 0 18px}
+    li{margin:6px 0}
+
+    .table-wrap{overflow-x:auto}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:8px;
+      font-size: 13px;
+    }
+    th, td{
+      border:1px solid var(--border);
+      padding:9px 10px;
+      vertical-align:top;
+    }
+    th{background:var(--panel); text-align:left}
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    .mini{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .pill-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:8px;
+    }
+    .pill{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size: 13px;
+    }
+
+    .qa{
+      margin-top:10px;
+      padding:10px 12px;
+      border-left:4px solid var(--border);
+      background:#fff;
+    }
+
+    footer{
+      margin-top:14px;
+      color:var(--muted);
+      font-size: 12px;
+      text-align:center;
+    }
+
+    /* Print rules for clean A4 output */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    @media print{
+      .page{max-width:none; padding:0}
+      header, section{break-inside: avoid; page-break-inside: avoid}
+      a{color:var(--ink); text-decoration:none}
+      .toolbar{display:none !important}
+      .tag{border-color:#bdbdbd}
+      table{font-size: 12px}
+      h1{font-size: 20px}
+      h2{font-size: 16px}
+      h3{font-size: 14px}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>Artificial Intelligence Services on AWS 🤖</h1>
+      <p class="subtitle">
+        CLF-C02 Reviewer / Study Guide — beginner-friendly notes, quick examples, and exam-focused takeaways.
+      </p>
+      <div class="toolbar" aria-hidden="false">
+        <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <span class="mini">Tip: In the print dialog, select <b>Paper size: A4</b> and <b>Margins: Default</b>.</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>1) Big Idea (What AWS “AI Services” means) 💡</h2>
+      <p>
+        AWS “AI Services” are <b>ready-to-use</b> machine-learning features that you can plug into apps via API.
+        You <b>don’t</b> train your own model (that’s more like <b>SageMaker</b>). Instead, you call a service to do a common task.
+      </p>
+      <div class="note">
+        <b>Exam mindset:</b> If the question says “need AI feature quickly” (vision, OCR, sentiment, chatbot, speech), think:
+        <b>use an AWS AI Service</b> (managed, pre-trained). ✅
+      </div>
+      <div class="pill-list" role="list">
+        <div class="pill" role="listitem">📷 Vision</div>
+        <div class="pill" role="listitem">📄 Document OCR</div>
+        <div class="pill" role="listitem">🧠 NLP / Text</div>
+        <div class="pill" role="listitem">🗣️ Speech</div>
+        <div class="pill" role="listitem">💬 Chatbots</div>
+        <div class="pill" role="listitem">🎯 Recommendations</div>
+        <div class="pill" role="listitem">🕵️ Fraud</div>
+        <div class="pill" role="listitem">📈 Forecasting</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2) Quick Map: Which service solves what? 🧭</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:24%">Service</th>
+              <th style="width:36%">What it does (simple)</th>
+              <th style="width:40%">Beginner example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Rekognition</b> 📷</td>
+              <td>Analyze images/videos (objects, faces, labels, moderation)</td>
+              <td>Auto-detect “car”, “person”, “logo”, or detect unsafe content in uploaded photos</td>
+            </tr>
+            <tr>
+              <td><b>Textract</b> 📄</td>
+              <td>Extract text + structured fields from documents (OCR for forms/tables)</td>
+              <td>Scan an invoice and extract invoice number, total amount, line items</td>
+            </tr>
+            <tr>
+              <td><b>Comprehend</b> 🧠</td>
+              <td>Understand text (sentiment, entities, key phrases, topics)</td>
+              <td>Analyze product reviews to see if customers feel “positive” or “negative”</td>
+            </tr>
+            <tr>
+              <td><b>Lex</b> 💬</td>
+              <td>Build chatbots / conversational interfaces (like Alexa-style bots)</td>
+              <td>Customer support chatbot: “Where is my order?” → checks status</td>
+            </tr>
+            <tr>
+              <td><b>Transcribe</b> 🗣️➡️📝</td>
+              <td>Convert speech/audio to text</td>
+              <td>Turn meeting audio into notes and searchable text</td>
+            </tr>
+            <tr>
+              <td><b>Polly</b> 📝➡️🗣️</td>
+              <td>Convert text to natural-sounding speech</td>
+              <td>Read articles aloud in a mobile app (accessibility feature)</td>
+            </tr>
+            <tr>
+              <td><b>Translate</b> 🌍</td>
+              <td>Machine translation of text</td>
+              <td>Translate product descriptions from English → Filipino/Spanish</td>
+            </tr>
+            <tr>
+              <td><b>Fraud Detector</b> 🕵️</td>
+              <td>Detect suspicious activity / online fraud patterns</td>
+              <td>Flag suspicious transactions: unusual location + high amount + many retries</td>
+            </tr>
+            <tr>
+              <td><b>Personalize</b> 🎯</td>
+              <td>Real-time personalized recommendations</td>
+              <td>“Recommended for you” products based on clicks and purchases</td>
+            </tr>
+            <tr>
+              <td><b>Forecast</b> 📈</td>
+              <td>Predict future business outcomes using ML</td>
+              <td>Forecast next month sales using historical sales + seasonality</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mini">Memory trick: <b>Rekognition = vision</b>, <b>Textract = documents</b>, <b>Comprehend = text meaning</b>, <b>Lex = chatbot</b>, <b>Transcribe/Polly = speech</b>, <b>Translate = language</b>, <b>Personalize = recommendations</b>, <b>Forecast = prediction</b>, <b>Fraud Detector = fraud</b>.</p>
+    </section>
+
+    <section>
+      <h2>3) Service-by-service notes (what to remember) 📝</h2>
+
+      <h3>Amazon Rekognition 📷</h3>
+      <ul>
+        <li><b>Purpose:</b> Understand what’s in images/videos (labels, faces, objects, moderation).</li>
+        <li><b>When to choose it:</b> Need vision features without training your own ML model.</li>
+        <li><b>Example:</b> A social app auto-flags uploaded images that contain unsafe content. 🚫</li>
+      </ul>
+
+      <h3>Amazon Textract 📄</h3>
+      <ul>
+        <li><b>Purpose:</b> OCR + extract structured data from <b>forms</b> and <b>tables</b>.</li>
+        <li><b>Difference vs “simple OCR”:</b> Textract is known for reading documents and pulling out fields (not just raw text).</li>
+        <li><b>Example:</b> HR scans IDs or forms and extracts name, ID number, and table rows. ✅</li>
+      </ul>
+
+      <h3>Amazon Comprehend 🧠</h3>
+      <ul>
+        <li><b>Purpose:</b> Natural Language Processing (NLP): sentiment, entities, key phrases, language detection.</li>
+        <li><b>Example:</b> “The delivery was late and the box was damaged.” → sentiment: negative 😞</li>
+      </ul>
+
+      <h3>Amazon Lex 💬</h3>
+      <ul>
+        <li><b>Purpose:</b> Chatbots/conversational interfaces (intents + prompts + responses).</li>
+        <li><b>Example:</b> “Reset my password” chatbot that collects email and triggers a reset flow. 🔐</li>
+      </ul>
+
+      <h3>Amazon Transcribe 🗣️➡️📝</h3>
+      <ul>
+        <li><b>Purpose:</b> Speech-to-text for audio/video.</li>
+        <li><b>Example:</b> Turn call-center recordings into text so you can search keywords (“refund”, “cancel”). 🔎</li>
+      </ul>
+
+      <h3>Amazon Polly 📝➡️🗣️</h3>
+      <ul>
+        <li><b>Purpose:</b> Text-to-speech (TTS).</li>
+        <li><b>Example:</b> An e-learning app reads quiz questions aloud for accessibility. 🎧</li>
+      </ul>
+
+      <h3>Amazon Translate 🌍</h3>
+      <ul>
+        <li><b>Purpose:</b> Translate text between languages (ML-powered).</li>
+        <li><b>Example:</b> Auto-translate support tickets into English so a global team can respond. 🌐</li>
+      </ul>
+
+      <h3>Amazon Fraud Detector 🕵️</h3>
+      <ul>
+        <li><b>Purpose:</b> Detect fraud (commonly for payments, accounts, signups).</li>
+        <li><b>Example:</b> Flag a transaction if it’s from a new device + new country + unusual purchase size. 🚩</li>
+      </ul>
+
+      <h3>Amazon Personalize 🎯</h3>
+      <ul>
+        <li><b>Purpose:</b> Personalized recommendations based on user behavior (clicks, views, purchases).</li>
+        <li><b>Example:</b> “Because you watched X, you may like Y.” 🍿</li>
+      </ul>
+
+      <h3>Amazon Forecast 📈</h3>
+      <ul>
+        <li><b>Purpose:</b> Time-series forecasting (predict future values from historical data).</li>
+        <li><b>Example:</b> Forecast product demand to avoid overstock/understock. 📦</li>
+      </ul>
+
+      <div class="note" style="margin-top:12px;">
+        <b>Common exam clue:</b> If the prompt says “pre-built AI for common task” → pick the matching AI service.
+        If it says “build/train your own model” → consider <b>SageMaker</b> (not an AI service).
+      </div>
+    </section>
+
+    <section>
+      <h2>4) Mini scenarios (practice) 🎓</h2>
+
+      <div class="qa">
+        <b>Q1.</b> You want to extract table data from scanned invoices.<br/>
+        <b>A:</b> <b>Amazon Textract</b> 📄
+      </div>
+      <div class="qa">
+        <b>Q2.</b> You want a “recommended products” panel personalized per user.<br/>
+        <b>A:</b> <b>Amazon Personalize</b> 🎯
+      </div>
+      <div class="qa">
+        <b>Q3.</b> You want to detect sentiment from customer feedback messages.<br/>
+        <b>A:</b> <b>Amazon Comprehend</b> 🧠
+      </div>
+      <div class="qa">
+        <b>Q4.</b> You want to turn meeting audio into text notes.<br/>
+        <b>A:</b> <b>Amazon Transcribe</b> 🗣️➡️📝
+      </div>
+      <div class="qa">
+        <b>Q5.</b> You need to detect objects in images uploaded by users.<br/>
+        <b>A:</b> <b>Amazon Rekognition</b> 📷
+      </div>
+      <div class="qa">
+        <b>Q6.</b> You want a chatbot for customer support.<br/>
+        <b>A:</b> <b>Amazon Lex</b> 💬
+      </div>
+      <div class="qa">
+        <b>Q7.</b> You want to forecast next month’s sales using past sales data.<br/>
+        <b>A:</b> <b>Amazon Forecast</b> 📈
+      </div>
+    </section>
+
+    <section>
+      <h2>5) Links (official service pages) 🔗</h2>
+      <ul>
+        <li>Amazon Rekognition: <a href="https://aws.amazon.com/rekognition">https://aws.amazon.com/rekognition</a></li>
+        <li>Amazon Textract: <a href="https://aws.amazon.com/textract">https://aws.amazon.com/textract</a></li>
+        <li>Amazon Comprehend: <a href="https://aws.amazon.com/comprehend">https://aws.amazon.com/comprehend</a></li>
+        <li>Amazon Lex: <a href="https://aws.amazon.com/lex">https://aws.amazon.com/lex</a></li>
+        <li>Amazon Transcribe: <a href="https://aws.amazon.com/transcribe">https://aws.amazon.com/transcribe</a></li>
+        <li>Amazon Polly: <a href="https://aws.amazon.com/polly">https://aws.amazon.com/polly</a></li>
+        <li>Amazon Translate: <a href="https://aws.amazon.com/translate">https://aws.amazon.com/translate</a></li>
+        <li>Amazon Fraud Detector: <a href="https://aws.amazon.com/fraud-detector">https://aws.amazon.com/fraud-detector</a></li>
+        <li>Amazon Personalize: <a href="https://aws.amazon.com/personalize">https://aws.amazon.com/personalize</a></li>
+        <li>Amazon Forecast: <a href="https://aws.amazon.com/forecast">https://aws.amazon.com/forecast</a></li>
+      </ul>
+      <p class="mini">Note: Links will appear as plain text in print for a clean output.</p>
+    </section>
+
+    <footer>
+      End of notes — Artificial Intelligence Services (AWS CLF-C02)
+    </footer>
+  </main>
+</body>
+</html>

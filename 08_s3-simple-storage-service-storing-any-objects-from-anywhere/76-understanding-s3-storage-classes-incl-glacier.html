@@ -1,0 +1,466 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Understanding S3 Storage Classes including Glacier</title>
+</head>
+<body>
+  <h1>Understanding S3 Storage Classes</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Storage Class</th>
+        <th>Description</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>⚡ S3 Standard</strong></td>
+        <td>Default storage class for frequently accessed data</td>
+        <td>
+          ✅ High durability and availability<br/>
+          ⚡ Low latency and high throughput<br/>
+          💰 Higher cost compared to other classes
+        </td>
+      </tr>
+          <tr>
+            <td><strong>🧯 Reduced Redundancy</strong> (legacy)</td>
+            <td>Older option sometimes mentioned in courses (rarely used today)</td>
+            <td>
+              ⚠️ Lower redundancy/guarantees compared to Standard<br/>
+              💰 Slight savings vs. Standard (trade-off is usually not worth it)<br/>
+              ✅ Still instant access
+            </td>
+          </tr>
+      <tr>
+        <td><strong>❄️ Glacier</strong></td>
+        <td>Archival storage with retrieval times in minutes or hours</td>
+        <td>
+          💰 Very low cost<br/>
+          ⏳ Retrieval delay<br/>
+          🔒 High durability
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <aside class="callout beginner-translation">
+    <h2>Beginner translation</h2>
+    <ul>
+      <li><strong>Standard</strong> = “I use it a lot.”</li>
+          <li><strong>Reduced redundancy (legacy)</strong> = “Cheaper Standard, but less protection — typically avoid.”</li>
+      <li><strong>Glacier</strong> = “I want to save money by storing rarely used backups.”</li>
+    </ul>
+  </aside>
+</body>
+</html>
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS S3 Storage Classes (incl. Glacier) — Reviewer / Study Guide</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --good:#0f7b3a;
+      --warn:#9a5b00;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-wrap:anywhere;
+      word-break: normal;
+      hyphens:auto;
+    }
+
+    /* Single-column container */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 22px 40px;
+    }
+
+    header{
+      padding: 0 0 14px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    h1{
+      margin: 0 0 6px;
+      font-size: 1.7rem;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .meta{
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .chip{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 6px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    h2{
+      margin: 18px 0 10px;
+      font-size: 1.25rem;
+    }
+
+    h3{
+      margin: 14px 0 8px;
+      font-size: 1.06rem;
+    }
+
+    p{ margin: 8px 0; }
+
+    ul,ol{
+      margin: 8px 0 10px 22px;
+      padding: 0;
+    }
+
+    li{ margin: 6px 0; }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .94em;
+    }
+
+    .callout{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 12px 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .callout strong{ display:inline-block; margin-bottom: 4px; }
+
+    .callout.good{ border-left: 6px solid var(--good); }
+    .callout.warn{ border-left: 6px solid var(--warn); }
+
+    .kbd{
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 2px 6px;
+      border-radius: 6px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 14px;
+      table-layout: fixed;
+    }
+
+    th, td{
+      border: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+
+    th{
+      background: var(--panel);
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .small{ color: var(--muted); font-size: .94rem; }
+
+    .divider{
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .checklist li{ list-style: none; margin-left: -22px; }
+    .checklist li::before{ content: "☐ "; }
+
+    footer{
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    /* Print settings (A4) */
+    @media print{
+      @page{ size: A4; margin: 16mm; }
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ border-bottom: 1px solid #000; }
+      a{ color: #000; text-decoration: none; }
+      .chip{ border-color: #000; }
+      .callout{ background: #fff; }
+      th{ background: #fff; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>📦 AWS S3 Storage Classes (incl. Glacier) — Reviewer / Study Guide</h1>
+      <p class="subtitle">Beginner-friendly notes on choosing the right S3 storage class based on access patterns, cost, and retrieval speed.</p>
+      <div class="meta">
+        <span class="chip">🎯 Goal: Save cost without breaking your app</span>
+        <span class="chip">🧠 Exam Focus: Know what each class is “for”</span>
+        <span class="chip">🧊 Glacier = archival (restore needed)</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>1) Big Idea: Why Storage Classes Exist 💰</h2>
+      <p>
+        In S3, you pay primarily for <strong>how much data you store</strong> and (often) how you <strong>access</strong> it.
+        AWS offers <strong>different storage classes</strong> because files don’t all behave the same:
+      </p>
+      <ul>
+        <li>📈 Some objects are read constantly (e.g., website images, app assets).</li>
+        <li>📉 Some objects are rarely opened (e.g., old invoices, archived logs).</li>
+        <li>🗄️ Some objects are kept for compliance (accessed once a year or never).</li>
+      </ul>
+
+      <div class="callout good">
+        <strong>✅ Rule of thumb</strong>
+        <p>
+          The <strong>less often</strong> you access an object and the <strong>longer you can wait</strong> to retrieve it,
+          the <strong>cheaper</strong> the storage can be.
+        </p>
+      </div>
+
+      <div class="callout warn">
+        <strong>⚠️ Common mistake</strong>
+        <p>
+          Putting frequently-used objects into an “infrequent” or “archive” class can backfire because retrieval costs and/or restore delays can hurt performance and increase cost.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>2) Access Patterns (Simple Categories) 🧭</h2>
+      <div class="grid">
+        <div class="callout">
+          <strong>⚡ Frequent access</strong>
+          <p>Used constantly; you need instant access. Default is usually <strong>S3 Standard</strong>.</p>
+        </div>
+        <div class="callout">
+          <strong>🕒 Infrequent access</strong>
+          <p>Used occasionally; you still want quick access, but accept a <strong>retrieval fee</strong> when you read it.</p>
+        </div>
+        <div class="callout">
+          <strong>🧊 Archive</strong>
+          <p>
+            Kept long-term; retrieval may require a <strong>restore</strong> step and could take minutes to hours.
+            Great for backups and compliance.
+          </p>
+        </div>
+        <div class="callout">
+          <strong>🤖 Unsure / mixed</strong>
+          <p>Use <strong>Intelligent-Tiering</strong> so AWS can move objects based on observed access patterns.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3) Storage Class Cheat Sheet 🧾</h2>
+      <p class="small">This table is “what to pick” in plain terms. Exact pricing varies by region.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 26%;">Storage class</th>
+            <th style="width: 34%;">Best for</th>
+            <th style="width: 40%;">Access & cost behavior</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>⚡ S3 Standard</strong></td>
+            <td>Frequently accessed objects (app assets, active content)</td>
+            <td>
+              ✅ Instant access<br/>
+              💡 Usually the default class<br/>
+              💰 Higher storage cost vs. archival
+            </td>
+          </tr>
+          <tr>
+            <td><strong>🕒 S3 Standard-IA</strong> (Infrequent Access)</td>
+            <td>Occasionally accessed objects (monthly reports, older images)</td>
+            <td>
+              ✅ Instant access<br/>
+              💸 Retrieval fee when you read/download<br/>
+              💰 Lower storage cost than Standard
+            </td>
+          </tr>
+          <tr>
+            <td><strong>🏝️ S3 One Zone-IA</strong></td>
+            <td>Infrequent access where you accept “single AZ” tradeoff (recreatable data)</td>
+            <td>
+              ✅ Instant access<br/>
+              💸 Retrieval fee<br/>
+              💰 Cheaper than Standard-IA in exchange for resilience tradeoff
+            </td>
+          </tr>
+          <tr>
+            <td><strong>🧊 S3 Glacier Instant Retrieval</strong></td>
+            <td>Archive data that still needs <em>milliseconds</em> access (quarterly access)</td>
+            <td>
+              ⚡ Millisecond retrieval (no restore wait)<br/>
+              💸 Higher access cost than IA classes<br/>
+              💰 Lower storage cost than Standard-IA
+            </td>
+          </tr>
+          <tr>
+            <td><strong>🧊 S3 Glacier Flexible Retrieval</strong></td>
+            <td>Archive data accessed 1–2× per year (backups, DR)</td>
+            <td>
+              ⏳ Restore required: minutes to hours (depends on tier)<br/>
+              💸 Retrieval cost (bulk can be cheaper)<br/>
+              💰 Lower ongoing storage cost
+            </td>
+          </tr>
+          <tr>
+            <td><strong>🧊 S3 Glacier Deep Archive</strong></td>
+            <td>Long-term compliance retention (almost never accessed)</td>
+            <td>
+              🕰️ Restore required: hours (very slow, cheapest storage)<br/>
+              💸 Retrieval cost when needed<br/>
+              💰 Lowest storage cost (for long retention)
+            </td>
+          </tr>
+          <tr>
+            <td><strong>🤖 S3 Intelligent-Tiering</strong></td>
+            <td>Unknown or changing access patterns</td>
+            <td>
+              🔁 AWS moves objects between tiers based on access<br/>
+              💰 Can save money without manual decisions<br/>
+              ℹ️ Small monitoring/management overhead may apply
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>🧠 Beginner translation</strong>
+        <ul>
+          <li><strong>Standard</strong> = “I use it a lot.”</li>
+          <li><strong>Standard-IA / One Zone-IA</strong> = “I don’t use it often, but when I do, I want it now.”</li>
+          <li><strong>Glacier classes</strong> = “I’m storing this for a long time, and I can wait (or restore) when needed.”</li>
+          <li><strong>Intelligent-Tiering</strong> = “I’m not sure — let AWS decide.”</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>4) Glacier: What “Restore” Means 🧊➡️📦</h2>
+      <p>
+        For <strong>archival</strong> storage classes (especially <strong>Glacier Flexible Retrieval</strong> and <strong>Deep Archive</strong>),
+        objects are not always immediately readable. You typically:
+      </p>
+      <ol>
+        <li>📝 Submit a <strong>restore request</strong>.</li>
+        <li>⏳ Wait (minutes to hours, depending on tier/class).</li>
+        <li>✅ Access a temporary restored copy for a chosen period.</li>
+      </ol>
+
+      <div class="callout warn">
+        <strong>⚠️ App design note</strong>
+        <p>
+          If your application must serve files instantly (e.g., user profile photos), avoid archival classes unless you’re using an instant-retrieval option.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>5) How You Choose a Storage Class in the Console 🖱️</h2>
+      <p>
+        When you upload an object to a bucket in the S3 console, you can select a storage class.
+        Typical flow:
+      </p>
+      <ol>
+        <li>Open <strong>S3</strong> → choose a <strong>bucket</strong>.</li>
+        <li>Click <span class="kbd">Upload</span> and select a file.</li>
+        <li>Under <strong>Properties</strong> → choose <strong>Storage class</strong>.</li>
+        <li>Upload the object.</li>
+      </ol>
+
+      <div class="callout">
+        <strong>💡 Practical tip</strong>
+        <p>
+          You can also use <strong>Lifecycle rules</strong> (covered later in most courses) to automatically move objects from Standard → IA → Glacier over time.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>6) Quick Examples (Pick the Class) 🧪</h2>
+      <ul>
+        <li>🌐 Website images/CSS/JS used every minute → <strong>S3 Standard</strong></li>
+        <li>🧾 Invoices accessed once a month → <strong>S3 Standard-IA</strong></li>
+        <li>🧪 Test data you can recreate if a zone fails → <strong>S3 One Zone-IA</strong></li>
+        <li>🏥 Medical records accessed quarterly, must be fast → <strong>S3 Glacier Instant Retrieval</strong></li>
+        <li>💾 Backups used 1–2× per year → <strong>S3 Glacier Flexible Retrieval</strong></li>
+        <li>⚖️ Compliance archives accessed rarely → <strong>S3 Glacier Deep Archive</strong></li>
+        <li>🤷 Unsure which bucket objects are hot/cold → <strong>S3 Intelligent-Tiering</strong></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7) Mini Reviewer: Exam-Friendly Reminders 📝</h2>
+      <ul class="checklist">
+        <li><strong>Storage classes</strong> exist to optimize cost for different access patterns.</li>
+        <li><strong>Frequent access</strong> = Standard; <strong>Infrequent access</strong> = IA (retrieval cost).</li>
+        <li><strong>Glacier</strong> = archive; some require restore time; Instant Retrieval is “fast archive.”</li>
+        <li><strong>Intelligent-Tiering</strong> = AWS automatically moves objects across tiers.</li>
+        <li>Pick based on: <strong>how often accessed</strong> + <strong>how fast needed</strong> + <strong>cost sensitivity</strong>.</li>
+      </ul>
+    </section>
+
+    <div class="divider"></div>
+
+    <footer>
+      <p><strong>Source:</strong> Lecture transcript notes (Maximilian Schwarzmüller). This page is designed for printing on A4 (single-column, white background).</p>
+      <p class="small">Tip: After printing, highlight keywords like “infrequent access,” “archive,” “restore,” and “intelligent-tiering.”</p>
+    </footer>
+  </main>
+</body>
+</html>

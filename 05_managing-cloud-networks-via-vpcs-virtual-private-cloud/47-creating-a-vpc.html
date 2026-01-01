@@ -1,0 +1,339 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Reviewer — Creating a VPC (VPC Wizard)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --focus:#1a73e8;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding:18px 16px;
+      border-radius:12px;
+    }
+    h1{
+      margin:0 0 6px;
+      font-size: 1.55rem;
+      letter-spacing:.2px;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: .98rem;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      padding:8px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:.95rem;
+    }
+    .btn:focus{outline:2px solid var(--focus); outline-offset:2px}
+
+    main{margin-top:18px}
+
+    h2{
+      margin: 18px 0 10px;
+      font-size: 1.2rem;
+    }
+    h3{
+      margin: 14px 0 8px;
+      font-size: 1.05rem;
+    }
+
+    p{margin: 10px 0}
+
+    .card{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:14px 14px;
+      background:#fff;
+      margin: 12px 0;
+    }
+
+    .callout{
+      border:1px solid var(--border);
+      background: var(--panel);
+      border-radius:12px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+
+    ul{margin:8px 0 8px 20px}
+    li{margin:6px 0}
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .95em;
+    }
+    pre{
+      margin:10px 0;
+      padding:12px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:#fff;
+      overflow:auto;
+      white-space:pre-wrap;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border:1px solid var(--border);
+      background:#fff;
+      border-bottom-width:2px;
+      border-radius:8px;
+      padding:1px 6px;
+      display:inline-block;
+      transform: translateY(-1px);
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+
+    .mini{
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--border);
+      margin:16px 0;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+    @media print {
+      body{background:#fff}
+      .page{padding:0; max-width:none}
+      header{break-inside:avoid}
+      .card,.callout{break-inside:avoid}
+      .toolbar{display:none !important}
+      a{color:inherit; text-decoration:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🧩 AWS CLF-C02 Reviewer: Creating a VPC (VPC Wizard)</h1>
+      <p class="subtitle">Topic focus: VPC is <strong>regional</strong>, VPC creation wizard, subnets per AZ, route tables, IGW, NAT, DNS hostnames.</p>
+      <div class="toolbar">
+        <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Quick Check</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>🎯 Learning Goals</h2>
+        <ul>
+          <li>Understand why <strong>Region selection matters</strong> for VPCs (VPC is regional).</li>
+          <li>Know what AWS creates for you via the <strong>VPC creation wizard</strong>.</li>
+          <li>Recognize the role of <strong>subnets</strong>, <strong>Availability Zones</strong>, <strong>route tables</strong>, and the <strong>Internet Gateway (IGW)</strong>.</li>
+          <li>Understand when a <strong>NAT Gateway</strong> is needed—and why it usually costs money. 💸</li>
+          <li>Know what “DNS hostnames” settings do in a VPC. 🌐</li>
+        </ul>
+      </section>
+
+      <section class="callout">
+        <h2>🗺️ Key Exam Idea: VPC is Regional</h2>
+        <p><strong>VPC is a regional construct</strong>. That means:</p>
+        <ul>
+          <li>Every region typically starts with a <strong>default VPC</strong> (e.g., <span class="kbd">us-east-1</span>, <span class="kbd">ap-southeast-1</span>, etc.).</li>
+          <li>If you switch the region (top-right dropdown), you are looking at <strong>different VPCs</strong>.</li>
+          <li>An <strong>EC2 instance launched in Region A</strong> can only be placed into a <strong>VPC that exists in Region A</strong>.</li>
+        </ul>
+        <p class="mini">🧠 Contrast: Some services (like IAM) are <strong>global</strong>, so they don’t depend on region selection.</p>
+      </section>
+
+      <section class="card">
+        <h2>🏗️ Creating a VPC: What You Do in the Wizard</h2>
+        <p>In the AWS Console, go to the <strong>VPC service</strong> and use the <strong>VPC creation wizard</strong>. The wizard helps you design your network quickly.</p>
+
+        <div class="two-col">
+          <div class="callout">
+            <h3>1) Choose how many AZs and Subnets</h3>
+            <ul>
+              <li>You can decide how many <strong>Availability Zones (AZs)</strong> are involved.</li>
+              <li>Because <strong>subnets are placed inside AZs</strong>, choosing AZ count influences your minimum subnet count.</li>
+            </ul>
+          </div>
+
+          <div class="callout">
+            <h3>2) Choose Public and Private Subnets</h3>
+            <ul>
+              <li><strong>Public subnets</strong>: intended for resources that need internet connectivity (e.g., a web server).</li>
+              <li><strong>Private subnets</strong>: intended for internal resources (e.g., a database) that should not accept inbound internet traffic.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <h3>3) Review the Preview Diagram</h3>
+          <p>The wizard shows a network preview (example: <strong>2 public subnets + 2 private subnets</strong>). This preview helps you confirm that your layout matches your intended design.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>🧭 Route Tables: How Traffic Gets Directed</h2>
+        <p>Inside the VPC, <strong>route tables</strong> control where network traffic goes.</p>
+        <ul>
+          <li>Traffic can be between instances (inside the VPC) or from/to the internet.</li>
+          <li>Route tables tell AWS how to <strong>forward</strong> requests to the correct target (e.g., IGW, NAT, or local VPC routing).</li>
+        </ul>
+
+        <div class="callout">
+          <h3>📌 Simple mental model</h3>
+          <p><strong>Route table = “traffic directions”</strong> for the subnet.</p>
+          <ul>
+            <li>“Local” routes: let resources inside the VPC talk to each other.</li>
+            <li>“Internet” routes: point to an <strong>Internet Gateway</strong>.</li>
+            <li>“Private outbound” routes: point to a <strong>NAT Gateway</strong>.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>🌐 Internet Gateway (IGW): What Makes a Subnet “Public”</h2>
+        <p>A subnet becomes “public” when it has a route to the <strong>Internet Gateway (IGW)</strong>.</p>
+        <ul>
+          <li>IGW enables internet connectivity for resources in a public subnet (when combined with correct routes and security settings).</li>
+          <li>In the wizard preview, you may see <strong>IGW</strong> connected to public subnets through route tables.</li>
+        </ul>
+
+        <div class="callout">
+          <h3>✅ Example</h3>
+          <p>Web server EC2 instance in a public subnet:</p>
+          <ul>
+            <li>Public Subnet route table has a route like: <code>0.0.0.0/0 → IGW</code></li>
+            <li>Security Group allows inbound HTTP/HTTPS (if you want a public website).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>🔒 NAT Gateway: Private Subnet Outbound Internet Only</h2>
+        <p>A <strong>NAT Gateway</strong> is used when your private subnet resources need to:</p>
+        <ul>
+          <li>✅ Make <strong>outbound</strong> requests to the internet (e.g., download updates / patches)</li>
+          <li>🚫 Still avoid <strong>inbound</strong> internet-initiated connections directly to them</li>
+        </ul>
+
+        <div class="callout">
+          <h3>⚠️ Cost Note (Important)</h3>
+          <p>NAT Gateway typically costs extra and is commonly <strong>not Free Tier</strong>. Use it intentionally and monitor billing. 💸</p>
+        </div>
+
+        <div class="callout">
+          <h3>🧪 Beginner Example</h3>
+          <p><strong>Database in private subnet</strong>:</p>
+          <ul>
+            <li>Should NOT accept inbound internet traffic.</li>
+            <li>May need outbound internet for OS/database updates.</li>
+            <li>Solution: put DB in <strong>private subnet</strong> + use <strong>NAT Gateway</strong> for outbound-only internet access.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>🧱 VPC Endpoints (Mentioned Briefly)</h2>
+        <p>The wizard may offer <strong>VPC Endpoints</strong>. For now, you can treat this as:</p>
+        <ul>
+          <li>🧩 A way to access some AWS services <strong>from inside your VPC</strong> without going through the public internet.</li>
+          <li>Not required to create a basic VPC, but you’ll see it again later in the course.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>🏷️ DNS Hostnames: Default Names for Instances</h2>
+        <p>The wizard includes settings that ensure instances launched into the subnets can automatically receive:</p>
+        <ul>
+          <li>✅ Hostnames / DNS names (useful for internal communication and basic testing)</li>
+          <li>🌐 Default addressing that makes it easier to reference instances without memorizing IPs</li>
+        </ul>
+        <p class="mini">You can still use your own domain later (Route 53 and related topics), but enabling defaults helps early on.</p>
+      </section>
+
+      <section class="callout" id="quick-check">
+        <h2>✅ Quick Check (Self-Quiz)</h2>
+        <ol>
+          <li><strong>True/False:</strong> VPC is global like IAM. <span class="mini">(Answer: False — VPC is regional.)</span></li>
+          <li>What makes a subnet “public” in AWS? <span class="mini">(Hint: route to IGW.)</span></li>
+          <li>Why would you add a NAT Gateway? <span class="mini">(Outbound internet for private subnet resources.)</span></li>
+          <li>What do route tables do? <span class="mini">(They direct traffic—like routing rules.)</span></li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>🧠 Exam Keywords to Remember</h2>
+        <ul>
+          <li><strong>VPC</strong> = Virtual network in the cloud (regional).</li>
+          <li><strong>Subnet</strong> = Sub-division of VPC, placed in an <strong>AZ</strong>.</li>
+          <li><strong>IGW</strong> = Internet Gateway (public internet connectivity).</li>
+          <li><strong>NAT Gateway</strong> = Outbound internet for private subnet without inbound exposure.</li>
+          <li><strong>Route Tables</strong> = Control where traffic is forwarded.</li>
+        </ul>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="mini">
+        <p><strong>Source:</strong> Converted from your lecture transcript into a print-ready reviewer format.</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

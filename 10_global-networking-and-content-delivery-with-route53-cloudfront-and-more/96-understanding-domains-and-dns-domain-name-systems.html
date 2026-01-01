@@ -1,0 +1,346 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Domains & DNS (Route 53 Intro)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e5e5e5;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 1.7rem;
+      margin: 0 0 6px 0;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      margin: 22px 0 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 10px 0; }
+
+    ul { margin: 8px 0 12px 22px; padding: 0; }
+    li { margin: 6px 0; }
+
+    code,
+    pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 14px;
+      margin: 12px 0;
+    }
+
+    .callout {
+      border: 1px solid var(--border);
+      border-left: 6px solid var(--accent);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    .callout strong { color: #0a3f9a; }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    .mini {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    .qa {
+      padding-left: 0;
+      list-style: none;
+      margin-left: 0;
+    }
+
+    .qa li {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+      margin: 10px 0;
+    }
+
+    .qa .q {
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    .qa .a {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    /* Print-friendly */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body {
+        font-size: 11pt;
+        line-height: 1.45;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      header {
+        margin-bottom: 10px;
+      }
+
+      h1 { font-size: 16pt; }
+      h2 { font-size: 13pt; }
+      h3 { font-size: 11.5pt; }
+
+      .card,
+      .callout,
+      .meta {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header>
+      <h1>🌐 Domains & DNS (Domain Name System) — AWS Route 53 Intro</h1>
+      <p class="subtitle">CLF-C02 Reviewer / Study Guide (Beginner-Friendly)</p>
+      <div class="meta">
+        <span class="pill">📄 Single-column</span>
+        <span class="pill">🖨️ A4 Print-ready</span>
+        <span class="pill">🧠 Beginner notes + examples</span>
+        <span class="pill">✅ Exam-focused terms</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>1) Big Idea (What is DNS?) 🧭</h2>
+      <div class="callout">
+        <strong>DNS = Domain Name System</strong> — it translates a human-friendly <em>domain name</em> (like <code>example.com</code>) into a machine-friendly <em>IP address</em> (like <code>203.0.113.10</code>). 🙂
+      </div>
+
+      <p>
+        Computers communicate using IP addresses, but people prefer names. DNS is the “phonebook” that connects the two.
+        📞➡️🌍
+      </p>
+
+      <div class="card">
+        <h3>Quick Example ✅</h3>
+        <p class="mini">When you type a website in your browser:</p>
+        <ul>
+          <li>👤 You enter: <code>academind.com</code></li>
+          <li>🔎 DNS looks it up and returns an IP address (example): <code>198.51.100.25</code></li>
+          <li>🌐 Your browser uses that IP to reach the server hosting the website</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>2) Why Do We Need Registrars? 🏷️</h2>
+      <p>
+        Because domain names must be <strong>registered</strong> (usually paid) so they become officially owned and resolvable on the internet.
+        Think: you can’t just claim <code>mybusiness.com</code>—you have to register it first.
+      </p>
+
+      <div class="card">
+        <h3>Beginner-friendly mental model 🧠</h3>
+        <ul>
+          <li>🏪 <strong>Domain Registrar</strong> = where you buy/register a domain name</li>
+          <li>🧾 Registration stores ownership info and points your domain to DNS settings</li>
+          <li>🗺️ DNS records then control where the domain should “go” (which IP/service)</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>Important:</strong> DNS is not AWS-only. DNS is a core internet system used everywhere. 🌍
+      </div>
+    </section>
+
+    <section>
+      <h2>3) DNS in One Simple Flow 🔁</h2>
+      <div class="card">
+        <h3>Step-by-step</h3>
+        <ol>
+          <li>👤 User types <code>myapp.com</code> in a browser</li>
+          <li>🧠 The browser/OS asks DNS: “What IP is <code>myapp.com</code>?”</li>
+          <li>📬 DNS responds with an IP (or a target like a load balancer/CDN)</li>
+          <li>✅ Browser connects to that target and loads the site</li>
+        </ol>
+        <p class="mini">In real life, there are more layers (caching, name servers, etc.), but this is the core idea you need. 🙂</p>
+      </div>
+
+      <div class="card">
+        <h3>Mini-example: domain → EC2 🖥️</h3>
+        <p class="mini">If your website runs on an EC2 instance:</p>
+        <ul>
+          <li>DNS record for <code>myapp.com</code> ultimately points to the EC2 public IP (or to an ALB in front of it)</li>
+          <li>Users open <code>myapp.com</code>, DNS resolves it, and traffic reaches your AWS setup</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>4) AWS Route 53 (Registrar + DNS Management) 🧰</h2>
+      <div class="callout">
+        <strong>AWS Route 53</strong> is AWS’s service for:
+        <ul>
+          <li>🛒 Registering domain names (acting as a registrar)</li>
+          <li>🧭 Managing DNS records (traffic forwarding rules)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>What “traffic forwarding rules” means ✍️</h3>
+        <p class="mini">In practice, this means configuring DNS records so that:</p>
+        <ul>
+          <li>🌐 <code>example.com</code> routes to the correct IP / load balancer / AWS service endpoint</li>
+          <li>🔐 You can control public exposure and direct traffic where it should go</li>
+          <li>🧩 You can change targets later without changing what users type</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Exam cue cards 🎯</h3>
+        <ul>
+          <li>🧠 <strong>DNS</strong> = translates domain names to IP addresses</li>
+          <li>🏷️ <strong>Registrar</strong> = where domains are registered/bought</li>
+          <li>🧰 <strong>Route 53</strong> = AWS service for domain registration + DNS management</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>5) Quick Checks (Self-Test) ✅</h2>
+      <ul class="qa">
+        <li>
+          <p class="q">Q1: What does DNS do?</p>
+          <p class="a">It translates domain names (human-friendly) into IP addresses or targets (machine-friendly). 🌐</p>
+        </li>
+        <li>
+          <p class="q">Q2: Why do you need a domain registrar?</p>
+          <p class="a">To register/buy a domain name so it becomes officially owned and resolvable on the internet. 🏷️</p>
+        </li>
+        <li>
+          <p class="q">Q3: What is AWS Route 53 used for?</p>
+          <p class="a">Registering domains and managing DNS records / routing rules. 🧰</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6) Tiny Glossary 📚</h2>
+      <div class="card">
+        <ul>
+          <li><strong>Domain name</strong> — human-friendly name like <code>example.com</code> 🙂</li>
+          <li><strong>IP address</strong> — numeric address for a server/device like <code>203.0.113.10</code> 🧮</li>
+          <li><strong>DNS</strong> — system that maps domain names to IP addresses/targets 🌐</li>
+          <li><strong>Registrar</strong> — company/service used to register a domain 🏷️</li>
+          <li><strong>Route 53</strong> — AWS domain registration + DNS management service 🧰</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <p class="mini"><strong>Next topic hint:</strong> Once a domain points to your app, you often add caching and global delivery with services like <strong>CloudFront</strong>. 🚀</p>
+    </section>
+  </main>
+</body>
+
+</html>

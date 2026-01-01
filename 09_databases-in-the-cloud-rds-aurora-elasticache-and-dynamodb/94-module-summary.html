@@ -1,0 +1,420 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Databases Module Summary</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    /* Single-column container */
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 28px 22px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 18px 14px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.6rem;
+      line-height: 1.25;
+      letter-spacing: 0.2px;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    main { margin-top: 16px; }
+
+    section {
+      margin: 16px 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 12px 0 6px;
+      font-size: 1.04rem;
+      line-height: 1.25;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin: 10px 0;
+    }
+
+    .keyline {
+      margin: 10px 0 0;
+      padding: 10px 12px;
+      border-left: 4px solid var(--accent);
+      background: #f5f8ff;
+      border-radius: 8px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .label {
+      display: inline-block;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .muted { color: var(--muted); }
+
+    .mini {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .qa {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .qa li {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin: 8px 0;
+      background: #fff;
+    }
+
+    .q { font-weight: 700; }
+    .a { margin-top: 6px; }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    /* Print styles for clean A4 output */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { font-size: 11pt; }
+      .page { max-width: none; padding: 0; }
+      header, section { border-color: #d9d9d9; box-shadow: none; }
+      a { color: #000; text-decoration: none; }
+
+      /* Avoid awkward cut-offs */
+      section, header, .card, .callout, .keyline, .qa li {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Keep headings with content */
+      h2, h3 { break-after: avoid; page-break-after: avoid; }
+      ul, ol { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>Databases in the Cloud — Module Summary (Reviewer)</h1>
+      <p class="sub">Beginner-friendly notes for AWS CLF-C02: database options, when to use which service, and exam cues.</p>
+      <div class="meta">
+        <span class="chip">📌 Topic: Databases</span>
+        <span class="chip">🧠 Focus: Concepts & comparisons</span>
+        <span class="chip">🖨️ A4 Print: Single-column</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Picture: What you learned ✅</h2>
+        <p>
+          AWS gives you <strong>multiple database services</strong> because different applications have different needs.
+          Sometimes you want strict tables and SQL; sometimes you want flexible NoSQL; sometimes you want a super-fast cache.
+        </p>
+        <div class="keyline">
+          <strong>Core idea:</strong> There is no “best database.” You choose based on <em>workload</em>, <em>data shape</em>, <em>performance</em>, and <em>operations effort</em>.
+        </div>
+      </section>
+
+      <section>
+        <h2>2) Hosting Options: Self-managed vs Managed 🧰</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="label">🛠️ Self-host on EC2</div>
+            <p class="mini"><strong>You install everything yourself</strong> (MySQL, PostgreSQL, etc.).</p>
+            <ul>
+              <li>✅ Full control (configs, plugins, OS-level tuning)</li>
+              <li>⚠️ Full responsibility: backups, patching, monitoring, failover</li>
+              <li>Example: “We already run MySQL on servers; we want the same approach in AWS.”</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="label">🤝 Managed services</div>
+            <p class="mini"><strong>AWS does the heavy lifting</strong> for common operational tasks.</p>
+            <ul>
+              <li>✅ Easier operations: built-in backups, patching options, monitoring</li>
+              <li>✅ High availability features (replication, Multi-AZ options depending on service)</li>
+              <li>⚠️ Less OS-level control (you configure the service, not the underlying host)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Exam cue 🎯</strong>
+          <p class="mini">If the question emphasizes “AWS manages it for you” (patching/backups/replication), think <strong>managed services</strong> (RDS/Aurora, DynamoDB, ElastiCache).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) Key Managed Database Services to Know 🧩</h2>
+
+        <h3>3.1 RDS (Relational Database Service) — SQL 🧾</h3>
+        <ul>
+          <li>Managed <strong>relational</strong> databases (SQL engines like MySQL, PostgreSQL, etc.).</li>
+          <li>You pick: engine + version + instance class (hardware) + storage + VPC/subnets + security groups.</li>
+          <li>Built-in options for backups, encryption, monitoring, and high availability features.</li>
+        </ul>
+
+        <div class="callout">
+          <div class="label">💡 Beginner example</div>
+          <p class="mini">
+            You are building an online shop and need tables like <strong>Users</strong>, <strong>Orders</strong>, <strong>Products</strong>.
+            SQL + relationships are useful → <strong>RDS</strong> is a common fit.
+          </p>
+        </div>
+
+        <h3>3.2 Aurora — Amazon-built SQL engine 🚀</h3>
+        <ul>
+          <li>AWS-managed engine that is <strong>compatible</strong> with MySQL/PostgreSQL.</li>
+          <li>Designed for scalability and performance (details vary by workload).</li>
+          <li><strong>Aurora Serverless</strong>: pay more “by usage” (good for unpredictable or infrequent DB activity).</li>
+          <li class="muted">Note: Aurora is commonly <em>not</em> free tier, so be mindful when experimenting.</li>
+        </ul>
+
+        <h3>3.3 ElastiCache — In-memory cache ⚡</h3>
+        <ul>
+          <li>Managed caching layer (commonly Redis or Memcached).</li>
+          <li>Goal: speed up reads by keeping frequently requested data in <strong>memory</strong>.</li>
+          <li>Often paired with a main database (e.g., RDS) to reduce DB load.</li>
+        </ul>
+
+        <div class="callout">
+          <div class="label">🧠 Beginner example</div>
+          <p class="mini">
+            “Product details page is slow because everyone requests the same product data.”
+            Cache it in <strong>ElastiCache</strong> so most requests don’t hit the main DB.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) DynamoDB — Managed NoSQL Key-Value 📦</h2>
+        <p>
+          DynamoDB is a fully managed <strong>NoSQL</strong> database built for AWS.
+          It is commonly used for high-performance access patterns where a strict relational schema is not required.
+        </p>
+        <ul>
+          <li>You create <strong>tables</strong> (not “database instances” that you manage).</li>
+          <li>Each item is identified by a <strong>Partition Key</strong> (primary identifier).</li>
+          <li>Capacity choices: <strong>Provisioned</strong> (plan reads/writes) or <strong>On-Demand</strong> (pay per use).</li>
+          <li>Access typically via AWS API/SDK/CLI (not a universal SQL interface).</li>
+        </ul>
+
+        <div class="keyline">
+          <strong>Quick memory hook 🧠:</strong> RDS/Aurora = “SQL + instances”, DynamoDB = “NoSQL + tables”.
+        </div>
+
+        <h3>Helpful DynamoDB features (high level) ✨</h3>
+        <ul>
+          <li>🌍 <strong>Global Tables</strong>: replicate tables across regions (availability + latency improvements).</li>
+          <li>📣 <strong>Streams</strong>: get a stream of item changes for event-driven workflows.</li>
+          <li>⚡ <strong>DAX</strong>: in-memory acceleration layer for even lower latency (extra cost).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5) VPC Placement Pattern: Web Server + Database 🧱</h2>
+        <p>
+          A very common AWS architecture pattern is:
+        </p>
+        <ul>
+          <li>🌐 <strong>Public subnet</strong>: web server (EC2) receives traffic from the internet.</li>
+          <li>🔒 <strong>Private subnet</strong>: database (RDS/Aurora or self-managed) is not directly reachable from the internet.</li>
+          <li>🔐 Communication happens via <strong>private IP/DNS</strong> inside the VPC, controlled by security groups.</li>
+        </ul>
+        <div class="callout">
+          <strong>Exam cue 🎯</strong>
+          <p class="mini">If a question says “DB should NOT be publicly accessible,” think <strong>private subnet</strong> + tight security groups.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Quick Comparison Cheatsheet 🧾</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="label">🧾 RDS / Aurora</div>
+            <ul>
+              <li><strong>Type:</strong> SQL / relational</li>
+              <li><strong>When:</strong> tables, relationships, transactions</li>
+              <li><strong>Access:</strong> SQL over network endpoint</li>
+              <li><strong>Ops:</strong> managed backups/patching options</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="label">⚡ ElastiCache</div>
+            <ul>
+              <li><strong>Type:</strong> in-memory cache</li>
+              <li><strong>When:</strong> need faster reads / reduce DB load</li>
+              <li><strong>Access:</strong> cache commands (Redis/Memcached)</li>
+              <li><strong>Ops:</strong> managed cluster options</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="label">📦 DynamoDB</div>
+            <ul>
+              <li><strong>Type:</strong> NoSQL key-value / document-ish items</li>
+              <li><strong>When:</strong> flexible schema, high throughput, predictable key access</li>
+              <li><strong>Access:</strong> AWS API/SDK/CLI</li>
+              <li><strong>Ops:</strong> table-focused, capacity-based billing</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>7) Mini Practice (Quick Self-Test) 📝</h2>
+        <ol>
+          <li>Which service is the best fit for a traditional SQL database with tables and joins?</li>
+          <li>Which service should you add to speed up frequent reads of the same data?</li>
+          <li>Which service is table-based and uses a partition key to identify items?</li>
+          <li>Where do you typically place databases in a secure VPC setup: public or private subnet?</li>
+        </ol>
+        <div class="hr"></div>
+        <ul class="qa">
+          <li>
+            <div class="q">✅ Answers</div>
+            <div class="a">
+              <ol>
+                <li><strong>RDS</strong> (or <strong>Aurora</strong>)</li>
+                <li><strong>ElastiCache</strong></li>
+                <li><strong>DynamoDB</strong></li>
+                <li><strong>Private subnet</strong> (typically)</li>
+              </ol>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>8) Quick Exam Keywords to Watch 🔎</h2>
+        <ul>
+          <li>“Managed relational database” → 🧾 <strong>RDS</strong> / 🚀 <strong>Aurora</strong></li>
+          <li>“Serverless relational database” → 🚀 <strong>Aurora Serverless</strong></li>
+          <li>“In-memory cache” / “reduce DB load” → ⚡ <strong>ElastiCache</strong></li>
+          <li>“NoSQL key-value” / “partition key” / “tables only” → 📦 <strong>DynamoDB</strong></li>
+          <li>“Database should not be reachable from the internet” → 🔒 <strong>Private subnet + security groups</strong></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>9) Takeaway ✅</h2>
+        <p>
+          AWS supports many database types. For the exam, focus on <strong>when</strong> to use RDS/Aurora, DynamoDB,
+          and ElastiCache, and remember the common secure VPC pattern (public web tier, private database tier).
+        </p>
+        <p class="muted mini">Tip: If you can explain the “why” in one sentence, you are ready for most CLF-C02 questions.</p>
+      </section>
+
+    </main>
+  </div>
+</body>
+
+</html>

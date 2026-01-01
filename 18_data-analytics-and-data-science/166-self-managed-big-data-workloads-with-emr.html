@@ -1,0 +1,310 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS EMR (Elastic MapReduce) — Reviewer / Study Guide</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+
+    /* Single-column page */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 22px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 12px;
+    }
+    h1{
+      margin: 0 0 6px;
+      font-size: 1.55rem;
+      letter-spacing: .2px;
+    }
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .controls{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .btn{
+      appearance:none;
+      border: 1px solid var(--border);
+      background:#fff;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor:pointer;
+      font-size: .95rem;
+    }
+    .btn:hover{ border-color:#cfcfcf; }
+    .hint{
+      color: var(--muted);
+      font-size: .9rem;
+      margin: 0;
+    }
+
+    section{
+      margin-top: 16px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+    }
+    h2{
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+    }
+    h3{
+      margin: 14px 0 8px;
+      font-size: 1.02rem;
+    }
+
+    .callout{
+      background: var(--panel);
+      border: 1px dashed var(--border);
+      padding: 12px 12px;
+      border-radius: 12px;
+    }
+
+    ul{ margin: 8px 0 0 20px; padding: 0; }
+    li{ margin: 6px 0; }
+
+    .mini{
+      color: var(--muted);
+      font-size: .95rem;
+      margin: 0;
+    }
+
+    .term{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .term .row{
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+    }
+    .term .k{
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+    .term .v{
+      margin: 0;
+      color: var(--text);
+    }
+
+    .code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .92rem;
+      white-space: pre-wrap;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 10px 0 0;
+    }
+
+    .badge{
+      display:inline-block;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: .82rem;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+
+    .divider{
+      height:1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    footer{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: .9rem;
+      text-align: center;
+    }
+
+    /* Print-ready settings */
+    @page { size: A4; margin: 14mm; }
+    @media print{
+      .page{ max-width: none; padding: 0; }
+      header, section{ box-shadow:none; }
+      .controls{ display:none !important; }
+      a{ color: inherit; text-decoration: none; }
+      h1{ font-size: 16pt; }
+      h2{ font-size: 12.5pt; }
+      h3{ font-size: 11pt; }
+      body{ font-size: 10.5pt; line-height: 1.45; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      .callout{ break-inside: avoid; page-break-inside: avoid; }
+      .code{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>🧩 AWS EMR (Elastic MapReduce) — Reviewer / Study Guide</h1>
+      <p class="subtitle">Topic: Self-managed big data workloads (more control than AWS Glue) • Single-column • A4 print-ready</p>
+
+      <div class="controls">
+        <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <p class="hint">Tip: In the print dialog, choose <b>A4</b> and <b>Margins: Default</b> (or similar).</p>
+      </div>
+    </header>
+
+    <section>
+      <h2>1) Big idea (in plain words) 🧠</h2>
+      <p class="mini">
+        <b>EMR</b> is an AWS service that helps you spin up a <b>big data compute cluster</b> so you can run your own
+        big-data tools/frameworks (e.g., Hadoop / Spark) to <b>analyze</b> or <b>transform</b> large datasets.
+      </p>
+      <div class="callout">
+        <p class="mini"><b>Simple mental model:</b> EMR = “AWS helps me build and manage a cluster of machines for big data work.” 🏗️</p>
+        <p class="mini"><b>Why it matters:</b> Doing this manually with EC2 can be painful (installing tools, connecting nodes, scaling, etc.). EMR reduces that setup burden.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>2) EMR vs Glue (when to use which?) ⚖️</h2>
+      <p class="mini">
+        In the lecture, EMR is introduced as a practical alternative to <b>AWS Glue</b> when you need <b>more control</b>.
+      </p>
+
+      <h3>✅ Use AWS Glue when… 🧰</h3>
+      <ul>
+        <li>You want a <b>serverless</b>, fully managed ETL experience (Extract → Transform → Load).</li>
+        <li>You prefer a more “pre-built” workflow with <b>less infrastructure</b> to manage.</li>
+        <li>You’re okay working within Glue’s supported patterns for ETL jobs.</li>
+      </ul>
+
+      <h3>✅ Use EMR when… 🧑‍💻</h3>
+      <ul>
+        <li>You need <b>more control</b> over the big data environment (framework choices, deeper customization).</li>
+        <li>You want to run a <b>specific big data framework</b> and possibly use your preferred language/tooling.</li>
+        <li>You want AWS to create the <b>cluster</b>, but you want flexibility in what runs on it.</li>
+      </ul>
+
+      <div class="callout">
+        <p class="mini"><b>Exam-style takeaway:</b> Glue = managed serverless ETL. EMR = managed cluster for running big data frameworks (more control). 📝</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>3) Key terms you should recognize 🔑</h2>
+      <div class="term">
+        <div class="row">
+          <p class="k">EMR (Elastic MapReduce) <span class="badge">Service</span></p>
+          <p class="v">AWS service to provision and manage big data clusters so you can run large-scale processing/analytics jobs.</p>
+        </div>
+        <div class="row">
+          <p class="k">Cluster <span class="badge">Concept</span></p>
+          <p class="v">A group of machines that work together. For big data, it helps process large volumes faster than a single machine.</p>
+        </div>
+        <div class="row">
+          <p class="k">MapReduce <span class="badge">Big data term</span></p>
+          <p class="v">A general concept for processing large datasets in distributed systems (don’t over-memorize details for CLF). The key is: EMR supports big data processing at scale.</p>
+        </div>
+        <div class="row">
+          <p class="k">Glue <span class="badge">Contrast</span></p>
+          <p class="v">A serverless managed ETL service. Less infrastructure control, but simpler.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4) How EMR works (step-by-step) 🧩</h2>
+      <ol style="margin: 8px 0 0 20px; padding: 0;">
+        <li style="margin: 6px 0;"><b>Choose parameters/settings</b> (what kind of environment you want).</li>
+        <li style="margin: 6px 0;"><b>EMR creates the connected compute cluster</b> for you (instead of you wiring EC2 instances manually).</li>
+        <li style="margin: 6px 0;"><b>Run your big data workload</b> on the cluster using your chosen framework.</li>
+        <li style="margin: 6px 0;"><b>Scale as needed</b> (cluster approach helps you handle large datasets efficiently).</li>
+      </ol>
+
+      <div class="divider"></div>
+
+      <h3>Why not just use EC2 directly? 🤔</h3>
+      <ul>
+        <li>Manually building a big-data cluster can be <b>cumbersome</b>: installation, configuration, networking, scaling, node coordination, etc.</li>
+        <li>EMR’s goal is to make “cluster setup + running jobs” much more manageable.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5) Beginner example (simple scenario) 🧪</h2>
+      <p class="mini"><b>Scenario:</b> You have a very large dataset of website logs and you want to transform it into a cleaner format for analytics.</p>
+      <ul>
+        <li>With <b>Glue</b>: you create an ETL job and let the managed system run it in a serverless manner.</li>
+        <li>With <b>EMR</b>: you spin up a big data cluster and run your chosen framework to process the logs in parallel.</li>
+      </ul>
+
+      <div class="callout">
+        <p class="mini"><b>Rule of thumb:</b> If your processing needs special frameworks or deeper customization, EMR is often the “more control” option. 🛠️</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>6) Quick exam notes (CLF-C02) ✅</h2>
+      <ul>
+        <li><b>EMR</b> = managed way to run <b>big data workloads</b> on a cluster (more control than Glue).</li>
+        <li><b>Glue</b> = <b>serverless managed ETL</b> (Extract, Transform, Load).</li>
+        <li>If a question mentions <b>custom big data frameworks</b> or <b>running big data clusters</b>, EMR is a strong candidate.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Source transcript (verbatim snippet) 📄</h2>
+      <p class="mini">This page is based on the lecture content you provided, summarized into a reviewer format.</p>
+      <div class="code">Now Glue is a service that helps with transforming and loading data and it's fully managed.
+If you want more control though ... you can do this with help of another service called EMR.
+EMR stands for elastic map reduce ... EMR is a service that simplifies spitting up your own big data compute clusters.
+... EMR creates such a connected cluster for you ... and then you can run your big data workloads on top of that cluster.</div>
+    </section>
+
+    <footer>
+      Prepared as a print-friendly reviewer (single-column, A4). If you want, I can format the next lecture in the same style.
+    </footer>
+  </main>
+</body>
+</html>

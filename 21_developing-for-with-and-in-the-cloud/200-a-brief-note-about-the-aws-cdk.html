@@ -1,0 +1,330 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — AWS CDK (Cloud Development Kit)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --link: #0b57d0;
+      --focus: #1a73e8;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 22px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 16px;
+      border-radius: 12px;
+    }
+
+    .kicker {
+      font-size: 12px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn:focus {
+      outline: 3px solid rgba(26, 115, 232, 0.25);
+      border-color: var(--focus);
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    main { margin-top: 18px; }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 14px 0;
+      background: #fff;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      font-size: 15px;
+      margin: 14px 0 8px;
+      line-height: 1.3;
+    }
+
+    p { margin: 0 0 10px; }
+
+    ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      background: var(--panel);
+      border: 1px dashed var(--border);
+      padding: 12px 12px;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      margin-right: 6px;
+      margin-bottom: 6px;
+      background: #fff;
+    }
+
+    pre {
+      margin: 10px 0 0;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fcfcfc;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+    }
+
+    .muted { color: var(--muted); }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Print styles for clean A4 output */
+    @media print {
+      @page { size: A4; margin: 14mm; }
+
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-size: 11pt;
+        line-height: 1.45;
+      }
+
+      .page { padding: 0; max-width: none; }
+      header, section { box-shadow: none; }
+
+      /* Hide interactive elements */
+      .toolbar { display: none !important; }
+
+      /* Avoid awkward splits */
+      section { break-inside: avoid; page-break-inside: avoid; }
+      h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+      pre { break-inside: avoid; page-break-inside: avoid; }
+      a { color: #000; text-decoration: underline; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer</p>
+      <h1>🧰 A Brief Note About the AWS CDK (Cloud Development Kit)</h1>
+      <p class="subtitle">How CDK relates to CloudFormation, what problem it solves, and what you need (and don’t need) for the exam 🙂</p>
+      <div class="toolbar">
+        <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <a class="btn" href="#quick-review">✅ Quick Review</a>
+        <a class="btn" href="#examples">💡 Examples</a>
+        <a class="btn" href="#exam">🧠 Exam Tips</a>
+      </div>
+    </header>
+
+    <main>
+      <section id="quick-review">
+        <h2>✅ Quick Review: CloudFormation vs CDK</h2>
+        <p><span class="tag">Infrastructure as Code</span> <span class="tag">Cloud Management</span> <span class="tag">Developer Tooling</span></p>
+
+        <div class="grid">
+          <div class="card">
+            <h3>☁️ CloudFormation (the foundation)</h3>
+            <ul>
+              <li>📄 You define AWS resources using <strong>templates</strong> (JSON or YAML).</li>
+              <li>🧱 Template describes <em>what</em> to create (VPCs, EC2, S3, IAM roles, etc.).</li>
+              <li>🔁 You can deploy the same template repeatedly to get a repeatable environment.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>🧰 AWS CDK (builds on CloudFormation)</h3>
+            <ul>
+              <li>👨‍💻 You define infrastructure using <strong>real programming languages</strong> (e.g., TypeScript, Python).</li>
+              <li>🧩 You can use variables, loops, functions, reusable components (called <strong>constructs</strong>).</li>
+              <li>🪄 <strong>Under the hood</strong>, CDK generates a <strong>CloudFormation template</strong> and deploys it.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p><strong>Key idea (memorize):</strong> CDK is “Infrastructure as Code with a programming language,” but deployment still happens via <strong>CloudFormation</strong> behind the scenes. ✅</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🤔 Why would someone use CDK?</h2>
+        <p>CDK is useful when teams want the benefits of CloudFormation, but prefer writing and maintaining infrastructure using code.</p>
+        <ul>
+          <li>🧱 <strong>Reusable building blocks:</strong> define a “standard VPC” once and reuse it across projects.</li>
+          <li>🔁 <strong>Less duplication:</strong> loops and helpers reduce copy/paste across templates.</li>
+          <li>🧠 <strong>Developer-friendly workflows:</strong> use familiar tooling, packages, and code review practices.</li>
+          <li>🧩 <strong>Safer patterns:</strong> abstractions (constructs) can encode best practices.</li>
+        </ul>
+
+        <div class="callout">
+          <p class="muted">🙂 Think of it like this: CloudFormation is “write a blueprint template.” CDK is “write a program that produces the blueprint.”</p>
+        </div>
+      </section>
+
+      <section id="examples">
+        <h2>💡 Beginner-Friendly Examples</h2>
+        <p>These examples are simplified on purpose. You don’t need to master CDK for CLF-C02, but examples help you remember what CDK <em>is</em>.</p>
+
+        <h3>Example 1: “Create an S3 bucket” (TypeScript-style)</h3>
+        <pre><code>// PSEUDOCODE (idea only)
+import * as cdk from 'aws-cdk-lib';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+
+const app = new cdk.App();
+const stack = new cdk.Stack(app, 'MyStack');
+
+new s3.Bucket(stack, 'UploadsBucket', {
+  versioned: true,
+  encryption: s3.BucketEncryption.S3_MANAGED,
+});
+
+// CDK will synthesize a CloudFormation template from this.</code></pre>
+
+        <h3>Example 2: “Create resources using a loop” (Python-style)</h3>
+        <pre><code># PSEUDOCODE (idea only)
+from aws_cdk import Stack
+from aws_cdk import aws_s3 as s3
+
+class DataLakeStack(Stack):
+    def __init__(self, scope, id):
+        super().__init__(scope, id)
+
+        for name in ["raw", "processed", "analytics"]:
+            s3.Bucket(self, f"{name}Bucket")
+
+# One loop can create multiple resources cleanly.</code></pre>
+
+        <div class="callout">
+          <p><strong>What to notice:</strong> CDK code looks like normal programming. But the output becomes CloudFormation during deployment. 🪄</p>
+        </div>
+      </section>
+
+      <section id="exam">
+        <h2>🧠 Exam Tips (CLF-C02)</h2>
+        <ul>
+          <li>✅ Know that <strong>CloudFormation</strong> is the core Infrastructure as Code service.</li>
+          <li>✅ Know that <strong>CDK builds on CloudFormation</strong> and generates templates under the hood.</li>
+          <li>✅ Know that CDK is <strong>developer-oriented</strong> (requires coding knowledge).</li>
+          <li>✅ For the exam: CDK is <strong>optional</strong>—you typically only need a high-level understanding.</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>Fast memory hook:</strong> “CDK = Code ➜ CloudFormation Template ➜ Deploy.” ✅🙂</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔗 Reference</h2>
+        <p>You can learn more here (optional):</p>
+        <ul>
+          <li>🌐 <a href="https://aws.amazon.com/cdk/" target="_blank" rel="noopener noreferrer">AWS CDK (official page)</a></li>
+        </ul>
+        <p class="muted">Note: Opening links is not required for your reviewer. This page is designed to be printable even without internet access.</p>
+      </section>
+
+      <p class="footer">End of reviewer — AWS CDK (Cloud Development Kit). Print tip: use “Save as PDF” and ensure paper size is set to A4.</p>
+    </main>
+  </div>
+</body>
+</html>

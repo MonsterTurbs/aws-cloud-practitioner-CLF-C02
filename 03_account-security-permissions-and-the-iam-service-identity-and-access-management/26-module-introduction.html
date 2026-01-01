@@ -1,0 +1,278 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 26 Module Introduction (Security, Permissions & IAM)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+      --ok:#0f7b0f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .qna strong{ display:block; margin: 10px 0 4px; }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Section 3 Introduction</p>
+      <h1>26 — Account Security, Permissions & IAM (Intro) 🔐🧑‍💼</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Lecture Goal</h2>
+        <p>This section introduces why security matters in AWS and what you will learn next: securing your AWS account, understanding the AWS security model, and controlling access using IAM.</p>
+        <div class="callout">
+          <p><strong>Big idea ✅</strong> Access to AWS is important—but <strong>secure access</strong> is critical. Security is a major exam topic and a real-world requirement.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔐 Why Security Matters in AWS</h2>
+        <p>AWS gives you powerful control over infrastructure and services. That power must be protected to prevent:</p>
+        <ul>
+          <li>🕵️ Unauthorized access (someone logging in or using your resources)</li>
+          <li>💸 Unexpected charges (attackers spinning up resources)</li>
+          <li>📄 Data leaks (sensitive files or databases exposed)</li>
+          <li>🧨 Service disruption (resources deleted or misconfigured)</li>
+        </ul>
+        <div class="warning">
+          <p><strong>Exam note ⚠️</strong> Security is not optional in AWS. Expect questions about secure access, authentication, and permissions.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧱 Topics You’ll Cover in This Section</h2>
+        <div class="grid">
+          <div class="mini">
+            <h3>1) AWS Security Model 🛡️</h3>
+            <p>You will learn the general security approach used by AWS—important for the certification exam.</p>
+          </div>
+          <div class="mini">
+            <h3>2) Account Management & Authentication 🔑</h3>
+            <p>You’ll learn how to authenticate securely when accessing AWS using different methods.</p>
+            <ul>
+              <li>🖥️ Management Console (web UI)</li>
+              <li>⌨️ AWS CLI (command line)</li>
+              <li>🧩 Other access approaches (e.g., programmatic access)</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>3) IAM: Identity and Access Management 🧑‍💼</h3>
+            <p>You’ll learn how AWS manages users and controls what they can do.</p>
+          </div>
+          <div class="mini">
+            <h3>4) Permissions & Access Control ✅⛔</h3>
+            <p>How permissions work in AWS: who is allowed to do what, on which resources.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧪 Beginner-Friendly Example (Why IAM Exists)</h2>
+        <p>Imagine a team with different roles:</p>
+        <ul>
+          <li>👩‍💻 Developer: should deploy apps but not change billing settings</li>
+          <li>🧑‍🔧 Support: should view logs but not delete databases</li>
+          <li>🧑‍💼 Admin: needs broader access for managing the AWS account</li>
+        </ul>
+        <div class="callout">
+          <p><strong>IAM helps you do this ✅</strong> You can create users/roles and give each one only the permissions they need (least privilege).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Exam Focus)</h2>
+        <span class="tag">Security</span>
+        <span class="tag">Authentication</span>
+        <span class="tag">Authorization</span>
+        <span class="tag">Permissions</span>
+        <span class="tag">Access Control</span>
+        <span class="tag">IAM</span>
+        <span class="tag">Management Console</span>
+        <span class="tag">AWS CLI</span>
+        <span class="tag">AWS Security Model</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="qna">
+          <strong>Q1: Why is secure access more important than just “having access”?</strong>
+          <p>A: Because insecure access can lead to data leaks, unauthorized actions, service disruption, and unexpected costs.</p>
+
+          <strong>Q2: What is IAM used for?</strong>
+          <p>A: Managing identities (users/roles) and controlling permissions (who can do what in AWS).</p>
+
+          <strong>Q3: Which access methods will be discussed in the context of authentication?</strong>
+          <p>A: The Management Console and AWS CLI (and other programmatic access approaches).</p>
+
+          <strong>Q4: What is the main goal of permissions and access control?</strong>
+          <p>A: To allow only the right actions on the right resources by the right identities.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

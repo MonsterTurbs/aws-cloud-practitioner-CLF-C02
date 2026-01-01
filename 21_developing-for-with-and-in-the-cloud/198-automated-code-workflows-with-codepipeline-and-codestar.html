@@ -1,0 +1,379 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — CodePipeline & CodeStar (CI/CD)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding:18px 16px;
+      border-radius:10px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: 13px;
+    }
+
+    .meta{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .chip{
+      border:1px solid var(--border);
+      background:#fff;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:#222;
+      white-space:nowrap;
+    }
+
+    .actions{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      border-radius:10px;
+      padding:10px 12px;
+      font-size:13px;
+      cursor:pointer;
+    }
+    .btn.primary{
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    main{ margin-top: 14px; }
+
+    section{
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:16px;
+      margin: 12px 0;
+      background:#fff;
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size: 18px;
+    }
+
+    h3{
+      margin:14px 0 8px;
+      font-size: 15px;
+    }
+
+    p{ margin: 8px 0; }
+
+    ul{ margin:8px 0 0 18px; padding:0; }
+    li{ margin:6px 0; }
+
+    .callout{
+      border:1px solid var(--border);
+      background: var(--panel);
+      border-radius:10px;
+      padding:12px;
+      margin-top:10px;
+    }
+
+    .callout strong{ display:inline-block; margin-bottom:6px; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:12px;
+      background:#fff;
+    }
+
+    .k{
+      display:inline-block;
+      font-weight:700;
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:2px 8px;
+      background:#fff;
+      font-size:12px;
+      margin-right:6px;
+    }
+
+    .muted{ color: var(--muted); }
+
+    .divider{
+      height:1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    /* Print-specific rules */
+    @page{
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print{
+      body{ font-size: 11.5pt; }
+      .page{ max-width:none; padding:0; }
+      header, section{ border: 1px solid #d9d9d9; box-shadow:none; }
+      .actions{ display:none !important; }
+      a{ color: inherit; text-decoration:none; }
+      .chip{ border-color:#d9d9d9; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Automated Code Workflows — AWS CodePipeline & AWS CodeStar</h1>
+      <p class="subtitle">Print-friendly reviewer / study guide (Beginner level) — single-column A4-ready</p>
+      <div class="meta">
+        <span class="chip">🧩 Topic: Developer Tools (CI/CD)</span>
+        <span class="chip">📘 Exam: AWS CLF-C02</span>
+        <span class="chip">🖨️ A4 Print Ready</span>
+        <span class="chip">⏱️ Quick Review</span>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <span class="muted">Tip: In print settings, choose “A4”, “Margins: Default”, and disable headers/footers if you want a cleaner output.</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Picture (What problem are these services solving?)</h2>
+        <p>
+          When you build software, you typically repeat the same steps again and again: <strong>store code → test → build → deploy</strong>.
+          Doing these steps manually is slow and error-prone. AWS provides tools to <strong>automate</strong> this workflow.
+        </p>
+        <div class="callout">
+          <strong>Core takeaway ✅</strong>
+          <p><span class="k">CodePipeline</span> is the managed service that <strong>orchestrates</strong> your CI/CD stages (source, build, deploy, approvals, etc.).</p>
+          <p><span class="k">CodeStar</span> is the simplified “getting started” experience that can <strong>create a project + pipeline setup</strong> faster (it uses other services behind the scenes).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) CodePipeline (CI/CD Orchestrator) 🚦</h2>
+        <h3>What it is</h3>
+        <p>
+          <strong>AWS CodePipeline</strong> is a managed <strong>Continuous Integration / Continuous Delivery</strong> (CI/CD) service.
+          You define a pipeline as a set of <strong>stages</strong> that run in order.
+          Each stage has one or more <strong>actions</strong> (e.g., pull code, run tests, deploy).
+        </p>
+
+        <h3>Common stages (beginner-friendly)</h3>
+        <ul>
+          <li>📥 <strong>Source</strong>: fetch code from a repo (e.g., CodeCommit / GitHub).</li>
+          <li>🧪 <strong>Test</strong>: run automated tests (often via CodeBuild).</li>
+          <li>🏗️ <strong>Build</strong>: compile/package your app (often via CodeBuild).</li>
+          <li>🚀 <strong>Deploy</strong>: ship the new version (often via CodeDeploy to EC2/ECS/Lambda).</li>
+          <li>🧍‍♂️✅ <strong>Manual approval</strong>: pause until someone approves (useful for production).</li>
+          <li>⚙️ <strong>Custom action</strong>: run a Lambda function for scripts/extra checks.</li>
+        </ul>
+
+        <h3>Triggers (how it starts)</h3>
+        <div class="grid">
+          <div class="card">
+            <p><span class="k">Most common</span> 🔔 Auto-trigger when you push code to the repository (example: push to main branch).</p>
+          </div>
+          <div class="card">
+            <p><span class="k">Also possible</span> ▶️ Manually start an execution (for testing or one-off runs).</p>
+          </div>
+        </div>
+
+        <h3>Monitoring and control</h3>
+        <ul>
+          <li>👀 You can <strong>monitor</strong> pipeline executions (which stage is running, failed, or succeeded).</li>
+          <li>🔁 You can <strong>retry</strong> failed executions or re-run a stage (depending on setup).</li>
+          <li>⏸️ You can <strong>disable transitions</strong> between stages to intentionally “pause” a pipeline between two steps.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Example (simple pipeline) 🧠</strong>
+          <p>
+            You push code to CodeCommit → CodePipeline triggers → CodeBuild runs tests → CodeBuild builds an artifact → CodeDeploy deploys to EC2.
+            Result: consistent deployments with fewer manual steps.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) CodeStar (Simplified Setup) 🧰</h2>
+        <h3>What it is</h3>
+        <p>
+          <strong>AWS CodeStar</strong> is designed to make it easier to get started with a typical development workflow.
+          Instead of assembling everything piece-by-piece, you select a <strong>template</strong> and CodeStar can provision a project
+          with preconfigured build/deploy steps.
+        </p>
+
+        <h3>How to think about it</h3>
+        <div class="grid">
+          <div class="card">
+            <p><span class="k">CodePipeline</span> = powerful orchestrator you design stage-by-stage.</p>
+          </div>
+          <div class="card">
+            <p><span class="k">CodeStar</span> = “starter kit” experience that helps you create common CI/CD setups quickly. 😌</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Beginner tip 💡</strong>
+          <p>
+            If you feel overwhelmed building a pipeline from scratch, CodeStar templates can be a helpful starting point.
+            Later, when you need full customization, you can work directly with CodePipeline and the underlying services.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Map the services to the workflow (memorize this)</h2>
+        <p class="muted">This mapping is a common exam-style memory check.</p>
+        <div class="divider"></div>
+        <ul>
+          <li>✍️ <strong>Write Code</strong> → Cloud9 (cloud IDE) or local IDE</li>
+          <li>🗃️ <strong>Store Code</strong> → CodeCommit (AWS Git repo) or GitHub</li>
+          <li>🧪🏗️ <strong>Test / Build</strong> → CodeBuild (managed build/test environment)</li>
+          <li>📦 <strong>Packages/Dependencies</strong> → CodeArtifact (optional package repository)</li>
+          <li>🚀 <strong>Deploy</strong> → CodeDeploy (deploy to EC2/ECS/Lambda)</li>
+          <li>🔁 <strong>Orchestrate the entire chain</strong> → CodePipeline</li>
+          <li>🧰 <strong>Simplified project + pipeline setup</strong> → CodeStar</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5) Beginner examples (mental models) 🧪</h2>
+        <h3>Example A — Small team web app</h3>
+        <ul>
+          <li>👨‍💻 Developer pushes code to CodeCommit</li>
+          <li>🔔 CodePipeline triggers automatically</li>
+          <li>🧪 CodeBuild runs tests</li>
+          <li>🏗️ CodeBuild builds a deployment artifact</li>
+          <li>🚀 CodeDeploy deploys to EC2 instances</li>
+        </ul>
+
+        <h3>Example B — Add a “human gate” for production</h3>
+        <ul>
+          <li>✅ Deploy automatically to <strong>staging</strong></li>
+          <li>🧍‍♂️✅ Manual approval stage before <strong>production</strong></li>
+          <li>🚀 Deploy to production after approval</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Why manual approval matters 🎯</strong>
+          <p>
+            It helps prevent accidental production deployments when tests pass but you still want a final review (change window, business sign-off, etc.).
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Exam-focused mini Q&amp;A (quick checks) ✅</h2>
+        <div class="grid">
+          <div class="card">
+            <p><strong>Q:</strong> Which service automates the steps of a CI/CD workflow as stages?</p>
+            <p><strong>A:</strong> <span class="k">CodePipeline</span> 🚦</p>
+          </div>
+          <div class="card">
+            <p><strong>Q:</strong> Which service helps beginners by providing templates and a simplified setup?</p>
+            <p><strong>A:</strong> <span class="k">CodeStar</span> 🧰</p>
+          </div>
+          <div class="card">
+            <p><strong>Q:</strong> Can CodePipeline include steps that are not “code services”?</p>
+            <p><strong>A:</strong> Yes — e.g., <span class="k">Manual approval</span> or <span class="k">Lambda</span> actions.</p>
+          </div>
+          <div class="card">
+            <p><strong>Q:</strong> How does CodePipeline commonly start?</p>
+            <p><strong>A:</strong> Triggered by a code change in your repository (e.g., push to CodeCommit). 🔔</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>7) Key terms (fast glossary) 📌</h2>
+        <ul>
+          <li>🧱 <strong>Stage</strong>: a major step in a pipeline (source, build, deploy).</li>
+          <li>🧩 <strong>Action</strong>: a specific operation inside a stage (run CodeBuild, manual approval, invoke Lambda).</li>
+          <li>🔁 <strong>CI/CD</strong>: automate integration (tests/build) and delivery/deployment (release).</li>
+          <li>🎛️ <strong>Transition</strong>: the movement from one stage to the next (can be paused/disabled).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>8) One-page summary (if you remember only this) 🧠</h2>
+        <ul>
+          <li>🚦 <strong>CodePipeline</strong> = managed CI/CD pipeline orchestrator (stages + actions + triggers).</li>
+          <li>🧰 <strong>CodeStar</strong> = simplified project setup using templates (often uses CodePipeline internally).</li>
+          <li>🧪 <strong>CodeBuild</strong> runs tests/builds; 🚀 <strong>CodeDeploy</strong> deploys; 🗃️ <strong>CodeCommit</strong> stores code.</li>
+          <li>🧍‍♂️✅ Pipelines can include <strong>manual approval</strong> or <strong>Lambda</strong> steps.</li>
+        </ul>
+      </section>
+
+      <section>
+        <p class="muted">
+          End of reviewer. Print tip: Use “Save as PDF” for a clean digital copy; the print button is hidden automatically when printing.
+        </p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

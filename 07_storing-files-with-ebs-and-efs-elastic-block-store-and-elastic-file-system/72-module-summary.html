@@ -1,0 +1,367 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — File Storage (Module Summary)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --chip: #f3f3f3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Single-column print-friendly layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 20px 40px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 18px 14px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.55rem;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .meta {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-block;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      color: #222;
+    }
+
+    main {
+      margin-top: 16px;
+    }
+
+    h2 {
+      margin: 18px 0 10px;
+      font-size: 1.15rem;
+      line-height: 1.3;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    ul {
+      margin: 8px 0 12px 22px;
+      padding: 0;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 14px 12px;
+      margin: 12px 0;
+      background: #fff;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .callout {
+      border-left: 4px solid #000;
+      background: #fff;
+      padding: 12px 14px;
+      margin: 12px 0;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .callout p {
+      margin: 0;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .keyline {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+
+    .qa {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin: 12px 0;
+      background: #fff;
+    }
+
+    .qa h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .qa .answers {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Print styling */
+    @page {
+      size: A4;
+      margin: 16mm;
+    }
+
+    @media print {
+      body {
+        font-size: 11.5pt;
+        line-height: 1.45;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      header,
+      .card,
+      .callout,
+      .qa {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>File Storage on AWS — Module Summary Reviewer</h1>
+      <p class="subtitle">Beginner-friendly study guide for AWS CLF-C02: EBS, EFS, FSx (Lustre), and a preview of S3.</p>
+      <div class="meta">
+        <span class="chip">🧠 Focus: core concepts</span>
+        <span class="chip">📝 Print-ready (A4)</span>
+        <span class="chip">📌 Single-column layout</span>
+        <span class="chip">✅ Exam-oriented takeaways</span>
+      </div>
+      <p class="keyline">Tip: Print with <strong>Scale = 100%</strong> and <strong>Margins = Default</strong> for clean A4 output.</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>1) Big Picture: Why file storage matters 📂</h2>
+        <p>
+          Most workloads (web apps, analytics jobs, internal tools) create or need files — user uploads, invoices, reports, logs, backups, and more.
+          AWS offers multiple storage services because <strong>not all “file storage” is the same</strong>.
+        </p>
+        <ul>
+          <li>Some workloads want a <strong>disk</strong> attached to a server (like plugging in an external drive).</li>
+          <li>Some workloads want a <strong>shared file system</strong> (multiple servers read/write the same folders).</li>
+          <li>Some workloads want <strong>object storage</strong> (store files without managing disks or file systems).</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>2) The 3 “storage mindsets” (quick mental models) 🧩</h2>
+
+        <div class="callout">
+          <p><strong>🧱 Block Storage</strong> = “Give me a raw disk.” You format it, mount it, and create folders/files on it.</p>
+        </div>
+        <ul>
+          <li><strong>Example:</strong> Attach a volume to an EC2 instance to store application data or additional files.</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>🗂️ File System Storage</strong> = “Give me a ready-to-use shared file system.” You create folders/files, but you don’t manage the disk.</p>
+        </div>
+        <ul>
+          <li><strong>Example:</strong> Multiple EC2 instances access the same shared folder structure.</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>🧺 Object Storage</strong> = “Give me a place to store objects (files) directly.” No formatting, no mounting.</p>
+        </div>
+        <ul>
+          <li><strong>Example:</strong> Store images, backups, documents, and retrieve them via API/console.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>3) Service Cheat Sheet: EBS vs EFS vs FSx (Lustre) vs S3 🧾</h2>
+
+        <div class="divider"></div>
+
+        <h3>🧱 EBS (Elastic Block Store)</h3>
+        <ul>
+          <li><strong>What it is:</strong> Raw (unformatted) virtual hard drive (volume).</li>
+          <li><strong>Attach to:</strong> <strong>EC2 only</strong>.</li>
+          <li><strong>You must do:</strong> Format + mount inside the instance (commonly via SSH).</li>
+          <li><strong>Extra capabilities to remember:</strong>
+            <ul>
+              <li>📸 <strong>Snapshots</strong> (backup/restore volume state)</li>
+              <li>📏 <strong>Elastic volumes</strong> (resize/scale volume capacity)</li>
+              <li>🔗 <strong>Multi-Attach</strong> (attach certain volumes to multiple EC2 instances — with constraints)</li>
+            </ul>
+          </li>
+          <li><strong>Common fit:</strong> You need “a disk” for an EC2 instance and want a straightforward setup at relatively lower cost.</li>
+        </ul>
+
+        <div class="divider"></div>
+
+        <h3>🗂️ EFS (Elastic File System)</h3>
+        <ul>
+          <li><strong>What it is:</strong> Managed, pre-configured <strong>network file system</strong> (shared folders).</li>
+          <li><strong>Attach/access from:</strong> EC2 <em>and</em> other AWS services (not EC2-only).</li>
+          <li><strong>You do NOT do:</strong> No disk formatting or disk sizing in the same way as EBS.</li>
+          <li><strong>Built for:</strong> Dynamic scaling + multiple clients accessing the same file system.</li>
+          <li><strong>Common fit:</strong> You want shared storage across multiple instances/services without worrying about running out of space.</li>
+        </ul>
+
+        <div class="divider"></div>
+
+        <h3>⚡ FSx for Lustre</h3>
+        <ul>
+          <li><strong>What it is:</strong> A high-performance managed file system for specialized workloads.</li>
+          <li><strong>Typical use:</strong> High-throughput / performance-heavy file access patterns.</li>
+          <li><strong>Common fit:</strong> You need faster/more specialized file system performance than a general-purpose option.</li>
+        </ul>
+
+        <div class="divider"></div>
+
+        <h3>🧺 S3 (Simple Storage Service) — Preview</h3>
+        <ul>
+          <li><strong>What it is:</strong> Object storage (store and retrieve files as “objects”).</li>
+          <li><strong>Best for:</strong> Storing personal/business files, backups, media, documents—without attaching disks to servers.</li>
+          <li><strong>Why mentioned here:</strong> Often a better choice than EBS/EFS for general file storage needs (e.g., vacation photos 🙂).</li>
+          <li><strong>Note:</strong> You’ll cover S3 in more depth later in the course.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>4) Quick decision guide (how to choose) ✅</h2>
+        <ul>
+          <li><strong>If you need storage attached to ONE EC2 instance</strong> (like adding a disk): choose <strong>🧱 EBS</strong>.</li>
+          <li><strong>If you need a SHARED folder structure</strong> accessible by multiple instances/services: choose <strong>🗂️ EFS</strong>.</li>
+          <li><strong>If you need very high-performance file access</strong> for specialized workloads: consider <strong>⚡ FSx for Lustre</strong>.</li>
+          <li><strong>If you want to store files without servers/disks</strong> (general-purpose file storage): use <strong>🧺 S3</strong>.</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>🔑 Key takeaway:</strong> There is no single “best” storage service. The “best” choice depends on the workload requirements, cost sensitivity, and how much manual setup you’re willing to do.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>5) Exam Nuggets (CLF-C02) 📌</h2>
+        <ul>
+          <li>🧱 <strong>EBS</strong> = block storage volume for <strong>EC2</strong>; you manage formatting/mounting.</li>
+          <li>🗂️ <strong>EFS</strong> = managed, scalable <strong>network file system</strong> for multi-access.</li>
+          <li>⚡ <strong>FSx for Lustre</strong> = high-performance file system option (specialized use cases).</li>
+          <li>🧺 <strong>S3</strong> = object storage (not a disk, not a traditional mounted file system).</li>
+          <li>💸 Always remember: pricing and effort differ; choose based on requirements.</li>
+        </ul>
+      </section>
+
+      <section class="qa">
+        <h2>6) Mini-Quiz (with answers) 🧪</h2>
+
+        <h3>Questions</h3>
+        <ol>
+          <li>Which AWS service gives you a raw, unformatted volume you attach to an EC2 instance?</li>
+          <li>Which service is designed for a shared file system used by multiple instances?</li>
+          <li>If you want to store files without managing disks or servers, which service is usually the best fit?</li>
+          <li>Name two common EBS features that help with backup and scaling.</li>
+          <li>Which service is often mentioned for high-performance file access workloads?</li>
+        </ol>
+
+        <div class="answers">
+          <h3>Answer Key</h3>
+          <ol>
+            <li><strong>EBS</strong> (Elastic Block Store).</li>
+            <li><strong>EFS</strong> (Elastic File System).</li>
+            <li><strong>S3</strong> (Simple Storage Service).</li>
+            <li><strong>Snapshots</strong> and <strong>Elastic Volumes</strong> (resize/scale).</li>
+            <li><strong>FSx for Lustre</strong>.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>7) One-sentence recap 🎯</h2>
+        <p>
+          <strong>EBS</strong> is a disk for EC2, <strong>EFS</strong> is a shared scalable file system, <strong>FSx (Lustre)</strong> is for specialized high-performance file workloads, and <strong>S3</strong> is object storage for straightforward file storage without managing servers.
+        </p>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>

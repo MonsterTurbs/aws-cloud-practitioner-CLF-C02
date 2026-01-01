@@ -1,0 +1,268 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 44 Module Introduction (VPC)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --ok:#0f7b0f;
+      --warn:#b00020;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    code{
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print: A4 + safe margins + no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout,.good,.warning{ background:#fff; border-color:#cfcfcf; }
+      .callout{ border-left: 4px solid #000; }
+      .good{ border-left: 4px solid #000; }
+      .warning{ border-left: 4px solid #000; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Networking • Module Intro</p>
+      <h1>44 — Module Introduction: VPC (Virtual Private Cloud) 🌐🧱</h1>
+      <p class="meta">Print-ready reviewer (single column, A4) • beginner-friendly notes + examples</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 What this section is about</h2>
+        <p>
+          After learning the basics of <strong>EC2</strong>, this module moves to the next practical challenge:
+          how to run <strong>multiple EC2 instances</strong> that may need to <strong>communicate</strong> with each other
+          while staying <strong>secure</strong> and well-organized.
+        </p>
+        <p>
+          To do that, you’ll learn a key AWS networking concept and service: <strong>VPC</strong> —
+          <em>Virtual Private Cloud</em>.
+        </p>
+      </section>
+
+      <section>
+        <h2>🧠 VPC in plain English</h2>
+        <div class="callout">
+          <p>
+            <strong>VPC = your private network inside AWS.</strong> 🏠
+            It’s like creating your own “network space” (with rules) where your cloud resources can live.
+          </p>
+        </div>
+        <p>
+          Inside this private network, you can decide how network traffic flows: which resources are reachable from the internet,
+          which are internal-only, and how resources talk to each other.
+        </p>
+      </section>
+
+      <section>
+        <h2>🔑 Key goals you should learn in this module</h2>
+        <ul>
+          <li><strong>What VPCs are</strong> and <strong>why they exist</strong> (control + isolation + security).</li>
+          <li>The difference between <strong>public</strong> and <strong>private</strong> parts of a network (instances / subnets).</li>
+          <li>How to <strong>manage network requests</strong> inside a VPC (who can talk to whom, and from where).</li>
+        </ul>
+        <div class="good">
+          <p><strong>Exam hint ✅</strong> “Public vs Private” is a frequent concept in AWS networking questions.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🌍 Public vs Private (starter mental model)</h2>
+        <p>
+          You will hear these terms a lot:
+        </p>
+        <ul>
+          <li>
+            <strong>Public</strong> 🌐: can be reached from the internet (e.g., a web server that users must access).
+          </li>
+          <li>
+            <strong>Private</strong> 🔒: internal-only (e.g., a database that should not be directly reachable by the public internet).
+          </li>
+        </ul>
+        <div class="callout">
+          <h3>Beginner example 👶</h3>
+          <ul>
+            <li>Public subnet: EC2 web server (serves a website)</li>
+            <li>Private subnet: database server (only the web server can access it)</li>
+          </ul>
+        </div>
+        <div class="warning">
+          <p><strong>Security takeaway ⚠️</strong> A database is rarely meant to be public. Usually, keep it private and only allow app/server access.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧾 Terms you will see soon</h2>
+        <p>Don’t worry if these feel fuzzy now — this module will unpack them step-by-step.</p>
+        <span class="tag">VPC</span>
+        <span class="tag">Subnet</span>
+        <span class="tag">Public Subnet</span>
+        <span class="tag">Private Subnet</span>
+        <span class="tag">Routing</span>
+        <span class="tag">Internet Access</span>
+        <span class="tag">Internal Traffic</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick self-check</h2>
+        <div class="callout">
+          <ul>
+            <li>Why do we need a VPC when we already have EC2?</li>
+            <li>What’s the difference between a public and private subnet (in one sentence)?</li>
+            <li>Give one example resource that should be public, and one that should be private.</li>
+          </ul>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Browser Print → Paper Size <strong>A4</strong>. This page includes print CSS for clean margins, spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

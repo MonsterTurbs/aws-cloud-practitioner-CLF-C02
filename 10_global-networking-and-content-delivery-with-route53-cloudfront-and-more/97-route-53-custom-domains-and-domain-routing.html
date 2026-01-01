@@ -1,0 +1,423 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Route 53 (DNS), Hosted Zones & Routing</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --soft: #f7f7f7;
+      --soft2: #fbfbfb;
+      --ink: #000000;
+    }
+
+    /* Base */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* Single-column layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--soft2);
+      padding: 18px 16px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.55rem;
+      line-height: 1.25;
+      letter-spacing: 0.1px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    main { margin-top: 18px; }
+
+    h2 {
+      margin: 22px 0 8px;
+      font-size: 1.2rem;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin: 16px 0 6px;
+      font-size: 1.05rem;
+      line-height: 1.35;
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 8px 0 12px;
+      padding-left: 22px;
+    }
+
+    li { margin: 6px 0; }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 14px;
+      background: #fff;
+      margin: 12px 0;
+    }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: var(--soft);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    .callout strong { color: var(--ink); }
+
+    .grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-right: 6px;
+      margin-top: 6px;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0 14px;
+    }
+
+    .table th, .table td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .table th {
+      background: var(--soft);
+      font-weight: 700;
+    }
+
+    .table tr:last-child td { border-bottom: 0; }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      border: 0;
+      margin: 18px 0;
+    }
+
+    .checklist li::marker { content: "✅ "; }
+
+    .danger li::marker { content: "⚠️ "; }
+
+    .tiny {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-bottom-width: 2px;
+      padding: 0 6px;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+
+    /* Print (A4) */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { color: #000; }
+      .page {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+      header, .card, .callout {
+        border-radius: 0;
+        box-shadow: none;
+      }
+      a { text-decoration: none; }
+      a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.9em;
+        color: #333;
+      }
+      .no-print { display: none !important; }
+      h2, h3 { break-after: avoid; }
+      .card, .callout, .table { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🌐 Route 53 (DNS) — Custom Domains, Hosted Zones & Routing (CLF-C02)</h1>
+      <p class="subtitle">Print-friendly reviewer / study guide (single-column, A4-ready). Focus: what Route 53 is, how DNS records route traffic, and a practical EC2 + ALB example.</p>
+      <div class="meta">
+        <div><span class="pill">🧠 Beginner-friendly</span><span class="pill">🖨️ A4 Print</span><span class="pill">📌 Exam Notes</span></div>
+        <div><strong>Goal:</strong> Understand how a domain like <code>demo1.example.com</code> can point to an AWS resource (e.g., an Application Load Balancer) using Route 53 records.</div>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Quick Overview</h2>
+        <div class="callout">
+          <p><strong>DNS in one sentence:</strong> DNS translates human-friendly names (e.g., <code>example.com</code>) into destinations (usually IP addresses, or AWS resources). 🧭</p>
+        </div>
+        <ul class="checklist">
+          <li><strong>Route 53</strong> is AWS’s managed DNS service (register + manage domains).</li>
+          <li>You manage a domain using a <strong>Hosted Zone</strong> (a container for DNS records).</li>
+          <li>You create <strong>DNS Records</strong> (A/AAAA/CNAME/etc.) to route traffic to services.</li>
+          <li>Route 53 supports advanced routing like <strong>failover</strong> and <strong>geolocation-based routing</strong>.</li>
+        </ul>
+      </section>
+
+      <hr class="hr" />
+
+      <section>
+        <h2>2) Key Terms You Must Know (Exam-Friendly)</h2>
+
+        <table class="table" aria-label="Route 53 Key Terms">
+          <thead>
+            <tr>
+              <th style="width: 28%">Term</th>
+              <th>Meaning (Beginner Explanation)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DNS</strong> 🌍</td>
+              <td>System that maps domain names to destinations so browsers/apps know where to go.</td>
+            </tr>
+            <tr>
+              <td><strong>Domain Registrar</strong> 🧾</td>
+              <td>Company/service where you buy/own a domain name. Route 53 can be a registrar too.</td>
+            </tr>
+            <tr>
+              <td><strong>Hosted Zone</strong> 🗂️</td>
+              <td>Where Route 53 stores DNS records for your domain. Think “domain configuration folder.”</td>
+            </tr>
+            <tr>
+              <td><strong>DNS Record</strong> 🧩</td>
+              <td>A rule like: “When someone requests <code>demo1.example.com</code>, send them to X.”</td>
+            </tr>
+            <tr>
+              <td><strong>A Record</strong> 📍</td>
+              <td>Routes a name to an IPv4 destination. In Route 53, it can also route to AWS resources via <em>Alias</em>.</td>
+            </tr>
+            <tr>
+              <td><strong>Alias</strong> 🔁</td>
+              <td>Route 53 feature that lets a record point to certain AWS resources (e.g., ALB) without you typing an IP address.</td>
+            </tr>
+            <tr>
+              <td><strong>Propagation</strong> ⏳</td>
+              <td>DNS changes take time to spread. You might see errors for minutes (sometimes longer) after updates.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <p><strong>Memory hook:</strong> <span class="pill">Hosted Zone = container</span> <span class="pill">Record = rule</span> <span class="pill">Alias = AWS shortcut</span></p>
+        </div>
+      </section>
+
+      <hr class="hr" />
+
+      <section>
+        <h2>3) Route 53 Capabilities</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>✅ Basic: Register + Route</h3>
+            <ul>
+              <li>Register a new domain (paid) or transfer an existing domain to AWS.</li>
+              <li>Create records to route traffic to your AWS workloads (ALB, EC2, S3 website, etc.).</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🚦 Advanced Routing (Know these exist)</h3>
+            <ul>
+              <li><strong>Failover</strong>: If one target is down, route to a backup target.</li>
+              <li><strong>Geolocation / Geo routing</strong>: Different countries can go to different targets.</li>
+              <li><strong>More complex policies</strong> exist (don’t memorize details; know the idea).</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <hr class="hr" />
+
+      <section>
+        <h2>4) Concrete Example: Domain → ALB → Target Group → EC2 (Node.js)</h2>
+        <p>
+          In the lecture scenario, a simple Node.js app runs on an EC2 instance (listening on a port).
+          An <strong>Application Load Balancer (ALB)</strong> sits in front, and the ALB forwards requests to a <strong>Target Group</strong>
+          that contains the EC2 instance.
+        </p>
+
+        <div class="callout">
+          <p><strong>Why not use the EC2 public IP?</strong> Public IPs can change. People also prefer names over IPs. Route 53 solves that. 🙂</p>
+        </div>
+
+        <h3>Flow (mental model)</h3>
+        <ul>
+          <li>👤 User types: <code>demo1.aws-course-demo-1.com</code></li>
+          <li>🌐 DNS (Route 53) says: “Send this to the ALB.”</li>
+          <li>⚖️ ALB forwards the request to a healthy target in its Target Group.</li>
+          <li>🖥️ EC2 instance responds (e.g., <code>Hello World</code>).</li>
+        </ul>
+
+        <h3>Step-by-step (what you do in AWS Console)</h3>
+        <ol>
+          <li><strong>Buy/transfer a domain</strong> in Route 53 (optional for the exam; costs money).</li>
+          <li>Route 53 creates a <strong>Hosted Zone</strong> automatically after registration completes.</li>
+          <li>In the Hosted Zone, click <strong>Create record</strong>.</li>
+          <li>Choose record type: <strong>A</strong> (IPv4).</li>
+          <li>Optional: set a <strong>subdomain</strong> (e.g., name: <code>demo1</code> → full domain becomes <code>demo1.yourdomain.com</code>).</li>
+          <li>Turn on <strong>Alias</strong> and select the target AWS resource:
+            <ul>
+              <li>Alias target type: <strong>Application Load Balancer</strong></li>
+              <li>Select the <strong>region</strong> where the ALB exists (ALBs are regional)</li>
+              <li>Select the correct ALB from the list</li>
+            </ul>
+          </li>
+          <li>Save the record.</li>
+          <li>Wait for <strong>DNS propagation</strong> ⏳, then test in your browser.</li>
+        </ol>
+
+        <div class="callout">
+          <p><strong>Beginner example:</strong> Think of Route 53 like a receptionist.
+            When someone asks for <code>demo1.aws-course-demo-1.com</code>, the receptionist points them to the ALB “front desk,”
+            and the ALB routes them to an available “staff member” (EC2 instance) behind the scenes.
+          </p>
+        </div>
+      </section>
+
+      <hr class="hr" />
+
+      <section>
+        <h2>5) Common Pitfalls (Why It Doesn’t Work Yet)</h2>
+        <ul class="danger">
+          <li><strong>“Block Public Access” vs “Public Access Allowed”</strong>: For some scenarios (like S3 website hosting), simply unblocking is not the same as granting public access. You still need correct policies.</li>
+          <li><strong>Wrong region</strong>: ALB is regional; ensure your Alias target uses the ALB’s region.</li>
+          <li><strong>DNS propagation delay</strong>: It can take minutes (sometimes longer). Initial errors can be normal.</li>
+          <li><strong>Security groups / ports</strong>: Even if DNS points correctly, traffic fails if ALB/EC2 SG rules block it.</li>
+        </ul>
+        <p class="tiny">Tip: If troubleshooting, validate the chain: DNS record → ALB listener → target group health → EC2 app port.</p>
+      </section>
+
+      <hr class="hr" />
+
+      <section>
+        <h2>6) Quick Exam Notes</h2>
+        <div class="card">
+          <ul class="checklist">
+            <li><strong>Route 53 = managed DNS</strong> (and domain registration is also possible).</li>
+            <li><strong>Hosted Zones</strong> hold DNS records for a domain.</li>
+            <li>Route 53 supports <strong>failover</strong> and <strong>geo routing</strong> (know the concept).</li>
+            <li><strong>Alias</strong> records can point to AWS resources (e.g., ALB) instead of typing IPs.</li>
+          </ul>
+        </div>
+      </section>
+
+      <hr class="hr" />
+
+      <section>
+        <h2>7) Mini Self-Check (1 minute)</h2>
+        <div class="card">
+          <ol>
+            <li>What does DNS do? (Answer: _____________________________________)</li>
+            <li>What is a Hosted Zone used for? (Answer: __________________________)</li>
+            <li>In the example, what does the A/Alias record point to? (Answer: ______)</li>
+            <li>Why might the site fail right after you create the record? (Answer: ____)</li>
+          </ol>
+        </div>
+        <p class="tiny"><strong>Suggested answers:</strong> name→destination mapping; container of records; ALB; propagation delay (and/or security rules).</p>
+      </section>
+
+      <hr class="hr" />
+
+      <section>
+        <h2>8) One-Line Summary</h2>
+        <div class="callout">
+          <p><strong>Route 53</strong> lets you attach a real domain name to AWS workloads by creating DNS records (often Alias records) inside a Hosted Zone—so users can reach your app using a friendly URL. 🚀</p>
+        </div>
+      </section>
+
+      <section class="no-print">
+        <h2>Print Tips</h2>
+        <ul>
+          <li>Use your browser’s print dialog and select <strong>A4</strong>.</li>
+          <li>Disable “Headers and footers” if you want a cleaner output.</li>
+          <li>If a page breaks awkwardly, try changing print scale to 95–100%.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,435 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — ECR (Elastic Container Registry)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+      overflow-wrap: anywhere; /* prevents cut-off when printing */
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 18px 48px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 16px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      font-size: 1.55rem;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .btn.primary {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    main { margin-top: 18px; }
+
+    h2 {
+      font-size: 1.2rem;
+      margin: 22px 0 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin: 16px 0 6px;
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol {
+      margin: 8px 0 12px;
+      padding-left: 22px;
+    }
+
+    li { margin: 6px 0; }
+
+    .card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 14px 14px;
+      margin: 12px 0;
+    }
+
+    .callout {
+      border-left: 5px solid var(--accent);
+      background: var(--panel);
+      padding: 12px 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-right: 6px;
+      white-space: nowrap;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 14px;
+      table-layout: fixed; /* helps prevent overflow in print */
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+      text-align: left;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: var(--panel);
+      font-weight: 700;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 0.95em;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    pre {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+      margin: 10px 0 14px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 18px 0;
+    }
+
+    .qa {
+      margin: 10px 0;
+      padding: 10px 12px;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Print-specific CSS for A4 */
+    @media print {
+      @page {
+        size: A4;
+        margin: 14mm;
+      }
+
+      body {
+        font-size: 11pt;
+        line-height: 1.45;
+        color: #000;
+        background: #fff;
+      }
+
+      header, .card, .callout, pre, table {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      h2, h3 {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+
+      a { color: #000; text-decoration: none; }
+      .actions { display: none !important; }
+      .page { max-width: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>📦 AWS ECR (Elastic Container Registry) — Reviewer / Study Guide</h1>
+      <p class="subtitle">CLF-C02 focused notes • Beginner-friendly explanation + examples • Single-column • A4 print-ready</p>
+      <div class="meta">
+        <span class="tag">Topic: Containers</span>
+        <span class="tag">Services: ECR • ECS • EKS • (Docker Hub)</span>
+        <span class="tag">Goal: Store & share container images</span>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quick').scrollIntoView({behavior:'smooth'})">✅ Jump to Quick Recall</button>
+      </div>
+    </header>
+
+    <main>
+      <h2>1) Big Picture: What is ECR?</h2>
+      <div class="callout">
+        <strong>🧠 Core idea:</strong> <em>ECR is AWS’s managed place to store container images</em> so that ECS/EKS (or any server with Docker) can pull them later. 🙂
+      </div>
+
+      <p>
+        When you work with containers, you typically create a <strong>container image</strong> (a blueprint). To run the app,
+        a machine or service (like <strong>ECS</strong> or <strong>EKS</strong>) must be able to <strong>download/pull</strong> that image.
+        If you’re not running everything locally, you need an online image repository.
+      </p>
+
+      <div class="card">
+        <h3>📌 One-sentence definition</h3>
+        <p><strong>ECR (Elastic Container Registry)</strong> is a managed <strong>container image registry</strong> where you create <strong>repositories</strong> and push/pull images for use by AWS container services (ECS/EKS) or other machines.</p>
+      </div>
+
+      <h2>2) Key Terms (Exam-Friendly)</h2>
+      <table aria-label="Key ECR terms">
+        <thead>
+          <tr>
+            <th style="width: 26%">Term</th>
+            <th>Meaning (Beginner-friendly)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Image</strong> 🧱</td>
+            <td>A packaged blueprint of your app + runtime needs (built with Docker). It’s what you “run” to create a container.</td>
+          </tr>
+          <tr>
+            <td><strong>Container</strong> 🚀</td>
+            <td>A running instance of an image (the actual app process, live and executing).</td>
+          </tr>
+          <tr>
+            <td><strong>Registry</strong> 🗃️</td>
+            <td>A service that stores images so other systems can download them (ECR is AWS’s registry).</td>
+          </tr>
+          <tr>
+            <td><strong>Repository</strong> 📁</td>
+            <td>A “folder-like” place inside ECR where related images live (often one repo per app/service).</td>
+          </tr>
+          <tr>
+            <td><strong>Tag</strong> 🏷️</td>
+            <td>A label for an image version, e.g. <code>v1</code>, <code>latest</code>, <code>2025-12-22</code>.</td>
+          </tr>
+          <tr>
+            <td><strong>Private vs Public</strong> 🔒🌍</td>
+            <td>
+              <strong>Private</strong>: only allowed AWS identities can pull/push.<br/>
+              <strong>Public</strong>: share images with the world (useful for demos or open-source).
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>3) Why ECR Exists (Compared to “Local Only”)</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>😵 Without a registry</h3>
+          <ul>
+            <li>You build an image on your laptop… but ECS/EKS can’t see it.</li>
+            <li>You need a way to move that image to wherever containers run.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>✅ With ECR</h3>
+          <ul>
+            <li>You push the image once to ECR.</li>
+            <li>ECS/EKS (or EC2 with Docker) pulls the image anytime it needs to run or scale.</li>
+            <li>You can store multiple versions using tags.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>4) Typical Workflow (Simple Example)</h2>
+      <p>
+        Here’s the common “build → push → run” flow. This is conceptual (you don’t need to memorize commands for CLF-C02),
+        but it helps you understand the moving parts. 🙂
+      </p>
+
+      <ol>
+        <li><strong>Build</strong> the image locally (Docker): <span class="tag">docker build</span></li>
+        <li><strong>Tag</strong> the image with a version: <span class="tag">:v1</span> or <span class="tag">:latest</span></li>
+        <li><strong>Push</strong> the image to an ECR repository (so AWS can access it).</li>
+        <li><strong>Reference</strong> the ECR image in ECS task definitions / EKS manifests.</li>
+        <li><strong>Run</strong> containers. When scaling happens, ECS/EKS pulls the same image again.</li>
+      </ol>
+
+      <pre><code># Conceptual example (not required for exam)
+# 1) Build
+docker build -t my-app:1.0 .
+
+# 2) Tag for ECR
+docker tag my-app:1.0 &lt;account-id&gt;.dkr.ecr.&lt;region&gt;.amazonaws.com/my-app:1.0
+
+# 3) Push
+docker push &lt;account-id&gt;.dkr.ecr.&lt;region&gt;.amazonaws.com/my-app:1.0
+
+# 4) ECS/EKS pulls this image when starting containers
+</code></pre>
+
+      <div class="callout">
+        <strong>🎯 Quick mental model:</strong> ECR is “GitHub for Docker images” (not code), but inside AWS.
+      </div>
+
+      <h2>5) Public vs Private Repositories</h2>
+      <div class="card">
+        <h3>🔒 Private repositories (most common)</h3>
+        <ul>
+          <li>Best for company/internal workloads.</li>
+          <li>Access controlled via AWS permissions (IAM).</li>
+          <li>ECS/EKS typically pulls images from private ECR repos.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🌍 Public repositories</h3>
+        <ul>
+          <li>Useful when you want others to pull images without AWS credentials.</li>
+          <li>Common for demos, sample apps, open-source tools.</li>
+        </ul>
+      </div>
+
+      <h2>6) Security Features You Should Recognize</h2>
+      <ul>
+        <li><strong>🔐 Encryption</strong>: you can enable extra encryption for repos/images.</li>
+        <li><strong>🕵️ Image scanning</strong>: scan images to detect known vulnerabilities (security hygiene).</li>
+        <li><strong>👮 Access control</strong>: decide who can push/pull (private repos) using AWS permissions.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Exam hint 🙂:</strong> If you see “store container images for ECS/EKS” → think <strong>ECR</strong>.
+      </div>
+
+      <h2 id="quick">7) Quick Recall (Memorize These)</h2>
+      <div class="card">
+        <ul>
+          <li>📦 <strong>ECR</strong> = AWS-managed <strong>container image registry</strong>.</li>
+          <li>📁 You create <strong>repositories</strong> to store images.</li>
+          <li>🏷️ Images are versioned with <strong>tags</strong> (e.g., <code>v1</code>, <code>latest</code>).</li>
+          <li>🔒 Repos can be <strong>private</strong> or <strong>public</strong>.</li>
+          <li>🧰 ECR images are commonly used by <strong>ECS/EKS</strong> (and can be pulled by any Docker-capable server).</li>
+          <li>🛡️ Security options include <strong>encryption</strong> and <strong>image scanning</strong>.</li>
+        </ul>
+      </div>
+
+      <h2>8) Mini Practice Questions</h2>
+      <div class="qa">
+        <p><strong>Q1:</strong> You built a Docker image for your app and want ECS to run it. Where do you store the image?</p>
+        <p><strong>A:</strong> In an <strong>ECR repository</strong> (so ECS can pull it).</p>
+      </div>
+      <div class="qa">
+        <p><strong>Q2:</strong> Your company doesn’t want the world to access images. Which repo type should you use?</p>
+        <p><strong>A:</strong> <strong>Private</strong> repository 🔒</p>
+      </div>
+      <div class="qa">
+        <p><strong>Q3:</strong> You want vulnerability checks on container images. Which ECR feature helps?</p>
+        <p><strong>A:</strong> <strong>Image scanning</strong> 🕵️</p>
+      </div>
+
+      <h2>9) Common Confusions (Clearing Them Up)</h2>
+      <div class="card">
+        <h3>🤔 “Is ECR the same as ECS/EKS?”</h3>
+        <p>
+          No. <strong>ECR stores images</strong>. <strong>ECS/EKS runs containers</strong> that are created from those images.
+          Think: <em>Warehouse (ECR)</em> vs <em>Factory/Runner (ECS/EKS)</em>.
+        </p>
+      </div>
+      <div class="card">
+        <h3>🤔 “Is Docker Hub an AWS service?”</h3>
+        <p>
+          No. <strong>Docker Hub</strong> is a popular third-party image registry. <strong>ECR</strong> is AWS’s own managed registry.
+        </p>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="footer">
+        End of reviewer — ECR (Elastic Container Registry). Print tip: use <strong>Scale: 100%</strong> and <strong>Margins: Default</strong> in the print dialog for best A4 output.
+      </p>
+    </main>
+  </div>
+</body>
+</html>

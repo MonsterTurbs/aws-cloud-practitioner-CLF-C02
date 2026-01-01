@@ -1,0 +1,454 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Typical Development Workflow (Cloud Developer Tools)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --accent2:#1a73e8;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.6;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+
+    /* Single-column page wrapper */
+    .page{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 20px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 18px 14px;
+      border-radius: 12px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size: 24px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .chip{
+      display:inline-block;
+      border:1px solid var(--border);
+      background:#fff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space:nowrap;
+    }
+
+    main{ margin-top: 18px; }
+
+    section{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      background:#fff;
+    }
+
+    h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    h3{
+      margin: 14px 0 8px;
+      font-size: 15.5px;
+    }
+
+    p{ margin: 8px 0; }
+
+    ul{ margin: 8px 0 8px 20px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .box{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background:#fff;
+    }
+
+    .kicker{
+      color: var(--muted);
+      font-size: 12.5px;
+      margin: 0 0 6px;
+    }
+
+    .tag{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      padding: 1px 6px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      white-space: nowrap;
+    }
+
+    .divider{
+      height:1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    .steps{
+      list-style:none;
+      padding:0;
+      margin: 10px 0 0;
+    }
+
+    .steps li{
+      margin: 10px 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .steps strong{
+      display:inline-block;
+      margin-right: 6px;
+    }
+
+    .flow{
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      line-height: 1.55;
+      overflow-wrap:anywhere;
+    }
+
+    .qa{
+      margin-top: 10px;
+    }
+
+    .qa details{
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+      margin: 10px 0;
+    }
+
+    .qa summary{
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+    }
+
+    .qa summary::-webkit-details-marker{ display:none; }
+
+    .footer{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 14px;
+      text-align:center;
+    }
+
+    /* Print styles (A4, clean margins, no weird cutoffs) */
+    @media print{
+      @page{ size: A4; margin: 14mm; }
+      body{ font-size: 11.5pt; line-height: 1.45; }
+      .page{ max-width: none; margin: 0; padding: 0; }
+      header, section{ break-inside: avoid; page-break-inside: avoid; }
+      a{ color: inherit; text-decoration: none; }
+      .chip{ background:#fff; }
+      .footer{ margin-top: 10mm; }
+    }
+
+    /* Small screen readability */
+    @media (max-width: 520px){
+      .page{ padding: 18px 14px 28px; }
+      h1{ font-size: 20px; }
+    }
+
+    /* Buttons (screen only) */
+    .actions{
+      margin-top: 12px;
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      appearance:none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor:pointer;
+      font-weight: 700;
+      font-size: 13.5px;
+    }
+
+    .btn.primary{
+      border-color: rgba(11,87,208,.35);
+      box-shadow: 0 1px 0 rgba(0,0,0,.03);
+    }
+
+    @media print{
+      .actions{ display:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>🧑‍💻 Typical Development Workflow (AWS Developer Tools)</h1>
+      <p class="subtitle">CLF-C02 reviewer — how code moves from your editor → repo → tests/build → deployment (and how AWS services can help)</p>
+      <div class="meta">
+        <span class="chip">📄 Single-column • Print-ready (A4)</span>
+        <span class="chip">🖨️ Tip: Use <span class="tag">Ctrl/Cmd + P</span> → Paper: <span class="tag">A4</span></span>
+        <span class="chip">✅ Beginner-friendly explanations + examples</span>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">🧠 Quick Check</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 What you’re learning in this lesson</h2>
+        <p>
+          When you build an application, you typically repeat the same loop: <strong>write code</strong>, <strong>store/share it</strong>,
+          <strong>test + build it</strong>, and <strong>deploy it</strong>. AWS provides tools for each step to reduce manual work and mistakes.
+        </p>
+        <div class="callout">
+          <strong>Big idea:</strong> As systems scale (more developers, more releases), automation becomes critical.
+          Tools like pipelines keep deployments consistent and repeatable. 🙂
+        </div>
+      </section>
+
+      <section>
+        <h2>🧩 The typical workflow (step-by-step)</h2>
+        <p class="kicker">Think of this as a simple “CI/CD-lite” flow for Cloud Practitioner level.</p>
+        <ol class="steps">
+          <li>
+            <strong>1) ✍️ Write code</strong>
+            <div>Use an IDE (e.g., VS Code) locally, or a cloud IDE like <strong>AWS Cloud9</strong>.</div>
+            <ul>
+              <li>Local IDE: fast, familiar, works offline.</li>
+              <li>Cloud IDE (Cloud9): browser-based, consistent environment, useful for teams.</li>
+            </ul>
+          </li>
+          <li>
+            <strong>2) 🗃️ Store code in a remote repository</strong>
+            <div>So you can collaborate, back up work, and work from multiple machines.</div>
+            <ul>
+              <li>Common: GitHub, GitLab, Bitbucket</li>
+              <li>AWS option: <strong>CodeCommit</strong> (managed Git repository)</li>
+            </ul>
+          </li>
+          <li>
+            <strong>3) 🧪 Run automated tests</strong>
+            <div>Validate that your code changes did not break anything (unit tests, integration tests).</div>
+            <div class="callout">
+              <strong>Beginner tip:</strong> Tests are like a “safety net.” They catch problems early before deployment. ✅
+            </div>
+          </li>
+          <li>
+            <strong>4) 🏗️ Build the application</strong>
+            <div>Create an output artifact: a ZIP, executable, container image, etc.</div>
+            <ul>
+              <li>For containers: <em>build a Docker image</em> 🐳</li>
+              <li>For server apps: <em>compile / bundle / package</em></li>
+            </ul>
+          </li>
+          <li>
+            <strong>5) 🚀 Deploy</strong>
+            <div>Move the built artifact to where it runs (servers, containers, serverless).</div>
+            <ul>
+              <li>Targets mentioned in AWS tools: <strong>EC2</strong>, <strong>ECS</strong>, <strong>Lambda</strong></li>
+            </ul>
+          </li>
+          <li>
+            <strong>6) 🔁 Repeat (automate it)</strong>
+            <div>You do this cycle frequently (sometimes many times per day), so you automate it with pipelines.</div>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>🧰 AWS services mapped to each step</h2>
+        <div class="grid">
+          <div class="box">
+            <p class="kicker">✍️ Write code</p>
+            <p><strong>Cloud9</strong> — cloud-based IDE you can use instead of (or alongside) local IDEs.</p>
+            <p><em>Example:</em> You open Cloud9 in the browser, edit your app, and run commands in the built-in terminal.</p>
+          </div>
+
+          <div class="box">
+            <p class="kicker">🗃️ Store code</p>
+            <p><strong>CodeCommit</strong> — managed Git repository in AWS (similar goal to GitHub, but AWS-native).</p>
+            <p><em>Example:</em> Your team pushes commits to CodeCommit so everyone can pull the latest code.</p>
+          </div>
+
+          <div class="box">
+            <p class="kicker">🧪 Test + 🏗️ Build</p>
+            <p><strong>CodeBuild</strong> — managed build service that can run tests and build artifacts.</p>
+            <ul>
+              <li>Runs in a controlled environment (good for consistency).</li>
+              <li>Can be triggered by commits or pipelines.</li>
+            </ul>
+            <p><em>Example:</em> After a push, CodeBuild runs unit tests; if they pass, it builds a deployable ZIP.</p>
+          </div>
+
+          <div class="box">
+            <p class="kicker">🚀 Deploy</p>
+            <p><strong>CodeDeploy</strong> — deploys your built artifact to targets like <strong>EC2</strong>, <strong>Lambda</strong>, <strong>ECS</strong>.</p>
+            <p><em>Example:</em> Deploy version v1.2.0 of your app to an EC2 Auto Scaling group.</p>
+          </div>
+
+          <div class="box">
+            <p class="kicker">🔁 Automate the workflow</p>
+            <p><strong>CodePipeline</strong> — orchestrates stages (Source → Build/Test → Deploy) and automates the full loop.</p>
+            <p><em>Example:</em> Every time you push to main, the pipeline runs tests, builds, then deploys automatically. 🤖</p>
+          </div>
+
+          <div class="box">
+            <p class="kicker">🧩 “Simplified starter”</p>
+            <p><strong>CodeStar</strong> — a simpler way to set up a project/pipeline experience (conceptually: “getting started faster”).</p>
+            <p><em>Memory aid:</em> Like how Elastic Beanstalk simplifies certain deployments, CodeStar simplifies getting started with dev tooling. 🙂</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Visual memory: the flow in one line</h2>
+        <p class="kicker">Memorize this. Many exam questions are just “Which service fits this step?”</p>
+        <div class="flow" aria-label="Workflow diagram">
+Write code (VS Code / Cloud9)
+  → Store in repo (GitHub / CodeCommit)
+    → Test + Build (CodeBuild)
+      → Deploy (CodeDeploy → EC2 / ECS / Lambda)
+        → Orchestrate everything (CodePipeline)
+        → (Optional quick-start) CodeStar
+        </div>
+      </section>
+
+      <section>
+        <h2>📌 Beginner-friendly examples</h2>
+        <h3>Example A: Simple website/app update</h3>
+        <ul>
+          <li>👩‍💻 You update code (fix a bug).</li>
+          <li>🗃️ Push to repo (CodeCommit).</li>
+          <li>🧪 CodeBuild runs tests (passes ✅).</li>
+          <li>🏗️ CodeBuild packages the app.</li>
+          <li>🚀 CodeDeploy deploys to EC2 (or ECS/Lambda).</li>
+        </ul>
+
+        <h3>Example B: You want it automatic</h3>
+        <ul>
+          <li>🔁 Use CodePipeline to connect Source → Build → Deploy.</li>
+          <li>🤖 Now each commit triggers a consistent release process.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Why automation matters:</strong> Manual deployments are error-prone (different settings, missed steps). Pipelines enforce a standard process. ✅
+        </div>
+      </section>
+
+      <section id="quick-check">
+        <h2>✅ Quick check (mini reviewer)</h2>
+        <div class="qa">
+          <details>
+            <summary>Q1: Which AWS service is a cloud-based IDE? 🙂</summary>
+            <p><strong>A:</strong> <strong>Cloud9</strong>.</p>
+          </details>
+
+          <details>
+            <summary>Q2: Which service hosts Git repositories in AWS? 🗃️</summary>
+            <p><strong>A:</strong> <strong>CodeCommit</strong>.</p>
+          </details>
+
+          <details>
+            <summary>Q3: Which service runs tests and builds artifacts? 🧪🏗️</summary>
+            <p><strong>A:</strong> <strong>CodeBuild</strong>.</p>
+          </details>
+
+          <details>
+            <summary>Q4: Which service deploys to EC2/Lambda/ECS? 🚀</summary>
+            <p><strong>A:</strong> <strong>CodeDeploy</strong>.</p>
+          </details>
+
+          <details>
+            <summary>Q5: Which service orchestrates the end-to-end workflow? 🔁</summary>
+            <p><strong>A:</strong> <strong>CodePipeline</strong>.</p>
+          </details>
+        </div>
+      </section>
+
+      <section>
+        <h2>📝 Exam-focused notes</h2>
+        <ul>
+          <li>🎯 CLF-C02 typically tests <strong>service purpose</strong>, not deep configuration.</li>
+          <li>🧩 If the question mentions “<em>automate steps from source to deployment</em>,” think <strong>CodePipeline</strong>.</li>
+          <li>🧪 If it says “<em>run tests/build in a managed environment</em>,” think <strong>CodeBuild</strong>.</li>
+          <li>🚀 If it says “<em>deploy artifacts to EC2/Lambda/ECS</em>,” think <strong>CodeDeploy</strong>.</li>
+          <li>🗃️ If it says “<em>store code in AWS repo</em>,” think <strong>CodeCommit</strong>.</li>
+        </ul>
+      </section>
+
+      <p class="footer">
+        End of reviewer — Typical Development Workflow • Single-column A4 print layout
+      </p>
+    </main>
+  </div>
+</body>
+</html>

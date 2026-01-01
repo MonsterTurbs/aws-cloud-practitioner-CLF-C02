@@ -1,0 +1,357 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — AWS Batch (Batch Jobs)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      font-size: 16px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 10px;
+    }
+
+    .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .sub {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    main { margin-top: 14px; }
+
+    h2 {
+      margin: 18px 0 8px;
+      font-size: 16.5px;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 14.5px;
+    }
+
+    p { margin: 8px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-left: 6px solid var(--accent);
+      padding: 12px 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .callout .title {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 12px;
+      border-radius: 10px;
+    }
+
+    .label {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--muted);
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    ul { margin: 8px 0 8px 20px; padding: 0; }
+    li { margin: 6px 0; }
+
+    .steps {
+      margin: 10px 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: step;
+    }
+
+    .steps li {
+      counter-increment: step;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      padding: 10px 12px;
+      margin: 10px 0;
+    }
+
+    .steps li::before {
+      content: "Step " counter(step) " — ";
+      font-weight: 700;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+    }
+
+    pre {
+      margin: 10px 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .divider {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    .quiz {
+      border: 1px dashed var(--border);
+      padding: 12px;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .quiz details {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: var(--panel);
+      margin: 10px 0;
+    }
+
+    .quiz summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Print-specific rules */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { font-size: 11.5pt; line-height: 1.45; }
+      .page { max-width: none; padding: 0; }
+      header, .card, .callout, .steps li, .quiz, .quiz details { break-inside: avoid; page-break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+      details { open: true; }
+      summary { list-style: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer</p>
+      <h1>🧰 AWS Batch — Running Batch Jobs (Containers at Scale)</h1>
+      <p class="sub">Single-column, print-friendly study guide. Focus: What AWS Batch is, when to use it, and how it works (high level).</p>
+    </header>
+
+    <main>
+      <section class="callout">
+        <div class="title">✅ Core idea (in one sentence)</div>
+        <p><strong>AWS Batch</strong> helps you run <strong>many compute jobs</strong> (usually container-based) reliably and automatically—without you manually provisioning clusters, scheduling runs, or tracking job status.</p>
+      </section>
+
+      <section>
+        <h2>1) Why does AWS Batch exist? 🤔</h2>
+        <p>In bigger companies, you often have <strong>batch tasks</strong>—work that needs to run:</p>
+        <ul>
+          <li>📌 <strong>From time to time</strong> (ad-hoc) or <strong>on a schedule</strong> (daily / weekly / monthly)</li>
+          <li>⚙️ Using <strong>multiple compute workers</strong> (many containers/servers doing similar work)</li>
+          <li>📈 With <strong>scaling</strong> and <strong>automatic provisioning</strong> to handle job bursts</li>
+        </ul>
+
+        <div class="card">
+          <span class="label">Beginner-friendly picture</span>
+          <p>Think of Batch like a “job runner” that says: <em>“Here’s the job definition—AWS, please create the needed compute, run the job(s), and tell me when they’re done.”</em> ✅</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) Key terms you should remember 🧠</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>📦 Job Definition</h3>
+            <ul>
+              <li>Describes <strong>what to run</strong> (container image) and <strong>how to run it</strong>.</li>
+              <li>Includes basics like <strong>memory/CPU</strong> requirements, and optional config.</li>
+              <li>Often includes a <strong>role/permissions</strong> the job can assume (IAM role).</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>🏃 Job</h3>
+            <ul>
+              <li>An <strong>execution</strong> of a job definition.</li>
+              <li>You can submit jobs <strong>one-by-one</strong> or run them <strong>repeatedly</strong> (scheduled).</li>
+              <li>You can track status: <strong>queued → running → succeeded/failed</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>🧱 Compute Environment (concept)</h3>
+            <ul>
+              <li>The underlying compute where your containers run.</li>
+              <li>Typically uses <strong>Fargate</strong> or <strong>EC2</strong> (your lecture emphasized choosing one).</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) Batch runs containers: Fargate vs EC2 🆚</h2>
+        <div class="card">
+          <p><strong>✅ Batch is container-centric:</strong> your code + runtime dependencies are packaged into a container image.</p>
+          <ul>
+            <li>🟦 <strong>Fargate</strong>: “serverless containers” — less server management; you mainly specify resources (CPU/memory).</li>
+            <li>🟧 <strong>EC2</strong>: more control; you’re still using instances under the hood (Batch provisions/uses them for you).</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <div class="title">Exam mindset 📝</div>
+          <p>If the scenario says <strong>run lots of jobs</strong>, <strong>container-based</strong>, <strong>scheduled or recurring</strong>, and you want AWS to provision resources automatically, <strong>AWS Batch</strong> is a strong match.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Typical AWS Batch workflow (high level) 🔁</h2>
+        <ol class="steps">
+          <li><strong>Build a container image</strong> that contains your code + dependencies (e.g., Docker image).</li>
+          <li><strong>Create a Job Definition</strong> (image, CPU/memory, role/permissions, optional filesystem, etc.).</li>
+          <li><strong>Submit a Job</strong> (one-off) or <strong>schedule jobs</strong> (recurring runs).</li>
+          <li><strong>AWS provisions compute</strong> automatically (based on your settings) and runs the job(s).</li>
+          <li><strong>Track progress</strong> and outcomes (succeeded/failed) in the console/CLI; apply timeouts and retries if configured.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>5) Simple example (beginner-friendly) 📌</h2>
+        <div class="card">
+          <p><strong>Scenario:</strong> Every night at 1:00 AM, a company wants to generate reports for all branches (hundreds of files).</p>
+          <ul>
+            <li>📥 Input data lives in S3</li>
+            <li>🧮 A container processes data and outputs a report</li>
+            <li>📤 Output reports are stored back in S3</li>
+          </ul>
+          <p><strong>Why Batch?</strong> You run <strong>many similar jobs</strong> (one per branch / dataset), and AWS Batch can scale the compute and run them reliably without you manually creating clusters.</p>
+        </div>
+
+        <pre class="mono">Example “job definition” thinking (conceptual only)
+
+Image: company/report-generator:1.0
+CPU/Memory: 1 vCPU / 2 GB RAM
+Role: can read from S3 input bucket + write to S3 output bucket
+Timeout: 30 minutes
+Schedule: daily at 1:00 AM</pre>
+      </section>
+
+      <section>
+        <h2>6) What AWS Batch saves you from 😅</h2>
+        <ul>
+          <li>❌ Manually creating/maintaining an ECS cluster for every batch run</li>
+          <li>❌ Manually scaling compute up/down when job volume spikes</li>
+          <li>❌ Writing lots of “scheduler + worker management” glue code</li>
+          <li>✅ You focus on defining the job and AWS handles provisioning + execution</li>
+        </ul>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="quiz">
+        <h2>Quick self-check (mini quiz) ✅</h2>
+        <details>
+          <summary>1) What is the main thing you define in AWS Batch to describe what should run?</summary>
+          <p><strong>Answer:</strong> A <strong>Job Definition</strong> (includes container image + resource requirements + optional permissions/settings).</p>
+        </details>
+        <details>
+          <summary>2) What kind of packaging is typically used for AWS Batch jobs?</summary>
+          <p><strong>Answer:</strong> <strong>Containers</strong> (a container image that includes code + execution environment).</p>
+        </details>
+        <details>
+          <summary>3) If you want less server management for containers, which option often fits best?</summary>
+          <p><strong>Answer:</strong> <strong>Fargate</strong> (serverless container execution).</p>
+        </details>
+        <details>
+          <summary>4) True or False: With AWS Batch, you must manually create and manage an ECS cluster to run jobs.</summary>
+          <p><strong>Answer:</strong> <strong>False</strong> (Batch provisions and manages resources for you based on your definitions).</p>
+        </details>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser print dialog → Paper size: <strong>A4</strong>, Margins: <strong>Default</strong> (or “None” if available), and enable <strong>Background graphics</strong> if you want the light panels to appear.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,512 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 — Cloud Migration & Hybrid Cloud (Module Summary Reviewer)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --soft: #f7f7f7;
+      --chip: #f2f6ff;
+      --accent: #0b57d0;
+      --accent-2: #137333;
+      --warn: #b45309;
+      --danger: #b91c1c;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    /* Single-column print-friendly container */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px 56px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 18px 14px;
+      background: #fff;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--chip);
+      font-size: 12px;
+      color: #123;
+      white-space: nowrap;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0 0;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .btn:hover { border-color: #cfcfcf; }
+
+    main {
+      margin-top: 14px;
+    }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 16px 14px;
+      background: #fff;
+      margin: 12px 0;
+    }
+
+    h2 {
+      font-size: 16px;
+      margin: 0 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3 {
+      font-size: 14px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 0 0 10px; }
+
+    ul {
+      margin: 8px 0 10px 18px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .muted { color: var(--muted); }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: var(--soft);
+      border-radius: 10px;
+      padding: 12px 12px 10px;
+      margin: 10px 0;
+    }
+
+    .callout strong { color: #111; }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .card-title {
+      font-weight: 700;
+      margin: 0 0 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mini {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 10px 0;
+    }
+
+    .qa {
+      border: 1px dashed #d6d6d6;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .q {
+      font-weight: 700;
+      margin: 0 0 6px;
+    }
+
+    .a {
+      margin: 0;
+      color: #111;
+      padding-left: 18px;
+      border-left: 3px solid var(--accent);
+      display: none;
+    }
+
+    .a.show { display: block; }
+
+    /* Word wrapping protection */
+    body, p, li, div, span {
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+    }
+
+    @media print {
+      .page { max-width: none; padding: 0; }
+      header, section { border-color: #d9d9d9; box-shadow: none; }
+      .toolbar { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      .a { display: block !important; } /* show answers on print */
+      body { font-size: 11.5pt; line-height: 1.45; }
+      h1 { font-size: 18pt; }
+      h2 { font-size: 13.5pt; }
+      h3 { font-size: 12pt; }
+      section { break-inside: avoid; }
+      .card, .qa, .callout { break-inside: avoid; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>AWS CLF-C02 Reviewer — Cloud Migration & Hybrid Cloud (Module Summary)</h1>
+      <p class="subtitle">Single-column • A4 print-ready • Beginner-friendly explanations • Icons for recall</p>
+
+      <div class="chips" aria-label="Quick topics">
+        <span class="chip">☁️ Migration: move workloads</span>
+        <span class="chip">🏢 Hybrid: on‑prem + cloud</span>
+        <span class="chip">📦 Data movement services</span>
+        <span class="chip">🔒 Internet vs VPN vs Direct Connect</span>
+        <span class="chip">🧠 Exam focus: “what is it for?”</span>
+      </div>
+
+      <div class="toolbar" role="group" aria-label="Actions">
+        <button class="btn" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" id="toggleAnswersBtn">✅ Show answers</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 What this module is about</h2>
+        <p>
+          This section summarizes <strong>how AWS supports cloud migration</strong> and <strong>hybrid cloud setups</strong>.
+          Many companies started with on‑premises data centers, so moving to AWS can be challenging.
+        </p>
+        <div class="callout">
+          <div class="kicker">🧠 Remember</div>
+          <p class="mini">
+            In the exam, questions are usually: <strong>Which service helps migrate apps?</strong>
+            <strong>Which service moves databases?</strong> <strong>Which is most secure for connectivity?</strong>
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧩 Core ideas (simple explanation)</h2>
+        <div class="grid">
+          <div class="card">
+            <p class="card-title">☁️ Cloud migration</p>
+            <p class="mini">
+              Moving existing workloads from on‑prem (your own servers) to AWS.
+              Challenges include planning cost, avoiding downtime, and dealing with complex networking.
+            </p>
+          </div>
+
+          <div class="card">
+            <p class="card-title">🏢 Hybrid cloud</p>
+            <p class="mini">
+              Keeping <strong>some workloads on‑prem</strong> while running <strong>some in AWS</strong>.
+              This can be temporary (during migration) or permanent (company decision).
+            </p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="kicker">💡 Beginner example</div>
+          <p class="mini">
+            You keep your legacy payroll system on‑prem (strict requirements), but move your public website and backups to AWS.
+            That is a <strong>hybrid setup</strong>.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧰 Migration services you should recognize</h2>
+        <p class="muted">Focus on the “what does it migrate?” question.</p>
+
+        <h3>🧭 Migration Hub (visibility / tracking)</h3>
+        <ul>
+          <li>📍 Central dashboard to <strong>track migration progress</strong> across multiple migration tools/tasks.</li>
+          <li>✅ Use when you need <strong>visibility and coordination</strong> for a larger migration.</li>
+        </ul>
+
+        <h3>🖥️ Application Migration Service (move servers/apps)</h3>
+        <ul>
+          <li>🧩 Install an <strong>agent</strong> on on‑prem servers to analyze and replicate them to AWS.</li>
+          <li>🎯 Goal: migrate applications by creating equivalent workloads on <strong>EC2</strong> in the cloud.</li>
+        </ul>
+
+        <h3>🗄️ Database Migration Service (move databases)</h3>
+        <ul>
+          <li>📦 Migrates database data to AWS (e.g., to RDS).</li>
+          <li>🔁 Supports <strong>homogeneous</strong> (same engine → same engine) and <strong>heterogeneous</strong> (engine → different engine) migrations.</li>
+          <li>🧱 Can support schema conversion when needed.</li>
+        </ul>
+
+        <h3>📁 DataSync (sync files)</h3>
+        <ul>
+          <li>🔄 Synchronizes files from on‑prem to AWS storage like <strong>S3</strong>, <strong>EFS</strong>, or <strong>FSx</strong>.</li>
+          <li>🧠 Think: “I have lots of files/folders locally and want them copied/synced to AWS.”</li>
+        </ul>
+
+        <h3>🔌 Transfer Family (SFTP/FTP endpoints for S3/EFS)</h3>
+        <ul>
+          <li>📫 Helps when you need <strong>SFTP</strong> (or FTP-like workflow) but your target storage is <strong>S3/EFS</strong>.</li>
+          <li>✅ Good for legacy systems that can only push files using SFTP.</li>
+        </ul>
+
+        <h3>❄️ Snow Family (move huge data without the internet)</h3>
+        <ul>
+          <li>🚚 Physical devices shipped by AWS to transfer very large datasets to AWS.</li>
+          <li>🧊 Includes Snowcone (small), Snowball (bigger), and Snowmobile (truck-scale).</li>
+          <li>⚙️ Snowball can also be used for <strong>edge computing</strong> (run some workloads locally on the device).</li>
+        </ul>
+
+        <div class="callout">
+          <div class="kicker">📝 Fast memory trick</div>
+          <p class="mini">
+            <strong>Apps</strong> → Application Migration Service • <strong>DB</strong> → DMS • <strong>Files</strong> → DataSync / Transfer Family • <strong>Huge data</strong> → Snow devices • <strong>Tracking</strong> → Migration Hub
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔗 Connectivity options: Internet vs VPN vs Direct Connect</h2>
+        <p>
+          When connecting your on‑prem environment to AWS, you have three common options.
+          The “best” choice depends on security, reliability, and cost.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <p class="card-title">🌐 Public Internet</p>
+            <ul>
+              <li>✅ Easiest to start</li>
+              <li>💸 No special setup</li>
+              <li>⚠️ Least secure compared to other options (it’s public)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <p class="card-title">🔒 VPN (Private network over the internet)</p>
+            <ul>
+              <li>✅ More secure than plain internet traffic</li>
+              <li>👩‍💻 <strong>Client VPN</strong>: employees connect securely to AWS</li>
+              <li>🏢 <strong>Site-to-Site VPN</strong>: connects your data center to AWS</li>
+              <li class="muted">(You may see terms like Virtual Private Gateway / Transit Gateway as endpoints.)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <p class="card-title">🧵 Direct Connect (dedicated private connection)</p>
+            <ul>
+              <li>🛡️ Highest security/isolation (uses AWS network, not just public internet)</li>
+              <li>⚡ Often more consistent performance</li>
+              <li>💰 Higher cost (requires physical connectivity to a Direct Connect location)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="kicker">✅ Exam-friendly conclusion</div>
+          <p class="mini">
+            <strong>Internet</strong> = easiest • <strong>VPN</strong> = more secure over internet • <strong>Direct Connect</strong> = most secure + dedicated link (but costs more).
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🏢 Hybrid cloud: services that help</h2>
+        <h3>🧺 Storage Gateway</h3>
+        <ul>
+          <li>🗂️ Extends <strong>S3</strong> into your local environment (treat S3 like part of your file system).</li>
+          <li>🎯 Think: “We want cloud storage benefits but still access it from on‑prem workflows.”</li>
+        </ul>
+
+        <h3>🛠️ Systems Manager (manage servers anywhere)</h3>
+        <ul>
+          <li>🧩 Manage fleets of servers in AWS and on‑prem (install <strong>SSM Agent</strong> on servers).</li>
+          <li>📌 Centralized operations: run commands, patch, manage configuration at scale.</li>
+        </ul>
+
+        <h3>🧱 Outposts (AWS infrastructure in your data center)</h3>
+        <ul>
+          <li>🏗️ AWS ships racks/servers that run AWS services <strong>on‑prem</strong>.</li>
+          <li>✅ Useful when you need AWS services locally due to latency, data residency, or strict requirements.</li>
+        </ul>
+
+        <div class="callout">
+          <div class="kicker">💡 Quick scenario</div>
+          <p class="mini">
+            If you must keep data in your building but still want AWS-managed infrastructure, <strong>Outposts</strong> is a typical answer.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Key takeaways (memorize-ready)</h2>
+        <ul>
+          <li>🚧 Migration is hard: cost planning, no downtime, complex networks, possible code adjustments.</li>
+          <li>🧭 <strong>Migration Hub</strong> = track everything (visibility).</li>
+          <li>🖥️ <strong>Application Migration Service</strong> = replicate servers/apps to AWS (EC2).</li>
+          <li>🗄️ <strong>DMS</strong> = migrate databases (same engine or different engine).</li>
+          <li>📁 <strong>DataSync</strong> / 🔌 <strong>Transfer Family</strong> = move/sync files to AWS storage.</li>
+          <li>❄️ <strong>Snow Family</strong> = move huge datasets without using the public internet; Snowball can do edge compute.</li>
+          <li>🔗 Connectivity choices: Internet (easy) → VPN (more secure) → Direct Connect (most secure, higher cost).</li>
+          <li>🏢 Hybrid helpers: Storage Gateway (S3 locally), Systems Manager (manage on‑prem + cloud), Outposts (AWS on‑prem).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧪 Quick self-check (mini quiz)</h2>
+        <p class="muted">Try answering first, then click “Show answers” (answers always show when printing).</p>
+
+        <div class="qa">
+          <p class="q">1) Which service is mainly for tracking/visibility of a migration across tools?</p>
+          <p class="a" data-answer>Migration Hub 🧭</p>
+        </div>
+
+        <div class="qa" style="margin-top:10px;">
+          <p class="q">2) You must move an on‑prem database to AWS, possibly even changing DB engines. What service fits?</p>
+          <p class="a" data-answer>Database Migration Service (DMS) 🗄️</p>
+        </div>
+
+        <div class="qa" style="margin-top:10px;">
+          <p class="q">3) You have terabytes/petabytes and weak internet bandwidth. What migration option is designed for this?</p>
+          <p class="a" data-answer>Snow Family devices ❄️🚚</p>
+        </div>
+
+        <div class="qa" style="margin-top:10px;">
+          <p class="q">4) Which connectivity option is most secure (dedicated connection), but costs more?</p>
+          <p class="a" data-answer>AWS Direct Connect 🧵</p>
+        </div>
+
+        <div class="qa" style="margin-top:10px;">
+          <p class="q">5) Which service helps extend S3 so it feels like part of your on‑prem file system?</p>
+          <p class="a" data-answer>Storage Gateway 🧺</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ One-sentence “exam answers”</h2>
+        <ul>
+          <li>🧭 <strong>Migration Hub</strong>: Central place to track migration progress.</li>
+          <li>🖥️ <strong>Application Migration Service</strong>: Agent-based replication of servers/apps to AWS (EC2).</li>
+          <li>🗄️ <strong>DMS</strong>: Migrates databases; supports homogeneous/heterogeneous migrations.</li>
+          <li>📁 <strong>DataSync</strong>: Sync/copy files to S3/EFS/FSx.</li>
+          <li>🔌 <strong>Transfer Family</strong>: Managed SFTP endpoints that map to S3/EFS.</li>
+          <li>❄️ <strong>Snow Family</strong>: Physical devices for offline bulk data transfer; Snowball supports edge compute.</li>
+          <li>🔒 <strong>VPN</strong>: Encrypted private network over the internet (client or site-to-site).</li>
+          <li>🧵 <strong>Direct Connect</strong>: Dedicated private connection into AWS network.</li>
+          <li>🏢 <strong>Outposts</strong>: AWS infrastructure/services in your on‑prem data center.</li>
+          <li>🛠️ <strong>Systems Manager</strong>: Central ops for cloud + on‑prem servers (via SSM Agent).</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const btn = document.getElementById('toggleAnswersBtn');
+      const answers = Array.from(document.querySelectorAll('[data-answer]'));
+      let shown = false;
+
+      function setShown(next) {
+        shown = next;
+        answers.forEach(a => a.classList.toggle('show', shown));
+        if (btn) btn.textContent = shown ? '🙈 Hide answers' : '✅ Show answers';
+      }
+
+      if (btn) {
+        btn.addEventListener('click', () => setShown(!shown));
+      }
+
+      // Helpful default: keep answers hidden on screen.
+      setShown(false);
+    })();
+  </script>
+</body>
+
+</html>

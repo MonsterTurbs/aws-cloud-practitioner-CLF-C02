@@ -1,0 +1,346 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — S3 (Module Introduction)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#5b5b5b;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 18px 18px 12px;
+      border-radius: 10px;
+    }
+
+    h1{
+      margin:0 0 8px;
+      font-size: 1.55rem;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta{
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .pill{
+      border:1px solid var(--border);
+      background: var(--panel);
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    main{ margin-top: 14px; }
+
+    h2{
+      margin: 18px 0 8px;
+      font-size: 1.18rem;
+    }
+
+    h3{
+      margin: 14px 0 8px;
+      font-size: 1.05rem;
+    }
+
+    p{ margin: 8px 0; }
+
+    ul{
+      margin: 8px 0 8px 20px;
+      padding: 0;
+    }
+
+    li{ margin: 6px 0; }
+
+    .card{
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 14px 14px 12px;
+      margin: 12px 0;
+    }
+
+    .callout{
+      border-left: 6px solid var(--accent);
+      background: #ffffff;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin: 12px 0;
+    }
+
+    .muted{ color: var(--muted); }
+
+    .two-col-note{
+      border-top: 1px dashed var(--border);
+      margin-top: 10px;
+      padding-top: 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      padding: 1px 6px;
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      background: var(--panel);
+      white-space: nowrap;
+    }
+
+    .mini-table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.98rem;
+    }
+    .mini-table th,
+    .mini-table td{
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      vertical-align: top;
+    }
+    .mini-table th{
+      background: var(--panel);
+      text-align:left;
+    }
+
+    /* Prevent text from getting cut off when printing */
+    body, .page, .card, .callout, p, li, td, th{
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Keep important boxes together on page breaks */
+    .card, .callout{ break-inside: avoid; page-break-inside: avoid; }
+    h2, h3{ break-after: avoid; page-break-after: avoid; }
+
+    /* Print styles (A4) */
+    @media print{
+      @page{
+        size: A4;
+        margin: 14mm 14mm 16mm;
+      }
+      body{
+        background:#fff !important;
+        color:#000 !important;
+      }
+      .page{
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+      header{
+        border-radius: 0;
+      }
+      a{ color:#000; text-decoration:none; }
+      .pill{ background:#fff; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🪣 AWS S3 — Module Introduction (Reviewer / Study Guide)</h1>
+      <p class="subtitle">Beginner-friendly notes for AWS Certified Cloud Practitioner (CLF-C02) — single-column, A4 print-ready.</p>
+      <div class="meta">
+        <span class="pill">📚 Topic: Object Storage (S3)</span>
+        <span class="pill">🎯 Goal: Understand what S3 is + core concepts</span>
+        <span class="pill">🧠 Keywords: Buckets, Objects, Settings, Archival, Static Website</span>
+      </div>
+      <p class="two-col-note">
+        <strong>How to use this page:</strong> Read top-to-bottom once, then review the “Exam Nuggets” and answer the mini-quiz.
+      </p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>1) What is S3?</h2>
+        <p>
+          <strong>Amazon S3</strong> (Simple Storage Service) is AWS’s <strong>object storage</strong> service for storing files (“objects”) at massive scale. 📦
+          In this section of the course, the focus is: what S3 is, how to store files, and the key concepts you’ll see in the console and exam.
+        </p>
+        <div class="callout">
+          <p><strong>🧩 Beginner translation:</strong> Think of S3 like a very durable, online “warehouse” for files. You upload files, then download them later—without managing disks, servers, or file systems.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>2) Core Concepts You Must Know</h2>
+        <h3>🪣 Buckets</h3>
+        <ul>
+          <li>A <strong>bucket</strong> is a container that holds your objects (files).</li>
+          <li>You create a bucket first, then you upload objects into it.</li>
+          <li>In the console, you’ll typically: <span class="kbd">Create bucket</span> → <span class="kbd">Upload</span> → configure settings.</li>
+        </ul>
+
+        <h3>📄 Objects</h3>
+        <ul>
+          <li>An <strong>object</strong> is the file you store (e.g., image, PDF, log file, video, backup).</li>
+          <li>Objects live <em>inside</em> buckets.</li>
+          <li>When the lecture says “store files”, that usually means “upload objects to S3”.</li>
+        </ul>
+
+        <h3>⚙️ Settings when storing files</h3>
+        <p class="muted">The lecture mentions “various settings we can choose when storing files.” Expect these categories throughout the S3 lessons:</p>
+        <ul>
+          <li>🔒 <strong>Access / Permissions</strong> — who can read/write the object (private vs public, etc.).</li>
+          <li>🏷️ <strong>Metadata / Tags</strong> — labels to help organize, search, and bill/track usage.</li>
+          <li>🧊 <strong>Storage classes</strong> — choose cost vs retrieval speed (including archival options).</li>
+          <li>🛡️ <strong>Encryption</strong> — protect data at rest using AWS-managed or customer-managed keys.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>3) Where S3 Fits vs EBS/EFS (Simple Comparison)</h2>
+        <p>
+          In the previous section you covered file storage via <strong>EBS</strong> and <strong>EFS</strong>. Now S3 introduces a different model: <strong>object storage</strong>.
+        </p>
+
+        <table class="mini-table" aria-label="Storage comparison">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>What it feels like</th>
+              <th>Good for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>EBS</strong> 💽</td>
+              <td>Raw hard drive attached to an EC2 instance</td>
+              <td>App disks, databases on EC2, low-latency block storage</td>
+            </tr>
+            <tr>
+              <td><strong>EFS</strong> 🗂️</td>
+              <td>Shared network file system</td>
+              <td>Shared files across multiple instances/services</td>
+            </tr>
+            <tr>
+              <td><strong>S3</strong> 📦</td>
+              <td>A bucket of files (objects), accessed via API/console</td>
+              <td>Uploads, backups, logs, data lakes, static site files, archival</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <p><strong>✅ Exam mindset:</strong> If the question talks about “objects”, “buckets”, “static website hosting”, or “archiving”, think <strong>S3</strong>.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>4) Typical Beginner Use Cases (with examples)</h2>
+
+        <h3>📸 Example A — User uploads for a website</h3>
+        <p>
+          If you run a website where users upload images, you can store those images in S3.
+          Your app uploads the file to a bucket, then saves the file reference (e.g., object name) in a database.
+        </p>
+        <ul>
+          <li>App action: “Upload photo” → S3 stores the object</li>
+          <li>Benefit: You don’t need to manage a file server yourself</li>
+        </ul>
+
+        <h3>🗄️ Example B — File archival (long-term storage)</h3>
+        <p>
+          S3 supports storing files for long periods, including archival-oriented options (mentioned in the lecture). Think: compliance records, logs, historical reports.
+        </p>
+        <ul>
+          <li>Good fit: files you rarely access but must keep</li>
+          <li>Reason: typically lower cost storage classes for colder data</li>
+        </ul>
+
+        <h3>🌐 Example C — Hosting a static website</h3>
+        <p>
+          You can host a <strong>static website</strong> (HTML/CSS/JS only) in S3.
+          “Static” means: no server-side code (no Node/PHP/Java) — just files served to the browser.
+        </p>
+        <ul>
+          <li>Upload <span class="kbd">index.html</span> and assets (CSS/JS/images) to a bucket</li>
+          <li>Enable static website hosting feature on that bucket</li>
+          <li>Visitors load the site via the bucket’s website endpoint</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>5) Exam Nuggets (Quick Memory Cues)</h2>
+        <ul>
+          <li>🪣 <strong>Bucket</strong> = container. 📄 <strong>Object</strong> = file in the container.</li>
+          <li>📦 S3 is <strong>object storage</strong>, not a hard drive and not a traditional file system.</li>
+          <li>🗄️ S3 can support <strong>archival</strong> use cases via storage class choices.</li>
+          <li>🌐 S3 can host <strong>static websites</strong> (files only; no server-side compute).</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>6) Mini-Quiz (with Answer Key)</h2>
+        <ol>
+          <li><strong>What is stored inside an S3 bucket?</strong> (a) instances (b) objects (c) subnets</li>
+          <li><strong>Which word best matches S3?</strong> (a) block storage (b) object storage (c) RAM</li>
+          <li><strong>Can S3 host a static website?</strong> (yes / no)</li>
+          <li><strong>Least likely fit for S3:</strong> (a) user-uploaded images (b) long-term archives (c) OS root disk for EC2</li>
+        </ol>
+        <div class="callout">
+          <p><strong>✅ Answer Key:</strong> 1) b, 2) b, 3) yes, 4) c</p>
+        </div>
+      </section>
+
+      <section class="callout">
+        <h2 style="margin-top:0;">Next Up in the Course</h2>
+        <p>
+          After this introduction, you’ll go deeper into S3 fundamentals (buckets/objects) and then into more advanced topics like archival workflows and static website hosting.
+        </p>
+        <p class="muted" style="margin-bottom:0;">
+          Tip: As you progress, keep connecting every new S3 feature back to the core model: <strong>bucket → object → settings</strong>.
+        </p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

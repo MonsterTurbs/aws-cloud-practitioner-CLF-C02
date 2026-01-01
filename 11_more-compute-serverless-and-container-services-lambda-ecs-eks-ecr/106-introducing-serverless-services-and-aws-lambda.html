@@ -1,0 +1,386 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Serverless Services & AWS Lambda (Module 106)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --good:#0a7a3b;
+      --warn:#8a5a00;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 20px 18px 64px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 12px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .2px;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .sub{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+
+    button{
+      appearance:none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor:pointer;
+    }
+
+    button:hover{ border-color:#cfcfcf; }
+
+    main{ margin-top: 14px; }
+
+    section{
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 14px 10px;
+      background: #fff;
+    }
+
+    section > h2{
+      font-size: 16.5px;
+      margin: 0 0 10px;
+      line-height: 1.25;
+    }
+
+    .note{
+      border-left: 4px solid var(--accent);
+      background: #f6f9ff;
+      padding: 10px 10px;
+      border-radius: 10px;
+      margin: 10px 0 12px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .card{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .card h3{
+      margin: 0 0 8px;
+      font-size: 14.5px;
+      line-height: 1.25;
+    }
+
+    ul{ margin: 8px 0 12px 18px; }
+    li{ margin: 6px 0; }
+
+    .kv{
+      display:grid;
+      grid-template-columns: 160px 1fr;
+      gap: 8px 12px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .k{ color: var(--muted); font-size: 13px; }
+    .v{ font-size: 13.5px; }
+
+    .tag{
+      display:inline-block;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background:#fff;
+      margin-right: 6px;
+      margin-top: 6px;
+      color: var(--muted);
+    }
+
+    .callout-good{ border-left-color: var(--good); background:#f2fbf5; }
+    .callout-warn{ border-left-color: var(--warn); background:#fff7e6; }
+
+    .qa{
+      margin: 10px 0 12px;
+      border-top: 1px dashed var(--border);
+      padding-top: 10px;
+    }
+
+    details{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+      margin: 10px 0;
+    }
+
+    summary{
+      cursor:pointer;
+      font-weight: 700;
+    }
+
+    .muted{ color: var(--muted); }
+
+    .divider{
+      height:1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    .footer{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    /* Print styles (A4, clean output) */
+    @page{
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print{
+      body{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .page{ max-width: none; padding: 0; }
+      header, section{ border-color:#dcdcdc; }
+      .toolbar{ display:none !important; }
+      details{ break-inside: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      a{ color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Module 106</p>
+      <h1>Serverless Services &amp; AWS Lambda — Reviewer / Study Guide 🧠⚡</h1>
+      <p class="sub">Single-column • White background • A4 print-ready • Beginner-friendly notes + examples</p>
+
+      <div class="toolbar" aria-label="Actions">
+        <button type="button" onclick="window.print()">Print / Save as PDF 🖨️</button>
+        <button type="button" onclick="toggleAllDetails(true)">Open all answers ✅</button>
+        <button type="button" onclick="toggleAllDetails(false)">Close all answers 🔒</button>
+      </div>
+
+      <div class="kv" aria-label="Quick facts">
+        <div class="k">Main idea</div>
+        <div class="v">Serverless = you focus on the <b>task</b> and <b>trigger</b>, not on provisioning/configuring servers.</div>
+        <div class="k">Core service</div>
+        <div class="v"><b>AWS Lambda</b> — serverless compute that runs code when events happen.</div>
+        <div class="k">Also “serverless”</div>
+        <div class="v">Some services like <b>S3</b> can be considered serverless too (no server setup needed), but this module focuses on <b>serverless compute</b>.</div>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) What “Serverless” Means (in plain words) ☁️🙂</h2>
+        <div class="note">
+          <b>Serverless services</b> are cloud services where you <b>don’t provision, configure, or pay for servers</b> directly.
+          AWS handles the underlying infrastructure so you can focus on what should happen.
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3>EC2 vs Serverless (the mindset shift) 🔁</h3>
+            <ul>
+              <li><b>EC2</b>: You still think about “server setup” — instance type (hardware), OS, base software, and configuration.</li>
+              <li><b>Serverless</b>: You think about “<b>task</b> + <b>trigger</b>” — the platform runs your code when needed.</li>
+            </ul>
+            <span class="tag">💡 Less infrastructure work</span>
+            <span class="tag">⚙️ You define behavior</span>
+            <span class="tag">🧾 Pay only when it runs (conceptually)</span>
+          </div>
+
+          <div class="card">
+            <h3>Two building blocks: Task + Event 🧩</h3>
+            <ul>
+              <li><b>Task</b> = the action to execute (e.g., a code snippet).</li>
+              <li><b>Event</b> = what triggers the task (e.g., “a file was uploaded”).</li>
+            </ul>
+            <div class="note callout-good">
+              <b>Easy mental model:</b> “When <i>X</i> happens ➜ run <i>Y</i>.” ✅
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) AWS Lambda: The Core Serverless Compute Service ⚡🧑‍💻</h2>
+        <p class="muted">Lambda is AWS’s key service for executing code in an event-driven way.</p>
+
+        <div class="card">
+          <h3>What Lambda is for 🎯</h3>
+          <ul>
+            <li>Run code without managing servers.</li>
+            <li>Define <b>when</b> it should run (the trigger/event).</li>
+            <li>Handle small, focused tasks like reacting to file uploads.</li>
+          </ul>
+        </div>
+
+        <div class="card" style="margin-top:10px;">
+          <h3>Beginner-friendly example: S3 upload ➜ Lambda action 🖼️➡️🪄</h3>
+          <p>
+            Scenario: Users upload an image to an S3 bucket. You want to automatically copy it to another bucket
+            (or do something else with it).
+          </p>
+          <ul>
+            <li><b>Event</b>: “Image uploaded to S3” 📥</li>
+            <li><b>Task</b>: Lambda runs code to copy the image (or process it) 🛠️</li>
+            <li><b>Result</b>: Automation happens instantly, without you running a server just to watch for uploads ✅</li>
+          </ul>
+          <div class="note callout-warn">
+            Exam-safe wording: “Serverless” does <b>not</b> mean “no servers exist.” It means <b>you don’t manage them</b>. 🧠
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) “Serverless” Is Bigger Than Compute (Quick Context) 🧭</h2>
+        <div class="note">
+          In the course, you already saw services like <b>S3</b> where you can immediately store files without setting up servers.
+          That’s why people sometimes call services like S3 “serverless” too.
+          <br /><br />
+          <b>But in this section:</b> we focus on <b>serverless compute</b> (running code), and that mainly means <b>Lambda</b>.
+        </div>
+        <ul>
+          <li><b>S3</b> (storage): upload files right away, no server setup needed 📦</li>
+          <li><b>Lambda</b> (compute): run code right away (triggered by events) ⚡</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4) Quick Reviewer: Key Points to Remember 📝</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Memory hooks (easy to recall) 🧠</h3>
+            <ul>
+              <li>Serverless = <b>Task + Trigger</b> (not “pick a server”) 🎯</li>
+              <li>EC2 = you still do “server configuration work” 🧰</li>
+              <li>Lambda = the main serverless compute service in AWS ⚡</li>
+              <li>S3 can be seen as serverless storage (no server setup) 🗂️</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Mini comparison (from this lecture only) ⚖️</h3>
+            <ul>
+              <li><b>EC2</b>: choose hardware profile, OS, base software, configuration</li>
+              <li><b>Lambda</b>: define code + define event; AWS handles infrastructure</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>5) Knowledge Check (Mini Quiz) ✅📌</h2>
+        <p class="muted">Open the answers to self-check. For printing, you can open all answers first.</p>
+
+        <details>
+          <summary>Q1: In one sentence, what does “serverless” mean here?</summary>
+          <div class="qa">
+            <p><b>Answer:</b> It means you don’t provision/configure/pay for servers directly; you focus on the task and when it should run. 🙂</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Q2: What are the 2 building blocks of serverless code execution?</summary>
+          <div class="qa">
+            <p><b>Answer:</b> <b>Task</b> (the code/action) + <b>Event</b> (what triggers it). 🧩</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Q3: Give one simple example of an event that could trigger a Lambda function.</summary>
+          <div class="qa">
+            <p><b>Answer:</b> An image (file) being uploaded to an <b>S3 bucket</b> 📥, which triggers Lambda to copy/process the image. 🖼️</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Q4: Why can S3 be described as “serverless” in a broad sense?</summary>
+          <div class="qa">
+            <p><b>Answer:</b> You can start uploading files immediately without installing/configuring servers or an OS. ☁️📦</p>
+          </div>
+        </details>
+      </section>
+
+      <section>
+        <h2>6) One-Liner Summary (Exam-style) 🧾</h2>
+        <div class="note">
+          <b>AWS Lambda</b> is AWS’s core <b>serverless compute</b> service: you provide code and define triggers (events), while AWS manages the underlying infrastructure.
+        </div>
+        <p class="footer">
+          Tip: Keep your notes consistent: <b>Serverless = focus on task + trigger</b>. If you remember that, most questions become easier to reason about.
+        </p>
+      </section>
+
+      <div class="divider" role="separator" aria-label="Divider"></div>
+
+      <p class="footer">Source: Your provided lecture transcript (Module 106). Designed for clean A4 printing (single column).</p>
+    </main>
+  </div>
+
+  <script>
+    function toggleAllDetails(open) {
+      document.querySelectorAll('details').forEach(d => { d.open = open; });
+    }
+  </script>
+</body>
+</html>

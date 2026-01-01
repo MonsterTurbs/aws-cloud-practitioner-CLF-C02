@@ -1,0 +1,451 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Connecting Subnets & EC2 Instances (VPC)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #666;
+      --border: #e7e7e7;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent2: #1a73e8;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 18px 14px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      white-space: nowrap;
+    }
+
+    main {
+      margin-top: 16px;
+    }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      background: #fff;
+    }
+
+    h2 {
+      font-size: 16.5px;
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 14.5px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 10px 0; }
+
+    ul,
+    ol {
+      margin: 8px 0 10px 22px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 10px 0;
+    }
+
+    .callout strong { color: #000; }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 760px) {
+      .grid2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: #fff;
+    }
+
+    .kbox {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      background: #fff;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .btn.primary {
+      border-color: var(--accent2);
+      color: var(--accent);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    /* Strong word-wrapping to prevent cut-off while printing */
+    body, p, li, h1, h2, h3, .kbox {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      header,
+      section,
+      .callout,
+      .card {
+        border-color: #d5d5d5;
+        background: #fff;
+        box-shadow: none;
+      }
+
+      .actions {
+        display: none !important;
+      }
+
+      a {
+        color: #000;
+        text-decoration: underline;
+      }
+
+      /* Keep headings with content */
+      h2, h3 {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+
+      section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>🌐 AWS CLF-C02 Reviewer: Connecting Subnets & EC2 Instances (VPC)</h1>
+      <p class="subtitle">Single-column, A4 print-ready study guide (Beginner-friendly) — VPC, subnets, security groups, and public IP assignment 🙂</p>
+      <div class="meta" aria-label="Page metadata">
+        <span class="pill">🧱 Topic: VPC Networking</span>
+        <span class="pill">🖥️ Service: EC2 + VPC</span>
+        <span class="pill">🎯 Exam: AWS Cloud Practitioner (CLF-C02)</span>
+      </div>
+      <div class="actions" aria-label="Page actions">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">🧠 Jump to Quick Quiz</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>✅ What this lecture is saying (in plain words)</h2>
+        <p>
+          EC2 instances <strong>must</strong> be launched <strong>inside a VPC</strong>, and specifically inside a <strong>subnet</strong> of that VPC.
+          When you launch an instance (EC2 Launch Wizard → Network settings), you’re not only choosing firewall rules (Security Group).
+          You’re also choosing <strong>which VPC</strong> and <strong>which subnet</strong> will hold your instance.
+        </p>
+        <div class="callout">
+          <strong>Key idea 🔑</strong><br />
+          <ul>
+            <li><strong>Subnet (Public vs Private)</strong> controls <em>internet connectivity</em> (can the internet reach it?).</li>
+            <li><strong>Security Group</strong> controls <em>traffic rules</em> (what is allowed/blocked if traffic reaches it?).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧩 Core Terms you must remember</h2>
+        <div class="grid2">
+          <div class="card">
+            <h3>🏠 VPC (Virtual Private Cloud)</h3>
+            <p>A virtual network in AWS (regional). Your subnets and instances live inside a VPC.</p>
+            <p class="callout"><strong>Exam tip:</strong> Many resources are launched “into a VPC” even beyond EC2.</p>
+          </div>
+          <div class="card">
+            <h3>🧱 Subnet</h3>
+            <p>A smaller network inside a VPC, tied to a specific Availability Zone (AZ).</p>
+            <ul>
+              <li><strong>Public subnet</strong> → has a route to the Internet Gateway (IGW).</li>
+              <li><strong>Private subnet</strong> → no direct route to IGW.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🛡️ Security Group (SG)</h3>
+            <p>Instance-level firewall rules. Decides which inbound/outbound traffic is allowed.</p>
+            <p class="callout"><strong>Important:</strong> SG ≠ “internet connection”. It is a traffic filter.</p>
+          </div>
+          <div class="card">
+            <h3>🌍 Public IP</h3>
+            <p>A public identifier to receive requests from outside the VPC (internet). Typically used for instances in public subnets.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧭 Where you set VPC + Subnet (EC2 Launch Wizard)</h2>
+        <p>When you launch an EC2 instance and reach <strong>Network settings</strong>:</p>
+        <ol>
+          <li>You choose (or create) a <strong>Security Group</strong> (firewall).</li>
+          <li>Click <strong>Edit</strong> (advanced settings) to pick the <strong>VPC</strong> and <strong>Subnet</strong>.</li>
+          <li>Optionally enable <strong>Auto-assign public IP</strong> (usually for public subnet instances).</li>
+        </ol>
+        <div class="callout">
+          <strong>Remember 🙂</strong><br />
+          <ul>
+            <li>Your account has a <strong>default VPC per region</strong>.</li>
+            <li>If you created more VPCs, they will show in the VPC dropdown (still within the same region).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🌐 Public vs Private subnet: what changes?</h2>
+        <div class="grid2">
+          <div class="card">
+            <h3>Public Subnet ✅</h3>
+            <ul>
+              <li>Has a route to the <strong>Internet Gateway (IGW)</strong>.</li>
+              <li>Instance <em>can</em> be reachable from the internet <strong>if</strong>:
+                <ul>
+                  <li>It has a <strong>Public IP</strong> (or Elastic IP), and</li>
+                  <li>The <strong>Security Group</strong> allows the inbound traffic (e.g., HTTP 80).</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Private Subnet 🔒</h3>
+            <ul>
+              <li>No direct route to IGW.</li>
+              <li>Internet users <strong>cannot</strong> reach it directly (even if SG “allows HTTP”).</li>
+              <li>It can still talk to other instances in the VPC.</li>
+            </ul>
+            <div class="callout">
+              <strong>Optional:</strong> Add a <strong>NAT Gateway</strong> if you want <em>outbound-only</em> internet (e.g., download patches), but still block inbound internet traffic.</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>Example scenario 💡</h3>
+        <ul>
+          <li>🖥️ <strong>Web Server</strong> in <strong>Public Subnet</strong> (needs internet traffic).</li>
+          <li>🗄️ <strong>Database</strong> in <strong>Private Subnet</strong> (should not accept internet traffic).</li>
+          <li>Security Groups:
+            <ul>
+              <li>Web SG: allow inbound HTTP/HTTPS from the internet.</li>
+              <li>DB SG: allow inbound DB port (e.g., 3306) <strong>only</strong> from Web SG.</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🔁 VPC connectivity vs Security Group rules</h2>
+        <p>
+          If instances are in the <strong>same VPC</strong>, they can usually communicate across subnets by default.
+          That’s the network-level connectivity.
+        </p>
+        <div class="callout">
+          <strong>Two layers to remember 🧠</strong>
+          <ol>
+            <li><strong>Connectivity (network path)</strong>: Subnet routing / VPC route tables decide whether traffic can reach the target at all.</li>
+            <li><strong>Permission (traffic allowed)</strong>: Security Group decides whether the instance accepts/blocks that traffic.</li>
+          </ol>
+        </div>
+        <p>
+          So even if two instances are “technically reachable” within a VPC, your Security Group can still block the traffic.
+          Example: If SG blocks HTTP, then no HTTP requests will be accepted — even though the network path exists.
+        </p>
+      </section>
+
+      <section>
+        <h2>📌 Public IP assignment (why it matters)</h2>
+        <p>
+          When launching an instance, you can enable AWS to <strong>auto-assign a public IPv4 address</strong>.
+          This is typically needed when you want the instance to receive internet requests.
+        </p>
+        <div class="callout">
+          <strong>Important ⚠️</strong><br />
+          A public IP only makes sense for instances in a <strong>public subnet</strong>. If the instance is in a private subnet, internet requests still won’t reach it.
+        </div>
+        <h3>Mini example 🙂</h3>
+        <ul>
+          <li>Public subnet + Public IP + SG allows HTTP → website can be reached from the internet.</li>
+          <li>Private subnet + SG allows HTTP → still not reachable from the internet.</li>
+        </ul>
+        <p>
+          This lecture then leads into the next topic: <strong>IP addresses</strong> and <strong>CIDR blocks (CIDR ranges)</strong>,
+          which explain how subnets define available IP address space.
+        </p>
+      </section>
+
+      <section id="quiz">
+        <h2>🧠 Quick Quiz (CLF-C02 style)</h2>
+        <ol>
+          <li>
+            <strong>True/False:</strong> If a Security Group allows inbound HTTP, the instance is reachable from the internet.
+            <div class="callout"><strong>Answer:</strong> False ❌. If the instance is in a private subnet (no IGW route), the internet can’t reach it.</div>
+          </li>
+          <li>
+            <strong>Which component primarily decides whether a subnet is public?</strong>
+            <div class="callout"><strong>Answer:</strong> Route table route to an <strong>Internet Gateway (IGW)</strong> ✅</div>
+          </li>
+          <li>
+            <strong>Two EC2 instances are in different subnets but the same VPC. Can they communicate?</strong>
+            <div class="callout"><strong>Answer:</strong> Typically yes ✅ (network connectivity exists by default), but Security Groups can still block specific traffic.</div>
+          </li>
+          <li>
+            <strong>What is the purpose of auto-assign public IP?</strong>
+            <div class="callout"><strong>Answer:</strong> Provide a public identifier so the instance can receive requests from outside the VPC (internet), assuming it’s in a public subnet and SG allows traffic.</div>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>📝 Key Takeaways (memorize this)</h2>
+        <ul>
+          <li>✅ EC2 instances must be launched into a <strong>VPC</strong> and a <strong>Subnet</strong>.</li>
+          <li>🌐 <strong>Public subnet</strong> (IGW route) enables internet connectivity; <strong>Private subnet</strong> does not.</li>
+          <li>🛡️ <strong>Security Groups</strong> are firewalls — they do not “create” internet access; they only allow/deny traffic.</li>
+          <li>📌 <strong>Public IP</strong> is usually needed for inbound internet access to a public subnet instance.</li>
+          <li>➡️ Next topic: <strong>CIDR blocks</strong> explain IP address ranges for VPCs/subnets.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>✅ Checklist before you print</h2>
+        <ul>
+          <li>Use Chrome/Edge print dialog → Paper size: <strong>A4</strong></li>
+          <li>Margins: <strong>Default</strong> (the page has its own A4 margins via CSS)</li>
+          <li>Scale: <strong>Default</strong> (avoid “Fit to page” unless needed)</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>

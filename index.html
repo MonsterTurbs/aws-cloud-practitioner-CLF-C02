@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Index</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --border:#e5e5e5;
+      --panel:#fafafa;
+      --link:#0b57d0;
+      --focus:#1a73e8;
+      --shadow: 0 8px 30px rgba(0,0,0,.06);
+    }
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+      overflow:hidden; /* keep scroll inside sidebar/content */
+    }
+
+    /* Layout */
+    .app{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      height:100vh;
+      overflow:hidden;
+      transition: grid-template-columns .18s ease;
+    }
+    .app.sidebar-collapsed{
+      grid-template-columns: 0px 1fr;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      border-right:1px solid var(--border);
+      background:var(--panel);
+      display:flex;
+      flex-direction:column;
+      min-width:260px;
+      height:100vh;
+      overflow:hidden; /* scroll only inside .sidebar-body */
+      transition: transform .18s ease, width .18s ease, opacity .18s ease;
+    }
+    .app.sidebar-collapsed .sidebar{
+      width:0;
+      min-width:0;
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .sidebar-header{
+      padding: 14px 14px 10px;
+      border-bottom:1px solid var(--border);
+      background:#fff;
+    }
+    .sidebar-title{
+      font-size:14px;
+      font-weight:700;
+      margin:0 0 8px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .sidebar-title span.badge{
+      font-weight:600;
+      font-size:12px;
+      color:#fff;
+      background:#111;
+      border-radius:999px;
+      padding:2px 8px;
+    }
+    .search{
+      width:100%;
+      padding:10px 10px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      outline:none;
+      font-size:13px;
+    }
+    .search:focus{
+      border-color:var(--focus);
+      box-shadow:0 0 0 2px rgba(26,115,232,.15);
+    }
+
+    .sidebar-body{
+      flex:1;
+      overflow-y:auto;
+      overflow-x:hidden;
+      padding:10px;
+      scrollbar-gutter: stable; /* modern Chromium */
+    }
+
+    details.section{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius:12px;
+      margin:10px 0;
+      overflow:hidden;
+      box-shadow: 0 1px 0 rgba(0,0,0,.02);
+    }
+    details.section > summary{
+      cursor:pointer;
+      list-style:none;
+      padding:10px 12px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom:1px solid var(--border);
+      background:#fff;
+      user-select:none;
+    }
+    details.section > summary::-webkit-details-marker{ display:none }
+
+    .sec-left{ display:flex; flex-direction:column; gap:2px; }
+    .sec-name{ font-size:13px; font-weight:700; }
+    .sec-folder{
+      font-size:12px;
+      color:var(--muted);
+      overflow-wrap:anywhere;
+    }
+    .sec-count{
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      padding-top:2px;
+    }
+
+    .lecture-list{ padding:8px 8px 10px; }
+    .lecture{
+      display:block;
+      text-decoration:none;
+      color:var(--text);
+      padding:8px 10px;
+      border-radius:10px;
+      font-size:13px;
+      border:1px solid transparent;
+      overflow-wrap:anywhere;
+    }
+    .lecture:hover{
+      background:var(--panel);
+      border-color:var(--border);
+    }
+    .lecture.active{
+      background:#eef4ff;
+      border-color:#c7dcff;
+      color:#0b57d0;
+      font-weight:700;
+    }
+    .lecture small{
+      display:block;
+      color:var(--muted);
+      font-weight:400;
+      margin-top:2px;
+      font-size:12px;
+    }
+
+    /* Main */
+    .main{
+      display:flex;
+      flex-direction:column;
+      height:100vh;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    .topbar{
+      border-bottom:1px solid var(--border);
+      background:#fff;
+      padding:10px 14px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:1;
+    }
+
+    .crumb{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:260px;
+      flex:1;
+    }
+    .crumb .h1{
+      margin:0;
+      font-size:14px;
+      font-weight:800;
+      overflow-wrap:anywhere;
+    }
+    .crumb .h2{
+      margin:0;
+      font-size:12px;
+      color:var(--muted);
+      overflow-wrap:anywhere;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:#111;
+      padding:8px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{ background:var(--panel) }
+    .btn:disabled{ opacity:.45; cursor:not-allowed; }
+    .btn.primary{
+      border-color:#c7dcff;
+      background:#eef4ff;
+      color:#0b57d0;
+      font-weight:700;
+    }
+
+    .content{
+      height:100%;
+      overflow:hidden;
+      background:#fff;
+    }
+    iframe#viewer{
+      width:100%;
+      height:100%;
+      border:0;
+      background:#fff;
+    }
+
+    /* Mobile sidebar drawer */
+    .overlay{
+      display:none;
+    }
+    @media (max-width: 920px){
+      body{ overflow:auto } /* allow normal scroll if needed */
+      .app{
+        grid-template-columns: 1fr;
+      }
+      .sidebar{
+        position:fixed;
+        inset:0 auto 0 0;
+        width:min(88vw, 360px);
+        box-shadow: var(--shadow);
+        transform: translateX(-105%);
+        opacity:1;
+        pointer-events:auto;
+        z-index:20;
+      }
+      .app.sidebar-open-mobile .sidebar{
+        transform: translateX(0);
+      }
+      .overlay{
+        display:block;
+        position:fixed;
+        inset:0;
+        background: rgba(0,0,0,.25);
+        z-index:15;
+        opacity:0;
+        pointer-events:none;
+        transition: opacity .18s ease;
+      }
+      .app.sidebar-open-mobile ~ .overlay{
+        opacity:1;
+        pointer-events:auto;
+      }
+      /* on mobile we do NOT collapse grid columns; we use drawer */
+      .app.sidebar-collapsed{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Print: hide navigation chrome */
+    @media print{
+      .sidebar, .topbar, .overlay{ display:none !important; }
+      .app{ grid-template-columns: 1fr; height:auto; }
+      .main{ height:auto; }
+      .content{ height:auto; }
+      iframe#viewer{ height:100vh; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Course navigation">
+      <div class="sidebar-header">
+        <div class="sidebar-title">📚 AWS CLF-C02 Reviewer <span class="badge">Index</span></div>
+        <input id="search" class="search" type="search" placeholder="Search lecture… (e.g., IAM, S3, VPC)" />
+      </div>
+      <div id="sidebarBody" class="sidebar-body"></div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="topbar">
+        <button id="btnToggleSidebar" class="btn primary" type="button" title="Toggle sidebar (Desktop) / Open menu (Mobile)">
+          ☰ Menu
+        </button>
+
+        <button id="btnPrev" class="btn" type="button" title="Previous lecture">⬅️ Prev</button>
+        <button id="btnNext" class="btn" type="button" title="Next lecture">Next ➡️</button>
+        <button id="btnOpen" class="btn" type="button" title="Open current lecture in a new tab">🧾 Open</button>
+        <button id="btnPrint" class="btn" type="button" title="Print current lecture">🖨️ Print</button>
+
+        <div class="crumb" aria-live="polite">
+          <p id="currentTitle" class="h1">Select a lecture from the sidebar…</p>
+          <p id="currentPath" class="h2">Tip: Use Prev/Next. When navigating, it auto-scrolls to top. ✅</p>
+        </div>
+      </div>
+
+      <div class="content">
+        <iframe id="viewer" title="Lecture viewer" src="about:blank"></iframe>
+      </div>
+    </main>
+  </div>
+
+  <!-- Mobile overlay -->
+  <div id="overlay" class="overlay" aria-hidden="true"></div>
+
+  <script>
+    // ------------------------------------------------------------
+    // DATA: your folders + lecture html files (based on your list)
+    // ------------------------------------------------------------
+    const SECTIONS = [
+      {
+        folder: "01_getting-started",
+        title: "Section 01: Getting Started",
+        items: [
+          ["Welcome To This Course", "01-welcome-to-this-course.html"],
+          ["What Is AWS? What Is Cloud Computing?", "02-what-is-aws-what-is-cloud-computing.html"],
+          ["Join Our Learning Community", "03-join-our-learning-community.html"],
+          ["A World Without Cloud Computing", "04-a-world-without-cloud-computing.html"],
+          ["Cloud Advantage: Reliability", "05-cloud-advantage-reliability.html"],
+          ["Cloud Advantages: Agility, Elasticity & Scalability", "06-cloud-advantages-agility-elasticity-and-scalability.html"],
+          ["Cloud Advantage: Pay-as-you-go Pricing", "07-cloud-advantage-pay-as-you-go-pricing.html"],
+          ["Cloud Advantage: Global Reach", "08-cloud-advantage-global-reach.html"],
+          ["Cloud Advantages - AWS Summaries", "09-cloud-advantages-aws-summaries.html"],
+          ["The AWS Infrastructure, Regions & Availability Zones", "10-the-aws-infrastructure-regions-and-availability-zones.html"],
+          ["Self-service vs Managed Services", "11-self-service-vs-managed-services.html"],
+          ["Service Categories", "12-service-categories.html"],
+          ["Course Slides", "13-course-slides.html"],
+        ]
+      },
+      {
+        folder: "02_accessing-and-using-aws-services",
+        title: "Section 02: Accessing & Using AWS Services",
+        items: [
+          ["Module Introduction", "14-module-introduction.html"],
+          ["Creating an AWS Account", "15-creating-an-aws-account.html"],
+          ["The Management Console", "16-the-management-console.html"],
+          ["Different Ways of Using AWS Services: CLI, SDKs & the AWS API", "17-different-ways-of-using-aws-services-cli-sdks-and-the-aws-api.html"],
+          ["Using the CLI & CloudShell", "18-using-the-cli-and-cloudshell.html"],
+          ["Important: AWS Pricing", "19-important-aws-pricing.html"],
+          ["Get Started For Free With The Free Tier", "20-get-started-for-free-with-the-free-tier.html"],
+          ["Cost Management & Working with Budgets", "21-cost-management-and-working-with-budgets.html"],
+          ["Important: Pricing & Selecting Regions", "22-important-pricing-and-selecting-regions.html"],
+          ["Get Help: AWS Support, Personal Health Dashboard & Documentation", "23-get-help-aws-support-personal-health-dashboard-and-documentation.html"],
+          ["Service Quotas", "24-service-quotas.html"],
+          ["Module Summary", "25-module-summary.html"],
+        ]
+      },
+      {
+        folder: "03_account-security-permissions-and-the-iam-service-identity-and-access-management",
+        title: "Section 03: IAM & Permissions",
+        items: [
+          ["Module Introduction", "26-module-introduction.html"],
+          ["The AWS Security Model: The Shared Responsibility Model", "27-the-aws-security-model-the-shared-responsibility-model.html"],
+          ["Protecting Your Account", "28-protecting-your-account.html"],
+          ["Understanding IAM: Users, User Groups & Roles", "29-understanding-iam-users-user-groups-and-roles.html"],
+          ["Creating Users & Assigning Permissions", "30-creating-users-and-assigning-permissions.html"],
+          ["Understanding Roles", "31-understanding-roles.html"],
+          ["How Policies & Permissions Are Evaluated", "32-how-policies-and-permissions-are-evaluated.html"],
+          ["Granting Least Privilege", "33-granting-least-privilege.html"],
+          ["Module Summary", "34-module-summary.html"],
+        ]
+      },
+      {
+        folder: "04_getting-started-with-compute-services-and-ec2",
+        title: "Section 04: Compute & EC2",
+        items: [
+          ["Module Introduction", "35-module-introduction.html"],
+          ["Key Compute Services - An Overview", "36-key-compute-services-an-overview.html"],
+          ["Understanding EC2 & EC2 Instances", "37-understanding-ec2-and-ec2-instances.html"],
+          ["Configuring & Launching EC2 Instances", "38-configuring-and-launching-ec2-instances.html"],
+          ["Inspecting Instances & Connecting to Instances", "39-inspecting-instances-and-connecting-to-instances.html"],
+          ["Connecting via (local) SSH & Key Pairs", "40-connecting-via-local-ssh-and-key-pairs.html"],
+          ["Running a Web Server via EC2", "41-running-a-web-server-via-ec2.html"],
+          ["EC2 Pricing Models", "42-ec2-pricing-models.html"],
+          ["Module Summary", "43-module-summary.html"],
+        ]
+      },
+      {
+        folder: "05_managing-cloud-networks-via-vpcs-virtual-private-cloud",
+        title: "Section 05: VPC Networking",
+        items: [
+          ["Module Introduction", "44-module-introduction.html"],
+          ["Whats The Problem? And How Do VPCs Help?", "45-whats-the-problem-and-how-do-vpcs-help.html"],
+          ["VPCs & Subnets", "46-vpcs-and-subnets.html"],
+          ["Creating a VPC", "47-creating-a-vpc.html"],
+          ["Connecting Subnets & EC2 Instances", "48-connecting-subnets-and-ec2-instances.html"],
+          ["Beyond EC2 Instances", "49-beyond-ec2-instances.html"],
+          ["Understanding IP Ranges (CIDR Blocks) & Why They Exist", "50-understanding-ip-ranges-cidr-blocks-and-why-they-exist.html"],
+          ["Public IP Addresses & Elastic IP Addresses", "51-public-ip-addresses-and-elastic-ip-addresses.html"],
+          ["Working with Security Groups", "52-working-with-security-groups.html"],
+          ["Understanding Network Access Control Lists (NACLs)", "53-understanding-network-access-control-lists-nacls.html"],
+          ["Security Groups vs NACLs", "54-security-groups-vs-nacls.html"],
+          ["VPC Peering & Transit Gateways", "55-vpc-peering-and-transit-gateways.html"],
+          ["Private Connections via PrivateLink & VPC Endpoints", "56-private-connections-via-privatelink-and-vpc-endpoints.html"],
+          ["Module Summary", "57-module-summary.html"],
+        ]
+      },
+      {
+        folder: "06_scaling-and-load-balancing-from-small-to-big-and-back",
+        title: "Section 06: Scaling & Load Balancing",
+        items: [
+          ["Module Introduction", "58-module-introduction.html"],
+          ["Why Dynamic Scaling Is Important", "59-why-dynamic-scaling-is-important.html"],
+          ["Scaling with AWS Auto Scaling", "60-scaling-with-aws-auto-scaling.html"],
+          ["Working with Autoscaling Groups", "61-working-with-autoscaling-groups.html"],
+          ["Using Elastic Load Balancers (ALB & NLB)", "62-using-elastic-load-balancers-alb-and-nlb.html"],
+          ["Creating Load Balancers & Combining Them With Scaling", "63-creating-load-balancers-and-combining-them-with-scaling.html"],
+          ["Module Summary", "64-module-summary.html"],
+        ]
+      },
+      {
+        folder: "07_storing-files-with-ebs-and-efs-elastic-block-store-and-elastic-file-system",
+        title: "Section 07: EBS / EFS / FSx",
+        items: [
+          ["Module Introduction", "65-module-introduction.html"],
+          ["Why File Storage Is Important", "66-why-file-storage-is-important.html"],
+          ["Different Kinds of File Storage & AWS Services", "67-different-kinds-of-file-storage-and-aws-services.html"],
+          ["Understanding EBS (Elastic Block Store)", "68-understanding-ebs-elastic-block-store.html"],
+          ["EC2 Instance Store & EBS", "69-ec2-instance-store-and-ebs.html"],
+          ["Understanding EFS & EFS vs EBS", "70-understanding-efs-and-efs-vs-ebs.html"],
+          ["Using EFS & Exploring FSx File System Services", "71-using-efs-and-exploring-fsx-file-system-services.html"],
+          ["Module Summary", "72-module-summary.html"],
+        ]
+      },
+      {
+        folder: "08_s3-simple-storage-service-storing-any-objects-from-anywhere",
+        title: "Section 08: S3",
+        items: [
+          ["Module Introduction", "73-module-introduction.html"],
+          ["S3 - An Overview", "74-s3-an-overview.html"],
+          ["Working with S3 & Buckets", "75-working-with-s3-and-buckets.html"],
+          ["Understanding S3 Storage Classes (incl. Glacier)", "76-understanding-s3-storage-classes-incl-glacier.html"],
+          ["Highlighting S3 Glacier", "77-highlighting-s3-glacier.html"],
+          ["Advanced S3 Features", "78-advanced-s3-features.html"],
+          ["Demo: Public Buckets & Static Website Hosting", "79-demo-public-buckets-and-static-website-hosting.html"],
+          ["S3 vs EBS vs EFS", "80-s3-vs-ebs-vs-efs.html"],
+          ["Module Summary", "81-module-summary.html"],
+        ]
+      },
+      {
+        folder: "09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb",
+        title: "Section 09: Databases",
+        items: [
+          ["Module Introduction", "82-module-introduction.html"],
+          ["Databases & The Cloud: You Got Multiple Options!", "83-databases-and-the-cloud-you-got-multiple-options.html"],
+          ["RDS (Relational Database Service) - An Overview", "84-rds-relational-database-service-an-overview.html"],
+          ["RDS Configuration & In Action", "85-rds-configuration-and-in-action.html"],
+          ["Exploring Aurora", "86-exploring-aurora.html"],
+          ["Databases & VPCs", "87-databases-and-vpcs.html"],
+          ["Caching & ElastiCache", "88-caching-and-elasticache.html"],
+          ["Understanding DynamoDB (NoSQL Database)", "89-understanding-dynamodb-nosql-database.html"],
+          ["DynamoDB In Action", "90-dynamodb-in-action.html"],
+          ["DynamoDB - Advanced Features", "91-dynamodb-advanced-features.html"],
+          ["Other AWS Database Services", "92-other-aws-database-services.html"],
+          ["Saving Data with AWS Backup", "93-saving-data-with-aws-backup.html"],
+          ["Module Summary", "94-module-summary.html"],
+        ]
+      },
+      {
+        folder: "10_global-networking-and-content-delivery-with-route53-cloudfront-and-more",
+        title: "Section 10: Global Networking & CDN",
+        items: [
+          ["Module Introduction", "95-module-introduction.html"],
+          ["Understanding Domains & DNS (Domain Name Systems)", "96-understanding-domains-and-dns-domain-name-systems.html"],
+          ["Route 53: Custom Domains & Domain Routing", "97-route-53-custom-domains-and-domain-routing.html"],
+          ["Understanding CDNs, Edge Locations & CloudFront", "98-understanding-cdns-edge-locations-and-cloudfront.html"],
+          ["Using CloudFront", "99-using-cloudfront.html"],
+          ["More AWS Infrastructure: Local Zones, Outposts & Wavelength", "100-more-aws-infrastructure-local-zones-outposts-and-wavelength.html"],
+          ["Speed Boosts via Global Accelerator & S3 Transfer Acceleration", "101-speed-boosts-via-global-accelerator-and-s3-transfer-acceleration.html"],
+          ["Using Global Accelerator As A Load Balancer", "102-using-global-accelerator-as-a-load-balancer.html"],
+          ["Encrypting Network Traffic via SSL & ACM (AWS Certificate Manager)", "103-encrypting-network-traffic-via-ssl-and-acm-aws-certificate-manager.html"],
+          ["Module Summary", "104-module-summary.html"],
+        ]
+      },
+      {
+        folder: "11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr",
+        title: "Section 11: Serverless & Containers",
+        items: [
+          ["Module Introduction", "105-module-introduction.html"],
+          ["Introducing Serverless Services & AWS Lambda", "106-introducing-serverless-services-and-aws-lambda.html"],
+          ["AWS Lambda: Theory", "107-aws-lambda-theory.html"],
+          ["Using AWS Lambda", "108-using-aws-lambda.html"],
+          ["EC2 vs Lambda", "109-ec2-vs-lambda.html"],
+          ["Working with Containers & Understanding the Idea Behind Containers", "110-working-with-containers-and-understanding-the-idea-behind-containers.html"],
+          ["ECS & EKS (Elastic Container Service & Elastic Kubernetes Service)", "111-ecs-and-eks-elastic-container-service-and-elastic-kubernetes-service.html"],
+          ["Understanding ECS & Fargate", "112-understanding-ecs-and-fargate.html"],
+          ["Managing Images via ECR (Elastic Container Registry)", "113-managing-images-via-ecr-elastic-container-registry.html"],
+          ["Module Summary", "114-module-summary.html"],
+        ]
+      },
+      {
+        folder: "12_building-serverless-rest-and-graphql-apis-via-api-gateway-and-appsync",
+        title: "Section 12: APIs (API Gateway / AppSync)",
+        items: [
+          ["Module Introduction", "115-module-introduction.html"],
+          ["Why APIs?", "116-why-apis.html"],
+          ["Building REST APIs via API Gateway", "117-building-rest-apis-via-api-gateway.html"],
+          ["Building GraphQL APIs via AppSync", "118-building-graphql-apis-via-appsync.html"],
+          ["Adding User Authentication via Cognito", "119-adding-user-authentication-via-cognito.html"],
+          ["Frontend + AWS = Amplify", "120-frontend-plus-aws-equals-amplify.html"],
+          ["Module Summary", "121-module-summary.html"],
+        ]
+      },
+      {
+        folder: "13_simplifying-application-deployment-via-elastic-beanstalk-lightsail-and-apprunner",
+        title: "Section 13: Deployment",
+        items: [
+          ["Module Introduction", "122-module-introduction.html"],
+          ["Using Elastic Beanstalk for Deploying Application Environments", "123-using-elastic-beanstalk-for-deploying-application-environments.html"],
+          ["Lightsail: Turning AWS Into A Simple Web Hosting Provider", "124-lightsail-turning-aws-into-a-simple-web-hosting-provider.html"],
+          ["Simplifying Container Deployment via AppRunner", "125-simplifying-container-deployment-via-apprunner.html"],
+          ["Module Summary", "126-module-summary.html"],
+        ]
+      },
+      {
+        folder: "14_app-integration-with-sqs-sns-and-eventbridge",
+        title: "Section 14: App Integration",
+        items: [
+          ["Module Introduction", "127-module-introduction.html"],
+          ["What's The Problem? Why App Integration?", "128-whats-the-problem-why-app-integration.html"],
+          ["Key AWS App Integration Services - An Overview", "129-key-aws-app-integration-services-an-overview.html"],
+          ["SQS, SNS & EventBridge In Action", "130-sqs-sns-and-eventbridge-in-action.html"],
+          ["Amazon MQ", "131-amazon-mq.html"],
+          ["A Brief Look At SES", "132-a-brief-look-at-ses.html"],
+          ["Introducing CloudMap", "133-introducing-cloudmap.html"],
+          ["Understanding Step Functions", "134-understanding-step-functions.html"],
+          ["Module Summary", "135-module-summary.html"],
+        ]
+      },
+      {
+        folder: "15_monitoring-workloads",
+        title: "Section 15: Monitoring",
+        items: [
+          ["Module Introduction", "136-module-introduction.html"],
+          ["Why Monitoring Matters", "137-why-monitoring-matters.html"],
+          ["CloudWatch - Theory", "138-cloudwatch-theory.html"],
+          ["CloudWatch In Action", "139-cloudwatch-in-action.html"],
+          ["Beyond The Basics & X-Ray", "140-beyond-the-basics-and-x-ray.html"],
+          ["VPC Flow Logs & Advanced Monitoring", "141-vpc-flow-logs-and-enabling-advanced-monitoring-in-services.html"],
+          ["Module Summary", "142-module-summary.html"],
+        ]
+      },
+      {
+        folder: "16_managing-compute-resources-at-scale",
+        title: "Section 16: Managing Compute at Scale",
+        items: [
+          ["Module Introduction", "143-module-introduction.html"],
+          ["AWS Batch For Batch Jobs", "144-aws-batch-for-batch-jobs.html"],
+          ["Compute Optimizer", "145-optimizing-compute-resources-with-compute-optimizer.html"],
+          ["Introducing Systems Manager", "146-introducing-systems-manager.html"],
+          ["Systems Manager: AppConfig & Parameter Store", "147-systems-manager-appconfig-and-parameter-store.html"],
+          ["AWS OpsWorks", "148-aws-opsworks.html"],
+          ["Standardizing Implementations & Solutions", "149-standardizing-service-implementations-and-solutions.html"],
+          ["Module Summary", "150-module-summary.html"],
+        ]
+      },
+      {
+        folder: "17_cloud-migration-and-hybrid-cloud-solutions",
+        title: "Section 17: Migration & Hybrid",
+        items: [
+          ["Module Introduction", "151-module-introduction.html"],
+          ["What & Why?", "152-what-and-why.html"],
+          ["Cloud Migration: Challenges", "153-cloud-migration-challenges.html"],
+          ["Cloud Migration: Solutions", "154-cloud-migration-solutions.html"],
+          ["Key Migration Services", "155-key-migration-services.html"],
+          ["Snow Family & Snowball Edge", "156-the-snow-family-and-snowball-edge.html"],
+          ["Hybrid Cloud - Key Services", "157-hybrid-cloud-computing-key-services.html"],
+          ["VPN & DirectConnect", "158-connecting-to-the-aws-cloud-via-vpn-and-directconnect.html"],
+          ["Module Summary", "159-module-summary.html"],
+        ]
+      },
+      {
+        folder: "18_data-analytics-and-data-science",
+        title: "Section 18: Data Analytics & Data Science",
+        items: [
+          ["Module Introduction", "160-module-introduction.html"],
+          ["Typical Tasks & Problems", "161-data-analytics-typical-tasks-and-problems.html"],
+          ["Introducing AWS Kinesis", "162-introducing-aws-kinesis.html"],
+          ["Redshift & Data Lakes", "163-data-warehouses-redshift-and-data-lakes.html"],
+          ["A Closer Look at Redshift", "164-a-closer-look-at-redshift.html"],
+          ["Extracting Data With Glue", "165-extracting-data-with-glue.html"],
+          ["EMR Big Data Workloads", "166-self-managed-big-data-workloads-with-emr.html"],
+          ["QuickSight & Athena", "167-analysing-data-with-quicksight-and-athena.html"],
+          ["Searching & Visualizing Data", "168-searching-and-visualizing-data.html"],
+          ["Module Summary", "169-module-summary.html"],
+        ]
+      },
+      {
+        folder: "19_cloud-management",
+        title: "Section 19: Cloud Management",
+        items: [
+          ["Module Introduction", "170-module-introduction.html"],
+          ["AWS Organizations", "171-introducing-aws-organizations-multi-account-environments.html"],
+          ["Control Tower", "172-getting-started-with-control-tower.html"],
+          ["Very Important: Cost Management", "173-very-important-cost-management.html"],
+          ["Using Tags", "174-using-tags.html"],
+          ["Consolidated Billing", "175-consolidated-billing.html"],
+          ["CloudFormation", "176-introducing-cloudformation-for-reproducible-cloud-resources.html"],
+          ["Managing Service & App Configurations", "177-managing-service-and-app-configurations.html"],
+          ["Module Summary", "178-module-summary.html"],
+        ]
+      },
+      {
+        folder: "20_security-a-closer-look",
+        title: "Section 20: Security — A Closer Look",
+        items: [
+          ["Module Introduction", "179-module-introduction.html"],
+          ["What Should Be Secured", "180-what-should-be-secured.html"],
+          ["Re-introducing IAM", "181-re-introducing-iam.html"],
+          ["User Authentication, SSO & Managed Directory", "182-user-authentication-sso-and-managed-directory.html"],
+          ["CloudTrail & GuardDuty", "183-track-account-usage-via-cloudtrail-and-guardduty.html"],
+          ["Compliance & Legal Requirements", "184-compliance-and-legal-requirements.html"],
+          ["Inspector & Detective", "185-app-protection-with-inspector-and-detective.html"],
+          ["WAF & Network Firewall", "186-protecting-traffic-with-waf-and-network-firewall.html"],
+          ["Shield (DDoS)", "187-protecting-against-ddos-attacks-with-shield.html"],
+          ["Encrypting Data", "188-encrypting-data-at-rest-and-in-transit.html"],
+          ["Secrets Manager", "189-managing-code-secrets-with-secrets-manager.html"],
+          ["Macie", "190-protecting-data-with-macie.html"],
+          ["Security Hub", "191-introducing-security-hub.html"],
+          ["Module Summary", "192-module-summary.html"],
+        ]
+      },
+      {
+        folder: "21_developing-for-with-and-in-the-cloud",
+        title: "Section 21: Developing In The Cloud",
+        items: [
+          ["Module Introduction", "193-module-introduction.html"],
+          ["A Typical Development Workflow", "194-a-typical-development-workflow.html"],
+          ["Cloud9 & CodeCommit", "195-writing-code-with-cloud9-and-using-codecommit.html"],
+          ["CodeBuild & CodeArtifact", "196-building-code-with-codebuild-and-codeartifact.html"],
+          ["Deployments with CodeDeploy", "197-deployments-with-codedeploy.html"],
+          ["CodePipeline & CodeStar", "198-automated-code-workflows-with-codepipeline-and-codestar.html"],
+          ["CodeGuru & DevOpsGuru", "199-introducing-codeguru-and-devopsguru.html"],
+          ["AWS CDK (Note)", "200-a-brief-note-about-the-aws-cdk.html"],
+          ["Module Summary", "201-module-summary.html"],
+        ]
+      },
+      {
+        folder: "22_other-services",
+        title: "Section 22: Other Services",
+        items: [
+          ["Module Introduction", "202-module-introduction.html"],
+          ["Machine Learning on AWS", "203-machine-learning-on-aws.html"],
+          ["Artificial Intelligence Services", "204-artificial-intelligence-services.html"],
+          ["IoT on AWS", "205-internet-of-things-iot-on-aws.html"],
+          ["Business Applications", "206-business-applications.html"],
+          ["Media Services", "207-media-services.html"],
+          ["Amazon Connect", "208-amazon-connect-a-cloud-call-center.html"],
+        ]
+      },
+      {
+        folder: "23_cloud-best-practices",
+        title: "Section 23: Cloud Best Practices",
+        items: [
+          ["Module Introduction", "209-module-introduction.html"],
+          ["Well-Architected Framework", "210-the-well-architected-framework.html"],
+          ["Well-Architected Tool", "211-the-well-architected-tool.html"],
+          ["Trusted Advisor", "212-automated-suggestions-with-trusted-advisor.html"],
+          ["Acceptable Use Policy", "213-allowed-or-not-allowed-acceptable-use-policy.html"],
+        ]
+      },
+      {
+        folder: "24_beyond-aws-services-additional-offerings",
+        title: "Section 24: Beyond AWS",
+        items: [
+          ["Module Introduction", "214-module-introduction.html"],
+          ["AWS Partner Network (APN)", "215-the-aws-partner-network-apn.html"],
+          ["AWS Marketplace", "216-the-aws-marketplace.html"],
+          ["AWS Professional & Managed Services", "217-aws-professional-and-managed-services.html"],
+        ]
+      },
+      {
+        folder: "25_preparing-for-the-exam",
+        title: "Section 25: Preparing For The Exam",
+        items: [
+          ["How To Prepare For The Exam", "218-how-to-prepare-for-the-exam.html"],
+          ["Exam Content & Structure", "219-cloud-practitioner-exam-content-and-structure.html"],
+          ["Additional Reading", "220-exam-preparation-additional-reading.html"],
+          ["English as Second Language (+30 mins)", "221-english-as-a-second-language-get-30-minutes-extra.html"],
+          ["Exam Recommendations & Success", "222-exam-recommendations-and-share-your-success.html"],
+          ["Example Question & Approach", "223-an-example-question-and-how-to-approach-exam-questions.html"],
+          ["Bonus Lecture", "224-bonus-lecture.html"],
+        ]
+      },
+    ];
+
+    // Flatten into ordered lecture list for Prev/Next
+    const LECTURES = [];
+    SECTIONS.forEach((sec) => {
+      sec.items.forEach(([title, file]) => {
+        LECTURES.push({
+          sectionTitle: sec.title,
+          folder: sec.folder,
+          title,
+          file,
+          path: `${sec.folder}/${file}`
+        });
+      });
+    });
+
+    // UI elements
+    const app = document.getElementById("app");
+    const overlay = document.getElementById("overlay");
+    const sidebarBody = document.getElementById("sidebarBody");
+    const searchInput = document.getElementById("search");
+    const viewer = document.getElementById("viewer");
+    const currentTitle = document.getElementById("currentTitle");
+    const currentPath = document.getElementById("currentPath");
+    const btnPrev = document.getElementById("btnPrev");
+    const btnNext = document.getElementById("btnNext");
+    const btnOpen = document.getElementById("btnOpen");
+    const btnPrint = document.getElementById("btnPrint");
+    const btnToggleSidebar = document.getElementById("btnToggleSidebar");
+
+    // State
+    let currentIndex = -1;
+
+    function escapeHtml(s) {
+      return (s || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function isMobile() {
+      return window.matchMedia("(max-width: 920px)").matches;
+    }
+
+    function setSidebarStateDesktop(collapsed) {
+      if (collapsed) app.classList.add("sidebar-collapsed");
+      else app.classList.remove("sidebar-collapsed");
+      try { localStorage.setItem("aws_index_sidebar_collapsed", collapsed ? "1" : "0"); } catch (e) {}
+    }
+
+    function openSidebarMobile() {
+      app.classList.add("sidebar-open-mobile");
+      overlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeSidebarMobile() {
+      app.classList.remove("sidebar-open-mobile");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+
+    function toggleSidebar() {
+      if (isMobile()) {
+        if (app.classList.contains("sidebar-open-mobile")) closeSidebarMobile();
+        else openSidebarMobile();
+      } else {
+        const collapsed = app.classList.contains("sidebar-collapsed");
+        setSidebarStateDesktop(!collapsed);
+      }
+    }
+
+    function buildSidebar() {
+      sidebarBody.innerHTML = "";
+      SECTIONS.forEach((sec, secIdx) => {
+        const details = document.createElement("details");
+        details.className = "section";
+        if (secIdx < 2) details.open = true;
+
+        const summary = document.createElement("summary");
+        summary.innerHTML = `
+          <div class="sec-left">
+            <div class="sec-name">📌 ${escapeHtml(sec.title)}</div>
+            <div class="sec-folder">${escapeHtml(sec.folder)}</div>
+          </div>
+          <div class="sec-count">(${sec.items.length})</div>
+        `;
+        details.appendChild(summary);
+
+        const list = document.createElement("div");
+        list.className = "lecture-list";
+
+        sec.items.forEach(([title, file]) => {
+          const path = `${sec.folder}/${file}`;
+          const a = document.createElement("a");
+          a.className = "lecture";
+          a.href = `#file=${encodeURIComponent(path)}`;
+          a.dataset.path = path;
+          a.dataset.title = title;
+          a.dataset.section = sec.title;
+          a.innerHTML = `📄 ${escapeHtml(title)}<small>${escapeHtml(path)}</small>`;
+          a.addEventListener("click", (e) => {
+            e.preventDefault();
+            loadByPath(path, true);
+            // On mobile, close after selection
+            if (isMobile()) closeSidebarMobile();
+          });
+          list.appendChild(a);
+        });
+
+        details.appendChild(list);
+        sidebarBody.appendChild(details);
+      });
+    }
+
+    function setActiveLink(path) {
+      document.querySelectorAll(".lecture").forEach(a => {
+        a.classList.toggle("active", a.dataset.path === path);
+      });
+    }
+
+    function updateTopbar() {
+      if (currentIndex < 0) {
+        btnPrev.disabled = true;
+        btnNext.disabled = true;
+        btnOpen.disabled = true;
+        btnPrint.disabled = true;
+        currentTitle.textContent = "Select a lecture from the sidebar…";
+        currentPath.textContent = "Tip: Use search, then click a lecture. ✅";
+        return;
+      }
+
+      const item = LECTURES[currentIndex];
+      btnPrev.disabled = currentIndex === 0;
+      btnNext.disabled = currentIndex === LECTURES.length - 1;
+      btnOpen.disabled = false;
+      btnPrint.disabled = false;
+
+      currentTitle.textContent = `🧠 ${item.title}`;
+      currentPath.textContent = `📂 ${item.sectionTitle}  •  ${item.path}`;
+    }
+
+    function scrollToTopEverywhere() {
+      // Scroll index page top
+      window.scrollTo(0, 0);
+
+      // Scroll iframe content to top (works if same-origin local files)
+      try {
+        viewer.contentWindow.scrollTo(0, 0);
+        const doc = viewer.contentDocument;
+        if (doc) {
+          doc.documentElement.scrollTop = 0;
+          if (doc.body) doc.body.scrollTop = 0;
+        }
+      } catch (err) {
+        // ignore if browser blocks access
+      }
+    }
+
+    function loadByPath(path, pushHash) {
+      const idx = LECTURES.findIndex(x => x.path === path);
+      if (idx === -1) return;
+
+      currentIndex = idx;
+      const item = LECTURES[currentIndex];
+
+      // Set iframe src
+      viewer.src = item.path;
+
+      // UI updates
+      setActiveLink(item.path);
+      updateTopbar();
+
+      // Update URL hash
+      if (pushHash) {
+        location.hash = `file=${encodeURIComponent(item.path)}`;
+      }
+
+      // When content finishes loading, scroll to top
+      viewer.onload = () => {
+        scrollToTopEverywhere();
+      };
+    }
+
+    function loadFromHash() {
+      const h = location.hash || "";
+      const m = h.match(/file=([^&]+)/);
+      if (m && m[1]) {
+        const path = decodeURIComponent(m[1]);
+        loadByPath(path, false);
+        return true;
+      }
+      return false;
+    }
+
+    // Prev/Next
+    btnPrev.addEventListener("click", () => {
+      if (currentIndex > 0) loadByPath(LECTURES[currentIndex - 1].path, true);
+    });
+    btnNext.addEventListener("click", () => {
+      if (currentIndex >= 0 && currentIndex < LECTURES.length - 1) {
+        loadByPath(LECTURES[currentIndex + 1].path, true);
+      }
+    });
+
+    // Open in new tab
+    btnOpen.addEventListener("click", () => {
+      if (currentIndex < 0) return;
+      window.open(LECTURES[currentIndex].path, "_blank");
+    });
+
+    // Print current lecture
+    btnPrint.addEventListener("click", () => {
+      if (currentIndex < 0) return;
+      try {
+        viewer.contentWindow.focus();
+        viewer.contentWindow.print();
+      } catch (err) {
+        window.open(LECTURES[currentIndex].path, "_blank");
+      }
+    });
+
+    // Toggle sidebar
+    btnToggleSidebar.addEventListener("click", toggleSidebar);
+    overlay.addEventListener("click", () => {
+      if (isMobile()) closeSidebarMobile();
+    });
+
+    // ESC closes sidebar on mobile
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isMobile() && app.classList.contains("sidebar-open-mobile")) {
+        closeSidebarMobile();
+      }
+    });
+
+    // Search
+    searchInput.addEventListener("input", () => {
+      const q = (searchInput.value || "").trim().toLowerCase();
+      document.querySelectorAll(".lecture").forEach(a => {
+        const text = `${a.dataset.title} ${a.dataset.path} ${a.dataset.section}`.toLowerCase();
+        a.style.display = text.includes(q) ? "block" : "none";
+      });
+    });
+
+    // Back/forward
+    window.addEventListener("hashchange", () => {
+      loadFromHash();
+    });
+
+    // On resize: ensure correct sidebar mode (close mobile drawer, keep desktop preference)
+    window.addEventListener("resize", () => {
+      if (!isMobile()) {
+        closeSidebarMobile();
+      }
+    });
+
+    // Init
+    buildSidebar();
+
+    // Restore desktop collapsed preference
+    try {
+      const collapsed = localStorage.getItem("aws_index_sidebar_collapsed") === "1";
+      if (!isMobile()) setSidebarStateDesktop(collapsed);
+    } catch (e) {}
+
+    // Load hash target, otherwise load first lecture
+    if (!loadFromHash()) {
+      loadByPath(LECTURES[0].path, true);
+    }
+  </script>
+</body>
+</html>

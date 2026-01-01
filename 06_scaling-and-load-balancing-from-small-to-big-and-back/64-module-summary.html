@@ -1,0 +1,398 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Reviewer — Module Summary: Scaling & Load Balancing</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e5e5e5;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Single-column container */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 22px;
+    }
+
+    header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover { border-color: #cfcfcf; }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    h2 { font-size: 18px; margin: 18px 0 10px; }
+    h3 { font-size: 15.5px; margin: 14px 0 8px; }
+
+    p { margin: 10px 0; }
+
+    .note {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    ul { margin: 8px 0 12px 20px; padding: 0; }
+    li { margin: 7px 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 10px 0 12px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .card .title {
+      margin: 0 0 6px;
+      font-weight: 700;
+      font-size: 14.5px;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+    }
+
+    pre {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 10px 0 12px;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      white-space: nowrap;
+    }
+
+    .hr { height: 1px; background: var(--border); margin: 16px 0; }
+
+    /* Prevent cut-off in print: wrap long words/URLs */
+    p, li, div, span {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { padding: 0; max-width: none; }
+      .actions { display: none !important; }
+      a { color: #000; text-decoration: underline; }
+      a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 10.5px;
+        color: #333;
+      }
+      .note, .card, pre { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>Scaling & Load Balancing — Module Summary (Reviewer)</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) • Beginner-friendly notes + examples • Single-column A4 print layout</p>
+      <div class="meta">
+        <span class="pill">📌 Topic: Elasticity, Scalability, High Availability</span>
+        <span class="pill">🧠 Focus: EC2 Auto Scaling + Elastic Load Balancing</span>
+        <span class="pill">📝 Goal: Understand the “why” + exam vocabulary</span>
+      </div>
+      <div class="actions" aria-label="Page actions">
+        <button type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button type="button" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Jump to Quick Check</button>
+      </div>
+    </header>
+
+    <section>
+      <h2>1) Core idea of this section 🌍</h2>
+      <p>
+        This section explains how AWS helps you handle <strong>changing workload requirements</strong> (traffic spikes) using
+        <strong>Auto Scaling</strong> and <strong>Load Balancing</strong>.
+      </p>
+      <div class="note">
+        <strong>Why it matters (business impact) 💼</strong>
+        <ul>
+          <li>📉 <strong>Too little capacity</strong> → slow app or crash → lost users / lost revenue.</li>
+          <li>📈 <strong>Too much capacity</strong> → you pay for idle servers → wasted cost.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="hr"></div>
+
+    <section>
+      <h2>2) Key terms you must remember 🧠</h2>
+      <ul>
+        <li>⚡ <strong>Elasticity</strong>: ability to scale instantly when needed (up and down).</li>
+        <li>📈 <strong>Scalability</strong>: ability to grow capacity in general (handle more load).</li>
+        <li>🛡️ <strong>High availability</strong>: staying online by avoiding single points of failure and spreading workload.</li>
+      </ul>
+
+      <h3>Beginner example 🧩</h3>
+      <p>
+        A web app has normal traffic most days, but spikes during a sale. AWS lets you add instances during spikes and remove them after.
+        You get performance when you need it and avoid paying too much when you don’t.
+      </p>
+    </section>
+
+    <div class="hr"></div>
+
+    <section>
+      <h2>3) Two core AWS capabilities in this topic 🧱🧱</h2>
+      <div class="grid">
+        <div class="card">
+          <p class="title">🔁 EC2 Auto Scaling</p>
+          <p>
+            Automatically adds/removes EC2 instances based on rules you set.
+            It helps keep the right capacity without over-provisioning.
+          </p>
+        </div>
+        <div class="card">
+          <p class="title">⚖️ Elastic Load Balancing (ELB)</p>
+          <p>
+            Distributes incoming traffic across instances so the workload is shared and no single instance gets overwhelmed.
+          </p>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Mental model 🧠</strong>
+        <ul>
+          <li>Auto Scaling decides: “How many servers do we need?”</li>
+          <li>Load Balancer decides: “Which server gets this request?”</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="hr"></div>
+
+    <section>
+      <h2>4) EC2 Auto Scaling — must-know details 🔁</h2>
+      <h3>Capacity settings</h3>
+      <ul>
+        <li>🎯 <strong>Desired capacity</strong>: default number of instances you want running.</li>
+        <li>🧱 <strong>Minimum</strong>: never go below this.</li>
+        <li>🚀 <strong>Maximum</strong>: never go above this.</li>
+      </ul>
+
+      <h3>Launch Template / Launch Configuration 🧾</h3>
+      <p>
+        Auto Scaling must know <em>what kind of instances</em> to launch. That configuration is stored in a <strong>Launch Template</strong>.
+      </p>
+      <ul>
+        <li>📀 AMI (OS + base software)</li>
+        <li>🖥️ Instance type</li>
+        <li>🌐 VPC + subnets (where instances will be placed)</li>
+        <li>🧱 Security groups (instance firewall rules)</li>
+      </ul>
+
+      <h3>Scaling triggers (rules) 📏</h3>
+      <p>
+        Auto Scaling changes instance count based on metrics (commonly average CPU utilization). You define the thresholds.
+      </p>
+      <pre>
+Example (conceptual):
+- If average CPU > 50%  -> scale out (add instances)
+- If average CPU < 20%  -> scale in  (remove instances)
+      </pre>
+
+      <div class="note">
+        <strong>Key takeaway ✅</strong>
+        <p>
+          You keep control over the instance type/AMI/VPC/subnets, but AWS launches (and removes) instances automatically.
+        </p>
+      </div>
+    </section>
+
+    <div class="hr"></div>
+
+    <section>
+      <h2>5) Elastic Load Balancing — must-know details ⚖️</h2>
+      <p>
+        Scaling is not enough by itself. If you have multiple instances, you also need traffic distributed evenly.
+        That is what the <strong>Elastic Load Balancer</strong> service provides.
+      </p>
+
+      <h3>Two main load balancers (for this level) 🧭</h3>
+      <div class="grid">
+        <div class="card">
+          <p class="title">🌐 ALB — Application Load Balancer</p>
+          <ul>
+            <li>Best default for <strong>websites / HTTP(S)</strong>.</li>
+            <li>More features for routing (path/cookie/rules).</li>
+            <li>Can do <strong>SSL termination</strong> (handles HTTPS, forwards traffic internally).</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="title">🧵 NLB — Network Load Balancer</p>
+          <ul>
+            <li>Great for <strong>non-HTTP</strong> network traffic.</li>
+            <li>Can offer strong performance in certain cases.</li>
+            <li>Provides a <strong>fixed IP</strong> (useful in some scenarios).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Plain-English SSL termination 🔒</strong>
+        <p>
+          Your users send HTTPS to the Load Balancer. The Load Balancer decrypts it, then forwards requests inside AWS.
+          Your EC2 app does not need to manage certificates on every instance.
+        </p>
+      </div>
+
+      <h3>Target Groups 🎯</h3>
+      <p>
+        A <strong>Target Group</strong> is the group of instances that can receive traffic.
+        Target groups are connected to your <strong>VPC</strong> and <strong>subnets</strong>.
+      </p>
+      <ul>
+        <li>🔗 If the Load Balancer is connected to an Auto Scaling Group, instances launched by Auto Scaling are added automatically to the target group.</li>
+        <li>🩺 Health checks ensure traffic is only routed to healthy instances.</li>
+      </ul>
+
+      <div class="note">
+        <strong>Important detail from the lecture 🧠</strong>
+        <p>
+          Load balancer rules (how requests are forwarded) are typically configured <em>after</em> the load balancer is created.
+        </p>
+      </div>
+    </section>
+
+    <div class="hr"></div>
+
+    <section id="quick-check">
+      <h2>6) Quick Check (self-test) ✅</h2>
+      <ul>
+        <li>🤔 What problem happens with <strong>too little capacity</strong>?</li>
+        <li>🤔 What problem happens with <strong>too much capacity</strong>?</li>
+        <li>🤔 What does <strong>Auto Scaling</strong> do in one sentence?</li>
+        <li>🤔 What does a <strong>Load Balancer</strong> do in one sentence?</li>
+        <li>🤔 ALB vs NLB: which one is usually best for a website?</li>
+        <li>🤔 What is a <strong>Target Group</strong>?</li>
+      </ul>
+
+      <div class="note">
+        <strong>Mini answers (peek) 👀</strong>
+        <ul>
+          <li>Too little: app slows/crashes; lose users and business.</li>
+          <li>Too much: you pay for idle resources.</li>
+          <li>Auto Scaling: adjusts the number of EC2 instances automatically based on rules/metrics.</li>
+          <li>Load Balancer: distributes incoming traffic across instances evenly.</li>
+          <li>ALB is typically used for websites/HTTP(S).</li>
+          <li>Target Group: the pool of instances where the load balancer forwards requests.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="note" style="margin-top:16px;">
+      <strong>Print tips 🖨️</strong>
+      <ul>
+        <li>Use <span class="kbd">Ctrl</span> + <span class="kbd">P</span> (Windows) or <span class="kbd">Cmd</span> + <span class="kbd">P</span> (Mac).</li>
+        <li>Paper size: <strong>A4</strong>. Margins are already optimized via CSS.</li>
+        <li>If you see content cut off, ensure your browser print settings are not forcing “Fit to page” with weird scaling.</li>
+      </ul>
+    </footer>
+  </main>
+</body>
+</html>

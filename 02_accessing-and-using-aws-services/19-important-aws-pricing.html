@@ -1,0 +1,356 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 19 Important AWS Pricing Concepts</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    a{ color: var(--accent); }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .qna strong{ display:block; margin: 10px 0 4px; }
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      white-space: pre-wrap;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+      .mono{ font-size: 10.5pt; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Accessing & Using AWS Services</p>
+      <h1>19 — Important AWS Pricing Concepts 💸</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Lecture Goal</h2>
+        <p>Understand common AWS pricing models (especially <strong>On-Demand</strong>), how to look up pricing, and how to estimate costs using the <strong>AWS Pricing Calculator</strong>. Also learn key terms like <strong>Total Cost of Ownership (TCO)</strong>.</p>
+        <div class="callout">
+          <p><strong>Big idea ✅</strong> AWS usage generally costs money, and pricing depends on the service, region, and usage units (e.g., per hour, per GB).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>💡 Core Reminder: AWS Services Usually Cost Money</h2>
+        <p>AWS is a business—so most AWS services are paid. Pricing varies by service and by how you use the service.</p>
+        <div class="mini">
+          <p><strong>Beginner tip 💡</strong> Don’t guess costs. Always check the pricing page and/or use the Pricing Calculator before running resources for long periods.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧾 Common AWS Payment Models</h2>
+        <p>AWS offers different payment models depending on the service:</p>
+        <div class="grid">
+          <div class="mini">
+            <h3>1) On-Demand (Most Common) ⏱️</h3>
+            <p>You pay only for what you use, based on usage.</p>
+            <ul>
+              <li>🖥️ Example: rent a server → pay for each hour it runs</li>
+              <li>⏹️ Stop it → stop paying (in that basic model example)</li>
+            </ul>
+            <div class="callout">
+              <p><strong>Why it’s common ✅</strong> On-demand pricing matches one of the main cloud benefits: flexible usage without long commitments.</p>
+            </div>
+          </div>
+          <div class="mini">
+            <h3>2) In-Advance / Upfront Options 💳</h3>
+            <p>For some services/features, you can commit to a certain usage amount and pay upfront to get a discount.</p>
+            <p><em>Note:</em> Not available for all services.</p>
+          </div>
+          <div class="mini">
+            <h3>3) Subscription Models 🔁</h3>
+            <p>Some offerings charge a regular fee (monthly/yearly).</p>
+            <ul>
+              <li>Example from the lecture: AWS <strong>Support Plans</strong></li>
+            </ul>
+            <p><em>Note:</em> Subscriptions are not super common across AWS services overall.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>📏 Pricing Units Vary by Service</h2>
+        <p>How AWS charges you depends on the service and what you consume.</p>
+        <ul>
+          <li>⏱️ Some services charge <strong>per hour</strong> or per time unit (e.g., server runtime).</li>
+          <li>🗄️ Some services charge <strong>per GB stored</strong> (e.g., storage services).</li>
+          <li>📦 Other services can charge per request, per CPU, per feature, etc.</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Key point ✅</strong> You must be able to look up service-specific pricing details, because the units and rates vary.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔎 How to Look Up AWS Service Pricing</h2>
+        <p>The easiest approach described is to search for <strong>AWS pricing</strong> and open the official pricing pages.</p>
+        <ul>
+          <li>Open the general AWS pricing page</li>
+          <li>Navigate to a specific service (e.g., Amazon EC2)</li>
+          <li>Read the pricing for the exact option you plan to use</li>
+        </ul>
+
+        <div class="mini">
+          <h3>EC2 pricing example (concept) 🧪</h3>
+          <p>On-demand EC2 pricing can vary based on:</p>
+          <ul>
+            <li>🌍 Region</li>
+            <li>🧩 Operating system</li>
+            <li>🖥️ Instance/server type (how powerful it is)</li>
+            <li>🧠 CPU specifications</li>
+          </ul>
+          <p><em>Result:</em> different hourly rates depending on your choices.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧮 AWS Pricing Calculator (Know This for the Exam)</h2>
+        <p>The lecture highlights the <strong>AWS Pricing Calculator</strong> as a key tool for estimating costs.</p>
+        <div class="grid">
+          <div class="mini">
+            <h3>✅ What it does</h3>
+            <ul>
+              <li>Estimates expected costs for selected services</li>
+              <li>Shows an expected <strong>monthly cost</strong> based on your inputs</li>
+              <li>Lets you compare different payment strategies (when available)</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>🆓 Can you use it without logging in?</h3>
+            <p>Yes—according to the lecture, it can be used without being logged in.</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p><strong>Beginner tip 💡</strong> Use the calculator before launching services for real—so you understand the “ballpark” monthly cost.</p>
+        </div>
+
+        <div class="mini">
+          <h3>Example (conceptual steps) 🧪</h3>
+          <div class="mono">1) Choose a service (e.g., EC2)
+2) Select region
+3) Pick usage parameters (simple or detailed)
+4) Run estimate → see expected monthly cost
+5) Compare strategies (if available)</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🏷️ Total Cost of Ownership (TCO)</h2>
+        <p><strong>Total Cost of Ownership</strong> (TCO) is the total cost of running a workload either:</p>
+        <ul>
+          <li>🏢 On-premises (local data center): hardware + infrastructure + staff + maintenance, etc.</li>
+          <li>☁️ In the cloud: service usage and related costs</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Why it matters ✅</strong> Companies can compare on-prem vs cloud costs to decide where a workload should run.</p>
+        </div>
+        <div class="mini">
+          <p><strong>Pricing Calculator link to TCO 💡</strong> You can estimate cloud costs using the calculator and compare it against your on-prem costs.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>⚠️ Practical Reminder: Avoid Surprise Bills</h2>
+        <div class="warning">
+          <p><strong>Important ⚠️</strong> It’s easy to spend more than expected if you launch services and forget to stop or delete them (especially when learning).</p>
+        </div>
+        <div class="callout">
+          <p><strong>Next topic ✅</strong> The lecture transitions to cost management and the Free Tier next.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Exam Focus)</h2>
+        <span class="tag">On-Demand</span>
+        <span class="tag">Upfront / In-Advance</span>
+        <span class="tag">Subscription</span>
+        <span class="tag">Pricing Units</span>
+        <span class="tag">Service Pricing Pages</span>
+        <span class="tag">AWS Pricing Calculator</span>
+        <span class="tag">Total Cost of Ownership (TCO)</span>
+        <span class="tag">Region-based Pricing</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="qna">
+          <strong>Q1: What is the most common AWS pricing model mentioned?</strong>
+          <p>A: On-Demand (pay for what you use).</p>
+
+          <strong>Q2: Give two examples of different pricing units.</strong>
+          <p>A: Per hour (compute/server runtime) and per GB stored (storage).</p>
+
+          <strong>Q3: What tool should you know for the exam to estimate costs?</strong>
+          <p>A: The AWS Pricing Calculator.</p>
+
+          <strong>Q4: Name two factors that can affect EC2 pricing in the lecture example.</strong>
+          <p>A: Region, operating system, instance type, CPU specs (any two).</p>
+
+          <strong>Q5: What does TCO mean?</strong>
+          <p>A: Total Cost of Ownership—the total cost of running a workload in the cloud vs on-premises.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

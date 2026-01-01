@@ -1,0 +1,356 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — CodeGuru & DevOps Guru</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent2: #1a73e8;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 18px 16px;
+    }
+
+    .kicker {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.55rem;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .toolbar {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn.primary {
+      border-color: rgba(11, 87, 208, 0.25);
+      background: rgba(11, 87, 208, 0.06);
+    }
+
+    .btn:focus {
+      outline: 2px solid var(--accent2);
+      outline-offset: 2px;
+    }
+
+    main {
+      margin-top: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 14px 12px;
+      background: #fff;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+    }
+
+    h3 {
+      margin: 12px 0 8px;
+      font-size: 1.02rem;
+    }
+
+    p { margin: 8px 0; }
+
+    .note {
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      background: rgba(11, 87, 208, 0.06);
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 760px) {
+      .grid2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: var(--panel);
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid rgba(11, 87, 208, 0.25);
+      background: rgba(11, 87, 208, 0.06);
+      color: #0b3f9e;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .mini {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .qa {
+      border-top: 1px dashed var(--border);
+      margin-top: 10px;
+      padding-top: 10px;
+    }
+
+    .answer {
+      margin-top: 6px;
+      color: var(--muted);
+    }
+
+    /* Word wrapping + print safety */
+    body, p, li, code, pre {
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
+
+    @media print {
+      .page { max-width: none; padding: 0; }
+      header, section, .card { break-inside: avoid; page-break-inside: avoid; }
+      .toolbar { display: none !important; }
+      a { color: inherit; text-decoration: none; }
+      body {
+        font-size: 11pt;
+        line-height: 1.45;
+      }
+      h1 { font-size: 16pt; }
+      h2 { font-size: 12.5pt; }
+      h3 { font-size: 11.5pt; }
+      .note { background: #f5f7ff; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Developer Services</p>
+      <h1>CodeGuru & DevOps Guru — Reviewer / Study Guide</h1>
+      <p class="subtitle">Focus: ML-powered recommendations for <strong>code quality</strong> and <strong>operational improvements</strong> 🧠🔍</p>
+
+      <div class="toolbar" aria-label="Actions">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Jump to Quick Check</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Picture 🌩️</h2>
+        <p>
+          In addition to build/deploy tools (like CodeCommit, CodeBuild, CodeDeploy, CodePipeline), AWS also provides
+          <strong>recommendation engines</strong> that use <strong>machine learning</strong> to help you improve:
+        </p>
+        <ul>
+          <li><strong>Your code</strong> (quality, best practices, potential issues) — via <strong>Amazon CodeGuru</strong> 👨‍💻</li>
+          <li><strong>Your running applications</strong> (operational signals, potential issues, optimizations) — via <strong>Amazon DevOps Guru</strong> 🛠️</li>
+        </ul>
+
+        <div class="note">
+          <strong>Exam mindset 🎯:</strong> You usually don’t need deep configuration details. Know <em>what each service analyzes</em>
+          and <em>what output you get</em> (recommendations/findings).
+        </div>
+      </section>
+
+      <section>
+        <h2>2) Service Cheat Sheet 🧾</h2>
+        <div class="grid2">
+          <div class="card">
+            <h3>Amazon CodeGuru <span class="badge">Code Analysis</span></h3>
+            <p class="mini">ML-based service that analyzes <strong>source code</strong> and provides recommendations.</p>
+            <ul>
+              <li>Finds <strong>best-practice issues</strong> and common mistakes 🧩</li>
+              <li>Helps you write <strong>better, safer, more efficient</strong> code ✨</li>
+              <li>Works as a <strong>developer productivity</strong> tool (optional but helpful)</li>
+            </ul>
+            <p><strong>Think:</strong> “I want feedback on my code before/while I ship.” ✅</p>
+          </div>
+
+          <div class="card">
+            <h3>Amazon DevOps Guru <span class="badge">Ops Analysis</span></h3>
+            <p class="mini">ML-based service that analyzes <strong>running applications</strong> using operational signals.</p>
+            <ul>
+              <li>Analyzes signals like <strong>CloudWatch metrics/logs</strong> (and other sources) 📈</li>
+              <li>Detects <strong>potential issues</strong> and suggests <strong>improvements</strong> 🔎</li>
+              <li>Helps improve <strong>reliability</strong> and operational setup 🧯</li>
+            </ul>
+            <p><strong>Think:</strong> “My app is running—warn me early and suggest fixes.” 🚨</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) Beginner-Friendly Explanation + Examples 🧑‍🏫</h2>
+
+        <h3>3.1 Amazon CodeGuru — What it does 👨‍💻</h3>
+        <p>
+          CodeGuru reviews your code and gives recommendations. This can include highlighting patterns that might lead to
+          bugs, security problems, or inefficient implementations.
+        </p>
+        <p><strong>Simple example:</strong></p>
+        <ul>
+          <li>🙂 You write code that works but is inefficient (e.g., unnecessary loops or expensive operations)</li>
+          <li>🧠 CodeGuru flags it and suggests a better approach (best practice / optimization)</li>
+          <li>✅ You apply improvements before deployment</li>
+        </ul>
+
+        <div class="note">
+          <strong>Memory hook 🧠:</strong> <em>CodeGuru</em> = “Guru for your <strong>code</strong>.”
+        </div>
+
+        <h3>3.2 Amazon DevOps Guru — What it does 🛠️</h3>
+        <p>
+          DevOps Guru looks at your application <strong>while it is running</strong>. It analyzes monitoring data (commonly CloudWatch)
+          and detects patterns that suggest problems or areas to improve.
+        </p>
+        <p><strong>Simple example:</strong></p>
+        <ul>
+          <li>📈 Your app’s error rate gradually increases after a new release</li>
+          <li>🔍 DevOps Guru detects an unusual pattern (anomaly) and surfaces a recommendation</li>
+          <li>🧯 You investigate and adjust configs / resources / deployments before the issue becomes a major outage</li>
+        </ul>
+
+        <div class="note">
+          <strong>Memory hook 🧠:</strong> <em>DevOps Guru</em> = “Guru for <strong>operations</strong> (running systems).”
+        </div>
+      </section>
+
+      <section>
+        <h2>4) When to Use Which? 🤔</h2>
+        <ul>
+          <li><strong>Use CodeGuru</strong> when your goal is <strong>better code quality</strong> before it causes incidents. 🧼</li>
+          <li><strong>Use DevOps Guru</strong> when your goal is <strong>better operational reliability</strong> and earlier detection of issues in production. 🧯</li>
+        </ul>
+        <p class="mini">
+          In practice, teams may use <strong>both</strong>: CodeGuru to reduce defects earlier, and DevOps Guru to monitor & improve the live system.
+        </p>
+      </section>
+
+      <section id="quick-check">
+        <h2>5) Quick Check (Exam-Style) ✅</h2>
+
+        <div class="qa">
+          <p><strong>Q1:</strong> You want ML recommendations to improve <em>source code best practices</em>. Which service? 🤓</p>
+          <p class="answer"><strong>A:</strong> <strong>Amazon CodeGuru</strong> 👨‍💻</p>
+        </div>
+
+        <div class="qa">
+          <p><strong>Q2:</strong> You want ML recommendations based on <em>CloudWatch logs/metrics</em> to improve a <em>running</em> app. Which service? 📊</p>
+          <p class="answer"><strong>A:</strong> <strong>Amazon DevOps Guru</strong> 🛠️</p>
+        </div>
+
+        <div class="qa">
+          <p><strong>Q3:</strong> Are CodeGuru and DevOps Guru mandatory to build and deploy apps on AWS? 🙃</p>
+          <p class="answer"><strong>A:</strong> No. They are optional, helpful services for <strong>recommendations</strong> and <strong>improvements</strong>.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Final Summary 🧾</h2>
+        <ul>
+          <li>🧠 Both services use <strong>machine learning</strong> to deliver recommendations.</li>
+          <li>👨‍💻 <strong>CodeGuru</strong> analyzes <strong>code</strong> and suggests improvements (best practices / issues).</li>
+          <li>🛠️ <strong>DevOps Guru</strong> analyzes <strong>running applications</strong> using operational signals (often CloudWatch) and suggests improvements.</li>
+        </ul>
+        <p class="mini">If you remember only one thing: <strong>Code = CodeGuru</strong>, <strong>Operations = DevOps Guru</strong>. ✅</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

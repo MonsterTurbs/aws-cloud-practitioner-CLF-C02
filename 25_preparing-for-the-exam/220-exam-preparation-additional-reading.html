@@ -1,0 +1,374 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Exam Preparation (Additional Reading)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 16px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 22px;
+    }
+
+    header {
+      padding: 16px 16px 14px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+
+    main { margin-top: 14px; }
+
+    section {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 15.5px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    li { margin: 6px 0; }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    .callout {
+      margin-top: 10px;
+      padding: 12px;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .card-title {
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 8px;
+    }
+
+    .checklist li {
+      margin: 8px 0;
+      padding-left: 0;
+    }
+
+    .divider {
+      margin: 14px 0;
+      border: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Prevent cut-off and awkward breaks */
+    body, p, li, a, code, pre, .card, .callout {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    /* Print styles for A4 bond paper */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body {
+        font-size: 11.5pt;
+        line-height: 1.45;
+        background: #fff;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      header, section {
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      a { text-decoration: underline; }
+
+      /* Show URLs on paper */
+      a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: 9.5pt;
+        color: #333;
+      }
+
+      /* Keep blocks together when possible */
+      header, section, .card, .callout {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .chip { background: #fff; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>📘 Exam Preparation — Additional Reading (AWS CLF-C02)</h1>
+      <p class="subtitle">Print-friendly reviewer / study guide for extra reading that boosts exam confidence.</p>
+      <div class="meta">
+        <span class="chip">🧾 A4 Print-Ready</span>
+        <span class="chip">🧠 Beginner-Friendly</span>
+        <span class="chip">🧩 Single-Column</span>
+        <span class="chip">✅ Focus: Cloud Practitioner</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Goal of this reading list</h2>
+        <p>
+          Watching the course videos and reviewing the slides are the foundation — but you can significantly improve your exam performance by
+          also reading <strong>official AWS summaries</strong>. These pages are written in a way that mirrors the exam style: short definitions,
+          key benefits, and “when to use which service.”
+        </p>
+
+        <div class="callout">
+          <p><strong>✅ Best mindset:</strong> Don’t aim to memorize every detail. Aim to recognize <em>what a service is for</em>, and <em>how it differs</em> from similar services.</p>
+          <p class="small">Tip: While reading, keep asking: “What problem does this service solve?” and “What’s the simplest example use case?”</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>⭐ MUST READ (High impact)</h2>
+        <p>
+          This AWS whitepaper is one of the best single sources to review core concepts and many key services.
+          It also contains services you don’t need for the exam — that’s fine. Focus on the <strong>core service summaries</strong>.
+        </p>
+
+        <div class="card">
+          <p class="card-title">📄 AWS Overview Whitepaper</p>
+          <p class="small">
+            What to do: skim the intro + major service categories; then revisit sections where you feel weak (compute, storage, networking, security, billing).
+          </p>
+          <p>
+            🔗 <a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/introduction.html">https://docs.aws.amazon.com/whitepapers/latest/aws-overview/introduction.html</a>
+          </p>
+        </div>
+
+        <hr class="divider" />
+
+        <h3>🧠 How to read it efficiently (beginner-friendly)</h3>
+        <ul>
+          <li>✅ Read the <strong>headings</strong> first (treat it like a table of contents).</li>
+          <li>✅ For each service you see, write <strong>one sentence</strong>: “I use this when…”.</li>
+          <li>✅ If you see 2 services that sound similar, add a short “vs” note (example: <strong>S3 vs EBS</strong>, <strong>CloudWatch vs CloudTrail</strong>).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🔍 Service overview pages (quick exam-friendly summaries)</h2>
+        <p>
+          Service overview pages are helpful because they usually include plain-language explanations, benefits, and common use cases.
+          These are the kinds of details that show up in multiple-choice questions.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <p class="card-title">🧭 Example: Trusted Advisor overview page</p>
+            <p class="small">Focus on: what it checks, why it’s useful, and the categories (cost, performance, security, fault tolerance, service quotas).</p>
+            <p>🔗 <a href="https://aws.amazon.com/premiumsupport/technology/trusted-advisor/">https://aws.amazon.com/premiumsupport/technology/trusted-advisor/</a></p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p><strong>📝 Micro-exercise:</strong> After reading a service page, try explaining it like this:</p>
+          <ul>
+            <li>“This service is mainly for ____.”</li>
+            <li>“You would choose it when ____.”</li>
+            <li>“It is NOT mainly for ____.”</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🌩️ Key marketing / concept pages to study</h2>
+        <p>
+          These pages reinforce the <strong>language AWS uses</strong> — and the exam tends to reuse that language (benefits, global infrastructure,
+          shared advantages of cloud computing). Reading these makes questions feel more familiar. 🙂
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <p class="card-title">☁️ Core Cloud Concepts</p>
+            <p class="small">Focus on: what cloud computing is, why it matters, and core terminology.</p>
+            <p>🔗 <a href="https://aws.amazon.com/getting-started/cloud-essentials/">https://aws.amazon.com/getting-started/cloud-essentials/</a></p>
+          </div>
+
+          <div class="card">
+            <p class="card-title">🌍 AWS Global Infrastructure</p>
+            <p class="small">Focus on: Regions, Availability Zones, Edge Locations; why they matter for reliability and latency.</p>
+            <p>🔗 <a href="https://aws.amazon.com/about-aws/global-infrastructure/">https://aws.amazon.com/about-aws/global-infrastructure/</a></p>
+          </div>
+
+          <div class="card">
+            <p class="card-title">🚀 AWS Benefits (Application Hosting)</p>
+            <p class="small">Focus on: common cloud benefits (speed, cost, scalability, agility) and examples.</p>
+            <p>🔗 <a href="https://aws.amazon.com/application-hosting/benefits/">https://aws.amazon.com/application-hosting/benefits/</a></p>
+          </div>
+
+          <div class="card">
+            <p class="card-title">✅ Six Advantages of Cloud Computing</p>
+            <p class="small">Focus on: “trade CapEx for OpEx”, “benefit from massive economies of scale”, “stop guessing capacity”, etc.</p>
+            <p>🔗 <a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/six-advantages-of-cloud-computing.html">https://docs.aws.amazon.com/whitepapers/latest/aws-overview/six-advantages-of-cloud-computing.html</a></p>
+          </div>
+
+          <div class="card">
+            <p class="card-title">🏛️ Well-Architected Framework</p>
+            <p class="small">Focus on: the 6 pillars and what “good architecture” means (operational excellence, security, reliability, performance efficiency, cost optimization, sustainability).</p>
+            <p>🔗 <a href="https://aws.amazon.com/architecture/well-architected/?wa-lens-whitepapers.sort-by=item.additionalFields.sortDate&wa-lens-whitepapers.sort-order=desc">https://aws.amazon.com/architecture/well-architected/</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Simple study plan (no overwhelm)</h2>
+        <p>
+          Use this plan if you want structure without spending endless hours reading.
+        </p>
+
+        <h3>📅 Suggested flow</h3>
+        <ul>
+          <li>1) 📄 Read the <strong>AWS Overview whitepaper</strong> (skim first, then go deeper only where needed).</li>
+          <li>2) 🌍 Review <strong>AWS Global Infrastructure</strong> and <strong>Six Advantages</strong> pages.</li>
+          <li>3) 🧭 Read 3–5 <strong>service overview pages</strong> for services you consistently miss in quizzes.</li>
+          <li>4) 🏛️ Revisit the <strong>Well-Architected Framework</strong> pillars — learn the names and the “why”.</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>Rule of thumb:</strong> If a page is long, you’re allowed to skim. The exam tests recognition and understanding, not memorization. 🙂</p>
+        </div>
+
+        <h3>🧾 Quick checklist (print + tick)</h3>
+        <ul class="checklist">
+          <li>☐ I can explain what a Region and an Availability Zone are.</li>
+          <li>☐ I know at least 4–6 cloud advantages (and can give a simple example for each).</li>
+          <li>☐ I can explain the 6 Well-Architected pillars in 1 sentence each.</li>
+          <li>☐ I can explain what Trusted Advisor does and which categories it checks.</li>
+          <li>☐ I can say when to use key services (EC2, S3, RDS, IAM, CloudWatch, CloudTrail) and what they are for.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧩 Mini-quiz (self-check)</h2>
+        <ol>
+          <li><strong>Which page helps you understand what you’re allowed to do on AWS?</strong> (Hint: acceptable use policy)</li>
+          <li><strong>Why do Regions and Availability Zones matter</strong> for reliability and latency?</li>
+          <li><strong>What is Trusted Advisor</strong> and name two categories it checks.</li>
+          <li><strong>Name any three</strong> of the Well-Architected pillars.</li>
+          <li><strong>What does “trade CapEx for OpEx”</strong> mean in simple words?</li>
+        </ol>
+
+        <div class="callout">
+          <p><strong>✅ Scoring:</strong> If you can answer most questions in simple English without reading notes, you’re in good shape.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

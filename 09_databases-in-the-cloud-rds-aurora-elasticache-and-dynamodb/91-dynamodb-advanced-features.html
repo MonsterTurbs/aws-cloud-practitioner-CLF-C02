@@ -1,0 +1,524 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — DynamoDB Advanced Features</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #666;
+      --border: #e5e5e5;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent2: #1a73e8;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    .toolbar {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: #111;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn:focus {
+      outline: 3px solid rgba(26, 115, 232, 0.25);
+      outline-offset: 2px;
+    }
+
+    main { margin-top: 18px; }
+
+    section {
+      margin: 16px 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    p { margin: 10px 0; }
+
+    ul {
+      margin: 8px 0 10px 20px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      background: var(--panel);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    .callout strong { color: #111; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #fff;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      color: #222;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 8px;
+      margin-right: 6px;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    .example {
+      border-left: 4px solid var(--accent2);
+      padding: 10px 12px;
+      background: #fbfdff;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .example .mono {
+      display: block;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 6px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--panel);
+      font-weight: 700;
+    }
+
+    .muted { color: var(--muted); }
+
+    footer {
+      margin: 18px 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* Print styling (A4, clean margins, no cut-off) */
+    @page {
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+    }
+
+    @media print {
+      body {
+        font-size: 11.5pt;
+        line-height: 1.45;
+        background: #fff !important;
+        color: #000 !important;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      header, section {
+        border-color: #cfcfcf;
+        box-shadow: none;
+      }
+
+      .toolbar { display: none !important; }
+
+      a { color: #000; text-decoration: none; }
+
+      /* Avoid awkward splits */
+      header, section, .card, .callout, .example, table {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      h1, h2, h3 {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+
+      ul, ol { break-inside: avoid; }
+
+      /* Ensure long text never overflows */
+      * {
+        overflow-wrap: anywhere;
+        word-wrap: break-word;
+        hyphens: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>📘 DynamoDB Advanced Features — Reviewer / Study Guide</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) • Beginner-friendly • Print-ready (A4)</p>
+      <div class="meta">
+        <span class="pill">✅ Single-column</span>
+        <span class="pill">🖨️ A4 print CSS</span>
+        <span class="pill">🧠 Exam-aware notes</span>
+        <span class="pill">⏱️ Quick review</span>
+      </div>
+      <div class="toolbar" role="toolbar" aria-label="Page tools">
+        <button class="btn primary" type="button" onclick="window.print()">Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-quiz').scrollIntoView({behavior:'smooth'})">Jump to Quick Quiz</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Goal of this lesson</h2>
+        <p>
+          DynamoDB is easy to start with, but it also has <strong>advanced features</strong> that help with:
+          <strong>event-driven workflows</strong>, <strong>multi-region availability</strong>, and <strong>ultra-low latency</strong>.
+          This page focuses on three: <strong>Streams</strong>, <strong>Global Tables</strong>, and <strong>DAX</strong>.
+        </p>
+
+        <div class="callout">
+          <strong>Beginner reminder 🙂</strong>
+          <ul>
+            <li><strong>DynamoDB</strong> = fully-managed <strong>NoSQL key-value</strong> (and document-style) database.</li>
+            <li>You work with <strong>tables</strong> and <strong>items</strong> (no “database server” you manage).</li>
+            <li>It’s a <strong>regional</strong> service by default (created in a chosen region).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🌊 Feature 1: DynamoDB Streams</h2>
+        <p>
+          <strong>Streams</strong> (when enabled) create a <strong>change log</strong> of table activity.
+          Think: “Whenever an item is created/updated/deleted, DynamoDB can emit an event.” 🔔
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <span class="tag">What it solves</span>
+            <ul>
+              <li>Trigger actions when data changes (event-driven design).</li>
+              <li>Keep other systems in sync with DynamoDB updates.</li>
+              <li>Build audit trails or near-real-time processing pipelines.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <span class="tag">How to think about it</span>
+            <p>
+              A stream is like a “feed” of changes. Another workload can <strong>subscribe</strong> and react.
+              Common subscriber: <strong>AWS Lambda</strong> (not required for the exam, but a common pairing).
+            </p>
+          </div>
+        </div>
+
+        <h3>🧪 Simple example</h3>
+        <div class="example">
+          <p><strong>Scenario:</strong> You store orders in <span class="mono">Orders</span> table.</p>
+          <ul>
+            <li>New order is inserted → Streams produces a record ✅</li>
+            <li>A subscriber is notified → it sends confirmation email / updates analytics / triggers fulfillment 📦</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <strong>Exam tip 📝</strong>
+          <p class="muted">
+            If you see “react to item changes”, “event-driven updates”, “notify another workload on change” → think
+            <strong>DynamoDB Streams</strong>.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🌍 Feature 2: Global Tables</h2>
+        <p>
+          <strong>Global Tables</strong> replicate a DynamoDB table across <strong>multiple regions</strong>.
+          This helps with <strong>high availability</strong> (region failure tolerance) and can help with
+          <strong>performance</strong> (apps talk to a closer region). 🚀
+        </p>
+
+        <table aria-label="Global Tables summary">
+          <thead>
+            <tr>
+              <th>Benefit</th>
+              <th>What it means (simple)</th>
+              <th>Typical use case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>High Availability</strong> ✅</td>
+              <td>Data exists in multiple regions; if one region has issues, another can serve traffic.</td>
+              <td>Critical apps that must stay online globally</td>
+            </tr>
+            <tr>
+              <td><strong>Lower Latency</strong> ⚡</td>
+              <td>Apps/users can read/write “closer” to their location (via their regional stack).</td>
+              <td>Global user base (Asia + US + EU)</td>
+            </tr>
+            <tr>
+              <td><strong>Trade-off</strong> 💸</td>
+              <td>Multi-region replication adds cost and complexity.</td>
+              <td>Enterprises / mission-critical systems</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>🧪 Simple example</h3>
+        <div class="example">
+          <p><strong>Scenario:</strong> Your app has users in Singapore and Virginia.</p>
+          <ul>
+            <li>You create a table in <span class="mono">ap-southeast-1</span> (Singapore).</li>
+            <li>You add a replica in <span class="mono">us-east-1</span> (N. Virginia).</li>
+            <li>Both regions have a copy of the table; data is replicated automatically. 🔁</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <strong>Exam tip 🧠</strong>
+          <p class="muted">
+            If the question emphasizes “multi-region DynamoDB replication”, “global availability”, or “multi-region table” →
+            think <strong>Global Tables</strong>.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>⚡ Feature 3: DAX (DynamoDB Accelerator)</h2>
+        <p>
+          <strong>DAX</strong> is an AWS-managed <strong>in-memory cache layer</strong> for DynamoDB.
+          It can reduce latency by serving repeated reads from memory instead of hitting the table every time. 🏎️
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <span class="tag">What it is</span>
+            <ul>
+              <li>A managed cache layer (AWS runs it for you).</li>
+              <li>Works with DynamoDB reads to speed up repeated queries.</li>
+              <li>Designed for <strong>very low latency</strong> workloads.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <span class="tag">When it helps</span>
+            <ul>
+              <li>Same data is read again and again (hot items).</li>
+              <li>Apps need faster reads than DynamoDB alone provides.</li>
+              <li>Leaderboards, product catalog lookups, user profile reads, etc.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>🧪 Simple example</h3>
+        <div class="example">
+          <p><strong>Scenario:</strong> Online shop product page is opened thousands of times per minute.</p>
+          <ul>
+            <li>Without DAX: many reads go directly to DynamoDB.</li>
+            <li>With DAX: repeated reads can be served from memory → lower latency, less pressure on the table. 🙂</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <strong>Exam tip ✅</strong>
+          <p class="muted">
+            If you see “accelerate DynamoDB reads”, “in-memory cache for DynamoDB”, “lowest latency possible” →
+            think <strong>DAX</strong>.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧾 Quick comparison</h2>
+        <table aria-label="Streams vs Global Tables vs DAX">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Main purpose</th>
+              <th>Keyword clue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Streams</strong> 🌊</td>
+              <td>React to item changes (event-driven workflows)</td>
+              <td>“notify on change”, “stream of updates”</td>
+            </tr>
+            <tr>
+              <td><strong>Global Tables</strong> 🌍</td>
+              <td>Multi-region replication for HA + performance</td>
+              <td>“multi-region”, “replica in another region”</td>
+            </tr>
+            <tr>
+              <td><strong>DAX</strong> ⚡</td>
+              <td>In-memory cache to speed up reads</td>
+              <td>“accelerator”, “cache”, “lowest latency”</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="quick-quiz">
+        <h2>✅ Quick Quiz (self-check)</h2>
+        <ol>
+          <li>
+            You want to trigger an action whenever a DynamoDB item changes.
+            <br /><span class="muted">Answer:</span> Streams 🌊
+          </li>
+          <li>
+            Your app must keep working even if a whole AWS region has an outage.
+            <br /><span class="muted">Answer:</span> Global Tables 🌍
+          </li>
+          <li>
+            You need ultra-fast repeated reads from DynamoDB.
+            <br /><span class="muted">Answer:</span> DAX ⚡
+          </li>
+        </ol>
+
+        <div class="callout">
+          <strong>Mini-memory trick 🙂</strong>
+          <ul>
+            <li><strong>Streams</strong> = “Change feed”</li>
+            <li><strong>Global Tables</strong> = “Many regions”</li>
+            <li><strong>DAX</strong> = “DynamoDB cache boost”</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>📌 Key takeaways</h2>
+        <ul>
+          <li>✅ <strong>Streams</strong> help you build event-driven architectures by emitting item-change events.</li>
+          <li>✅ <strong>Global Tables</strong> replicate data across regions for availability and potentially lower latency.</li>
+          <li>✅ <strong>DAX</strong> is a managed in-memory cache that accelerates DynamoDB reads.</li>
+          <li>⚠️ Advanced features can add cost—use them when the business requirement justifies it.</li>
+        </ul>
+      </section>
+
+      <footer>
+        Prepared for print on A4 • Single-column layout • DynamoDB Advanced Features
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

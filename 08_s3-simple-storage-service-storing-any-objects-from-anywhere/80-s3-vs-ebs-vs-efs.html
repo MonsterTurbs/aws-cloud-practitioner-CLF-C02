@@ -1,0 +1,300 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Reviewer — S3 vs EBS vs EFS</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column, print-safe layout */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 22px;
+    }
+
+    header{
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    h1{
+      font-size: 1.55rem;
+      margin: 0 0 6px 0;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    h2{
+      font-size: 1.15rem;
+      margin: 18px 0 10px;
+    }
+
+    h3{
+      font-size: 1.02rem;
+      margin: 14px 0 8px;
+    }
+
+    p{ margin: 8px 0; }
+
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    .badge{
+      display:inline-block;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      background:#fff;
+      color: var(--muted);
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    ul{ margin: 8px 0 8px 20px; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .mini{
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kicker{
+      font-weight: 700;
+    }
+
+    .hr{
+      height:1px;
+      background: var(--border);
+      border:0;
+      margin: 14px 0;
+    }
+
+    /* Wrap-safe rules to prevent cut-off when printing */
+    p, li, code, pre, a, .card{
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    .cheats{
+      padding-left: 0;
+      list-style: none;
+      margin-left: 0;
+    }
+    .cheats li{
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+      margin: 10px 0;
+    }
+
+    /* Print styles */
+    @page{
+      size: A4;
+      margin: 16mm;
+    }
+    @media print{
+      body{ background:#fff; }
+      .page{ max-width: none; padding: 0; }
+      header{ border-bottom: 1px solid #bbb; }
+      a{ color: #000; text-decoration: none; }
+      .card, .callout, .cheats li{
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .badge{ border-color:#bbb; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>AWS CLF-C02 Reviewer: S3 vs EBS vs EFS</h1>
+      <p class="subtitle">Single-page, A4 print-ready study guide (beginner-friendly) — focus: what each service is, when to use it, and exam cues.</p>
+    </header>
+
+    <section class="callout">
+      <p><span class="kicker">Big Picture</span> 🧭: All three store files, but they do it in different ways. There is no “best” service—pick based on <strong>how your app needs to access files</strong> (disk attached to one server, shared file system, or object storage).</p>
+    </section>
+
+    <section>
+      <h2>1) Quick Definitions (Memorize These)</h2>
+
+      <article class="card">
+        <h3>💽 EBS (Elastic Block Store) <span class="badge">Block storage</span></h3>
+        <p><strong>Think:</strong> “Attachable hard drive” for <strong>EC2 only</strong>.</p>
+        <ul>
+          <li>Acts like a raw disk you attach to an EC2 instance (you format/mount inside the OS).</li>
+          <li>Best when your EC2 workload needs extra disk space and low-latency disk access.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>🗂️ EFS (Elastic File System) <span class="badge">Managed file system</span></h3>
+        <p><strong>Think:</strong> “Shared network folder” you can mount from <strong>multiple</strong> compute services.</p>
+        <ul>
+          <li>Provides a ready-to-use, scalable file system (you manage folders/files, not disks).</li>
+          <li>Designed for multi-access (many instances/services can read/write).</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>📦 S3 (Simple Storage Service) <span class="badge">Object storage</span></h3>
+        <p><strong>Think:</strong> “Unlimited storage buckets for files” accessed via API/console/CLI.</p>
+        <ul>
+          <li>Stores objects (files) in buckets—no traditional disk or mounted file system.</li>
+          <li>Can be used <strong>with or without</strong> EC2 (upload/download directly).</li>
+        </ul>
+      </article>
+
+      <p class="mini">Memory trick: <strong>EBS = Disk</strong>, <strong>EFS = Shared Folder</strong>, <strong>S3 = Bucket of Objects</strong>.</p>
+    </section>
+
+    <hr class="hr" />
+
+    <section>
+      <h2>2) When to Use What (Simple Scenarios)</h2>
+
+      <ul class="cheats">
+        <li>
+          <p><strong>✅ Use EBS</strong> when you need a disk attached to one EC2 instance (e.g., database volume, app files on a single server).</p>
+          <p class="mini">Example: You run a single EC2 web server and want extra space for logs or a local DB → attach an EBS volume.</p>
+        </li>
+        <li>
+          <p><strong>✅ Use EFS</strong> when multiple instances/services must share the same files (e.g., shared uploads folder, shared configs).</p>
+          <p class="mini">Example: Auto Scaling group of EC2 instances needs a shared <code>/uploads</code> directory → mount EFS on all instances.</p>
+        </li>
+        <li>
+          <p><strong>✅ Use S3</strong> when you want simple, scalable file storage accessed via API (uploads, backups, static website files, archives).</p>
+          <p class="mini">Example: Users upload images → store in S3; your app reads them via URL/API. No server disk management needed.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3) Key Differences (Exam-Friendly)</h2>
+
+      <article class="card">
+        <h3>🔌 “Attach to compute” vs “Standalone storage”</h3>
+        <ul>
+          <li><strong>EBS</strong> and <strong>EFS</strong> are typically used <strong>by</strong> compute services (mounted/attached).</li>
+          <li><strong>S3</strong> is <strong>standalone</strong>—you can upload/download without running EC2 at all.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>📈 Scaling</h3>
+        <ul>
+          <li><strong>S3</strong>: effectively “unlimited” scaling for objects (you don’t provision capacity).</li>
+          <li><strong>EFS</strong>: built for automatic scaling of a managed file system.</li>
+          <li><strong>EBS</strong>: volume-based; can scale, but is closer to “disk management” and may require more planning/ops work.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>👥 Multi-access</h3>
+        <ul>
+          <li><strong>EFS</strong>: designed for many instances/services reading/writing the same file system.</li>
+          <li><strong>EBS</strong>: can support multi-attach in specific cases, but it’s not the typical default pattern and can be tricky.</li>
+          <li><strong>S3</strong>: many clients can access objects; it’s not a mounted shared file system.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>🧠 “What do I manage?”</h3>
+        <ul>
+          <li><strong>EBS</strong>: you manage formatting/mounting (like a raw disk).</li>
+          <li><strong>EFS</strong>: you manage folders/files, AWS manages the underlying storage.</li>
+          <li><strong>S3</strong>: you manage objects (files) + permissions (buckets/policies), not disks or file systems.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section>
+      <h2>4) Common Mistakes (Avoid These) ⚠️</h2>
+      <ul>
+        <li><strong>Mixing up EFS vs S3:</strong> EFS is a mounted file system; S3 is object storage accessed via API/console/CLI.</li>
+        <li><strong>Trying to use EBS without EC2:</strong> EBS is effectively EC2-focused for attachment.</li>
+        <li><strong>Assuming “public by default” in S3:</strong> by default, buckets/objects are typically locked down; public access requires explicit configuration.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5) Exam Cues (What Keywords Usually Mean) 📝</h2>
+      <article class="card">
+        <ul>
+          <li><strong>“Attach a volume / disk to EC2”</strong> → EBS</li>
+          <li><strong>“Shared file system mounted by multiple EC2 instances”</strong> → EFS</li>
+          <li><strong>“Store files in buckets / object storage / archive / static website hosting”</strong> → S3</li>
+        </ul>
+        <p class="mini">Tip: If the question talks about <em>buckets</em> or <em>storage classes</em>, it’s almost certainly S3.</p>
+      </article>
+    </section>
+
+    <hr class="hr" />
+
+    <footer class="mini">
+      <p><strong>One-line recap</strong> ✅: <span class="kicker">EBS</span> = disk for EC2, <span class="kicker">EFS</span> = shared managed file system, <span class="kicker">S3</span> = scalable object storage you can use from anywhere.</p>
+    </footer>
+  </main>
+</body>
+</html>

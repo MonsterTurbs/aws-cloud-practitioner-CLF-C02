@@ -1,0 +1,432 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — CloudWatch (In Action)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --ink:#111;
+      --muted:#555;
+      --faint:#777;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --accent2:#1a73e8;
+      --ok:#0f7b0f;
+      --warn:#8a5a00;
+      --danger:#b00020;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    /* Single-column page */
+    .page{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 18px 42px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 12px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size: 1.45rem;
+      letter-spacing: .2px;
+    }
+
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top: 10px;
+    }
+
+    .chip{
+      border:1px solid var(--border);
+      background:#fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size:.88rem;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin: 14px 0 0;
+    }
+
+    button{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--ink);
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor:pointer;
+      font-size:.95rem;
+    }
+
+    button.primary{
+      border-color: rgba(11,87,208,.25);
+      background: rgba(11,87,208,.06);
+      color: #083a8c;
+    }
+
+    button:focus{ outline: 2px solid rgba(26,115,232,.35); outline-offset: 2px; }
+
+    main{ margin-top: 16px; }
+
+    h2{
+      margin: 18px 0 10px;
+      font-size: 1.15rem;
+    }
+
+    h3{
+      margin: 14px 0 8px;
+      font-size: 1.02rem;
+    }
+
+    p{ margin: 8px 0; }
+
+    /* Print-safe wrapping */
+    p, li, .note, .callout, .qa, .kbd, code, pre{
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    ul{ margin: 8px 0 10px 22px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin: 10px 0;
+    }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      background:#fff;
+      padding: 12px 14px;
+    }
+
+    .callout{
+      border:1px solid var(--border);
+      background: var(--panel);
+      border-left: 5px solid rgba(11,87,208,.35);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .callout.ok{ border-left-color: rgba(15,123,15,.35); }
+    .callout.warn{ border-left-color: rgba(138,90,0,.35); }
+    .callout.danger{ border-left-color: rgba(176,0,32,.35); }
+
+    .note{
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: .92rem;
+      background: #fff;
+      border:1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    .hr{ height:1px; background: var(--border); margin: 14px 0; }
+
+    /* Q&A / Self-test */
+    .qa{
+      border:1px dashed rgba(0,0,0,.25);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: #fff;
+    }
+
+    .q{
+      margin:0;
+      font-weight: 700;
+    }
+
+    .a{
+      margin: 8px 0 0;
+      display:none;
+      color:#1f1f1f;
+    }
+
+    .a .tag{
+      display:inline-block;
+      margin-right: 8px;
+      border:1px solid var(--border);
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: .85rem;
+      background: var(--panel);
+      color: var(--muted);
+    }
+
+    .show-answers .a{ display:block; }
+
+    footer{
+      margin-top: 18px;
+      color: var(--faint);
+      font-size: .9rem;
+    }
+
+    /* Print */
+    @page{ size: A4; margin: 14mm 12mm; }
+
+    @media print{
+      body{ background:#fff; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; border-color:#ddd; }
+      .toolbar{ display:none !important; }
+      button{ display:none !important; }
+      .chip{ border-color:#ddd; }
+      .callout{ background:#fff; }
+      a{ color: inherit; text-decoration: none; }
+      h2, h3{ break-after: avoid; page-break-after: avoid; }
+      .card, .callout, .qa{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page" id="root">
+    <header>
+      <h1>☁️📈 CloudWatch (In Action) — Reviewer / Study Guide</h1>
+      <p class="sub">Beginner-friendly walkthrough of what you can do in the CloudWatch console: <strong>Logs</strong>, <strong>Alarms</strong>, <strong>Metrics/Charts</strong>, and <strong>Dashboards</strong> — with quick examples and exam-focused takeaways.</p>
+
+      <div class="chips" aria-label="Key topics">
+        <span class="chip">🧾 Logs → Log Groups</span>
+        <span class="chip">⏰ Alarms → Metric + Threshold + Action</span>
+        <span class="chip">📊 Metrics → Charts + Statistics</span>
+        <span class="chip">🧩 Dashboards → One-page visibility</span>
+        <span class="chip">🔔 Notifications via SNS</span>
+      </div>
+
+      <div class="toolbar">
+        <button class="primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button type="button" onclick="toggleAnswers()">🧠 Toggle Answers (Self-Test)</button>
+      </div>
+
+      <p class="note" style="margin-top:10px;">
+        Print tip: In your browser print dialog, enable <span class="kbd">A4</span>, disable headers/footers if you want cleaner output.
+      </p>
+    </header>
+
+    <main>
+      <h2>1) CloudWatch Console: What you do there</h2>
+      <div class="callout">
+        <p style="margin:0;"><strong>Idea:</strong> CloudWatch is your “monitoring command center” in AWS. You typically use it to:</p>
+        <ul>
+          <li>🧾 <strong>Inspect logs</strong> (grouped into <em>log groups</em>)</li>
+          <li>📊 <strong>View metrics</strong> (CPU, errors, latency, etc.)</li>
+          <li>⏰ <strong>Create alarms</strong> (notify or auto-act when metrics cross thresholds)</li>
+          <li>🧩 <strong>Build dashboards</strong> (multiple charts in one page)</li>
+        </ul>
+      </div>
+
+      <h2>2) Logs in the console</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>🧾 Log Groups (think: folders)</h3>
+          <p>
+            In CloudWatch Logs, log entries are organized in <strong>Log Groups</strong>. A log group usually represents a workload or service.
+            Example: a log group for an <strong>RDS</strong> instance, or for a <strong>Lambda</strong> function.
+          </p>
+          <p class="note">
+            Beginner mental model: <strong>Log Group</strong> = container of related logs. Inside it, you’ll typically have streams/entries that come from specific instances/executions.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>🔎 What you do with logs</h3>
+          <ul>
+            <li>Read what happened (errors, warnings, info)</li>
+            <li>Trace why a feature broke (e.g., “DB connection timeout”)</li>
+            <li>Confirm behavior (e.g., deployment version, request payload shape)</li>
+          </ul>
+          <div class="callout warn" style="margin-top:10px;">
+            <p style="margin:0;"><strong>⚠️ Exam hint:</strong> Many services publish logs to CloudWatch. Example: <strong>Lambda</strong> writes logs to CloudWatch automatically (commonly tested concept).</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>3) Alarms in the console</h2>
+      <div class="callout ok">
+        <p style="margin:0;"><strong>Alarm formula:</strong> <span class="kbd">Metric</span> + <span class="kbd">Statistic</span> + <span class="kbd">Time Period</span> + <span class="kbd">Threshold</span> + <span class="kbd">Action</span></p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>⏰ Step-by-step (based on the transcript)</h3>
+          <ol style="margin: 8px 0 0 18px; padding:0;">
+            <li><strong>Select a metric</strong> (e.g., EC2 → per instance)</li>
+            <li><strong>Pick the statistic</strong>: average / sum / max (peak)</li>
+            <li><strong>Choose the time window</strong> (e.g., 5 minutes)</li>
+            <li><strong>Set a threshold</strong> (e.g., CPU &gt; 80%)</li>
+            <li><strong>Define an action</strong> (e.g., send email via SNS)</li>
+          </ol>
+          <p class="note" style="margin-top:10px;">
+            “Average vs max” matters: max catches spikes; average can hide short spikes.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>📧 Example: CPU utilization alarm</h3>
+          <p><strong>Scenario:</strong> You host a web server on EC2. If CPU is too high, users might feel slowness.</p>
+          <ul>
+            <li>Metric: <strong>EC2 CPUUtilization</strong></li>
+            <li>Statistic: <strong>Average</strong> over 5 minutes</li>
+            <li>Condition: <strong>&gt; 80%</strong></li>
+            <li>Action: <strong>Notify</strong> an email list using <strong>SNS</strong> 🔔</li>
+          </ul>
+          <div class="callout" style="margin-top:10px;">
+            <p style="margin:0;"><strong>🧠 Remember:</strong> CloudWatch alarms don’t “send emails directly.” They usually trigger an action like <strong>SNS</strong>, which then delivers email/SMS/etc.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>4) Metrics and Charts in the console</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>📊 Explore Metrics (by service)</h3>
+          <p>
+            CloudWatch lets you browse metrics by AWS service (e.g., <strong>EC2 metrics</strong>) and then drill down:
+          </p>
+          <ul>
+            <li>By Auto Scaling Group</li>
+            <li>By Instance</li>
+            <li>By other dimensions (depending on the service)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>📈 Chart a metric over time</h3>
+          <p>
+            You can view a chart (e.g., last <strong>3 days</strong>) and zoom/select a time range.
+            This helps you answer questions like:
+          </p>
+          <ul>
+            <li>“Did CPU spike during deployment?”</li>
+            <li>“Is latency worse on weekends?”</li>
+            <li>“Is the problem constant or intermittent?”</li>
+          </ul>
+          <p class="note">
+            Practical workflow: pick the right <strong>time range</strong> first, then interpret trends/spikes.
+          </p>
+        </div>
+      </div>
+
+      <h2>5) Dashboards in the console</h2>
+      <div class="callout">
+        <p style="margin:0;"><strong>Dashboards</strong> let you put multiple charts/widgets on one page so you can see the “health picture” fast. 🧩</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>🧩 Why dashboards are useful</h3>
+          <ul>
+            <li>Single-screen visibility for a workload (CPU, errors, latency, requests)</li>
+            <li>Quick checks during incidents (“Is it only one instance or all?”)</li>
+            <li>Compare different time periods easily (hours vs days)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>🛠️ Auto vs custom dashboards</h3>
+          <p>
+            You can use dashboards created by AWS automatically (service-focused views) or create your own custom dashboard.
+          </p>
+          <p class="note">
+            Best practice: build dashboards around <strong>user experience signals</strong> (errors/latency) + <strong>resource signals</strong> (CPU/memory). 
+          </p>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <h2>6) Quick “Console Navigation” cheat sheet</h2>
+      <div class="card">
+        <ul>
+          <li>🧾 <strong>Logs</strong> → Find <strong>Log Groups</strong> → pick group → inspect log events</li>
+          <li>⏰ <strong>Alarms</strong> → Create alarm → pick metric → set threshold → choose action (often SNS)</li>
+          <li>📊 <strong>Metrics</strong> → pick service (EC2) → pick dimension (instance/ASG) → view chart</li>
+          <li>🧩 <strong>Dashboards</strong> → use existing / create new → add widgets → choose time range</li>
+        </ul>
+      </div>
+
+      <h2>7) Self-test (CLF-C02 style)</h2>
+      <div class="qa">
+        <p class="q">Q1) What are the four main CloudWatch console areas discussed here?</p>
+        <p class="a"><span class="tag">Answer</span> Logs (Log Groups), Alarms, Metrics/Charts, Dashboards.</p>
+      </div>
+
+      <div class="qa" style="margin-top:10px;">
+        <p class="q">Q2) When creating an alarm, what decision changes how spikes are handled: Average or Max?</p>
+        <p class="a"><span class="tag">Answer</span> The chosen <strong>statistic</strong>. Max catches spikes; average can smooth them out.</p>
+      </div>
+
+      <div class="qa" style="margin-top:10px;">
+        <p class="q">Q3) If you want an email notification when CPU goes above 80%, what AWS service is commonly used with CloudWatch alarms?</p>
+        <p class="a"><span class="tag">Answer</span> <strong>SNS</strong> (Simple Notification Service) is commonly used for notifications like email/SMS.</p>
+      </div>
+
+      <div class="qa" style="margin-top:10px;">
+        <p class="q">Q4) Why use dashboards instead of opening metrics one by one?</p>
+        <p class="a"><span class="tag">Answer</span> Dashboards aggregate multiple charts/widgets on one page for quick visibility and faster troubleshooting.</p>
+      </div>
+
+      <div class="callout danger" style="margin-top:14px;">
+        <p style="margin:0;"><strong>⚠️ Common confusion:</strong> CloudWatch is primarily monitoring (metrics/logs/alarms/dashboards). It’s not the same as CloudTrail (API auditing) and not the same as AWS Config (resource configuration tracking).</p>
+      </div>
+
+      <footer>
+        <div class="hr"></div>
+        <p style="margin:0;">End of reviewer: <strong>CloudWatch (In Action)</strong>. You can paste the next transcript and I’ll generate the next print-ready page in the same style.</p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    function toggleAnswers(){
+      document.getElementById('root').classList.toggle('show-answers');
+    }
+  </script>
+</body>
+</html>

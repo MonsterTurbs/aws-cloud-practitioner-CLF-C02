@@ -1,0 +1,325 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 10 AWS Infrastructure: Regions & Availability Zones</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .qna strong{ display:block; margin: 10px 0 4px; }
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Getting Started</p>
+      <h1>10 — AWS Infrastructure: Regions & Availability Zones 🌍🏢</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Lecture Goal</h2>
+        <p>Understand how AWS is structured globally—especially the two exam-critical terms: <strong>Region</strong> and <strong>Availability Zone (AZ)</strong>. Learn why these matter for <strong>availability</strong>, <strong>latency</strong>, <strong>pricing</strong>, and <strong>compliance</strong>.</p>
+        <div class="callout">
+          <p><strong>Big idea ✅</strong> AWS runs data centers worldwide. You choose where your workloads run using Regions (large geographic areas) and Availability Zones (separate locations inside a Region).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🌍 AWS Has Many Data Centers Worldwide</h2>
+        <ul>
+          <li>AWS owns and operates data centers across <strong>dozens of locations</strong> worldwide.</li>
+          <li>These locations are organized into <strong>Regions</strong>.</li>
+          <li>AWS has more Regions than a simplified schematic map might show; AWS lists both current and planned Regions on its official pages (linked in the course resources).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🏷️ Key Term 1: Region</h2>
+        <p>A <strong>Region</strong> is a geographic area that contains <strong>multiple data centers</strong>.</p>
+        <div class="callout">
+          <p><strong>Important ✅</strong> A Region is <strong>not</strong> a single data center. A Region contains <strong>multiple</strong> data centers grouped into Availability Zones.</p>
+        </div>
+
+        <h3>🧱 Why Regions exist</h3>
+        <ul>
+          <li>Regions are <strong>physically isolated</strong> from each other.</li>
+          <li>If a major catastrophe affects one Region, other Regions are expected to be unaffected.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧩 Regional vs Global Services</h2>
+        <ul>
+          <li>Many AWS services are <strong>regional</strong>: you can choose the Region where you use the service.</li>
+          <li>Some services are <strong>global</strong>: you don’t pick a Region for them.</li>
+        </ul>
+        <div class="mini">
+          <p><strong>Console tip 💡</strong> For many regional services, you choose the Region from the Region selector (often a dropdown) in the top-right of the AWS Management Console.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧭 Why Choose One Region Over Another?</h2>
+        <p>The lecture lists common reasons for Region selection:</p>
+        <div class="grid">
+          <div class="mini">
+            <h3>💰 Pricing differences</h3>
+            <p>Costs can differ by Region because AWS has different operating costs in different parts of the world.</p>
+          </div>
+          <div class="mini">
+            <h3>🧰 Service availability</h3>
+            <p>Not all services exist in all Regions (Regions can differ in size/hardware/capabilities).</p>
+          </div>
+          <div class="mini">
+            <h3>⚖️ Legal / compliance</h3>
+            <p>You may need to store data in a specific geography (example: EU data residency). That influences Region selection.</p>
+          </div>
+          <div class="mini">
+            <h3>⚡ Latency</h3>
+            <p>Run workloads closer to end users so requests are faster (lower latency).</p>
+          </div>
+          <div class="mini">
+            <h3>✅ High availability & resilience</h3>
+            <p>Run workloads in multiple Regions so if one Region is impacted, another can continue serving users.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🏷️ Key Term 2: Availability Zone (AZ)</h2>
+        <p>A Region is divided into <strong>Availability Zones (AZs)</strong>.</p>
+        <ul>
+          <li>A Region contains <strong>multiple AZs</strong>.</li>
+          <li>A Region has at least <strong>three AZs</strong> (as described in the lecture).</li>
+          <li>An AZ contains at least <strong>one data center</strong>.</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>Exam-friendly relationship ✅</strong></p>
+          <p class="mono">Region → multiple Availability Zones (AZs) → one or more Data Centers</p>
+        </div>
+
+        <h3>🧯 Why AZs improve reliability</h3>
+        <ul>
+          <li>AZs are separated from each other (different buildings, independent power).</li>
+          <li>They are closer than Regions (miles / tens of miles apart), so they support low-latency redundancy inside one Region.</li>
+          <li>A disaster may affect one AZ, but is less likely to affect all AZs in the Region.</li>
+        </ul>
+
+        <div class="mini">
+          <p><strong>Practical takeaway 💡</strong> You can increase availability by spreading your workload across multiple AZs within the same Region.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧭 Other Location Concepts (Mentioned for Later)</h2>
+        <p>The lecture references additional location-related constructs that you’ll revisit later:</p>
+        <ul>
+          <li>📍 Local Zones</li>
+          <li>📡 Edge Locations</li>
+          <li>📶 Wavelength Zones</li>
+          <li>🏠 AWS Outposts</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Focus for now ✅</strong> The two must-know terms right now are <strong>Regions</strong> and <strong>Availability Zones</strong>.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🕸️ AWS Global Network Connectivity</h2>
+        <p>AWS Regions are connected by a network owned and operated by AWS.</p>
+        <ul>
+          <li>🔒 Can provide secure connectivity between workloads across Regions.</li>
+          <li>⚡ Can be faster and more reliable than depending only on the public internet.</li>
+          <li>🌐 You can still use public internet too—both approaches exist depending on architecture.</li>
+        </ul>
+        <div class="mini">
+          <p><strong>Why this matters 💡</strong> Running apps across Regions can still be practical because the underlying network connectivity is designed for global operation.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Exam Focus)</h2>
+        <span class="tag">Region</span>
+        <span class="tag">Availability Zone (AZ)</span>
+        <span class="tag">Data Center</span>
+        <span class="tag">Regional Service</span>
+        <span class="tag">Global Service</span>
+        <span class="tag">High Availability</span>
+        <span class="tag">Resilience</span>
+        <span class="tag">Latency</span>
+        <span class="tag">Data Residency</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="qna">
+          <strong>Q1: Is a Region the same as a data center?</strong>
+          <p>A: No. A Region contains multiple Availability Zones, and those contain data centers.</p>
+
+          <strong>Q2: What is an Availability Zone (AZ)?</strong>
+          <p>A: A grouping of one or more data centers within a Region, separated from other AZs with independent infrastructure.</p>
+
+          <strong>Q3: Name two reasons to choose a specific Region.</strong>
+          <p>A: Pricing differences, service availability, legal requirements (data residency), reducing latency, and/or designing for higher availability.</p>
+
+          <strong>Q4: How can you improve availability without leaving a Region?</strong>
+          <p>A: Spread workloads across multiple Availability Zones within the same Region.</p>
+
+          <strong>Q5: How do Regions help with catastrophe risk?</strong>
+          <p>A: Regions are physically isolated; if one Region is impacted, another Region can host the workload.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,376 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Different Kinds of File Storage (EBS, S3, EFS/FSx)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column container */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px 46px;
+    }
+
+    header {
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: inline-block;
+      max-width: 100%;
+    }
+
+    h2 {
+      font-size: 1.22rem;
+      margin: 18px 0 10px;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 10px 18px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .note {
+      background: var(--panel);
+      border-left: 4px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .twoColTable {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 0;
+      table-layout: fixed;
+    }
+
+    .twoColTable th,
+    .twoColTable td {
+      border: 1px solid var(--border);
+      padding: 9px 10px;
+      vertical-align: top;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .twoColTable th {
+      background: var(--panel);
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: var(--panel);
+      white-space: nowrap;
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    .checklist li { margin: 7px 0; }
+
+    .quiz li { margin: 9px 0; }
+
+    .muted { color: var(--muted); }
+
+    /* Print setup */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { font-size: 11pt; line-height: 1.45; }
+      .page { max-width: none; padding: 0; }
+      header { border-bottom: 1px solid #cfcfcf; }
+      .pill, .note { background: #ffffff; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>Different Kinds of File Storage in AWS</h1>
+      <p class="subtitle">Reviewer / Study Guide (Beginner-friendly): Block Storage (EBS), Object Storage (S3), Network File Systems (EFS / FSx)</p>
+      <div class="meta">
+        <span class="pill">🧠 CLF-C02 Focus</span>
+        <span class="pill">💾 Storage Basics</span>
+        <span class="pill">🖨️ A4 Print-ready</span>
+        <span class="pill">📌 Single-column</span>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2>Big Idea</h2>
+      <p>
+        AWS offers <strong>different storage services</strong> because there are <strong>different “styles” of storing files</strong>.
+        In this lecture, the three major approaches are:
+      </p>
+      <ul>
+        <li>🧱 <strong>Block storage</strong> → like attaching a raw hard drive to a server (AWS: <strong>EBS</strong>)</li>
+        <li>📦 <strong>Object storage</strong> → store files as “objects” without managing disks (AWS: <strong>S3</strong>)</li>
+        <li>🗄️ <strong>Network file system</strong> → a shared file system you mount (AWS: <strong>EFS</strong> / <strong>FSx</strong>)</li>
+      </ul>
+      <div class="note">
+        ✅ Exam mindset: When you see a question about “<em>how</em> the app needs to use files” (raw disk vs object store vs shared filesystem), you can usually pick the service quickly.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>1) Block Storage → EBS (Elastic Block Store) 🧱</h2>
+      <p>
+        <strong>Block storage</strong> means you attach an <strong>unformatted virtual disk</strong> to a server.
+        You (or your OS) then:
+      </p>
+      <ul>
+        <li>format it (create a filesystem),</li>
+        <li>mount it inside the instance,</li>
+        <li>then create folders/files like a normal hard drive.</li>
+      </ul>
+
+      <h3>How it looks in AWS</h3>
+      <ul>
+        <li>💡 You attach an <strong>EBS volume</strong> to an <strong>EC2 instance</strong>.</li>
+        <li>🔒 In this lecture’s framing: <strong>EBS is EC2-focused</strong> (you use it like an attached disk for EC2).</li>
+      </ul>
+
+      <h3>Beginner example</h3>
+      <p>
+        You run a web server on EC2 and need extra disk space for logs or app files.
+        You add an EBS volume, format it, mount it, and store files there.
+      </p>
+
+      <div class="note">
+        📝 Memory hook: <strong>EBS = “Extra disk for EC2”</strong>.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2) Object Storage → S3 (Simple Storage Service) 📦</h2>
+      <p>
+        <strong>Object storage</strong> focuses on storing and retrieving <strong>files (objects)</strong> directly.
+        You don’t manage disks, formatting, or mounting.
+      </p>
+
+      <h3>Key characteristics (beginner-friendly)</h3>
+      <ul>
+        <li>🧰 No “hard drive management” — you just upload/download files.</li>
+        <li>🗂️ You don’t build a traditional OS filesystem by default; you store objects in a storage “place” (commonly thought of as buckets).</li>
+        <li>📈 Great when you want to store files independently from any one EC2 instance.</li>
+      </ul>
+
+      <h3>Beginner examples</h3>
+      <ul>
+        <li>🖼️ Website uploads user images → store them in S3.</li>
+        <li>🧾 Online shop generates invoices (PDF) → store PDFs in S3.</li>
+        <li>📚 Archive legal documents or backups → store long-term in S3.</li>
+      </ul>
+
+      <div class="note">
+        📝 Memory hook: <strong>S3 = “store files as objects; no disk to manage”</strong>.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3) Network File Systems → EFS / FSx 🗄️</h2>
+      <p>
+        A <strong>network file system</strong> gives you a <strong>ready-to-use filesystem</strong> that you mount over the network.
+        You care about folders and file paths, but you don’t want to manage the underlying disk like with block storage.
+      </p>
+
+      <h3>Why this exists</h3>
+      <ul>
+        <li>🤝 You may want a <strong>shared filesystem</strong> usable by multiple compute resources (e.g., multiple EC2 instances).</li>
+        <li>🧩 You want a “filesystem experience” (folders, structure) without manually attaching/formatting disks.</li>
+      </ul>
+
+      <h3>Services mentioned in the lecture</h3>
+      <ul>
+        <li>📁 <strong>EFS</strong> (Elastic File System) — network file system concept</li>
+        <li>🧊 <strong>FSx</strong> family — includes specialized options (lecture mentions FSx Lustre)</li>
+      </ul>
+
+      <h3>Beginner example</h3>
+      <p>
+        You have two EC2 instances (behind a load balancer) that both need to read/write the same shared files.
+        A network file system lets both instances access the same folder structure.
+      </p>
+
+      <div class="note">
+        📝 Memory hook: <strong>EFS/FSx = “shared network folders”</strong>.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Quick Comparison (Exam-friendly)</h2>
+      <table class="twoColTable" aria-label="Storage comparison">
+        <thead>
+          <tr>
+            <th style="width: 30%">Type</th>
+            <th style="width: 70%">What it feels like (and when you pick it)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>🧱 Block</strong><br><span class="muted">EBS</span></td>
+            <td>
+              Like adding an extra disk to a server. You format/mount it inside EC2.
+              Pick when your workload needs “disk attached to server” behavior.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>📦 Object</strong><br><span class="muted">S3</span></td>
+            <td>
+              Store files directly without managing disks or filesystems.
+              Pick when you want durable file storage independent of a single EC2 instance.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>🗄️ Network FS</strong><br><span class="muted">EFS / FSx</span></td>
+            <td>
+              A mountable shared filesystem (folders/paths) accessible over the network.
+              Pick when multiple servers/services need shared file access.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Common Confusions (and Simple Fixes)</h2>
+      <ul>
+        <li>❓ “I want to store files… should I always use EBS?” → Not always. If you don’t want to manage disks and the files should outlive an EC2 instance, <strong>S3</strong> is often a better fit.</li>
+        <li>❓ “S3 is file storage, so it’s a filesystem?” → Think of S3 as <strong>object storage</strong>, not a traditional mounted filesystem.</li>
+        <li>❓ “I need folders shared between multiple EC2 instances.” → Think <strong>EFS/FSx</strong> (network file system).</li>
+      </ul>
+      <div class="note">
+        ✅ Quick decision question: “Do I need a <strong>disk</strong>, an <strong>object store</strong>, or a <strong>shared filesystem</strong>?”
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Mini Quiz (for retention) 🧪</h2>
+      <ol class="quiz">
+        <li>
+          You need an extra drive attached to your EC2 instance for app data. Which storage style is this?
+          <div class="muted">Answer: Block storage → EBS 🧱</div>
+        </li>
+        <li>
+          Your website stores user-uploaded images and you don’t want to manage disks/formatting. Which service style fits best?
+          <div class="muted">Answer: Object storage → S3 📦</div>
+        </li>
+        <li>
+          Two EC2 instances must access the same folder structure (shared files). What storage style is that?
+          <div class="muted">Answer: Network file system → EFS / FSx 🗄️</div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>Key Terms to Remember</h2>
+      <ul class="checklist">
+        <li>🧱 <strong>Block storage</strong> = raw disk attached to a server (format/mount)</li>
+        <li>📦 <strong>Object storage</strong> = store/retrieve files as objects (no disk management)</li>
+        <li>🗄️ <strong>Network file system</strong> = mountable filesystem over the network (shared folders)</li>
+        <li>🔤 <strong>EBS</strong> = Elastic Block Store (lecture: EC2-focused disk attachment)</li>
+        <li>🔤 <strong>S3</strong> = Simple Storage Service (major AWS service; deeper dive later)</li>
+        <li>🔤 <strong>EFS / FSx</strong> = managed network file system services (file system without manual disk setup)</li>
+      </ul>
+      <div class="note">
+        🧠 Fast recall: <strong>EBS = disk</strong>, <strong>S3 = objects</strong>, <strong>EFS/FSx = shared folders</strong>.
+      </div>
+    </section>
+
+    <footer class="muted" style="margin-top: 14px;">
+      <div class="hr"></div>
+      <p style="margin: 0;">
+        Tip: For printing, use your browser’s print dialog and ensure scale is set to 100% (or “Default”) and paper size is A4.
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

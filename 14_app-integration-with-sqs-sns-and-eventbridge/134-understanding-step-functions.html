@@ -1,0 +1,452 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Reviewer — Step Functions</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent-2: #167a3a;
+      --warn: #b54708;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 18px 14px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 12.5px;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    .toolbar {
+      margin: 14px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: #111;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13.5px;
+    }
+
+    .btn:hover { border-color: #cfcfcf; }
+
+    main {
+      margin-top: 16px;
+    }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 12px 0;
+      background: #fff;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 16.5px;
+    }
+
+    h3 {
+      margin: 12px 0 8px;
+      font-size: 14.5px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: #f3f7ff;
+      padding: 10px 12px;
+      border-radius: 10px;
+    }
+
+    .callout.good {
+      border-left-color: var(--accent-2);
+      background: #f2fbf5;
+    }
+
+    .callout.warn {
+      border-left-color: var(--warn);
+      background: #fff7ed;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .box {
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+    }
+
+    pre {
+      margin: 10px 0 0;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fbfbfb;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Word wrapping safety (prevents print cut-offs) */
+    .wrap {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    .kvs {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 13.5px;
+    }
+
+    .kvs th, .kvs td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    .kvs th {
+      background: var(--panel);
+      text-align: left;
+      width: 34%;
+    }
+
+    .small {
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    footer {
+      margin: 14px 0 30px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      html, body {
+        background: #fff;
+      }
+
+      .page {
+        padding: 0;
+        max-width: none;
+      }
+
+      header, section {
+        border-color: #d9d9d9;
+        box-shadow: none;
+      }
+
+      .toolbar {
+        display: none !important;
+      }
+
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+
+      /* Make text print-friendly */
+      body {
+        font-size: 11.5pt;
+        line-height: 1.45;
+      }
+
+      h1 { font-size: 16pt; }
+      h2 { font-size: 12.5pt; }
+      h3 { font-size: 11.5pt; }
+
+      .pill {
+        border-color: #d9d9d9;
+      }
+
+      /* Avoid awkward breaks */
+      section { break-inside: avoid; page-break-inside: avoid; }
+      pre { break-inside: avoid; page-break-inside: avoid; }
+      ul, ol { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page wrap">
+    <header>
+      <h1>🧩 AWS Step Functions — Reviewer / Study Guide (CLF-C02)</h1>
+      <p class="subtitle">Single-column, print-friendly notes: what Step Functions is, why it matters, and how it fits with Lambda, containers, and app integration.</p>
+      <div class="meta">
+        <span class="pill">📌 Topic: App Integration / Orchestration</span>
+        <span class="pill">🧠 Focus: Beginner-friendly + exam cues</span>
+        <span class="pill">🖨️ A4 Print Ready</span>
+      </div>
+      <div class="toolbar">
+        <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="toggleAll(true)">➕ Expand all</button>
+        <button class="btn" onclick="toggleAll(false)">➖ Collapse all</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Idea (in plain words) 🧠</h2>
+        <div class="callout">
+          <p><strong>Step Functions</strong> helps you build a <strong>reliable, pre-defined workflow</strong> made of multiple steps (tasks). Each step runs some work (often a <strong>Lambda</strong>, but it can also start containers or integrate with other AWS services), then passes its <strong>output</strong> to the next step as <strong>input</strong>.</p>
+          <p class="small">Think of it like a “flowchart that actually runs.” ✅</p>
+        </div>
+      </section>
+
+      <section>
+        <details open>
+          <summary><strong>2) Why Step Functions exists (the problem it solves) 🎯</strong></summary>
+          <div class="hr"></div>
+          <p>When an application needs <strong>multiple actions</strong> in a specific order, code can become messy:</p>
+          <ul>
+            <li>Lots of “if this succeeds, then do that” logic</li>
+            <li>Error handling and retries duplicated everywhere 😵</li>
+            <li>Hard to see the full process end-to-end</li>
+          </ul>
+          <p><strong>Step Functions</strong> centralizes that flow so you can:</p>
+          <ul>
+            <li>Define the <strong>sequence</strong> (A → B → C)</li>
+            <li>Run steps <strong>in parallel</strong> (A and B at the same time)</li>
+            <li>Run steps <strong>conditionally</strong> (if X then A else B)</li>
+            <li>Add <strong>permissions</strong> and <strong>logging</strong> for the workflow</li>
+          </ul>
+        </details>
+      </section>
+
+      <section>
+        <details open>
+          <summary><strong>3) Key Concepts you must remember 🧩</strong></summary>
+          <div class="hr"></div>
+          <table class="kvs">
+            <tr>
+              <th>Step / Task</th>
+              <td>A single unit of work (often invokes a Lambda). It receives input and returns output.</td>
+            </tr>
+            <tr>
+              <th>Input → Output</th>
+              <td>Each step takes <strong>input</strong> data (JSON-style) and produces <strong>output</strong> that can be passed forward.</td>
+            </tr>
+            <tr>
+              <th>Workflow / State Machine</th>
+              <td>The overall process definition—how steps connect and execute.</td>
+            </tr>
+            <tr>
+              <th>Parallel</th>
+              <td>Run multiple steps at the same time ⚡ (useful when tasks are independent).</td>
+            </tr>
+            <tr>
+              <th>Choice / Conditional</th>
+              <td>Branching logic: different path depending on data or results 🛣️.</td>
+            </tr>
+            <tr>
+              <th>Retries & Error Handling</th>
+              <td>Workflows can be designed to retry or take alternate paths when something fails 🛡️.</td>
+            </tr>
+          </table>
+        </details>
+      </section>
+
+      <section>
+        <details open>
+          <summary><strong>4) Typical “beginner” example (easy to imagine) 🧪</strong></summary>
+          <div class="hr"></div>
+          <p><strong>Scenario:</strong> You want a simple data pipeline.</p>
+          <div class="grid">
+            <div class="box">
+              <p><strong>Step 1:</strong> 🧾 Validate input (Lambda)</p>
+              <p class="small">Check required fields. If missing, stop with an error.</p>
+            </div>
+            <div class="box">
+              <p><strong>Step 2:</strong> 🧹 Transform/clean data (Lambda)</p>
+              <p class="small">Normalize values, remove invalid characters, etc.</p>
+            </div>
+            <div class="box">
+              <p><strong>Step 3:</strong> 💾 Store result (Lambda or service integration)</p>
+              <p class="small">Save to a database or S3.</p>
+            </div>
+          </div>
+          <div class="callout good" style="margin-top:10px;">
+            <p><strong>Why Step Functions helps:</strong> you can clearly define the order and ensure the same reliable process runs every time—even as your workflow grows.</p>
+          </div>
+        </details>
+      </section>
+
+      <section>
+        <details open>
+          <summary><strong>5) How it looks in the console (what the lecture described) 🖥️</strong></summary>
+          <div class="hr"></div>
+          <p>Step Functions lets you define steps in the AWS console using a <strong>Step Functions definition language</strong> (Amazon States Language). The console also shows a <strong>visual graph</strong> (boxes/arrows) of your workflow.</p>
+          <ul>
+            <li>Each “box” = one step/task ✅</li>
+            <li>Output of step N becomes input of step N+1 🔁</li>
+            <li>You can configure logging and permissions 🔐</li>
+          </ul>
+          <p class="small">You do not need to memorize the exact syntax for CLF-C02. Focus on the concept and use cases.</p>
+        </details>
+      </section>
+
+      <section>
+        <details open>
+          <summary><strong>6) When to use Step Functions vs SQS/SNS/EventBridge 🔄</strong></summary>
+          <div class="hr"></div>
+          <div class="callout warn">
+            <p><strong>Important mindset:</strong> These services can work together, but they solve different problems.</p>
+          </div>
+          <ul>
+            <li><strong>Step Functions</strong> 🧩 = <strong>Orchestration</strong>: you want a defined workflow (Step 1 → Step 2 → Step 3) with branching/parallel.</li>
+            <li><strong>SQS</strong> 📥 = <strong>Queue</strong>: decouple producers/consumers; consumers pull and process later (async).</li>
+            <li><strong>SNS</strong> 📣 = <strong>Push</strong>: send notifications/messages to subscribers immediately.</li>
+            <li><strong>EventBridge</strong> 🚌 = <strong>Event bus</strong>: route events to targets based on rules; great for event-driven architectures.</li>
+          </ul>
+          <p class="small">Exam tip: If the question emphasizes “multi-step workflow with conditional/parallel execution”, think <strong>Step Functions</strong>.</p>
+        </details>
+      </section>
+
+      <section>
+        <details>
+          <summary><strong>7) Mini “pseudo-flow” example (super readable) ✍️</strong></summary>
+          <div class="hr"></div>
+          <p>Below is a simple workflow idea (not full syntax—just for understanding):</p>
+          <pre>
+Start
+  -> ValidateInput (Lambda)
+      -> if invalid: Fail
+      -> else: Continue
+  -> Parallel:
+      -> EnrichData (Lambda)
+      -> CheckFraud (Lambda)
+  -> SaveResult (Lambda)
+End
+          </pre>
+          <p class="small">Key takeaway: Step Functions coordinates what runs, when it runs, and what happens next.</p>
+        </details>
+      </section>
+
+      <section>
+        <h2>Quick Review (Memory Hooks) 🧠</h2>
+        <ul>
+          <li>🧩 Step Functions = <strong>workflow/orchestration</strong> of steps.</li>
+          <li>🔁 Steps pass <strong>output → input</strong> to the next step.</li>
+          <li>⚡ Supports <strong>parallel</strong> steps and <strong>conditional</strong> branching.</li>
+          <li>🧑‍💻 Steps often run <strong>Lambda</strong>, but can also start other compute (e.g., containers) depending on design.</li>
+          <li>🧾 Helpful for complex processes that are easier to manage as a flowchart.</li>
+        </ul>
+      </section>
+
+      <footer>
+        <div class="hr"></div>
+        <p><strong>Printing tip:</strong> Use “Save as PDF” to keep a clean A4 reviewer copy. The buttons are hidden automatically when printing.</p>
+        <p class="small">File: 134-understanding-step-functions.html</p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    function toggleAll(open) {
+      document.querySelectorAll('details').forEach(d => d.open = open);
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,424 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Encrypting Data (At Rest & In Transit)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-wrap:anywhere;
+      word-break:normal;
+      hyphens:auto;
+    }
+
+    /* Single-column page */
+    .page{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 22px 18px 44px;
+    }
+
+    header{
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+    }
+
+    h1{
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .meta{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .pill{
+      border:1px solid var(--border);
+      background:#fff;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12.5px;
+      color:#222;
+      white-space:nowrap;
+    }
+
+    main{ margin-top: 14px; }
+
+    h2{
+      margin: 18px 0 8px;
+      font-size: 18px;
+    }
+
+    h3{
+      margin: 14px 0 6px;
+      font-size: 15.5px;
+    }
+
+    p{ margin: 8px 0; }
+
+    ul{ margin: 8px 0 8px 20px; }
+    li{ margin: 6px 0; }
+
+    .box{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background:#fff;
+      margin: 12px 0;
+    }
+
+    .box.gray{ background: var(--panel); }
+
+    .keyline{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+
+    .icon{
+      width: 28px;
+      flex: 0 0 28px;
+      text-align:center;
+      font-size: 18px;
+      line-height: 1.2;
+      margin-top: 1px;
+    }
+
+    .box h4{
+      margin:0 0 6px;
+      font-size: 14px;
+    }
+
+    .muted{ color: var(--muted); }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+    }
+
+    pre{
+      margin:10px 0;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius: 10px;
+      background:#fff;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap:anywhere;
+    }
+
+    .divider{
+      height:1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .btnbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      padding:8px 12px;
+      border-radius:10px;
+      font-size: 13px;
+      cursor:pointer;
+    }
+
+    .btn.primary{
+      border-color: rgba(11,87,208,.25);
+      color: #0b57d0;
+    }
+
+    .small{ font-size: 12.5px; }
+
+    /* Print */
+    @page{
+      size: A4;
+      margin: 16mm;
+    }
+
+    @media print{
+      body{ background:#fff; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; border-radius: 0; }
+      .box.gray{ background:#fff; }
+      .btnbar{ display:none !important; }
+      a{ color: inherit; text-decoration: none; }
+      .pill{ border-color:#ddd; }
+      /* avoid awkward page breaks */
+      header, .box, h2, h3, pre, ul{ break-inside: avoid; page-break-inside: avoid; }
+      h2, h3{ break-after: avoid; page-break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🔐 AWS CLF-C02 Reviewer: Encrypting Data (At Rest & In Transit)</h1>
+      <p class="subtitle">Beginner-friendly notes + examples based on the lecture transcript. Single-column and A4 print-ready.</p>
+      <div class="meta">
+        <span class="pill">Topic: Security — Data Protection</span>
+        <span class="pill">Focus: KMS / CloudHSM / ACM</span>
+        <span class="pill">Exam style: “What service do I use?”</span>
+      </div>
+
+      <div class="btnbar" aria-hidden="false">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Quick Check</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="box gray">
+        <div class="keyline">
+          <div class="icon">🧠</div>
+          <div>
+            <h4>Big Idea</h4>
+            <p>
+              <strong>Even if your account, apps, and network are secure</strong>, you still must protect the <strong>data</strong>.
+              A core best practice is: <strong>encrypt data at rest and in transit</strong>.
+            </p>
+            <p class="muted small">
+              “At rest” = stored (disk/object/database). “In transit” = moving over the network (requests/responses).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <h2>1) What does “encryption” do?</h2>
+      <div class="box">
+        <div class="keyline">
+          <div class="icon">🔒</div>
+          <div>
+            <p>
+              Encryption turns readable data (plaintext) into scrambled data (ciphertext) using a <strong>key</strong>.
+              If data is exposed or stolen, encryption helps ensure attackers <strong>cannot do anything useful</strong> without the key.
+            </p>
+            <ul>
+              <li><strong>Encrypt</strong> when storing or sending data.</li>
+              <li><strong>Decrypt</strong> only when an authorized system/user needs to read it.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h2>2) Encryption at rest (stored data)</h2>
+      <div class="box">
+        <div class="keyline">
+          <div class="icon">🗄️</div>
+          <div>
+            <h4>Meaning</h4>
+            <p>
+              Data is encrypted while it sits in storage (e.g., S3 objects, EBS volumes, RDS databases, snapshots, logs).
+            </p>
+            <h4>In AWS, two key services are commonly mentioned</h4>
+            <ul>
+              <li><strong>KMS</strong> (Key Management Service): managed encryption keys (AWS manages key infrastructure).</li>
+              <li><strong>CloudHSM</strong>: hardware security modules (HSM) for stronger control; you manage keys more directly.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h3>2.1 KMS (Key Management Service) — the “default” exam answer</h3>
+      <div class="box gray">
+        <div class="keyline">
+          <div class="icon">🧰</div>
+          <div>
+            <p>
+              <strong>KMS</strong> provides encryption keys that integrate with many AWS services.
+              For most major services, you can simply <strong>turn on encryption</strong> and select a KMS key.
+            </p>
+            <ul>
+              <li>✅ Easy to use: "enable encryption" and AWS handles most of the heavy lifting.</li>
+              <li>✅ Integrates broadly: commonly used with S3, EBS, RDS, Lambda env vars, etc.</li>
+              <li>✅ Keys are protected and managed by AWS (you still control permissions to use them).</li>
+            </ul>
+            <p class="muted small">
+              Practical mental model: <em>“KMS = managed keys that many services can use automatically.”</em>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <h3>2.2 CloudHSM — when you need “bring your own key store” control</h3>
+      <div class="box">
+        <div class="keyline">
+          <div class="icon">🏦</div>
+          <div>
+            <p>
+              <strong>CloudHSM</strong> uses dedicated hardware (HSM) so you can manage cryptographic keys with stronger isolation.
+              The lecture frames this as a way to have a <strong>key store managed by you</strong>, with minimal AWS involvement.
+            </p>
+            <ul>
+              <li>✅ More control over keys and key handling processes.</li>
+              <li>✅ Useful for strict compliance/security requirements.</li>
+              <li>⚠️ Typically more complex than KMS.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="box gray">
+        <div class="keyline">
+          <div class="icon">💡</div>
+          <div>
+            <h4>Beginner Example: S3 encryption at rest</h4>
+            <p>
+              Scenario: You store customer PDF statements in <strong>S3</strong>. If a bucket is misconfigured or a backup leaks,
+              you want the files to be unreadable.
+            </p>
+            <ul>
+              <li>Turn on S3 default encryption.</li>
+              <li>Choose <strong>SSE-KMS</strong> so S3 encrypts objects using a KMS key.</li>
+              <li>AWS automatically encrypts on upload and decrypts on authorized download.</li>
+            </ul>
+            <pre>Plaintext file (PDF)  →  S3 stores encrypted bytes (ciphertext)
+Authorized user/app   →  S3 decrypts automatically (if allowed to use the KMS key)
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <h2>3) Encryption in transit (network traffic)</h2>
+      <div class="box">
+        <div class="keyline">
+          <div class="icon">🌐</div>
+          <div>
+            <h4>Meaning</h4>
+            <p>
+              Data is encrypted while traveling across the network (client → AWS, AWS → client, service → service).
+              This is commonly done with <strong>TLS/SSL</strong> (HTTPS).
+            </p>
+            <h4>Key AWS service mentioned in the lecture</h4>
+            <ul>
+              <li><strong>ACM</strong> (AWS Certificate Manager): provisions and manages SSL/TLS certificates.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h3>3.1 ACM (AWS Certificate Manager)</h3>
+      <div class="box gray">
+        <div class="keyline">
+          <div class="icon">📜</div>
+          <div>
+            <p>
+              <strong>ACM</strong> helps you get and manage <strong>SSL/TLS certificates</strong> so your users connect via <strong>HTTPS</strong>.
+              Support is built into services that face the internet, such as:
+              <strong>CloudFront</strong> and <strong>Application Load Balancer (ALB)</strong>.
+            </p>
+            <ul>
+              <li>✅ ACM can provide certificates (often free for supported integrations).</li>
+              <li>✅ AWS services use them to encrypt traffic entering/leaving the AWS cloud.</li>
+              <li>✅ Simplifies renewals and certificate lifecycle management.</li>
+            </ul>
+            <p class="muted small">
+              Practical mental model: <em>“ACM = HTTPS certificates for AWS edge/load-balancing services.”</em>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="keyline">
+          <div class="icon">🧪</div>
+          <div>
+            <h4>Beginner Example: Encrypt website traffic</h4>
+            <p>
+              Scenario: Your customers open <strong>https://example.com</strong> and log in.
+              You want usernames/passwords and session cookies protected from eavesdropping.
+            </p>
+            <ul>
+              <li>Request/provision a certificate in <strong>ACM</strong> (for your domain).</li>
+              <li>Attach it to <strong>CloudFront</strong> or an <strong>ALB</strong>.</li>
+              <li>Users connect via HTTPS (TLS), encrypting requests and responses in transit.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h2 id="quick-check">✅ Quick Check (Exam-style memory hooks)</h2>
+      <div class="box gray">
+        <ul>
+          <li><strong>Encrypt at rest</strong> (stored data): usually <strong>KMS</strong> (managed keys) → “turn on encryption.” 🔐</li>
+          <li><strong>Need stronger key control / hardware-backed key store</strong>: <strong>CloudHSM</strong>. 🏦</li>
+          <li><strong>Encrypt in transit</strong> (HTTPS/TLS): <strong>ACM</strong> provides certificates for services like <strong>CloudFront</strong> / <strong>ALB</strong>. 🌐</li>
+        </ul>
+      </div>
+
+      <h2>Common mistakes to avoid</h2>
+      <div class="box">
+        <div class="keyline">
+          <div class="icon">⚠️</div>
+          <div>
+            <ul>
+              <li><strong>Only encrypting at rest</strong> and forgetting HTTPS/TLS for user traffic.</li>
+              <li><strong>Hardcoding secrets</strong> (passwords/API keys) in code or repos. (Use Secrets Manager / Parameter Store instead.)</li>
+              <li><strong>Assuming encryption is “automatic”</strong>: many services support it, but you often must <em>enable</em> it.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h2>One-sentence summary</h2>
+      <div class="box gray">
+        <div class="keyline">
+          <div class="icon">✅</div>
+          <div>
+            <p>
+              Protect data by encrypting <strong>at rest</strong> (usually with <strong>KMS</strong> / sometimes <strong>CloudHSM</strong>) and <strong>in transit</strong>
+              (TLS/HTTPS using <strong>ACM</strong> on edge/load-balancing services).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <p class="muted small">
+        Print tip: Use “Save as PDF” in the print dialog to keep an offline reviewer copy.
+      </p>
+    </main>
+  </div>
+</body>
+</html>

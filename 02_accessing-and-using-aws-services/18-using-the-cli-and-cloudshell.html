@@ -1,0 +1,302 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 18 Using the CLI & CloudShell</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    a{ color: var(--accent); }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 10px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .qna strong{ display:block; margin: 10px 0 4px; }
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      white-space: pre-wrap;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+      .mono{ font-size: 10.5pt; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Accessing & Using AWS Services</p>
+      <h1>18 — Using the CLI & CloudShell ⌨️☁️</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Lecture Goal</h2>
+        <p>Know what the <strong>AWS CLI</strong> and <strong>AWS CloudShell</strong> are, how they relate to the Management Console, and what you need (and don’t need) for the Cloud Practitioner exam.</p>
+        <div class="callout">
+          <p><strong>Big idea ✅</strong> For CLF-C02, you don’t need hands-on CLI/SDK skills. But learning the basics helps you explore AWS faster and automate repeatable tasks.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>📝 Exam Note (Very Important)</h2>
+        <p>According to the lecture:</p>
+        <ul>
+          <li>✅ For the Cloud Practitioner exam, you <strong>don’t need to be able to use</strong> the CLI or AWS SDKs.</li>
+          <li>✅ You also don’t need deep Management Console skills (no hands-on requirement).</li>
+        </ul>
+        <div class="mini">
+          <p><strong>Still worth learning 💡</strong> Console/CLI/CloudShell familiarity makes it easier to “play around” with AWS and understand how services are used in practice.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>⌨️ Using the AWS CLI (Local Installation)</h2>
+        <p>The AWS Command Line Interface (CLI) lets you run AWS commands from your computer’s terminal instead of clicking in the web console.</p>
+
+        <h3>📥 Step 1: Install the CLI</h3>
+        <p>Download and install from: <a href="https://aws.amazon.com/cli/">https://aws.amazon.com/cli/</a></p>
+        <ul>
+          <li>🪟 Windows</li>
+          <li>🍎 macOS</li>
+          <li>🐧 Linux</li>
+        </ul>
+
+        <h3>🔐 Step 2: Configure the CLI</h3>
+        <p>After installing, you configure it by running:</p>
+        <div class="mini">
+          <p class="mono">aws configure</p>
+        </div>
+        <p>This configuration uses <strong>Access Keys</strong> so the CLI can authenticate “behind the scenes” and act on your AWS account.</p>
+
+        <div class="callout">
+          <p><strong>Beginner mental model 💡</strong> The CLI needs credentials because AWS must know <em>which account</em> and <em>which user permissions</em> are making the request.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗝️ Access Keys: Where to Create Them</h2>
+        <p>Per the lecture, you can create an <strong>Access Key</strong> and a <strong>Secret Access Key</strong> in the Management Console:</p>
+        <ul>
+          <li>Click your <strong>account name</strong> (top-right corner)</li>
+          <li>Choose <strong>Security Credentials</strong></li>
+          <li>Create Access Keys there</li>
+        </ul>
+
+        <div class="warning">
+          <p><strong>Security reminder ⚠️</strong> Access Keys are sensitive credentials. Treat them like a password and never share them publicly.</p>
+        </div>
+
+        <div class="mini">
+          <p><strong>Official guide 📚</strong> Configuration quickstart: <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html">https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html</a></p>
+        </div>
+      </section>
+
+      <section>
+        <h2>☁️ Using CloudShell (No Local Install Needed)</h2>
+        <p>CloudShell is an alternative to installing the CLI on your own machine.</p>
+
+        <h3>🧭 Where you find it</h3>
+        <p>CloudShell is integrated into the AWS Management Console. You typically open it by clicking the <strong>shell icon</strong> in the top bar of the console.</p>
+
+        <h3>✅ Why CloudShell is convenient</h3>
+        <ul>
+          <li>🧰 Comes with the AWS CLI <strong>pre-installed</strong></li>
+          <li>🔐 Automatically assumes your user permissions (so you don’t set up local credentials first, in the typical flow described)</li>
+          <li>💻 Lets you run AWS CLI commands without installing anything locally</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>Beginner mental model 💡</strong> CloudShell is like a ready-to-use terminal that AWS hosts for you inside the console.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Quick Comparison (When to Use What)</h2>
+        <ul>
+          <li>🖥️ <strong>Management Console</strong>: best for learning and exploring services visually.</li>
+          <li>⌨️ <strong>AWS CLI (local)</strong>: best for repeated tasks, scripting, and automation on your own machine.</li>
+          <li>☁️ <strong>CloudShell</strong>: best when you want CLI power without installing/configuring locally.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Exam Focus)</h2>
+        <span class="tag">AWS CLI</span>
+        <span class="tag">CloudShell</span>
+        <span class="tag">Access Key</span>
+        <span class="tag">Secret Access Key</span>
+        <span class="tag">aws configure</span>
+        <span class="tag">Security Credentials</span>
+        <span class="tag">Authentication</span>
+        <span class="tag">Permissions</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="qna">
+          <strong>Q1: Do you need CLI skills for the Cloud Practitioner exam?</strong>
+          <p>A: No. Hands-on CLI/SDK knowledge is not required (per lecture).</p>
+
+          <strong>Q2: What command is used to configure the AWS CLI?</strong>
+          <p>A: <span class="mono">aws configure</span></p>
+
+          <strong>Q3: What two credential pieces are created for CLI access?</strong>
+          <p>A: An Access Key and a Secret Access Key.</p>
+
+          <strong>Q4: What is CloudShell?</strong>
+          <p>A: A browser-accessible shell environment inside the AWS Management Console with the CLI pre-installed.</p>
+
+          <strong>Q5: Why is CloudShell convenient?</strong>
+          <p>A: No local install needed, and it automatically uses your permissions so you can run CLI commands right away.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

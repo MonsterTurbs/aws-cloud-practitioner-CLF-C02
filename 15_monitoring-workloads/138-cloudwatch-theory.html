@@ -1,0 +1,387 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — CloudWatch (Theory)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --soft:#f7f7f7;
+      --soft2:#fbfbfb;
+      --focus:#1a73e8;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Single-column, print-friendly container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 22px 56px;
+    }
+
+    header{
+      padding: 18px 16px;
+      border: 1px solid var(--border);
+      background: var(--soft2);
+      border-radius: 12px;
+    }
+    h1{
+      margin: 0 0 6px;
+      font-size: 1.6rem;
+      letter-spacing: .2px;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: .98rem;
+    }
+
+    .toolbar{
+      margin-top: 14px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .btn{
+      border:1px solid var(--border);
+      background:#fff;
+      padding:10px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:.95rem;
+    }
+    .btn:focus{outline: 3px solid rgba(26,115,232,.25); outline-offset:2px;}
+
+    main{margin-top: 18px;}
+
+    section{
+      margin-top: 16px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background:#fff;
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size: 1.22rem;
+    }
+    h3{
+      margin:14px 0 8px;
+      font-size: 1.05rem;
+    }
+    p{margin: 8px 0;}
+
+    ul{
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+    li{margin: 6px 0;}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .card{
+      border:1px solid var(--border);
+      background: var(--soft2);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:.85rem;
+      padding:2px 8px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:#fff;
+      margin-right:6px;
+    }
+
+    .callout{
+      border-left: 5px solid var(--border);
+      padding: 10px 12px;
+      background: var(--soft);
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    .callout strong{display:block; margin-bottom:4px;}
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .92em;
+      padding: 0 6px;
+      border:1px solid var(--border);
+      border-radius: 6px;
+      background:#fff;
+      white-space: nowrap;
+    }
+
+    /* Prevent print cut-offs */
+    .page, section, header, .card, .callout, p, li{
+      overflow-wrap:anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Print settings */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+    }
+
+    @media print{
+      body{background:#fff;}
+      .page{padding:0; max-width:none;}
+      header, section, .card, .callout{box-shadow:none !important;}
+      .toolbar{display:none !important;}
+      a{color:inherit; text-decoration:none;}
+      h1{font-size: 16pt;}
+      h2{font-size: 13pt;}
+      h3{font-size: 11pt;}
+      p, li{font-size: 10.5pt; line-height: 1.45;}
+      .tag{font-size: 9.5pt;}
+      section{break-inside: avoid-page;}
+      .card{break-inside: avoid-page;}
+      .callout{break-inside: avoid-page;}
+    }
+
+    /* Accessibility */
+    a{color: var(--focus);}
+    a:focus{outline:3px solid rgba(26,115,232,.25); outline-offset:2px;}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>☁️ CloudWatch (Theory) — Reviewer / Study Guide</h1>
+      <p class="subtitle">
+        Focus: What CloudWatch collects, how it helps you analyze data, and how alarms help you react early.
+      </p>
+      <div class="toolbar" aria-label="Actions">
+        <button class="btn" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="toggleAnswers()">✅ Toggle Quick-Check Answers</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Learning Goals</h2>
+        <ul>
+          <li>Explain what <strong>Amazon CloudWatch</strong> is and why it matters for monitoring.</li>
+          <li>Differentiate <strong>logs</strong> vs <strong>metrics</strong> (and where they come from).</li>
+          <li>Describe how to collect extra data using the <strong>CloudWatch Agent</strong> or AWS APIs/SDK.</li>
+          <li>Understand how CloudWatch helps you <strong>analyze</strong> data (dashboards, insights) and <strong>act</strong> (alarms, forwarding).</li>
+        </ul>
+
+        <div class="callout">
+          <strong>🧠 One-liner to memorize</strong>
+          CloudWatch = <em>collect</em> (logs + metrics) ➜ <em>visualize</em> (charts + dashboards) ➜ <em>alert/act</em> (alarms + integrations).
+        </div>
+      </section>
+
+      <section>
+        <h2>🔎 What is CloudWatch?</h2>
+        <p>
+          <strong>Amazon CloudWatch</strong> is AWS’s managed monitoring service. In simple terms, it helps you
+          <strong>collect</strong> operational data (logs + metrics), <strong>analyze</strong> it, and <strong>react</strong>
+          when something looks wrong.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <span class="tag">📥 Collect</span>
+            <p><strong>Logs</strong> (text events) and <strong>metrics</strong> (numbers over time).</p>
+          </div>
+          <div class="card">
+            <span class="tag">📊 Analyze</span>
+            <p>Charts, dashboards, and log analytics to spot patterns and issues.</p>
+          </div>
+          <div class="card">
+            <span class="tag">🔔 Act</span>
+            <p>Alarms and integrations (e.g., notify via SNS or trigger Auto Scaling).</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>📥 Collecting Data in CloudWatch</h2>
+
+        <h3>1) 🧾 Logs</h3>
+        <p>
+          <strong>Logs</strong> are event messages (often text) produced by your applications and services.
+          Example: web server access logs, error logs, or “user X logged in” messages.
+        </p>
+        <ul>
+          <li>✅ Some services write logs automatically (e.g., <strong>Lambda</strong> writes execution logs to CloudWatch).</li>
+          <li>🔧 Other services (e.g., <strong>EC2 workloads</strong>) typically require configuration to send logs.</li>
+          <li>🛠️ You can send logs from your code using AWS APIs/SDKs, or via tools/agents.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>📌 Beginner tip</strong>
+          Think of logs as a <em>diary</em> of events: useful for debugging and understanding “what happened and when.”
+        </div>
+
+        <h3>2) 📈 Metrics</h3>
+        <p>
+          <strong>Metrics</strong> are numbers collected over time (time-series). CloudWatch can show them as charts.
+        </p>
+        <ul>
+          <li>🖥️ Example: <strong>EC2 CPU utilization</strong>, memory (when configured), network in/out.</li>
+          <li>🪣 Example: <strong>S3</strong> can publish storage-related metrics (e.g., bytes stored).</li>
+          <li>🔁 Many AWS services publish standard metrics automatically (especially when logging/monitoring is enabled).</li>
+        </ul>
+
+        <div class="callout">
+          <strong>🧠 Log vs Metric (fast memory)</strong>
+          Logs = “<em>text story</em> of events.” Metrics = “<em>numbers</em> that you graph.”
+        </div>
+
+        <h3>3) 🧰 Getting “Extra” Data (Agent + Custom Metrics)</h3>
+        <p>
+          If the default data isn’t enough, you can collect additional details.
+        </p>
+        <ul>
+          <li>🔧 <strong>CloudWatch Agent</strong>: installable tool (commonly on EC2) to collect more detailed data and enable additional capabilities.</li>
+          <li>🧩 <strong>Custom metrics</strong>: your application can publish its own measurements (e.g., “orders processed per minute”).</li>
+          <li>🧑‍💻 <strong>AWS SDK / API calls</strong>: send arbitrary supported log/metric data to CloudWatch from your code.</li>
+        </ul>
+
+        <div class="card">
+          <p><strong>🧪 Quick example (custom metric idea)</strong></p>
+          <ul>
+            <li>App tracks <em>“CheckoutFailures”</em> and sends it as a metric.</li>
+            <li>CloudWatch charts the failures per 5 minutes.</li>
+            <li>An alarm triggers if failures spike above a threshold.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>📊 Analyzing Data</h2>
+        <p>
+          Collecting data is not enough—you need visibility. CloudWatch supports analysis via:
+        </p>
+        <ul>
+          <li>📊 <strong>Metrics + Charts</strong>: visualize trends like CPU rising over time.</li>
+          <li>🧩 <strong>Dashboards</strong>: a single page showing multiple charts (your “operations cockpit”).</li>
+          <li>🔎 <strong>Log analytics features</strong> (e.g., log querying/insights) to search and summarize logs.</li>
+          <li>🧭 <strong>Service-level visibility features</strong> (e.g., deeper views for certain workloads) to help troubleshoot faster.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>📌 Practical use</strong>
+          Dashboards are best for “<em>Are we OK?</em>” checks. Logs are best for “<em>Why did this fail?</em>” investigations.
+        </div>
+      </section>
+
+      <section>
+        <h2>🔔 Acting on Problems with Alarms</h2>
+        <p>
+          <strong>CloudWatch Alarms</strong> notify you (or trigger actions) when a metric goes outside the expected range.
+          This is how you learn about issues early instead of discovering them from user complaints.
+        </p>
+
+        <h3>🧩 Alarm = Metric + Condition + Action</h3>
+        <div class="grid">
+          <div class="card">
+            <p><strong>1) Select a metric 📈</strong></p>
+            <p>Example: EC2 average CPU utilization over 5 minutes.</p>
+          </div>
+          <div class="card">
+            <p><strong>2) Define a condition ⚠️</strong></p>
+            <p>Example: CPU &gt; 80% for 5 minutes.</p>
+          </div>
+          <div class="card">
+            <p><strong>3) Choose an action 🔁</strong></p>
+            <p>Example: notify via SNS, or trigger Auto Scaling.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <p><strong>🧪 Beginner-friendly examples</strong></p>
+          <ul>
+            <li>🖥️ <strong>EC2 CPU alarm:</strong> If CPU &gt; 80% → send notification (SNS) or scale out.</li>
+            <li>🪣 <strong>S3 storage growth alarm:</strong> If bytes stored per day exceeds a threshold → notify team.</li>
+            <li>⚙️ <strong>Lambda cost guard:</strong> If invocation count spikes unexpectedly → alert to investigate.</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <strong>📌 Exam-style takeaway</strong>
+          Alarms can both <em>notify</em> (via services like SNS) and <em>trigger operational actions</em> (e.g., Auto Scaling for EC2).
+        </div>
+      </section>
+
+      <section>
+        <h2>🧾 Quick Glossary</h2>
+        <ul>
+          <li><strong>Logs</strong> 🧾 — detailed event records (usually text).</li>
+          <li><strong>Metrics</strong> 📈 — numeric measurements over time (time-series).</li>
+          <li><strong>Dashboard</strong> 📊 — collection of charts for at-a-glance health checks.</li>
+          <li><strong>Alarm</strong> 🔔 — rule that watches a metric and triggers actions if thresholds are crossed.</li>
+          <li><strong>CloudWatch Agent</strong> 🔧 — installed tool (commonly on EC2) to collect additional system/app data.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>✅ Quick Check (with Answers)</h2>
+        <ol>
+          <li><strong>What are the two main data types CloudWatch works with?</strong>
+            <div class="answer" hidden>Logs 🧾 and metrics 📈.</div>
+          </li>
+          <li><strong>Why do we use dashboards?</strong>
+            <div class="answer" hidden>To get a fast overview of service/workload health using multiple charts in one place.</div>
+          </li>
+          <li><strong>How can you collect additional data from an EC2 instance?</strong>
+            <div class="answer" hidden>Install and configure the CloudWatch Agent (or publish via AWS SDK/API calls).</div>
+          </li>
+          <li><strong>What can a CloudWatch alarm do besides notifying you?</strong>
+            <div class="answer" hidden>Trigger actions such as Auto Scaling (and integrations through other services like SNS).</div>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>🧭 Mini Summary</h2>
+        <p>
+          CloudWatch is AWS’s core monitoring service: it collects logs and metrics (some automatically, others via agents/SDK),
+          helps you analyze them through charts and dashboards, and lets you react quickly using alarms and integrations.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function toggleAnswers(){
+      const answers = document.querySelectorAll('.answer');
+      const anyHidden = Array.from(answers).some(a => a.hasAttribute('hidden'));
+      answers.forEach(a => {
+        if (anyHidden) a.removeAttribute('hidden');
+        else a.setAttribute('hidden','');
+      });
+    }
+  </script>
+</body>
+</html>

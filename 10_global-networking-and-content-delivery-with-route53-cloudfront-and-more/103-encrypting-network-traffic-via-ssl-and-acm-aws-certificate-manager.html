@@ -1,0 +1,300 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — SSL/TLS, ACM, and SSL Termination</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #666;
+      --border: #e5e5e5;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --focus: #1a73e8;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px 48px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 10px;
+    }
+
+    .kicker {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .2px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 8px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn:focus {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    main { margin-top: 16px; }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 12px 0;
+      background: #fff;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 0 0 10px;
+      line-height: 1.25;
+    }
+
+    h3 {
+      font-size: 15px;
+      margin: 14px 0 8px;
+      line-height: 1.25;
+    }
+
+    p { margin: 8px 0; }
+
+    ul { margin: 8px 0 8px 20px; padding: 0; }
+    li { margin: 6px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      color: var(--muted);
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    footer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* Print: A4, clean margins, no UI controls */
+    @page {
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+    }
+
+    @media print {
+      body { font-size: 11pt; line-height: 1.45; }
+      .page { max-width: none; padding: 0; }
+      header, section { border: 1px solid #ddd; box-shadow: none; }
+      .actions { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      .tag { border-color: #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer</p>
+      <h1>🔒 SSL/TLS + ACM (Amazon Certificate Manager) + SSL Termination</h1>
+      <p class="subtitle">Beginner-friendly notes on encrypting network traffic for CloudFront and Load Balancers.</p>
+      <div class="actions">
+        <button class="btn" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Quick Check</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Idea (What problem are we solving?) 🌐➡️🔐</h2>
+        <p>When users access your website, you typically want <strong>encrypted</strong> connections so that:</p>
+        <ul>
+          <li>✅ passwords, tokens, and personal data are protected in transit</li>
+          <li>✅ users see <strong>HTTPS</strong> (trust + browser security)</li>
+          <li>✅ attackers can’t easily read/modify traffic in the middle (MITM)</li>
+        </ul>
+
+        <div class="callout">
+          <span class="tag">Exam cue</span>
+          <strong>ACM</strong> is the AWS service used to <strong>request</strong> and <strong>manage</strong> SSL/TLS certificates. 🧾
+        </div>
+      </section>
+
+      <section>
+        <h2>2) What is SSL/TLS in simple terms? 🧠</h2>
+        <p><strong>SSL/TLS</strong> is the technology behind <strong>HTTPS</strong>.</p>
+        <ul>
+          <li>🔐 <strong>Encryption</strong>: data is scrambled so outsiders can’t read it</li>
+          <li>🪪 <strong>Identity</strong>: a certificate helps prove the site is the real site</li>
+          <li>🛡️ <strong>Integrity</strong>: prevents silent tampering with data in transit</li>
+        </ul>
+        <p class="mono">HTTP  = unencrypted (not secure)
+HTTPS = encrypted via SSL/TLS (secure)</p>
+      </section>
+
+      <section>
+        <h2>3) ACM (Amazon Certificate Manager) — what it does ✅</h2>
+        <p><strong>ACM</strong> helps you:</p>
+        <ul>
+          <li>📌 Request an SSL/TLS certificate for your domain (e.g., <span class="mono">example.com</span>)</li>
+          <li>🗂️ Manage certificates in one place (renewals/availability handled by AWS for supported cases)</li>
+          <li>🔗 Use certificates inside other AWS services (commonly: <strong>CloudFront</strong>, <strong>Elastic Load Balancing</strong>)</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>Key workflow idea:</strong> You often “touch” ACM from inside another service.</p>
+          <ul>
+            <li>CloudFront Distribution → add HTTPS → “Request certificate” → ACM opens</li>
+            <li>Load Balancer (ALB/NLB) → add HTTPS listener → pick ACM certificate</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) SSL Termination (the important concept) 🧩</h2>
+        <p><strong>SSL termination</strong> means an AWS edge/service becomes the “HTTPS endpoint” for users:</p>
+        <ul>
+          <li>👤 User → sends <strong>HTTPS</strong> request</li>
+          <li>☁️ CloudFront or Load Balancer → <strong>decrypts</strong> the request (uses the certificate)</li>
+          <li>🔁 Then forwards the request to your origin/app (often <strong>HTTP</strong>) inside AWS</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>Why is this useful?</strong> 🎯</p>
+          <ul>
+            <li>🧰 Your EC2 app/server does <em>not</em> need to manage certificates directly</li>
+            <li>📉 Reduced app complexity (cert renewals + termination handled upstream)</li>
+            <li>🛡️ Traffic inside AWS network is not the public internet, so risk surface is reduced</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>5) Practical Example (CloudFront + S3 website) 🧪</h2>
+        <p><strong>Scenario:</strong> You host a static website in S3 and deliver it globally using CloudFront.</p>
+        <h3>Steps (conceptual)</h3>
+        <ol>
+          <li>🪣 Create/host site files in S3 (origin)</li>
+          <li>🌍 Create CloudFront distribution pointing to S3</li>
+          <li>🔒 Enable HTTPS in CloudFront settings</li>
+          <li>🧾 Request/select an ACM certificate for your domain (e.g., <span class="mono">www.example.com</span>)</li>
+          <li>✅ Users access <span class="mono">https://www.example.com</span> and CloudFront terminates SSL</li>
+        </ol>
+        <div class="divider"></div>
+        <p><strong>What’s happening under the hood?</strong></p>
+        <ul>
+          <li>🌐 Browser ↔️ CloudFront: encrypted (HTTPS)</li>
+          <li>☁️ CloudFront ↔️ Origin (S3): forwarded inside AWS network</li>
+        </ul>
+      </section>
+
+      <section id="quick-check">
+        <h2>6) Quick Check (Exam-style reminders) ✅</h2>
+        <ul>
+          <li>🧾 <strong>ACM</strong> = request & manage SSL/TLS certificates.</li>
+          <li>🔒 <strong>HTTPS</strong> uses SSL/TLS encryption.</li>
+          <li>🧩 <strong>SSL termination</strong> commonly happens at <strong>CloudFront</strong> or a <strong>Load Balancer</strong>.</li>
+          <li>🧠 Benefit: app/instances don’t have to handle certs + decryption logic directly.</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Mini Q&A</strong> 📝</p>
+          <p><strong>Q:</strong> “Glacier” is referenced in an exam question — what is it? 🧊</p>
+          <p><strong>A:</strong> It usually means <strong>S3 Glacier storage classes</strong> (Instant, Flexible, Deep Archive) for long-term archival.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>7) One-page Summary 🧾</h2>
+        <ul>
+          <li>🔐 Encrypt user traffic using <strong>HTTPS (SSL/TLS)</strong></li>
+          <li>🧾 Use <strong>ACM</strong> to request/manage certificates</li>
+          <li>☁️ Enable HTTPS on <strong>CloudFront</strong> or <strong>Load Balancers</strong></li>
+          <li>🧩 They perform <strong>SSL termination</strong> and forward requests inside AWS</li>
+        </ul>
+      </section>
+
+      <footer>
+        Prepared as a print-friendly, single-column reviewer for A4 output.
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

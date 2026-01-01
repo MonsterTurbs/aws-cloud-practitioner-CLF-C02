@@ -1,0 +1,618 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Security (Module Summary)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 22px 18px 48px;
+    }
+
+    header {
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .toolbar {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .btn:focus { outline: 2px solid #000; outline-offset: 2px; }
+
+    section { margin: 16px 0; }
+
+    h2 {
+      font-size: 17px;
+      margin: 18px 0 10px;
+    }
+
+    h3 {
+      font-size: 14px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 8px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin: 10px 0;
+    }
+
+    .callout strong { display: inline-block; margin-bottom: 4px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    ul { margin: 8px 0 8px 18px; padding: 0; }
+    li { margin: 6px 0; }
+
+    .k {
+      display: inline-block;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0 6px;
+      font-size: 12px;
+      color: var(--muted);
+      background: #fff;
+      white-space: nowrap;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    .qa {
+      padding-left: 0;
+      margin-left: 0;
+      list-style: none;
+    }
+
+    .qa li {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin: 10px 0;
+      background: #fff;
+    }
+
+    .qa .q { font-weight: 700; }
+    .qa .a { margin-top: 6px; }
+
+    .foot {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+
+    /* Print: A4 + clean output */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+      header { border-bottom: 1px solid #000; }
+      .toolbar { display: none !important; }
+      .chip { border-color: #000; }
+      .card, .callout {
+        background: #fff !important;
+        box-shadow: none !important;
+      }
+      a { color: inherit; text-decoration: none; }
+
+      /* Avoid ugly page breaks */
+      h2, h3 { break-after: avoid-page; page-break-after: avoid; }
+      .card, .callout, .qa li { break-inside: avoid; page-break-inside: avoid; }
+      ul, li, p { orphans: 3; widows: 3; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header>
+      <h1>Security — Module Summary (AWS CLF-C02)</h1>
+      <p class="subtitle">Print-friendly reviewer / study guide (single-column, A4-ready) • Focus: what each security service does and when to use it.</p>
+      <div class="meta">
+        <span class="chip">🔐 Account protection</span>
+        <span class="chip">🧾 Compliance</span>
+        <span class="chip">🛡️ Workload + network protection</span>
+        <span class="chip">🔒 Data protection</span>
+        <span class="chip">📌 Exam-ready associations</span>
+      </div>
+      <div class="toolbar" aria-label="Page tools">
+        <button class="btn" type="button" onclick="window.print()">Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-map').scrollIntoView({behavior:'smooth'})">Jump to Quick Map</button>
+      </div>
+    </header>
+
+    <section>
+      <h2>1) Big picture: what “secure cloud” really means</h2>
+      <div class="callout">
+        <strong>✅ Core idea</strong>
+        <p>
+          A secure AWS environment is a <em>combination</em> of controls: you protect the account (who can log in + what they can do), stay compliant,
+          protect workloads and traffic, and protect data (including secrets). No single service does everything.
+        </p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>🧠 Think in 4 layers</h3>
+          <ul>
+            <li><strong>Account</strong>: identities, permissions, suspicious actions</li>
+            <li><strong>Compliance</strong>: enforce rules, produce audit evidence</li>
+            <li><strong>Workloads + Network</strong>: vulnerabilities, investigation, firewalls, DDoS</li>
+            <li><strong>Data</strong>: encryption, secrets, sensitive-data discovery</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="quick-map">
+      <h2>2) Quick Map: “Which AWS service solves which security problem?”</h2>
+      <div class="card">
+        <ul>
+          <li>🔐 <strong>Identities & permissions</strong> → <span class="k">IAM</span></li>
+          <li>🧑‍💼 <strong>Single sign-on (corporate login)</strong> → <span class="k">AWS Single Sign-On / IAM Identity Center</span> + <span class="k">Directory Service</span></li>
+          <li>🧾 <strong>Track “who did what” (API audit log)</strong> → <span class="k">CloudTrail</span></li>
+          <li>🚨 <strong>Detect suspicious activity automatically</strong> → <span class="k">GuardDuty</span></li>
+          <li>🧪 <strong>Scan EC2 / containers for vulnerabilities</strong> → <span class="k">Inspector</span></li>
+          <li>🕵️ <strong>Investigate incidents (what happened?)</strong> → <span class="k">Detective</span></li>
+          <li>🧱 <strong>Block malicious web requests (SQLi/XSS)</strong> → <span class="k">WAF</span></li>
+          <li>🔥 <strong>Inspect/block traffic at network level</strong> → <span class="k">Network Firewall</span></li>
+          <li>🧩 <strong>Manage firewall rules at scale</strong> → <span class="k">Firewall Manager</span></li>
+          <li>🌊 <strong>DDoS protection</strong> → <span class="k">Shield (Standard / Advanced)</span></li>
+          <li>🔐 <strong>Encryption keys (managed)</strong> → <span class="k">KMS</span></li>
+          <li>🏦 <strong>Own key control (hardware)</strong> → <span class="k">CloudHSM</span></li>
+          <li>🔏 <strong>Encrypt data in transit (TLS certificates)</strong> → <span class="k">ACM</span></li>
+          <li>🗝️ <strong>Store secrets (DB credentials, API keys)</strong> → <span class="k">Secrets Manager</span></li>
+          <li>🧬 <strong>Find sensitive data in S3 + exposure</strong> → <span class="k">Macie</span></li>
+          <li>📜 <strong>Enforce configuration rules</strong> → <span class="k">AWS Config</span></li>
+          <li>🧾 <strong>AWS compliance reports</strong> → <span class="k">Artifact</span></li>
+          <li>🧑‍⚖️ <strong>Audit evidence + reports</strong> → <span class="k">Audit Manager</span></li>
+          <li>🏢 <strong>Multi-account management</strong> → <span class="k">Organizations</span> + <span class="k">Resource Access Manager (RAM)</span></li>
+          <li>📊 <strong>One place to view security posture</strong> → <span class="k">Security Hub</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>3) Account security & access control</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>🔐 IAM (Identity and Access Management)</h3>
+          <p><strong>What it is:</strong> The core service for <em>who</em> can access AWS and <em>what</em> they can do.</p>
+          <ul>
+            <li><strong>Identities:</strong> Users (people), Groups (permissions bundles), Roles (usually for AWS services/apps)</li>
+            <li><strong>Policies:</strong> Permission statements attached to identities</li>
+            <li>Default is <strong>deny</strong>; you must explicitly allow actions</li>
+            <li>Explicit <strong>Deny</strong> overrides Allow</li>
+          </ul>
+          <div class="callout">
+            <strong>🧩 Beginner example</strong>
+            <p>
+              You have a developer who should only read from S3. You attach a policy that allows <span class="k">s3:GetObject</span>
+              and <span class="k">s3:ListBucket</span>, but not delete. Result: they can view files but can’t remove them.
+            </p>
+          </div>
+          <ul>
+            <li><strong>Access Advisor</strong>: shows when granted permissions were last used (helpful for removing unused access)</li>
+            <li><strong>Access Analyzer</strong>: flags resources that may be accessible from outside your account (“outside your zone of trust”)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>🧑‍💼 Single Sign-On and Directory Service</h3>
+          <p><strong>Goal:</strong> Make login easier and more standardized in larger environments.</p>
+          <ul>
+            <li><strong>Single sign-on</strong> means employees use one set of credentials across systems (e.g., corporate account).</li>
+            <li>For <strong>multi-account</strong> environments (Organizations), use <strong>AWS SSO / IAM Identity Center</strong> so one identity can access multiple accounts.</li>
+            <li><strong>Directory Service</strong> helps integrate Microsoft Active Directory with AWS.</li>
+          </ul>
+          <div class="callout">
+            <strong>🧩 Beginner example</strong>
+            <p>
+              Your company already uses Microsoft AD for employee accounts. Directory Service helps connect those existing logins to AWS,
+              so employees don’t need separate AWS-only usernames/passwords.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>🧾 CloudTrail (audit trail)</h3>
+          <p><strong>What it is:</strong> Records AWS API activity so you can answer: <em>Who did what, when, from where?</em></p>
+          <ul>
+            <li>Great for investigating suspicious behavior after the fact</li>
+            <li>Useful when credentials are compromised or when insider risk exists</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>🚨 GuardDuty (threat detection)</h3>
+          <p><strong>What it is:</strong> Automated detection of suspicious activity using ML/patterns.</p>
+          <ul>
+            <li>Helps you spot problems without manually reading CloudTrail logs</li>
+            <li>Best fit: large environments where “too many things happen” to audit manually</li>
+          </ul>
+          <div class="callout">
+            <strong>🧠 Memory hook</strong>
+            <p>
+              CloudTrail = <em>recording</em> 📼. GuardDuty = <em>alarm system</em> 🚨.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4) Multi-account security building blocks</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>🏢 Organizations (multi-account management)</h3>
+          <p><strong>Why it matters for security:</strong> Many security services can work across accounts, and you want central governance.</p>
+          <ul>
+            <li>Group accounts, manage centrally, and apply organization-wide controls</li>
+            <li>Works with services that support organization-wide visibility and controls</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>🔁 Resource Access Manager (RAM)</h3>
+          <p><strong>What it does:</strong> Securely share actual resources across accounts (not templates/blueprints).</p>
+          <div class="callout">
+            <strong>🧩 Beginner example</strong>
+            <p>
+              Account A (network team) owns a VPC. Account B (app team) needs to deploy into that VPC.
+              RAM lets Account B use the shared VPC without getting full admin control over it.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5) Compliance</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>📜 AWS Config</h3>
+          <p><strong>What it does:</strong> Define configuration rules and detect non-compliant resources.</p>
+          <ul>
+            <li>Think “policy enforcement for configurations” (guardrails for how resources should be set up)</li>
+            <li>Helps you detect drift: someone changes a setting that violates your rule</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>🧾 Artifact</h3>
+          <p><strong>What it does:</strong> Download AWS compliance reports and agreements (AWS-level compliance evidence).</p>
+          <p>
+            Useful when auditors ask: “Is AWS compliant with standard X?” Artifact provides AWS documentation to support that.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>🧑‍⚖️ Audit Manager</h3>
+          <p><strong>What it does:</strong> Helps generate audit-ready reports for your own controls, collecting evidence from AWS services.</p>
+          <ul>
+            <li>Define audit frameworks/requirements</li>
+            <li>Collect and package evidence to show compliance</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>6) Workload protection and incident investigation</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>🧪 Amazon Inspector</h3>
+          <p><strong>What it does:</strong> Automated vulnerability scanning for <strong>EC2 instances</strong> and <strong>containers</strong>.</p>
+          <ul>
+            <li>Finds known vulnerabilities (e.g., vulnerable packages/software)</li>
+            <li>Gives details on what’s affected so you can patch or remediate</li>
+          </ul>
+          <div class="callout">
+            <strong>🧠 Memory hook</strong>
+            <p>Inspector = “What’s vulnerable?” 🔍</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>🕵️ Amazon Detective</h3>
+          <p><strong>What it does:</strong> Helps investigate incidents and suspicious activity (who/what/when relationships).</p>
+          <ul>
+            <li>Explore resources (users, roles, instances) and their related events</li>
+            <li>Supports “root cause” investigation: what happened and how it spread</li>
+          </ul>
+          <div class="callout">
+            <strong>🧠 Memory hook</strong>
+            <p>Detective = “What happened?” 🕵️</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>7) Network protection: firewalls and traffic filtering</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>🧱 Security Groups and NACLs (baseline controls)</h3>
+          <ul>
+            <li><strong>Security Groups</strong>: instance-level firewall (stateful)</li>
+            <li><strong>NACLs</strong>: subnet-level network rules (stateless)</li>
+          </ul>
+          <p>
+            These control traffic mostly by ports/protocols/IPs. They are essential, but not enough for “content-based” web attacks.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>🧩 WAF (Web Application Firewall)</h3>
+          <p><strong>What it does:</strong> Inspect HTTP(S) requests and block based on request metadata/body.</p>
+          <ul>
+            <li>Can help block common web attacks like <strong>SQL injection</strong> and <strong>XSS</strong></li>
+            <li>Useful when traffic targets a valid port but the request content is malicious</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>🔥 Network Firewall</h3>
+          <p><strong>What it does:</strong> Managed firewall for network-level inspection and rules across networks/subnets/VPCs.</p>
+          <ul>
+            <li>Inspect protocol, IPs, ports, and more detailed traffic properties</li>
+            <li>Supports <strong>stateless</strong> and <strong>stateful</strong> rule configurations</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>🧰 Firewall Manager</h3>
+          <p><strong>What it does:</strong> Central management of firewall rules (WAF, Network Firewall, etc.) across accounts/environments.</p>
+          <p>
+            Think “one place to manage firewall policies” when you have many accounts or many applications.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>8) DDoS protection</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>🌊 AWS Shield</h3>
+          <ul>
+            <li><strong>Shield Standard</strong>: free and enabled by default (basic protection)</li>
+            <li><strong>Shield Advanced</strong>: paid, more features (anomaly detection, customization, specialized support)</li>
+          </ul>
+          <div class="callout">
+            <strong>🧩 Beginner explanation</strong>
+            <p>
+              DDoS is “too many normal-looking requests at once.” Firewalls may not block it because each request looks valid.
+              Shield focuses on identifying and stopping those attack patterns at scale.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>9) Data protection: encryption, secrets, and sensitive-data discovery</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>🔐 Encryption at rest: KMS vs CloudHSM</h3>
+          <ul>
+            <li><strong>KMS</strong> (Key Management Service): managed keys, easy integration with services like S3</li>
+            <li><strong>CloudHSM</strong>: hardware security module; more control (bring/manage your own key store)</li>
+          </ul>
+          <div class="callout">
+            <strong>✅ Exam-level takeaway</strong>
+            <p>
+              Turn on encryption for major services. KMS is the default “managed” approach; CloudHSM is for stronger self-managed key control.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>🔏 Encryption in transit: ACM</h3>
+          <p><strong>ACM</strong> (AWS Certificate Manager) helps you use SSL/TLS certificates to encrypt traffic to/from services like CloudFront and ALB.</p>
+        </div>
+
+        <div class="card">
+          <h3>🗝️ Secrets Manager</h3>
+          <p><strong>Problem:</strong> You must not hardcode secrets (DB username/password, API keys) in code.</p>
+          <p><strong>Solution:</strong> Store secrets securely in Secrets Manager and retrieve them at runtime (e.g., via AWS SDK).</p>
+          <div class="callout">
+            <strong>🧩 Beginner example</strong>
+            <p>
+              Instead of writing <span class="k">dbPassword = "mypassword"</span> in code, your app requests it from Secrets Manager
+              when it starts. Only the app role is allowed to read that secret.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>🧬 Amazon Macie</h3>
+          <p><strong>What it does:</strong> Scans S3 objects to identify sensitive data and flags risky exposure (public buckets, unencrypted sensitive files).</p>
+          <ul>
+            <li>Uses machine learning + optional custom rules</li>
+            <li>Helps prevent accidental data exposure</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>10) Consolidated dashboards</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>📊 Security Hub</h3>
+          <p><strong>What it does:</strong> Consolidated security posture view, grouping key findings across services.</p>
+          <ul>
+            <li>Integrates key services like <strong>GuardDuty</strong>, <strong>Inspector</strong>, and <strong>Macie</strong></li>
+            <li>Helps manage findings and actions centrally, including across accounts</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>11) Exam practice: quick Q&A (flashcard style)</h2>
+      <ol class="qa">
+        <li>
+          <div class="q">Q: Which service helps you see “who created an S3 bucket” or “who started an EC2 instance”?</div>
+          <div class="a">A: <strong>CloudTrail</strong> 🧾 — it records API actions so you can audit activity.</div>
+        </li>
+        <li>
+          <div class="q">Q: You want automated alerts for suspicious activity, not manual log reading. What do you enable?</div>
+          <div class="a">A: <strong>GuardDuty</strong> 🚨.</div>
+        </li>
+        <li>
+          <div class="q">Q: You need to block web attacks like SQL injection and XSS based on request content.</div>
+          <div class="a">A: <strong>WAF</strong> 🧱.</div>
+        </li>
+        <li>
+          <div class="q">Q: You want to scan EC2 instances/containers for known vulnerabilities.</div>
+          <div class="a">A: <strong>Inspector</strong> 🧪.</div>
+        </li>
+        <li>
+          <div class="q">Q: You suspect an incident happened and need investigation tooling to understand it.</div>
+          <div class="a">A: <strong>Detective</strong> 🕵️.</div>
+        </li>
+        <li>
+          <div class="q">Q: You need to store DB credentials securely and avoid hardcoding them in code.</div>
+          <div class="a">A: <strong>Secrets Manager</strong> 🗝️.</div>
+        </li>
+        <li>
+          <div class="q">Q: You want to find sensitive data in S3 and detect if it’s exposed publicly.</div>
+          <div class="a">A: <strong>Macie</strong> 🧬.</div>
+        </li>
+        <li>
+          <div class="q">Q: You want encryption keys managed for you and tightly integrated with AWS services.</div>
+          <div class="a">A: <strong>KMS</strong> 🔐.</div>
+        </li>
+        <li>
+          <div class="q">Q: DDoS protection that is enabled by default for AWS accounts?</div>
+          <div class="a">A: <strong>Shield Standard</strong> 🌊.</div>
+        </li>
+        <li>
+          <div class="q">Q: Where do you download AWS compliance reports for audits?</div>
+          <div class="a">A: <strong>AWS Artifact</strong> 🧾.</div>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>12) Final checklist for this module</h2>
+      <div class="card">
+        <ul>
+          <li>✅ I can map each service to a security problem (IAM vs CloudTrail vs GuardDuty vs Security Hub).</li>
+          <li>✅ I understand the difference between <strong>prevention</strong> (WAF, Network Firewall, Inspector) and <strong>detection/investigation</strong> (GuardDuty, Detective, CloudTrail).</li>
+          <li>✅ I know encryption: <strong>at rest</strong> (KMS/CloudHSM) and <strong>in transit</strong> (ACM).</li>
+          <li>✅ I can explain how to avoid exposing credentials (Secrets Manager) and how to detect sensitive S3 exposure (Macie).</li>
+          <li>✅ I know compliance tools: Config, Artifact, Audit Manager.</li>
+        </ul>
+      </div>
+
+      <p class="foot">
+        Note: This reviewer is designed for recall and exam recognition. For the CLF-C02 exam, you generally need to know <em>what</em> each service does and the common use case — not deep configuration steps.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

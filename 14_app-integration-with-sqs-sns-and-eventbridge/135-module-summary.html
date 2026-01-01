@@ -1,0 +1,387 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — App Integration (Module Summary)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      font-size:16px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 20px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 16px 16px;
+      margin-bottom: 14px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .pill{
+      display:inline-block;
+      border:1px solid var(--border);
+      background:#fff;
+      padding:4px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    .actions{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    button{
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    button:hover{ border-color: #cfcfcf; }
+
+    main{ margin-top: 14px; }
+
+    .card{
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 14px;
+      margin: 12px 0;
+      background:#fff;
+    }
+
+    .card h2{
+      font-size: 16.5px;
+      margin: 0 0 10px;
+    }
+
+    .card h3{
+      font-size: 14.5px;
+      margin: 12px 0 8px;
+    }
+
+    .lead{
+      margin: 0 0 8px;
+      color: var(--text);
+    }
+
+    .muted{ color: var(--muted); }
+
+    ul{
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    li{ margin: 6px 0; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .note{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-top: 10px;
+    }
+
+    .callout{
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      background: #fbfdff;
+      border-radius: 10px;
+      border: 1px solid #dfeaff;
+      margin-top: 10px;
+    }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      white-space: pre-wrap;       /* allow wrapping */
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    pre{
+      margin: 8px 0 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .divider{
+      height:1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    details{
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+      margin-top: 10px;
+    }
+
+    summary{
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* Prevent content cut-off */
+    p, li, h1, h2, h3, .pill, .note, .callout, pre, code{
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    /* Print styles for clean A4 output */
+    @media print{
+      @page{ size: A4; margin: 14mm; }
+      body{ font-size: 11.5pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background: #fff; }
+      .actions{ display:none !important; }
+
+      /* Keep cards tidy across pages */
+      .card, header, details, pre{ break-inside: avoid; page-break-inside: avoid; }
+
+      /* Ensure details content is visible on paper */
+      details{ border: 0; padding: 0; }
+      summary{ display:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>App Integration — Module Summary (SQS, SNS, EventBridge, Step Functions)</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) — Print-friendly reviewer / study guide</p>
+      <div class="meta">
+        <span class="pill">🧠 Focus: “connect apps and services”</span>
+        <span class="pill">🧩 Key services: SQS • SNS • EventBridge</span>
+        <span class="pill">🧭 Orchestration: Step Functions</span>
+      </div>
+      <div class="actions">
+        <button type="button" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>1) Why App Integration matters 🌐</h2>
+        <p class="lead">
+          In the cloud, it’s common to have <b>multiple applications</b> running on <b>different AWS services</b> (EC2, Lambda, containers, etc.).
+          They often need to <b>exchange data</b> or <b>trigger each other</b> — even if they are <b>not on the same server</b> and not in the same network.
+        </p>
+        <div class="note">
+          ✅ Goal: <b>decouple</b> systems so each app can evolve independently while still communicating reliably.
+        </div>
+        <h3>Why not just build a custom HTTP API? 🤔</h3>
+        <ul>
+          <li>Extra overhead: build, deploy, secure, and maintain an API.</li>
+          <li>More cost: you run/scale that API even if you only need “messaging.”</li>
+          <li>Harder to scale to many consumers: every consumer must integrate to your custom API.</li>
+          <li>Connectivity constraints: apps may need extra network work (VPC, security groups, routing).</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>2) The “Big 3” App Integration Services 🔁</h2>
+
+        <div class="callout">
+          Think of these as different communication styles:
+          <ul>
+            <li><b>SQS</b> = “Put message in a queue; process later.” ⏳</li>
+            <li><b>SNS</b> = “Broadcast push message to subscribers now.” 📣</li>
+            <li><b>EventBridge</b> = “When an event happens, automatically trigger targets.” ⚡</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>SQS — Simple Queue Service 📥 (Asynchronous)</h3>
+        <ul>
+          <li><b>Producer</b> app sends messages to a <b>queue</b>.</li>
+          <li><b>Consumer</b> app <b>polls</b> the queue, processes messages, then <b>deletes</b> them (acknowledges success).</li>
+          <li>Great for <b>decoupling</b> and <b>buffering spikes</b> (traffic bursts).</li>
+        </ul>
+        <div class="note">
+          🧩 Beginner mental model: Like a “to-do list” where workers pick tasks when ready.
+        </div>
+        <details open>
+          <summary>Example (SQS) 🧪</summary>
+          <p class="muted">Scenario: App A crawls websites. App B cleans data.</p>
+          <pre><code>App A (producer)  →  SQS Queue  →  App B (consumer)
+
+Message body example (JSON):
+{
+  "site": "example.com",
+  "rawDataS3Key": "raw/example.com/2025-12-22.json"
+}
+
+App B reads message, cleans data, stores results, then deletes message.</code></pre>
+        </details>
+
+        <div class="divider"></div>
+
+        <h3>SNS — Simple Notification Service 📣 (Push / Fan-out)</h3>
+        <ul>
+          <li>Publisher sends a message to an <b>SNS Topic</b>.</li>
+          <li>SNS <b>pushes</b> the message to all subscribers immediately.</li>
+          <li>Subscribers can be other AWS services (e.g., <b>Lambda</b>, <b>SQS</b>), HTTP endpoints, email, SMS, etc.</li>
+        </ul>
+        <div class="note">
+          🧠 Beginner mental model: Like a group chat announcement — everyone subscribed gets the message.
+        </div>
+        <details open>
+          <summary>Example (SNS Fan-out) 🧪</summary>
+          <pre><code>App A → SNS Topic → (Subscriber 1) Lambda
+                 → (Subscriber 2) SQS Queue
+                 → (Subscriber 3) Email/SMS
+
+Use-case: “New order created” triggers billing, shipping, and notifications.</code></pre>
+        </details>
+
+        <div class="divider"></div>
+
+        <h3>EventBridge ⚡ (Event bus + rules)</h3>
+        <ul>
+          <li>Services (AWS or your apps) emit <b>events</b>.</li>
+          <li>You create <b>rules</b> that match events and route them to <b>targets</b> (Lambda, SQS, SNS, Step Functions, etc.).</li>
+          <li>Useful for <b>event-driven architectures</b> where producers don’t need to know who consumes the event.</li>
+        </ul>
+        <div class="note">
+          🧠 Beginner mental model: Like an “IF this event happens… THEN trigger that action.”
+        </div>
+        <details open>
+          <summary>Example (EventBridge) 🧪</summary>
+          <pre><code>Event: "CrawlerFinished" emitted by App A
+Rule: if detail-type == "CrawlerFinished" → trigger Lambda (App B)
+
+Key idea: App A emits events; it doesn’t have to call App B directly.</code></pre>
+        </details>
+      </section>
+
+      <section class="card">
+        <h2>3) Quick “Which one should I use?” decision guide 🧭</h2>
+        <ul>
+          <li><b>Use SQS</b> when you want <b>buffering</b>, <b>retry</b> patterns, and consumers processing messages <b>when ready</b> (async). ⏳</li>
+          <li><b>Use SNS</b> when you want a <b>push broadcast</b> to multiple subscribers <b>right away</b> (fan-out). 📣</li>
+          <li><b>Use EventBridge</b> when you want <b>event routing</b> based on rules and a clean <b>event-driven</b> design (producers don’t know consumers). ⚡</li>
+        </ul>
+        <div class="callout">
+          Exam-friendly tip 🎯: If the question says “<b>decouple</b> and process later” → think <b>SQS</b>.
+          If it says “<b>notify many</b>” → think <b>SNS</b>.
+          If it says “<b>react to events</b> across services” → think <b>EventBridge</b>.
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>4) Step Functions 🪜 (Orchestrate workflows)</h2>
+        <p class="lead">
+          <b>Step Functions</b> helps you build <b>reliable workflows</b> by chaining steps (often Lambda functions) into a
+          <b>clear, repeatable execution sequence</b> — including <b>conditions</b> and <b>parallel branches</b>.
+        </p>
+        <ul>
+          <li>Define steps (input → work → output).</li>
+          <li>Control flow: sequence, parallel, conditional branching.</li>
+          <li>Good for multi-step processes that must run in a well-defined order.</li>
+        </ul>
+        <details open>
+          <summary>Example workflow 🧪</summary>
+          <pre><code>OrderWorkflow:
+1) ValidateOrder (Lambda)
+2) ChargePayment (Lambda)
+3) In Parallel:
+   - UpdateInventory (Lambda)
+   - NotifyCustomer (SNS/Lambda)
+4) ShipOrder (Container/Lambda)</code></pre>
+        </details>
+        <div class="note">
+          ✅ Key takeaway: Step Functions is about <b>orchestration</b> (workflow logic), not just “send messages.”
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>5) Common exam confusions (fast clarifications) 🧩</h2>
+        <ul>
+          <li><b>SES vs SNS</b>: SES sends <b>emails</b> to users; SNS sends <b>notifications/messages</b> to subscribers (services/endpoints). ✉️ vs 📣</li>
+          <li><b>SQS vs SNS</b>: SQS = queue for later processing; SNS = immediate push to many. 📥 vs 📣</li>
+          <li><b>SNS + SQS combo</b>: You can subscribe an SQS queue to SNS for fan-out + async buffering. 📣➡️📥</li>
+          <li><b>EventBridge vs SNS</b>: EventBridge routes <b>events</b> using rules; SNS broadcasts <b>messages</b> to subscribers. ⚡ vs 📣</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>6) One-paragraph module recap ✅</h2>
+        <p class="lead">
+          This section focused on <b>application integration</b> — enabling different applications/services in AWS to
+          <b>communicate and share data</b> without building expensive, fragile custom APIs. The main cloud-native tools are
+          <b>SQS</b> (asynchronous queues), <b>SNS</b> (push notifications/fan-out), and <b>EventBridge</b> (event bus + rules that trigger targets).
+          For multi-step processes that must run in a <b>defined, reproducible order</b>, <b>Step Functions</b> helps orchestrate complex workflows by chaining
+          steps and passing outputs to the next step.
+        </p>
+      </section>
+
+      <p class="muted" style="margin-top:14px; font-size:12px;">
+        Print tip: Use “Margins: Default” (or ~14mm) and enable “Background graphics” only if your browser requires it.
+      </p>
+    </main>
+  </div>
+</body>
+</html>

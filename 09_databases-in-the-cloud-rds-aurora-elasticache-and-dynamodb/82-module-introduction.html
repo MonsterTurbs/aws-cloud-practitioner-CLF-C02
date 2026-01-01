@@ -1,0 +1,359 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Databases in the Cloud (Module Introduction)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent-2: #1565c0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 20px 18px 60px;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    header {
+      padding: 14px 14px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 4px 10px;
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    main { margin-top: 16px; }
+
+    h2 {
+      font-size: 18px;
+      margin: 18px 0 10px;
+      padding-top: 6px;
+      border-top: 1px solid var(--border);
+    }
+
+    h3 {
+      font-size: 15.5px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul, ol { margin: 8px 0 8px 20px; }
+    li { margin: 6px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-left: 5px solid var(--accent);
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin: 12px 0;
+    }
+
+    .callout .title {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 6px;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: #f3f6fb;
+      font-weight: 700;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      padding: 2px 6px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+      display: inline-block;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+
+    /* Print styling (A4) */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      header, .card, .callout {
+        border-radius: 0;
+      }
+
+      a { color: #000; text-decoration: none; }
+
+      /* Avoid awkward breaks */
+      h1, h2, h3 { break-after: avoid-page; page-break-after: avoid; }
+      table, .card, .callout { break-inside: avoid; page-break-inside: avoid; }
+      ul, ol { break-inside: avoid; }
+
+      /* Slightly tighter print typography */
+      body { font-size: 11.5pt; line-height: 1.45; }
+      h1 { font-size: 17pt; }
+      h2 { font-size: 14pt; }
+      h3 { font-size: 12.5pt; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>☁️ AWS CLF-C02 Reviewer — Databases in the Cloud (Module Intro)</h1>
+      <p class="subtitle">Single-column, print-friendly study guide based on the lecture transcript. Focus: database options on AWS (managed vs self-managed, SQL vs NoSQL, RDS/Aurora/DynamoDB).</p>
+      <div class="meta">
+        <span class="pill">📄 A4-ready</span>
+        <span class="pill">🧠 Beginner-friendly</span>
+        <span class="pill">✅ Exam-oriented highlights</span>
+      </div>
+    </header>
+
+    <main>
+      <h2>1) What this module is about (in plain words) 🧭</h2>
+      <p>
+        In the previous section, you learned how to store <strong>files</strong> using <strong>S3</strong>.
+        In this section, we switch from file storage to <strong>data storage using databases</strong>.
+        Most real applications need databases to store and retrieve data like:
+        <em>users</em>, <em>products</em>, <em>orders</em>, <em>payments</em>, etc.
+      </p>
+
+      <div class="callout">
+        <div class="title">📌 Big idea</div>
+        <p>
+          <strong>Databases</strong> are typically used when you need structured data queries,
+          fast lookups, relationships, and reliable reads/writes for your application.
+        </p>
+      </div>
+
+      <h2>2) Key choices you will learn in this section 🔎</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>✅ Choice A: Self-managed vs Managed databases</h3>
+          <ul>
+            <li><strong>Self-managed</strong>: You run the database yourself on EC2 (you install, patch, backup, monitor, scale). 🛠️</li>
+            <li><strong>Managed</strong>: AWS runs many operational tasks for you (patching, backups, monitoring, automated failover depending on service). 🧰</li>
+          </ul>
+          <p class="note">Exam mindset: If the question emphasizes “AWS handles maintenance/patching/backups”, that typically points to <strong>managed services</strong>.</p>
+        </div>
+
+        <div class="card">
+          <h3>✅ Choice B: SQL vs NoSQL databases</h3>
+          <ul>
+            <li><strong>SQL (Relational)</strong>: Tables, rows, columns, relationships; good for structured data and complex queries. 🧾</li>
+            <li><strong>NoSQL (Non-relational)</strong>: Flexible schema; commonly used for high-scale key-value/document patterns. ⚡</li>
+          </ul>
+          <p class="note">Tip: “SQL vs NoSQL” is about how data is modeled and queried—not just about where it’s stored.</p>
+        </div>
+      </div>
+
+      <h2>3) Services you’ll meet: RDS, Aurora, DynamoDB 🧩</h2>
+      <p>
+        The lecture highlights that AWS gives multiple ways to run databases.
+        At this level, the important part is recognizing which AWS service category a name belongs to.
+      </p>
+
+      <table aria-label="Database services overview">
+        <thead>
+          <tr>
+            <th style="width: 24%;">Service</th>
+            <th style="width: 38%;">What it is (simple explanation)</th>
+            <th style="width: 38%;">Beginner example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>RDS</strong> 🗄️</td>
+            <td>
+              A <strong>managed relational database</strong> service.
+              Think: AWS helps you run a SQL database without managing the OS and many routine tasks.
+            </td>
+            <td>
+              Your app needs tables for <em>Users</em>, <em>Orders</em>, <em>Payments</em> and you want SQL queries like
+              <span class="kbd">SELECT ... JOIN ...</span>.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Aurora</strong> ✨</td>
+            <td>
+              A managed relational database engine (AWS-compatible with popular SQL engines).
+              Often discussed as a high-performance, cloud-optimized relational option.
+            </td>
+            <td>
+              Same use case as RDS (relational), but you want a cloud-optimized setup for demanding workloads.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>DynamoDB</strong> ⚡</td>
+            <td>
+              A <strong>managed NoSQL</strong> database service.
+              Designed for fast key-value / document-style access patterns.
+            </td>
+            <td>
+              You store “shopping cart by userId” and want very fast lookups:
+              <span class="kbd">GetItem(userId)</span>.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <div class="title">🧠 Quick memory hook</div>
+        <ul>
+          <li><strong>RDS / Aurora</strong> = usually <strong>SQL / relational</strong> ✅</li>
+          <li><strong>DynamoDB</strong> = usually <strong>NoSQL</strong> ✅</li>
+        </ul>
+      </div>
+
+      <h2>4) Beginner-friendly mental model 🧱</h2>
+      <p>
+        When you design an app, you typically pick storage based on what you need to do with the data:
+      </p>
+      <ul>
+        <li>📦 <strong>Store files</strong> (images, PDFs, backups) → S3</li>
+        <li>🗄️ <strong>Store structured business data</strong> (users, orders) → relational DB (RDS / Aurora)</li>
+        <li>⚡ <strong>Fast lookups at huge scale</strong> with flexible structure → NoSQL (DynamoDB)</li>
+      </ul>
+
+      <h2>5) Exam-style cues to watch for 👀</h2>
+      <div class="card">
+        <ul>
+          <li>✅ “We want AWS to handle backups/patching/maintenance” → <strong>Managed database service</strong></li>
+          <li>✅ “We need SQL, tables, joins, relationships” → <strong>RDS / Aurora</strong></li>
+          <li>✅ “We need NoSQL, key-value, very low-latency lookups” → <strong>DynamoDB</strong></li>
+        </ul>
+        <p class="note">You don’t need deep configuration details for the intro—focus on matching <em>use case → service category</em>.</p>
+      </div>
+
+      <h2>6) Mini self-check (quick quiz) 📝</h2>
+      <ol>
+        <li>🤔 If you want to store <strong>user profile data</strong> with relationships (users ↔ orders), which category fits best?</li>
+        <li>🤔 If you want <strong>very fast lookups</strong> by a single key (e.g., sessionId), which service name should you think of?</li>
+        <li>🤔 If a question says “<strong>self-managed database</strong>”, what AWS compute service is commonly involved?</li>
+      </ol>
+
+      <div class="callout">
+        <div class="title">✅ Suggested answers</div>
+        <ol>
+          <li>Relational / SQL (RDS or Aurora)</li>
+          <li>DynamoDB</li>
+          <li>EC2 (you manage the database yourself)</li>
+        </ol>
+      </div>
+
+      <footer>
+        <div><strong>Print tip:</strong> Use your browser print dialog and select <strong>A4</strong>. If needed, set margins to “Default” or “Minimum”.</div>
+        <div class="note">File: <span class="kbd">82-module-introduction.html</span></div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

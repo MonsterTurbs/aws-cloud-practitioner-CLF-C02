@@ -1,0 +1,347 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Auto Scaling & Load Balancing (Basics)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --good:#0f7b3a;
+      --warn:#a15c00;
+      --danger:#b00020;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+    }
+
+    header{
+      padding: 18px 18px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+    }
+    .kicker{
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 6px;
+    }
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor:pointer;
+    }
+    .btn.primary{
+      border-color: rgba(11,87,208,.35);
+      background: rgba(11,87,208,.08);
+      color: #083a8a;
+    }
+
+    main{ margin-top: 16px; }
+
+    h2{
+      font-size: 18px;
+      margin: 18px 0 10px;
+      line-height: 1.25;
+    }
+    h3{
+      font-size: 15px;
+      margin: 14px 0 8px;
+      line-height: 1.25;
+    }
+    p{ margin: 8px 0; }
+
+    .card{
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 14px;
+      background: #fff;
+      margin: 12px 0;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    .callout{
+      background: var(--panel);
+      border-left: 5px solid var(--accent);
+    }
+
+    .callout.good{ border-left-color: var(--good); }
+    .callout.warn{ border-left-color: var(--warn); }
+    .callout.danger{ border-left-color: var(--danger); }
+
+    .grid{
+      display:block; /* keep single column */
+    }
+
+    ul{ margin: 8px 0 8px 18px; padding: 0; }
+    li{ margin: 6px 0; }
+
+    .terms{
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+    .terms th, .terms td{
+      border: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+      text-align: left;
+    }
+    .terms th{ background: var(--panel); }
+
+    .pill{
+      display:inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .divider{
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    .small{ color: var(--muted); font-size: 12.5px; }
+
+    /* Print */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+    }
+    @media print{
+      body{ background:#fff; }
+      .page{ max-width: none; padding: 0; margin: 0; }
+      .toolbar{ display:none !important; }
+      a{ color: var(--text); text-decoration: none; }
+      .card{ break-inside: avoid; page-break-inside: avoid; }
+      header{ break-inside: avoid; }
+      h2, h3{ break-after: avoid; }
+      .mono{ border-color: #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer</p>
+      <h1>Scaling with AWS Auto Scaling & Load Balancing (Beginner Basics)</h1>
+      <p class="subtitle">Focus: why manual scaling is not ideal, what <strong>EC2 Auto Scaling</strong> does, and why <strong>Elastic Load Balancers</strong> matter. 📈⚙️</p>
+      <div class="toolbar">
+        <button class="btn primary" onclick="window.print()">Print / Save as PDF 🖨️</button>
+        <button class="btn" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">Jump to Quick Check ✅</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card callout">
+        <h2>1) The problem: manual scaling is better than nothing… but still risky 😅</h2>
+        <p><strong>Cloud benefit:</strong> you can add/remove compute power (EC2 instances) when traffic changes.</p>
+        <p><strong>Manual scaling</strong> means <em>you</em> decide when to add instances (e.g., before a sale). That helps, but it has two common issues:</p>
+        <ul>
+          <li>🕒 <strong>Too late reaction:</strong> traffic spikes can happen unexpectedly.</li>
+          <li>💸 <strong>Over-provisioning:</strong> you might keep extra instances running “just in case.”</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>2) EC2 Auto Scaling: automatic instance add/remove 🔁</h2>
+        <p><strong>EC2 Auto Scaling</strong> is the key service that can <strong>automatically add or remove EC2 instances</strong> based on conditions you define.</p>
+        <div class="divider"></div>
+        <h3>What it achieves</h3>
+        <ul>
+          <li>✅ <strong>Sufficient capacity</strong> during high traffic (avoid overload).</li>
+          <li>✅ <strong>No over-provisioning</strong> (remove unneeded instances).</li>
+          <li>✅ More consistent performance during spikes.</li>
+        </ul>
+        <p class="small">Exam signal: if the question says “automatically add/remove EC2 instances based on demand,” think <strong>EC2 Auto Scaling</strong>.</p>
+      </section>
+
+      <section class="card callout good">
+        <h2>3) Why a load balancer is required when you scale 🧠➡️⚖️</h2>
+        <p>Auto Scaling can create <strong>multiple instances</strong> running the same app (e.g., web servers). But then you have a new problem:</p>
+        <p><strong>How do incoming requests get spread across all instances?</strong></p>
+        <p>If requests keep going to one instance, that instance can still get overwhelmed—even if you have more instances available.</p>
+      </section>
+
+      <section class="card">
+        <h2>4) Elastic Load Balancing: distribute traffic across instances 🚦</h2>
+        <p><strong>Elastic Load Balancing (ELB)</strong> is the AWS capability that distributes incoming traffic across multiple targets (often EC2 instances).</p>
+        <ul>
+          <li>📬 Receives incoming requests (from users / clients)</li>
+          <li>🔀 Decides which instance should handle each request</li>
+          <li>🧯 Helps prevent any single instance from being overloaded</li>
+        </ul>
+
+        <div class="divider"></div>
+        <h3>Two key load balancer types you should recognize</h3>
+        <ul>
+          <li><strong>Application Load Balancer (ALB)</strong> <span class="pill">Layer 7 (HTTP/HTTPS)</span> — commonly used for web apps.</li>
+          <li><strong>Network Load Balancer (NLB)</strong> <span class="pill">Layer 4 (TCP/UDP)</span> — high performance, lower-level network traffic.</li>
+        </ul>
+        <p class="small">For CLF-C02, you typically just need to know the basic purpose + that ALB and NLB exist.</p>
+      </section>
+
+      <section class="card">
+        <h2>5) How Auto Scaling + Load Balancing work together 🔗</h2>
+        <p>Think of it like a simple “team” setup:</p>
+        <div class="mono" aria-label="Simple flow">
+Users 🌍  →  Load Balancer 🚦  →  EC2 Instance A 🖥️
+                              →  EC2 Instance B 🖥️
+                              →  EC2 Instance C 🖥️
+
+Auto Scaling 🔁 adds/removes instances depending on demand
+Load Balancer 🚦 routes requests across the instances
+        </div>
+        <ul>
+          <li>When traffic increases: Auto Scaling adds instances 📈</li>
+          <li>Load balancer starts sending requests to the new instances 🔀</li>
+          <li>When traffic drops: Auto Scaling removes extra instances 📉</li>
+        </ul>
+      </section>
+
+      <section class="card callout warn">
+        <h2>6) Beginner examples (exam-friendly) 🧩</h2>
+        <h3>Example A: Online store flash sale 🛒</h3>
+        <ul>
+          <li>Traffic spikes fast.</li>
+          <li><strong>Use:</strong> EC2 Auto Scaling (add instances) + ALB (spread HTTP requests).</li>
+        </ul>
+
+        <h3>Example B: Short-lived batch workload 🧾</h3>
+        <ul>
+          <li>Workload comes and goes (e.g., periodic processing).</li>
+          <li><strong>Use:</strong> Auto Scaling to keep “just enough” instances running.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="quick-check">
+        <h2>Quick Check ✅</h2>
+        <ol>
+          <li><strong>What does EC2 Auto Scaling do?</strong> (Hint: add/remove instances automatically)</li>
+          <li><strong>Why do we need a load balancer?</strong> (Hint: distribute requests)</li>
+          <li>Which is commonly used for HTTP/HTTPS web traffic: <strong>ALB</strong> or <strong>NLB</strong>?</li>
+        </ol>
+        <details>
+          <summary class="btn" style="display:inline-block; margin-top:8px;">Show suggested answers</summary>
+          <div class="divider"></div>
+          <ul>
+            <li><strong>EC2 Auto Scaling</strong> automatically adds/removes instances based on conditions/metrics.</li>
+            <li>A <strong>load balancer</strong> spreads incoming traffic so no single instance is overloaded.</li>
+            <li><strong>ALB</strong> (Application Load Balancer) is the typical web (HTTP/HTTPS) choice.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section class="card">
+        <h2>Key Terms (mini glossary) 📌</h2>
+        <table class="terms" aria-label="Key terms">
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Beginner meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Scaling</strong> 📈📉</td>
+              <td>Adjusting compute capacity (e.g., number of EC2 instances) to match demand.</td>
+            </tr>
+            <tr>
+              <td><strong>EC2 Auto Scaling</strong> 🔁</td>
+              <td>AWS service that can automatically add/remove EC2 instances based on rules/conditions.</td>
+            </tr>
+            <tr>
+              <td><strong>Elastic Load Balancing</strong> 🚦</td>
+              <td>Distributes incoming traffic across multiple targets so usage is balanced.</td>
+            </tr>
+            <tr>
+              <td><strong>ALB</strong></td>
+              <td>Application Load Balancer — commonly for HTTP/HTTPS (web apps).</td>
+            </tr>
+            <tr>
+              <td><strong>NLB</strong></td>
+              <td>Network Load Balancer — for high performance, lower-level network traffic (TCP/UDP).</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card callout danger">
+        <h2>Exam Reminder 🎯</h2>
+        <ul>
+          <li>“Automatically add/remove EC2 instances” → <strong>EC2 Auto Scaling</strong></li>
+          <li>“Distribute incoming traffic across instances” → <strong>Elastic Load Balancer</strong> (ALB/NLB)</li>
+          <li>Most CLF-C02 questions are concept-level, not deep configuration.</li>
+        </ul>
+      </section>
+
+      <p class="small">Source: Lecture transcript provided by user (Auto Scaling + Load Balancing introduction).</p>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,415 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Cognito (User Authentication)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --panel2:#fbfbfb;
+      --accent:#0b57d0;
+      --ok:#0f7b0f;
+      --warn:#8a5a00;
+      --danger:#b00020;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: Arial, Helvetica, sans-serif;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      text-rendering:optimizeLegibility;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background:var(--panel2);
+      padding:18px 18px 14px;
+      border-radius:12px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size: 1.55rem;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: .98rem;
+    }
+
+    .meta{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:#fff;
+      font-size:.9rem;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    h2{
+      margin:22px 0 10px;
+      font-size:1.22rem;
+    }
+
+    h3{
+      margin:16px 0 8px;
+      font-size:1.05rem;
+    }
+
+    p{ margin:10px 0; }
+
+    ul{
+      margin:10px 0 10px 22px;
+      padding:0;
+    }
+
+    li{ margin:6px 0; }
+
+    .toc{
+      margin-top:14px;
+      padding:12px 14px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      border-radius:12px;
+    }
+    .toc strong{ display:block; margin-bottom:6px; }
+    .toc a{ color:var(--accent); text-decoration:none; }
+    .toc a:hover{ text-decoration:underline; }
+
+    .card{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius:12px;
+      padding:14px 16px;
+      margin:12px 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .callout{
+      border-left: 6px solid var(--accent);
+      background: var(--panel);
+    }
+
+    .callout.ok{ border-left-color: var(--ok); }
+    .callout.warn{ border-left-color: var(--warn); }
+    .callout.danger{ border-left-color: var(--danger); }
+
+    .kvs{
+      display:grid;
+      grid-template-columns: 210px 1fr;
+      gap:10px 14px;
+      margin-top:8px;
+    }
+    .kvs .k{
+      color:var(--muted);
+      font-weight:700;
+    }
+    .kvs .v{
+      color:var(--text);
+    }
+
+    .mono{
+      font-family: var(--mono);
+      font-size: .92rem;
+    }
+
+    pre{
+      margin:10px 0;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius:12px;
+      overflow:auto;
+      font-family: var(--mono);
+      font-size:.92rem;
+      line-height:1.45;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+
+    code{
+      font-family: var(--mono);
+      font-size: .95em;
+      background:#fff;
+      padding:1px 6px;
+      border:1px solid var(--border);
+      border-radius:8px;
+    }
+
+    .divider{ height:1px; background:var(--border); margin:16px 0; }
+
+    .checklist li{ list-style: none; margin-left:-6px; }
+    .checklist li::before{ content:"✅ "; }
+
+    .qna{
+      border:1px dashed var(--border);
+      background:#fff;
+    }
+
+    .q{
+      font-weight:700;
+      margin-top:0;
+    }
+
+    .btnbar{
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      display:flex;
+      gap:10px;
+      z-index: 999;
+    }
+
+    .btn{
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      border-radius:999px;
+      padding:10px 12px;
+      font-size:.92rem;
+      cursor:pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    }
+    .btn:hover{ border-color:#cfcfcf; }
+
+    /* Print rules */
+    @page{
+      size: A4;
+      margin: 16mm;
+    }
+
+    @media print{
+      body{ background:#fff; }
+      .page{ max-width: none; padding:0; }
+      header{ border-color:#d9d9d9; }
+      a{ color: #000; text-decoration: underline; }
+      .btnbar{ display:none !important; }
+      pre{ overflow: visible; }
+      .chip{ border-color:#d9d9d9; }
+      .card{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🔐 AWS Cognito — User Authentication (Reviewer / Study Guide)</h1>
+      <p class="subtitle">Focus: how Cognito manages <em>app users</em> (customers of your product), and how it differs from IAM (users of your AWS account).</p>
+      <div class="meta">
+        <span class="chip">📄 Print-ready A4</span>
+        <span class="chip">🧠 Beginner-friendly</span>
+        <span class="chip">🧩 Exam-focused (CLF-C02)</span>
+        <span class="chip">🧷 Single-column layout</span>
+      </div>
+
+      <div class="toc" aria-label="Table of contents">
+        <strong>Quick Navigation</strong>
+        <ul>
+          <li><a href="#big-idea">Big Idea</a></li>
+          <li><a href="#iam-vs-cognito">IAM vs Cognito</a></li>
+          <li><a href="#user-pools">User Pools</a></li>
+          <li><a href="#identity-pools">Federated Identities / Identity Pools</a></li>
+          <li><a href="#temporary-iam">Temporary IAM Permissions</a></li>
+          <li><a href="#config">Common Configuration Choices</a></li>
+          <li><a href="#examples">Beginner Examples</a></li>
+          <li><a href="#exam">Exam Notes</a></li>
+          <li><a href="#quick-check">Quick Self-Check</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <h2 id="big-idea">🌟 Big Idea</h2>
+    <div class="card callout">
+      <p><strong>Cognito</strong> is AWS’s managed service for <strong>sign-up, sign-in, and user authentication</strong> for the <strong>users of your application</strong> (e.g., customers of an online shop).</p>
+      <p>It stores user credentials securely, handles validation, and can integrate with social sign-in providers. It can also help your app users obtain <strong>temporary AWS credentials</strong> when your app needs to access AWS services (e.g., upload to S3).</p>
+    </div>
+
+    <h2 id="iam-vs-cognito">🆚 IAM vs Cognito (Don’t Confuse These)</h2>
+    <div class="card">
+      <div class="kvs">
+        <div class="k">👤 IAM</div>
+        <div class="v">Users/roles for <strong>AWS account access</strong> (admins, developers, automation). Controls what can be done <strong>inside your AWS account</strong>.</div>
+
+        <div class="k">🧑‍💻 Cognito</div>
+        <div class="v">Users for <strong>your application</strong> (customers/end-users). Handles <strong>app authentication</strong> (sign-up, sign-in, MFA, etc.).</div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="mono"><strong>Rule of thumb:</strong> IAM = “Who can manage AWS?” • Cognito = “Who can log in to my app?”</p>
+    </div>
+
+    <h2 id="user-pools">👥 Cognito User Pools</h2>
+    <div class="card">
+      <p><strong>User Pools</strong> are like an AWS-managed user directory (think: a secure database of your app users).</p>
+      <ul>
+        <li>🗄️ Stores <strong>user accounts</strong> and <strong>credentials</strong> (securely)</li>
+        <li>🔑 Enforces sign-in rules (password policy, MFA, verification)</li>
+        <li>📨 Handles user flows (sign-up, sign-in, password reset / recovery)</li>
+        <li>🧩 Integrates with your front-end so your app can check “Is the user logged in?”</li>
+      </ul>
+
+      <div class="card callout ok">
+        <p class="q">Beginner mental model 🧠</p>
+        <p>Think of a <strong>User Pool</strong> like a hosted “login system” you don’t need to build yourself.</p>
+      </div>
+    </div>
+
+    <h2 id="identity-pools">🌐 Federated Identities (Identity Pools)</h2>
+    <div class="card">
+      <p>Cognito can also support <strong>third‑party sign-in</strong> (social login) through <strong>federated identity</strong> setups.</p>
+      <ul>
+        <li>🔗 Connect identity providers like <strong>Google</strong>, <strong>Facebook</strong>, <strong>Apple</strong> (and others)</li>
+        <li>🧾 Users can authenticate using existing accounts instead of creating a new password</li>
+        <li>🧠 Cognito can still help your app map those users to controlled AWS permissions (when needed)</li>
+      </ul>
+
+      <div class="card callout warn">
+        <p class="q">Common confusion ⚠️</p>
+        <p><strong>User Pool</strong> = your app’s native user directory (email/password etc.).<br />
+        <strong>Identity Pool (federated identities)</strong> = connects authenticated users to <strong>temporary AWS credentials</strong> and can include social providers.</p>
+      </div>
+    </div>
+
+    <h2 id="temporary-iam">🪪 Temporary IAM Permissions (When App Users Need AWS Access)</h2>
+    <div class="card">
+      <p>Sometimes, your app user must call an AWS service directly (example: uploading a photo to S3). You don’t want to give them permanent credentials.</p>
+      <p>Instead, Cognito can help provide <strong>temporary</strong>, <strong>limited</strong> permissions (least privilege) that expire.</p>
+
+      <div class="card callout danger">
+        <p class="q">Security point 🔒</p>
+        <p>These permissions should be <strong>narrow</strong> (e.g., “upload only to this one S3 bucket path”), not broad admin access.</p>
+      </div>
+    </div>
+
+    <h2 id="config">⚙️ What You Typically Configure in Cognito</h2>
+    <div class="card">
+      <ul class="checklist">
+        <li><strong>How users sign in</strong>: email/username/phone, etc.</li>
+        <li><strong>Password policy</strong>: length, complexity requirements</li>
+        <li><strong>MFA</strong>: optional or required (e.g., SMS/app-based)</li>
+        <li><strong>Account recovery</strong>: how password resets work (email/SMS)</li>
+        <li><strong>User verification</strong>: email/phone verification flows</li>
+        <li><strong>Messaging</strong>: what emails/SMS Cognito sends and how</li>
+        <li><strong>Federation</strong>: which third-party providers are allowed (Google, Apple, etc.)</li>
+      </ul>
+    </div>
+
+    <h2 id="examples">🧪 Beginner Examples</h2>
+
+    <div class="card">
+      <h3>Example A — Online Shop Login (Email + Password) 🛒</h3>
+      <p><strong>Goal:</strong> Users create accounts and log in to see orders.</p>
+      <ul>
+        <li>Use: <strong>Cognito User Pool</strong></li>
+        <li>Enable: password policy + optional MFA</li>
+        <li>Front-end uses Cognito to sign in and to check login state</li>
+      </ul>
+      <pre aria-label="Example flow">
+User signs up → Cognito stores credentials securely
+User logs in → Cognito validates credentials
+App receives authenticated session/token → App can call your API
+      </pre>
+    </div>
+
+    <div class="card">
+      <h3>Example B — “Login with Google” ✨</h3>
+      <p><strong>Goal:</strong> Users sign in using Google instead of a new password.</p>
+      <ul>
+        <li>Use: <strong>Federated identities / identity providers</strong></li>
+        <li>Cognito coordinates authentication with Google</li>
+        <li>Your app receives an authenticated identity and can proceed</li>
+      </ul>
+      <pre aria-label="Example flow">
+User taps “Sign in with Google” → Google authenticates user
+Cognito accepts the federated identity → App treats user as logged in
+      </pre>
+    </div>
+
+    <div class="card">
+      <h3>Example C — User Uploads an Image to S3 📦🖼️</h3>
+      <p><strong>Goal:</strong> After login, a user uploads files directly to S3 (fast and scalable).</p>
+      <ul>
+        <li>Use: Cognito + <strong>temporary AWS permissions</strong></li>
+        <li>User gets limited permission only for the needed S3 action</li>
+      </ul>
+      <pre aria-label="Example idea">
+Authenticated user → receives temporary credentials (limited)
+User uploads to S3 (allowed bucket/path only)
+Credentials expire automatically
+      </pre>
+    </div>
+
+    <h2 id="exam">📝 CLF-C02 Exam Notes</h2>
+    <div class="card callout ok">
+      <ul>
+        <li>✅ Cognito is for <strong>app user authentication</strong> (your product’s users).</li>
+        <li>✅ IAM is for <strong>AWS account permissions</strong> (admins/devs/automation).</li>
+        <li>✅ Cognito supports <strong>user pools</strong> and <strong>federated sign-in</strong>.</li>
+        <li>✅ Cognito can be used to grant <strong>temporary, scoped</strong> AWS access when needed.</li>
+      </ul>
+    </div>
+
+    <h2 id="quick-check">✅ Quick Self-Check</h2>
+
+    <div class="card qna">
+      <p class="q">1) If I need customers to log in to my mobile app, what service fits best?</p>
+      <p>➡️ <strong>Cognito</strong> (managed app user authentication).</p>
+    </div>
+
+    <div class="card qna">
+      <p class="q">2) If I need a developer to deploy resources and manage AWS services, what fits best?</p>
+      <p>➡️ <strong>IAM</strong> (AWS account identities and permissions).</p>
+    </div>
+
+    <div class="card qna">
+      <p class="q">3) If users want “Sign in with Google,” what Cognito feature is relevant?</p>
+      <p>➡️ <strong>Federated identities / identity providers</strong> (social sign-in).</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="mono"><strong>Mini-summary:</strong> Cognito = login system for your app users. IAM = security and permissions for your AWS account.</p>
+  </div>
+
+  <div class="btnbar" aria-hidden="true">
+    <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    <button class="btn" onclick="window.scrollTo({top:0, behavior:'smooth'})">⬆️ Top</button>
+  </div>
+</body>
+</html>

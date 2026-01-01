@@ -1,0 +1,522 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Searching & Visualizing Data (OpenSearch, Grafana, CloudSearch)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --soft: #f7f7f7;
+      --soft2: #fafafa;
+      --accent: #0b57d0;
+      --accent2: #1557ff;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--soft2);
+      border-radius: 12px;
+      padding: 18px 18px 14px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12.5px;
+      color: #222;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0 0;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: #111;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .btn.primary {
+      border-color: rgba(11, 87, 208, 0.35);
+      background: #f2f7ff;
+    }
+
+    main {
+      margin-top: 16px;
+    }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 16px 14px;
+      background: #fff;
+      margin: 12px 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    h2 {
+      font-size: 16.5px;
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 14.5px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 10px 0; }
+
+    ul {
+      margin: 10px 0 0 20px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: var(--soft);
+      border-radius: 12px;
+      padding: 12px 12px;
+      margin: 10px 0;
+    }
+
+    .callout strong { display: inline-block; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .box {
+      border: 1px dashed #d8d8d8;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 8px;
+      padding: 2px 6px;
+      white-space: nowrap;
+    }
+
+    pre {
+      margin: 10px 0;
+      padding: 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .qa {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .qa li {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+      margin: 10px 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .qa .q {
+      margin: 0 0 8px;
+      font-weight: bold;
+    }
+
+    .qa .a {
+      margin: 0;
+      color: #222;
+    }
+
+    footer {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 12.5px;
+      text-align: center;
+    }
+
+    /* Print styles (A4) */
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    @media print {
+      :root { --bg: #ffffff; }
+
+      body {
+        background: #fff;
+        color: #000;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      header, section {
+        border-color: #bdbdbd;
+        box-shadow: none;
+      }
+
+      .toolbar { display: none !important; }
+
+      a {
+        color: #000;
+        text-decoration: underline;
+      }
+
+      pre {
+        border-color: #bdbdbd;
+      }
+
+      .callout {
+        background: #fff;
+      }
+
+      /* Avoid awkward breaks */
+      h1, h2, h3 { page-break-after: avoid; }
+      section { break-inside: avoid; page-break-inside: avoid; }
+      li { break-inside: avoid; page-break-inside: avoid; }
+    }
+
+    /* Small screen */
+    @media (max-width: 520px) {
+      .page { padding: 18px 12px 32px; }
+      h1 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🔎📊 Searching & Visualizing Data on AWS</h1>
+      <p class="subtitle">
+        Reviewer / Study Guide (Beginner-Friendly) — Focus: <strong>OpenSearch</strong>, <strong>Grafana</strong>, and <strong>CloudSearch</strong>
+      </p>
+      <div class="meta">
+        <span class="pill">🧠 Exam: AWS CLF-C02</span>
+        <span class="pill">🗂️ Topic: Analytics & Data Science</span>
+        <span class="pill">🧾 Layout: Single column</span>
+        <span class="pill">🖨️ A4 print-ready</span>
+      </div>
+      <div class="toolbar">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-review').scrollIntoView({behavior:'smooth'})">✅ Jump to Quick Review</button>
+        <button class="btn" type="button" onclick="document.getElementById('mini-quiz').scrollIntoView({behavior:'smooth'})">📝 Mini Quiz</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Learning Goals</h2>
+        <ul>
+          <li>Understand what AWS services exist for <strong>searching</strong> and <strong>visualizing</strong> data.</li>
+          <li>Know the difference between <strong>internal analytics search</strong> (for teams) vs <strong>application/website search</strong> (for end users).</li>
+          <li>Be able to decide which tool fits a scenario: <strong>OpenSearch + Grafana</strong> vs <strong>QuickSight</strong> vs <strong>CloudSearch</strong>.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧩 Big Picture: “Search + Visualize” Use Cases</h2>
+        <div class="callout">
+          <strong>Simple idea:</strong> Sometimes you don’t just want charts — you want to <strong>search</strong> for answers/metrics first (filter, query, drill down), then <strong>visualize</strong> what you found. 🙂
+        </div>
+        <ul>
+          <li><strong>Example:</strong> “Show me all error logs containing <code>timeout</code> from the last 24 hours” → then visualize counts over time.</li>
+          <li><strong>Example:</strong> “Find the top 10 products searched by users last week” → then show a dashboard.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🔎 OpenSearch (Managed Search Service)</h2>
+        <p>
+          <strong>Amazon OpenSearch Service</strong> is a managed search service where you create a search cluster/server in AWS.
+          Because it’s a cluster, you typically choose a <strong>hardware profile</strong> (instance type/size) and AWS runs the search engine for you.
+        </p>
+
+        <div class="callout">
+          <strong>Think of it like this:</strong> OpenSearch is a fast “search engine” you own inside AWS.
+          You load/index data into it, then you run powerful queries to find matches, filter, and aggregate.
+        </div>
+
+        <h3>✅ When OpenSearch is useful</h3>
+        <ul>
+          <li>Searching large datasets quickly (text search, structured filters).</li>
+          <li>Exploring operational data (e.g., logs, events) when you need “find everything matching X”.</li>
+          <li>Powering dashboards (often paired with Grafana) where interactive filtering matters.</li>
+        </ul>
+
+        <h3>⚠️ Key note for beginners</h3>
+        <ul>
+          <li>Unlike purely serverless tools, OpenSearch typically means <strong>you pick capacity</strong> (cost depends on what you run).</li>
+          <li>Great power, but more “infrastructure-like” than QuickSight. 🧱</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>📈 Grafana (Visualization) + Managed Grafana on AWS</h2>
+        <p>
+          <strong>Grafana</strong> is a visualization tool used to build interactive dashboards.
+          AWS offers a <strong>managed Grafana</strong> service so you don’t need to self-host it.
+        </p>
+
+        <div class="callout">
+          <strong>How it fits:</strong> Grafana = “dashboard UI” 🧭, OpenSearch = “search + query engine” 🔎.
+          Connect them, then you can search/filter data and turn results into interactive charts.
+        </div>
+
+        <h3>🧪 Beginner-friendly example</h3>
+        <div class="box">
+          <p style="margin-top:0;"><strong>Scenario:</strong> You store application logs and want a dashboard.</p>
+          <ul>
+            <li>Send logs (or metrics) to a data source that Grafana can read.</li>
+            <li>Use <strong>OpenSearch</strong> to query: “errors per service per hour”.</li>
+            <li>Use <strong>Grafana</strong> to visualize a time-series chart + filters (service name, environment, etc.).</li>
+          </ul>
+        </div>
+
+        <h3>🆚 Grafana vs QuickSight (high level)</h3>
+        <ul>
+          <li><strong>Grafana:</strong> very strong for interactive operational dashboards and time-series views.</li>
+          <li><strong>QuickSight:</strong> classic Business Intelligence (BI) reporting (executive dashboards, business KPIs).</li>
+          <li>Neither replaces the other perfectly — pick based on the job. 🧠</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>☁️ CloudSearch (Application / Website Search for End Users)</h2>
+        <p>
+          <strong>Amazon CloudSearch</strong> is a managed service that simplifies building search features for a website or application.
+          It’s commonly used for “search bars” where your users search products, documents, or content.
+        </p>
+
+        <div class="callout">
+          <strong>Important distinction:</strong> CloudSearch is mainly for <strong>end-user search</strong> (your customers), not primarily for analytics.
+          That’s why it’s often mentioned next to OpenSearch to avoid confusion. 🤝
+        </div>
+
+        <h3>✅ What CloudSearch helps with</h3>
+        <ul>
+          <li>Website/app search (e.g., “search products” in an online shop).</li>
+          <li>Efficiency + built-in features (like autocomplete) so you don’t build everything from scratch.</li>
+          <li>Optimizations for search workloads used directly by your customers.</li>
+        </ul>
+
+        <h3>🧠 Quick comparison</h3>
+        <ul>
+          <li><strong>OpenSearch:</strong> often used for internal analytics/search + advanced querying and dashboards.</li>
+          <li><strong>CloudSearch:</strong> usually used to power the search bar of an application/website.</li>
+        </ul>
+      </section>
+
+      <section id="quick-review">
+        <h2>✅ Quick Review (What to remember for the exam)</h2>
+        <div class="grid">
+          <div class="box">
+            <h3 style="margin-top:0;">🔎 OpenSearch</h3>
+            <ul>
+              <li>Managed search service (search cluster/server in AWS).</li>
+              <li>Good for searching/filtering large datasets; often combined with visualization tools.</li>
+              <li>More infrastructure-like: you choose capacity (hardware profile).</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3 style="margin-top:0;">📈 Grafana (Managed Grafana)</h3>
+            <ul>
+              <li>Visualization tool for interactive dashboards.</li>
+              <li>Can connect to OpenSearch and other sources for charts + drill-down.</li>
+              <li>Great for operational dashboards (time-series, interactive filters).</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3 style="margin-top:0;">☁️ CloudSearch</h3>
+            <ul>
+              <li>Managed search for websites/apps (end-user search bar).</li>
+              <li>Often includes helpful features like autocomplete.</li>
+              <li>Not primarily an analytics service; focuses on product/app search experiences.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="callout">
+          <strong>Memory trick:</strong>
+          <ul style="margin-top:8px;">
+            <li><strong>CloudSearch</strong> = “Customer search bar” 🧑‍💻🔍</li>
+            <li><strong>OpenSearch</strong> = “Search engine for big data (often internal)” 🏢🔎</li>
+            <li><strong>Grafana</strong> = “Dashboards on top of sources” 📈🧭</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧪 Beginner Examples (When to pick what)</h2>
+        <div class="two-col">
+          <div class="box">
+            <h3 style="margin-top:0;">Example 1: Online Shop Search</h3>
+            <p style="margin:0;">
+              You need a search bar with autocomplete so customers can find products quickly.
+            </p>
+            <p><strong>Good fit:</strong> ☁️ CloudSearch</p>
+          </div>
+
+          <div class="box">
+            <h3 style="margin-top:0;">Example 2: Find/Filter Logs + Visualize</h3>
+            <p style="margin:0;">
+              You want to search logs for patterns ("timeout", "5xx") and visualize trends.
+            </p>
+            <p><strong>Good fit:</strong> 🔎 OpenSearch + 📈 Grafana</p>
+          </div>
+
+          <div class="box">
+            <h3 style="margin-top:0;">Example 3: Executive BI Dashboard</h3>
+            <p style="margin:0;">
+              You want business KPIs (revenue, orders, conversions) with shareable BI dashboards.
+            </p>
+            <p><strong>Good fit:</strong> 📊 QuickSight (from earlier lecture)</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="mini-quiz">
+        <h2>📝 Mini Quiz (Self-check)</h2>
+        <ol class="qa">
+          <li>
+            <p class="q">1) Which service is mainly for adding a search bar to a website/app for end users? 🙂</p>
+            <p class="a"><strong>Answer:</strong> CloudSearch.</p>
+          </li>
+          <li>
+            <p class="q">2) Which setup is commonly used for “search + interactive dashboards” over large datasets? 🔎📈</p>
+            <p class="a"><strong>Answer:</strong> OpenSearch + Grafana (Managed Grafana on AWS).</p>
+          </li>
+          <li>
+            <p class="q">3) True/False: OpenSearch always means you pick capacity (hardware profile) because it runs a managed search cluster.</p>
+            <p class="a"><strong>Answer:</strong> True (it’s typically cluster-based; you choose capacity).</p>
+          </li>
+          <li>
+            <p class="q">4) Why is CloudSearch listed together with OpenSearch in this section?</p>
+            <p class="a"><strong>Answer:</strong> The names are similar, but the goal differs: CloudSearch is primarily for end-user search, OpenSearch is often used for internal search/analytics and advanced querying.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>🧾 TL;DR</h2>
+        <ul>
+          <li>Need <strong>search + filtering</strong> over big data? → 🔎 OpenSearch</li>
+          <li>Need <strong>interactive dashboards</strong> on top of search/metrics? → 📈 Grafana</li>
+          <li>Need <strong>customer-facing app search</strong> (autocomplete, product search bar)? → ☁️ CloudSearch</li>
+        </ul>
+      </section>
+
+      <footer>
+        <p style="margin:0;">Tip: When printing, use <span class="kbd">A4</span> and enable <span class="kbd">Background graphics</span> only if you want subtle borders.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,378 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS S3: Public Buckets & Static Website Hosting — Print Reviewer</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-break:normal;
+      hyphens:auto;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 22px 18px 40px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px;
+      border-radius: 10px;
+    }
+
+    h1{
+      margin: 0 0 6px;
+      font-size: 1.55rem;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .meta{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px 14px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .chip{
+      border:1px solid var(--border);
+      background:#fff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space:nowrap;
+    }
+
+    h2{
+      margin: 18px 0 10px;
+      font-size: 1.15rem;
+    }
+
+    h3{
+      margin: 14px 0 8px;
+      font-size: 1.02rem;
+    }
+
+    p{ margin: 8px 0; }
+
+    .panel{
+      border:1px solid var(--border);
+      background: #fff;
+      padding: 14px 14px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    .callout{
+      border-left: 5px solid var(--accent);
+      background: #fff;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border:1px solid var(--border);
+      margin: 10px 0;
+    }
+
+    .warn{
+      border-left-color: #b3261e;
+    }
+
+    ul{ margin: 8px 0 8px 22px; padding:0; }
+    li{ margin: 6px 0; }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .92em;
+    }
+
+    pre{
+      margin: 10px 0;
+      padding: 12px;
+      background: #0f172a0a;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;          /* avoid horizontal cut-off when printing */
+      white-space: pre-wrap;      /* wrap long lines */
+      word-break: break-word;
+    }
+
+    .kbd{ border:1px solid var(--border); padding:1px 6px; border-radius:6px; background:#fff; }
+
+    .twoCol{ display:block; }
+
+    .hr{
+      border:0;
+      border-top:1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    .small{ color:var(--muted); font-size: .93rem; }
+
+    /* Print CSS for A4 */
+    @page{ size: A4; margin: 14mm; }
+    @media print{
+      body{ background:#fff; }
+      .page{ max-width: none; padding: 0; }
+      header, .panel, .callout{ border-radius: 0; box-shadow: none; }
+      a{ color: #000; text-decoration: none; }
+      .chip{ border-color: #ddd; }
+      h1{ font-size: 16pt; }
+      h2{ font-size: 12.5pt; }
+      h3{ font-size: 11pt; }
+      body{ font-size: 11pt; line-height: 1.35; }
+      pre{ font-size: 10pt; }
+      .noPrint{ display:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <header>
+      <h1>🪣 AWS S3: Public Buckets & Static Website Hosting — Reviewer</h1>
+      <p class="subtitle">Beginner-friendly study guide (single-column, A4 print-ready) based on the lecture transcript.</p>
+      <div class="meta">
+        <span class="chip">🌐 Topic: S3 Public Access</span>
+        <span class="chip">🏠 Topic: Static Website Hosting</span>
+        <span class="chip">🔒 Focus: Permissions & Safety</span>
+        <span class="chip">📝 Exam-ready notes</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>✅ What you should be able to do after this lecture</h2>
+      <div class="panel">
+        <ul>
+          <li>Explain the difference between <b>“not blocking public access”</b> and <b>“actually allowing public access”</b>.</li>
+          <li>Make selected S3 objects publicly readable using a <b>Bucket Policy</b> (read-only).</li>
+          <li>Enable <b>Static Website Hosting</b> and use the <b>Website Endpoint URL</b>.</li>
+          <li>Recognize common risks (accidental exposure) and how to avoid them.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧠 Core idea (quick summary)</h2>
+      <div class="callout">
+        <p><b>S3 can host files for the public internet</b>, but it is <b>private by default</b>.</p>
+        <p>To publish files, you typically do two steps:</p>
+        <ol>
+          <li>⚙️ Disable “Block all public access” (so public access is <i>possible</i>)</li>
+          <li>🔓 Add permissions (e.g., a bucket policy) so public access is <i>granted</i></li>
+        </ol>
+      </div>
+    </section>
+
+    <section>
+      <h2>1) Making an S3 bucket public (concept + steps)</h2>
+
+      <h3>🔎 Step A: Create the bucket and allow the possibility of public access</h3>
+      <div class="panel">
+        <ul>
+          <li>Go to <b>S3</b> → <b>Create bucket</b>.</li>
+          <li>Pick a <b>globally unique</b> name (example from lecture: <b>aws-course-demo-website-1</b>).</li>
+          <li>Pick a region (example: <b>us-east-1</b>).</li>
+          <li><b>Uncheck</b> the option that blocks public access ("Block all public access").</li>
+          <li>Confirm that you understand the risk, then create the bucket.</li>
+        </ul>
+        <p class="small">📝 Important: Unchecking “Block public access” <b>does not automatically publish</b> your files. It only removes the guardrail so you can publish them intentionally.</p>
+      </div>
+
+      <div class="callout warn">
+        <p><b>⚠️ Common beginner mistake:</b> “I unchecked Block Public Access, but my file is still private.”</p>
+        <p>That’s expected. You still need a permission rule (e.g., bucket policy) that explicitly allows public reads.</p>
+      </div>
+
+      <h3>🖼️ Step B: Upload an object and test the Object URL</h3>
+      <div class="panel">
+        <ul>
+          <li>Open the bucket → <b>Upload</b> → add an image file (or any test file).</li>
+          <li>After upload, copy the <b>Object URL</b> and try opening it in a browser.</li>
+        </ul>
+        <p class="small">If the bucket is still private, the browser request is denied (because S3 has not been told to allow anonymous reads).</p>
+      </div>
+
+      <h3>🔓 Step C: Add a Bucket Policy for public read-only access</h3>
+      <div class="panel">
+        <p>Go to <b>Permissions</b> → <b>Bucket policy</b>, then add a policy that grants read-only access to anonymous users.</p>
+        <p><b>Beginner translation:</b> “Let anyone on the internet download/view objects, but don’t let them upload/delete/change anything.”</p>
+
+        <p class="small">Below is the typical idea of the policy shown in the lecture (replace <code>YOUR_BUCKET_NAME</code> with your bucket name).</p>
+        <pre>{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::YOUR_BUCKET_NAME/*"
+    }
+  ]
+}</pre>
+
+        <ul>
+          <li><b>Principal: "*"</b> = anyone (anonymous included)</li>
+          <li><b>Action: s3:GetObject</b> = read/download objects</li>
+          <li><b>Resource: .../*</b> = applies to all objects in the bucket</li>
+        </ul>
+
+        <p>Save the policy, then re-try the object URL in the browser. ✅ It should now load.</p>
+      </div>
+
+      <div class="callout warn">
+        <p><b>🔒 Security note:</b> Public buckets are powerful but risky.</p>
+        <ul>
+          <li>Only publish what you <b>intentionally</b> want public.</li>
+          <li>Avoid putting secrets (keys, internal reports, customer data) in public buckets.</li>
+          <li>In real projects, prefer controlled sharing (pre-signed URLs, CloudFront, auth) unless you truly need public files.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>2) Static Website Hosting (S3 as a simple web host)</h2>
+
+      <h3>🏠 What “Static Website Hosting” means</h3>
+      <div class="panel">
+        <p><b>Static website</b> = files only (HTML, CSS, JavaScript, images). No server-side code (no Node/PHP/Python backend).</p>
+        <p>S3 can act like a simple “web server” that returns those files over HTTP.</p>
+      </div>
+
+      <h3>⚙️ How to enable it</h3>
+      <div class="panel">
+        <ol>
+          <li>Open the bucket → <b>Properties</b></li>
+          <li>Scroll to <b>Static website hosting</b> → click <b>Edit</b></li>
+          <li>Enable <b>Static website hosting</b></li>
+          <li>Choose <b>Host a static website</b></li>
+          <li>Set <b>Index document</b> to <code>index.html</code></li>
+          <li>Save changes</li>
+        </ol>
+      </div>
+
+      <h3>📦 Upload the website files</h3>
+      <div class="panel">
+        <p>Upload your site files (as in the lecture):</p>
+        <ul>
+          <li><code>index.html</code></li>
+          <li><code>styles.css</code></li>
+          <li>any images (e.g., the file you tested earlier)</li>
+        </ul>
+        <p class="small">If your objects are not publicly readable, the website may fail to load assets. Public-read permissions must align with your hosting goal.</p>
+      </div>
+
+      <h3>🔗 Use the Website Endpoint URL (not the object URL)</h3>
+      <div class="callout">
+        <p>After enabling hosting, go back to <b>Properties</b> → <b>Static website hosting</b> and copy the <b>Bucket website endpoint</b> URL.</p>
+        <p>That URL opens the hosted website (e.g., your <code>index.html</code> entry page).</p>
+        <p class="small">📌 The endpoint is generated by AWS. You can later map a custom domain (Route 53 / DNS), which the course covers later.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧩 Mental model: “Block Public Access” vs “Bucket Policy”</h2>
+      <div class="panel">
+        <ul>
+          <li>🧱 <b>Block Public Access</b> = a safety lock. When ON, you can’t make the bucket public even if you try.</li>
+          <li>🧾 <b>Bucket Policy</b> = the permission rule. This is what actually grants access.</li>
+        </ul>
+        <p><b>Easy analogy:</b> Block Public Access is like a <i>master “child lock”</i> on the door. Bucket Policy is the <i>guest list</i> that decides who can enter.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧪 Example scenarios</h2>
+      <div class="panel">
+        <h3>Example 1: Public image hosting 🖼️</h3>
+        <ul>
+          <li>You want anyone to view an image via a URL.</li>
+          <li>Solution: disable Block Public Access + add public-read bucket policy for objects.</li>
+        </ul>
+
+        <h3>Example 2: Static portfolio site 🧑‍💻</h3>
+        <ul>
+          <li>You want to host a simple site with <code>index.html</code> + CSS + images.</li>
+          <li>Solution: enable Static Website Hosting + ensure public read access to site files.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>📝 Exam notes (what to remember)</h2>
+      <div class="panel">
+        <ul>
+          <li>S3 buckets are <b>private by default</b>.</li>
+          <li>To make content public, you need both:
+            <ul>
+              <li>Allow the possibility (disable “Block public access”)</li>
+              <li>Grant permission (bucket policy for public read)</li>
+            </ul>
+          </li>
+          <li>S3 can host <b>static websites</b> (HTML/CSS/JS) using the bucket website endpoint.</li>
+          <li>Custom domain mapping is possible, but not required for the basic concept.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>✅ Quick checklist (hands-on)</h2>
+      <div class="panel">
+        <ul>
+          <li>☐ Bucket name is globally unique</li>
+          <li>☐ “Block public access” unchecked (only if you truly intend to publish)</li>
+          <li>☐ Bucket policy grants <code>s3:GetObject</code> to public</li>
+          <li>☐ Object URL loads in the browser</li>
+          <li>☐ Static website hosting enabled</li>
+          <li>☐ <code>index.html</code> uploaded</li>
+          <li>☐ Website endpoint URL loads the site</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧠 Self-check questions</h2>
+      <div class="panel">
+        <ol>
+          <li>Why does unchecking “Block public access” not automatically make objects public?</li>
+          <li>What does a public-read bucket policy typically allow (and what does it not allow)?</li>
+          <li>Which URL do you use to open the website: object URL or website endpoint URL?</li>
+          <li>Why is S3 website hosting called “static”?</li>
+        </ol>
+      </div>
+
+      <hr class="hr" />
+      <p class="small">End of reviewer. Print tip: Use your browser print dialog and select A4. The page is already optimized for clean A4 output.</p>
+    </section>
+
+  </main>
+</body>
+</html>

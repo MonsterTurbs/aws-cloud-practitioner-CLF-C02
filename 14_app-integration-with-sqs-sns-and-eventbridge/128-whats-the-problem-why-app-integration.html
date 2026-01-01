@@ -1,0 +1,444 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — App Integration: What’s the Problem?</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --panel2:#ffffff;
+      --accent:#0b57d0;
+      --accent2:#1a73e8;
+      --ok:#137333;
+      --warn:#b06000;
+      --bad:#b00020;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 18px 44px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding:16px 16px 14px;
+      border-radius:12px;
+    }
+
+    .kicker{
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:.2px;
+      margin:0 0 6px;
+    }
+
+    h1{
+      margin:0 0 8px;
+      font-size:22px;
+      line-height:1.25;
+    }
+
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:13.5px;
+    }
+
+    .top-actions{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:700;
+      font-size:13px;
+    }
+
+    .btn.primary{
+      border-color: rgba(11,87,208,.25);
+      background: rgba(11,87,208,.08);
+      color: #0b57d0;
+    }
+
+    .btn:focus{ outline:3px solid rgba(26,115,232,.25); outline-offset:2px; }
+
+    main{ margin-top:14px; }
+
+    .toc{
+      border:1px solid var(--border);
+      background:var(--panel2);
+      border-radius:12px;
+      padding:14px 16px;
+      margin:14px 0;
+    }
+
+    .toc h2{
+      margin:0 0 10px;
+      font-size:15px;
+    }
+
+    .toc ul{ margin:0; padding-left:18px; }
+    .toc li{ margin:6px 0; }
+    .toc a{ color:var(--accent); text-decoration:none; }
+    .toc a:hover{ text-decoration:underline; }
+
+    section{
+      border:1px solid var(--border);
+      background:var(--panel2);
+      border-radius:12px;
+      padding:16px;
+      margin:14px 0;
+      page-break-inside: avoid;
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size:17px;
+      line-height:1.25;
+    }
+
+    h3{
+      margin:14px 0 8px;
+      font-size:14.5px;
+    }
+
+    p{ margin:10px 0; }
+
+    .pill{
+      display:inline-block;
+      padding:2px 8px;
+      border-radius:999px;
+      background:rgba(11,87,208,.08);
+      border:1px solid rgba(11,87,208,.18);
+      color:#0b57d0;
+      font-weight:700;
+      font-size:12px;
+      vertical-align:middle;
+      margin-right:8px;
+    }
+
+    .callout{
+      border:1px solid var(--border);
+      background:var(--panel);
+      border-radius:12px;
+      padding:12px 14px;
+      margin:12px 0;
+      page-break-inside: avoid;
+    }
+
+    .callout.good{ border-color: rgba(19,115,51,.25); background: rgba(19,115,51,.06); }
+    .callout.warn{ border-color: rgba(176,96,0,.25); background: rgba(176,96,0,.06); }
+    .callout.bad{  border-color: rgba(176,0,32,.25); background: rgba(176,0,32,.06); }
+
+    .callout strong{ display:block; margin-bottom:6px; }
+
+    ul{ margin:10px 0; padding-left:18px; }
+    li{ margin:7px 0; }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+    }
+
+    pre{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius:10px;
+      padding:12px;
+      overflow:auto;
+      margin:10px 0;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+
+    .qa{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px 14px;
+      background:var(--panel2);
+      page-break-inside: avoid;
+    }
+
+    .qa .q{ font-weight:800; margin:0 0 6px; }
+    .qa .a{ margin:0; color:var(--text); }
+
+    footer{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:12px;
+      text-align:center;
+    }
+
+    /* Print styles */
+    @page{
+      size: A4;
+      margin: 16mm;
+    }
+
+    @media print{
+      :root{ --panel:#ffffff; }
+      body{ background:#fff; }
+      .page{ max-width: none; padding: 0; }
+      header, section, .toc, .callout, .qa{ border-color:#d9d9d9; box-shadow:none; }
+      .top-actions{ display:none !important; }
+      a{ color:#000; text-decoration:none; }
+      .toc a{ color:#000; }
+      pre{ border-style:solid; }
+      h1{ font-size:20px; }
+      h2{ font-size:16px; }
+      body{ font-size:11.5pt; line-height:1.5; }
+      section, .toc, header{ page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide</p>
+      <h1>App Integration: What’s the Problem We’re Solving? 🔗🧩</h1>
+      <p class="subtitle">
+        Goal: Understand why applications often need integration and why “just call the other app via HTTP” can be a fragile design.
+      </p>
+      <div class="top-actions">
+        <button class="btn primary" type="button" onclick="window.print()">Print / Save as PDF (A4) 🖨️</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">Jump to Quick Check ✅</button>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Table of contents">
+      <h2>Table of Contents 📌</h2>
+      <ul>
+        <li><a href="#problem">1) The Core Problem</a></li>
+        <li><a href="#scenario">2) Example Scenario: App A + App B</a></li>
+        <li><a href="#naive">3) A Naive Solution: App B Exposes an HTTP API</a></li>
+        <li><a href="#why-bad">4) Why That Can Be Painful</a></li>
+        <li><a href="#vocab">5) Key Terms (Exam-Friendly)</a></li>
+        <li><a href="#examples">6) Beginner Examples</a></li>
+        <li><a href="#quick-check">7) Quick Check Questions</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section id="problem">
+        <h2><span class="pill">1</span>The Core Problem 😵‍💫</h2>
+        <p>
+          When you run applications in the cloud (EC2, Lambda, containers, etc.), it’s common to end up with <strong>multiple apps</strong>
+          that must <strong>work together</strong>. These apps need a reliable way to:
+        </p>
+        <ul>
+          <li>Notify other apps that something happened ("an event occurred") 🔔</li>
+          <li>Exchange data between apps (sometimes big payloads) 📦</li>
+          <li>Do this reliably even if one app is temporarily down 🛡️</li>
+          <li>Scale without turning into a fragile web of dependencies 📈</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Key idea 🧠</strong>
+          As your system grows, <em>integration</em> becomes the hard part: not just running apps, but connecting them in a safe, scalable way.
+        </div>
+      </section>
+
+      <section id="scenario">
+        <h2><span class="pill">2</span>Example Scenario: Application A + Application B 🏗️</h2>
+
+        <h3>Application A: Web Crawler 🕷️</h3>
+        <ul>
+          <li>Crawls websites, extracts raw data (e.g., analytics/market data).</li>
+          <li>Could be <strong>long-running</strong> → often fits EC2 or containers.</li>
+        </ul>
+
+        <h3>Application B: Cleaner / Transformer 🧼➡️🔧</h3>
+        <ul>
+          <li>Takes raw data, cleans/transforms it, stores it in a database.</li>
+          <li>Could be <strong>short, repeatable jobs</strong> → often fits Lambda.</li>
+        </ul>
+
+        <div class="callout good">
+          <strong>Why split into multiple apps? ✅</strong>
+          <ul>
+            <li><strong>Decoupling:</strong> keep apps smaller and easier to maintain.</li>
+            <li><strong>Best-fit compute:</strong> EC2/containers for long tasks, Lambda for short tasks.</li>
+            <li><strong>Team ownership:</strong> different teams can own different services.</li>
+          </ul>
+        </div>
+
+        <p>
+          The catch: <strong>App B must be notified</strong> whenever App A finishes crawling a site, so App B can process the result.
+        </p>
+
+        <pre aria-label="Simple flow diagram">
+App A (Crawler)  --->  "Notify / send data"  --->  App B (Cleaner/Transformer)  --->  Database
+        </pre>
+      </section>
+
+      <section id="naive">
+        <h2><span class="pill">3</span>Naive Solution: App B Exposes an HTTP API 🌐</h2>
+        <p>
+          A straightforward approach is:
+        </p>
+        <ul>
+          <li>App B provides an HTTP endpoint (a small web API).</li>
+          <li>App A calls that endpoint when it finishes crawling.</li>
+          <li>The request might contain the raw data, or a pointer (e.g., “data is in S3 at this key”).</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Example (conceptual) 📮</strong>
+          <p style="margin:0 0 8px;">App A calls App B like this:</p>
+          <pre>POST /process-crawl-result
+{
+  "site": "example.com",
+  "rawDataLocation": "s3://my-bucket/raw/example.com.json"
+}</pre>
+        </div>
+
+        <p>
+          This can be built with API Gateway (REST/HTTP), AppSync (GraphQL), or custom code.
+          It works — but it often becomes painful as the system grows.
+        </p>
+      </section>
+
+      <section id="why-bad">
+        <h2><span class="pill">4</span>Why That Can Be Painful ⚠️</h2>
+
+        <div class="grid">
+          <div class="callout warn">
+            <strong>1) Extra overhead & cost 💸</strong>
+            You must build, deploy, secure, monitor, and maintain an extra API layer. That’s more code and more moving parts.
+          </div>
+
+          <div class="callout warn">
+            <strong>2) Tight coupling 🔗</strong>
+            App A depends directly on App B’s API contract. If App B changes its endpoint or payload format, App A must be updated.
+          </div>
+
+          <div class="callout warn">
+            <strong>3) Scaling + reliability issues 📉</strong>
+            If App B is slow or down, App A may fail or stall. Now App A needs retries, backoff, error handling, and “dead-letter” behavior.
+          </div>
+
+          <div class="callout warn">
+            <strong>4) Copy-paste integration 🧩</strong>
+            If you add App C, App D, etc., you end up replicating similar API patterns and logic across apps.
+          </div>
+
+          <div class="callout warn">
+            <strong>5) Networking constraints 🌍</strong>
+            Apps may run in different VPCs, subnets, or even regions. Direct connectivity can become complicated and can force design compromises.
+          </div>
+
+          <div class="callout bad">
+            <strong>Bottom line 🎯</strong>
+            “Call the other app directly” works for small systems, but it can create a fragile, tightly-coupled architecture as you scale.
+          </div>
+        </div>
+      </section>
+
+      <section id="vocab">
+        <h2><span class="pill">5</span>Key Terms (Exam-Friendly) 🧠📘</h2>
+        <ul>
+          <li><strong>Decoupling</strong> 🤝 — designing apps so they don’t depend on each other’s internal details.</li>
+          <li><strong>Tight coupling</strong> 🔗 — App A breaks when App B changes or goes down.</li>
+          <li><strong>Synchronous communication</strong> ⏱️ — App A calls App B and waits for a response (typical HTTP call).</li>
+          <li><strong>Asynchronous communication</strong> 📬 — App A sends a message/event and continues; App B processes later.</li>
+          <li><strong>Producer / Consumer</strong> 🏭➡️🍽️ — Producer emits data/events; consumer processes them.</li>
+          <li><strong>Integration layer</strong> 🧩 — services that help apps communicate reliably (this is where AWS services like SQS/SNS/EventBridge come in later).</li>
+        </ul>
+
+        <div class="callout good">
+          <strong>Exam hint ✅</strong>
+          If the question mentions: “decouple services”, “buffer”, “retry”, “spiky traffic”, “one service is sometimes down”, think
+          <em>asynchronous integration</em> patterns.
+        </div>
+      </section>
+
+      <section id="examples">
+        <h2><span class="pill">6</span>Beginner Examples 🧪</h2>
+
+        <h3>Example A: Stable, predictable traffic ✅</h3>
+        <p>
+          If App A only runs once per hour and App B is always available, a direct HTTP call can be acceptable.
+          Still, you must handle failures (timeouts, retries).
+        </p>
+
+        <h3>Example B: Spiky traffic (bursts) 📈</h3>
+        <p>
+          If App A crawls 10,000 sites quickly, App B may get flooded. Direct HTTP calls can overload App B.
+          A better pattern is to <strong>buffer</strong> work so App B can process at its own pace.
+        </p>
+
+        <h3>Example C: Different regions / networks 🌍</h3>
+        <p>
+          If App A runs in one region and App B in another, direct calls add latency and networking complexity.
+          In practice, teams often prefer an integration mechanism that reduces the need for direct point-to-point connectivity.
+        </p>
+      </section>
+
+      <section id="quick-check">
+        <h2><span class="pill">7</span>Quick Check ✅</h2>
+        <div class="qa">
+          <p class="q">Q1: Why split App A and App B instead of one big app?</p>
+          <p class="a">A: To keep services lean, use the best compute option per workload (EC2/containers vs Lambda), and enable team separation (decoupling).</p>
+        </div>
+
+        <div class="qa" style="margin-top:12px;">
+          <p class="q">Q2: What’s a key downside of App A calling App B directly via HTTP?</p>
+          <p class="a">A: Tight coupling and reliability issues — if App B is down/slow or its API changes, App A is impacted and needs extra retry/handling logic.</p>
+        </div>
+
+        <div class="qa" style="margin-top:12px;">
+          <p class="q">Q3: What kind of communication is an HTTP call?</p>
+          <p class="a">A: Typically synchronous (App A waits for App B’s response).</p>
+        </div>
+
+        <div class="qa" style="margin-top:12px;">
+          <p class="q">Q4: In one phrase, what is the “app integration problem”?</p>
+          <p class="a">A: Making multiple apps communicate reliably and at scale without becoming tightly coupled.</p>
+        </div>
+      </section>
+
+      <footer>
+        Tip: Print using “A4” and enable “Background graphics” only if you want the light callout shading.
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

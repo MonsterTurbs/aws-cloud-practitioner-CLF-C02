@@ -1,0 +1,309 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 33 Granting Least Privilege</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+      --ok:#0f7b0f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .steps{
+      margin: 8px 0 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .steps li{
+      margin: 8px 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+      .steps li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Security & IAM Best Practices</p>
+      <h1>33 — Granting Least Privilege 🛡️✅</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 What “Least Privilege” Means</h2>
+        <p><strong>Granting least privilege</strong> means you should <strong>never grant more permissions than needed</strong>—to anyone (users, groups, or roles).</p>
+        <div class="callout">
+          <p><strong>Memory hook ✅</strong> Give the smallest set of permissions required to do the job—nothing more.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🚫 Default State: No Permissions</h2>
+        <p>By default, new IAM users and roles have <strong>no permissions</strong>. They can’t do anything until you attach policies.</p>
+        <div class="good">
+          <p><strong>Why this is good ✅</strong> It prevents accidental access. You must intentionally grant permissions.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧾 Policies: Add Only What’s Needed</h2>
+        <p>You grant permissions by attaching policies. Least privilege means:</p>
+        <ul>
+          <li>✅ Attach only the policies needed for that user/role’s tasks</li>
+          <li>❌ Don’t attach “Full Admin” / <code>AdministratorAccess</code> to everyone</li>
+        </ul>
+
+        <div class="mini">
+          <h3>Beginner-friendly example 💡</h3>
+          <ul>
+            <li>👀 A user who only needs to <strong>view</strong> EC2 instances should have a <strong>read-only</strong> policy</li>
+            <li>🚀 A user who must <strong>start/stop</strong> EC2 instances needs additional “write” permissions</li>
+            <li>❌ Giving admin to both users is risky (too much power)</li>
+          </ul>
+        </div>
+
+        <div class="warning">
+          <p><strong>Risk ⚠️</strong> The more permissions you grant, the bigger the damage if credentials are compromised or misused.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔑 Manage Programmatic Access Keys (CLI/SDK)</h2>
+        <p>Least privilege also applies to <strong>access keys</strong> used for programmatic access (AWS CLI & SDKs):</p>
+        <ul>
+          <li>✅ Create access keys only for IAM users who truly need CLI/SDK access</li>
+          <li>❌ If a user only needs the console, don’t create programmatic keys</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Simple rule ✅</strong> No automation needs → no access keys.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>👑 Root Account: Best-Practice Reminder</h2>
+        <p>The root account has <strong>unlimited access</strong>. Best practice is to avoid using it for daily work.</p>
+        <div class="warning">
+          <p><strong>From the lecture ⚠️</strong> If the root account has programmatic access keys, delete them.</p>
+        </div>
+        <div class="good">
+          <p><strong>Recommended ✅</strong> Use IAM users (even admins) for daily operations, and keep root for rare account-level tasks only.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Exam-Focused Summary</h2>
+        <ol class="steps">
+          <li>1) Least privilege = only necessary permissions 🛡️</li>
+          <li>2) New identities start with no permissions 🚫</li>
+          <li>3) Attach minimal policies required for the job ✅</li>
+          <li>4) Create access keys only when CLI/SDK is needed 🔑</li>
+          <li>5) Avoid root usage; remove root access keys 👑</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Exam Focus)</h2>
+        <span class="tag">Least Privilege</span>
+        <span class="tag">IAM</span>
+        <span class="tag">Policy</span>
+        <span class="tag">Permissions</span>
+        <span class="tag">AdministratorAccess</span>
+        <span class="tag">Access Key</span>
+        <span class="tag">Secret Access Key</span>
+        <span class="tag">Programmatic Access</span>
+        <span class="tag">Root Account</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="mini">
+          <h3>Answer quickly ⚡</h3>
+          <ul>
+            <li>What does “least privilege” mean?</li>
+            <li>Should every user get admin permissions?</li>
+            <li>When should you create access keys?</li>
+            <li>What’s the best practice for root access keys?</li>
+          </ul>
+          <div class="good">
+            <p><strong>Expected answers ✅</strong> Minimal permissions • No • Only if CLI/SDK needed • Delete root programmatic keys (and avoid root daily use).</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,396 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Machine Learning on AWS</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #666;
+      --border: #e5e5e5;
+      --panel: #fafafa;
+      --link: #0b57d0;
+      --focus: #1a73e8;
+      --good: #0a7a2f;
+      --warn: #8a5a00;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 16px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 26px;
+      letter-spacing: -0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button:focus {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    a { color: var(--link); }
+
+    main {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      background: #fff;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.15px;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 15px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 10px;
+    }
+
+    .callout strong { display: inline-block; margin-bottom: 6px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .kicker {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: -4px;
+    }
+
+    .term {
+      font-weight: 700;
+    }
+
+    .good {
+      color: var(--good);
+      font-weight: 700;
+    }
+
+    .warn {
+      color: var(--warn);
+      font-weight: 700;
+    }
+
+    .qa {
+      border-top: 1px dashed var(--border);
+      margin-top: 10px;
+      padding-top: 10px;
+    }
+
+    .qa details {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+      margin-top: 10px;
+    }
+
+    .qa summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .footer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 14mm 12mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      header, section { border-color: #d8d8d8; }
+      .actions { display: none !important; }
+      a { color: #000; text-decoration: underline; }
+      /* Avoid awkward breaks */
+      header, section, .card, details { break-inside: avoid; page-break-inside: avoid; }
+      h2, h3 { break-after: avoid; page-break-after: avoid; }
+      ul, ol { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>Machine Learning on AWS (Not Exam-Focused)</h1>
+      <p class="subtitle">CLF-C02 reviewer — beginner-friendly overview of how AWS approaches ML/AI, and which services show up in real projects.</p>
+
+      <div class="meta">
+        <div class="badge-row" aria-label="Key tags">
+          <span class="badge">🤖 Machine Learning</span>
+          <span class="badge">🧰 Managed vs Self-Managed</span>
+          <span class="badge">🧠 SageMaker</span>
+          <span class="badge">✨ Pre-built AI Services</span>
+        </div>
+
+        <div class="actions" aria-label="Page actions">
+          <button type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+          <button type="button" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Jump to Quick Check</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Why ML is “big” on AWS, but not central in CLF-C02</h2>
+        <p>✅ AWS has <span class="term">many</span> Machine Learning (ML) and Artificial Intelligence (AI) services, and the cloud is a strong place to run ML workloads (scalable compute, GPUs, storage).</p>
+        <p>⚠️ For the <span class="term">Cloud Practitioner exam</span>, ML is typically <span class="term">not a major focus</span>. ML problems are often more about <span class="term">models + data + code</span> than classic cloud architecture topics (networking, server design, multi-tier apps).</p>
+        <div class="callout">
+          <strong>🎯 Practical takeaway</strong>
+          <p>Know the <span class="term">three approaches</span> AWS offers for ML/AI: <span class="term">Self-managed compute</span>, <span class="term">SageMaker</span>, and <span class="term">pre-built AI services</span>.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) The 3 ways to do ML on AWS</h2>
+        <p class="kicker">Think of this as a decision tree: “How much control do I need?” vs “How fast do I want results?”</p>
+
+        <div class="grid">
+          <div class="card">
+            <h3>🛠️ Option A — Self-managed ML (maximum control)</h3>
+            <ul>
+              <li>Run ML code on <span class="term">EC2</span> (your own servers in the cloud).</li>
+              <li>Use <span class="term">EMR</span> if you need a <span class="term">cluster</span> (connected instances) for big data-style processing.</li>
+              <li>Use <span class="term">ECS + containers</span> if you want container-based workloads.</li>
+              <li>You can choose <span class="term">GPU-optimized</span> instances for heavy training (deep learning, big models).</li>
+            </ul>
+            <div class="callout">
+              <strong>🙂 Best for</strong>
+              <p>Experienced teams that want full control of frameworks, libraries, and the runtime environment.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>🧠 Option B — Amazon SageMaker (managed ML platform)</h3>
+            <ul>
+              <li>Provides managed infrastructure + tools to <span class="term">build, train, test</span> ML models.</li>
+              <li>Supports both: <span class="term">bring your own code</span> (advanced) and more guided/visual workflows (beginner-friendly).</li>
+              <li>Includes features that help with <span class="term">deploying models</span> so other apps can use them.</li>
+            </ul>
+            <div class="callout">
+              <strong>🙂 Best for</strong>
+              <p>Teams who want ML workflows without manually managing clusters and tooling.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>✨ Option C — Pre-built AI services (fastest time-to-value)</h3>
+            <ul>
+              <li>Use ready-made services that solve common AI tasks <span class="term">without training your own model</span>.</li>
+              <li>Examples of tasks mentioned: <span class="term">face detection</span>, <span class="term">image analysis</span>, <span class="term">text extraction</span>, <span class="term">video captions</span>.</li>
+            </ul>
+            <div class="callout">
+              <strong>🙂 Best for</strong>
+              <p>When you need a practical AI feature quickly, and a pre-built model is “good enough.”</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) Beginner-friendly examples</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>🧪 Example 1 — Self-managed training</h3>
+            <p><span class="term">Scenario:</span> You’re an ML engineer and want full control over your Python environment.</p>
+            <ul>
+              <li>Spin up <span class="term">GPU EC2</span> instances.</li>
+              <li>Install your preferred ML libraries (PyTorch/TensorFlow, etc.).</li>
+              <li>Train a model and store datasets / outputs in cloud storage.</li>
+            </ul>
+            <p class="kicker">Key idea: you manage most setup decisions, AWS provides scalable compute.</p>
+          </div>
+
+          <div class="card">
+            <h3>🏁 Example 2 — Use SageMaker to speed up the workflow</h3>
+            <p><span class="term">Scenario:</span> Your team wants a managed toolchain for training + deployment.</p>
+            <ul>
+              <li>Use <span class="term">SageMaker</span> to develop and train models.</li>
+              <li>Deploy the model so your application can call it (e.g., “predict fraud risk”).</li>
+            </ul>
+            <p class="kicker">Key idea: less infrastructure work, more focus on model + data.</p>
+          </div>
+
+          <div class="card">
+            <h3>⚡ Example 3 — Use pre-built AI instead of building a model</h3>
+            <p><span class="term">Scenario:</span> You need image analysis or text extraction, but you don’t want to build ML from scratch.</p>
+            <ul>
+              <li>Use an AWS AI service that already has a model under the hood.</li>
+              <li>Send input (image/video/text) and get results (labels, text, captions, etc.).</li>
+            </ul>
+            <p class="kicker">Key idea: no model training required; you consume AI like an API.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Quick memory cues (for fast recall)</h2>
+        <ul>
+          <li>🤖 <span class="term">ML on AWS is broad</span>: lots of services, but CLF-C02 focuses elsewhere.</li>
+          <li>🛠️ <span class="term">EC2/EMR/ECS</span> = do it yourself (control).</li>
+          <li>🧠 <span class="term">SageMaker</span> = managed ML platform (build/train/deploy).</li>
+          <li>✨ <span class="term">AI services</span> = ready-made solutions for common tasks (fast results).</li>
+        </ul>
+        <div class="callout">
+          <strong>✅ Exam mindset</strong>
+          <p>If you see a question about “managed ML platform,” think <span class="term">SageMaker</span>. If you see “I want AI features without training a model,” think <span class="term">pre-built AI services</span>.</p>
+        </div>
+      </section>
+
+      <section id="quick-check">
+        <h2>5) Quick Check (Q&amp;A)</h2>
+        <p class="kicker">Use these to test understanding in under 2 minutes.</p>
+
+        <div class="qa">
+          <details>
+            <summary>Q1: What are the 3 broad options for ML/AI on AWS?</summary>
+            <p><span class="good">Answer:</span> (1) Self-managed compute (EC2/EMR/ECS), (2) managed ML platform (SageMaker), (3) pre-built AI services for common tasks.</p>
+          </details>
+
+          <details>
+            <summary>Q2: When would you choose EC2 for ML instead of SageMaker?</summary>
+            <p><span class="good">Answer:</span> When you want maximum control over the environment/frameworks or have an experienced team that prefers custom setup (including GPU instances).</p>
+          </details>
+
+          <details>
+            <summary>Q3: What is SageMaker in one sentence?</summary>
+            <p><span class="good">Answer:</span> A managed AWS service that provides infrastructure and tools to develop, train, test, and deploy machine learning models.</p>
+          </details>
+
+          <details>
+            <summary>Q4: What’s the advantage of pre-built AI services?</summary>
+            <p><span class="good">Answer:</span> You can solve common AI tasks (image/text/video analysis) without building or training your own machine learning model.</p>
+          </details>
+        </div>
+
+        <p class="footer">Tip: If printing, use your browser’s “Save as PDF” and keep scale at 100% for best A4 formatting.</p>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>

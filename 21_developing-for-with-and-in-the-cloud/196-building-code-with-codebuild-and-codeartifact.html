@@ -1,0 +1,481 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — CodeBuild & CodeArtifact</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #666;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --good: #0f7b4a;
+      --warn: #8a5a00;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-wrap: anywhere; /* strong wrapping for long words/URLs */
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+    }
+
+    header {
+      padding: 18px 18px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.65rem;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--panel);
+    }
+
+    main { margin-top: 18px; }
+
+    h2 {
+      margin: 22px 0 10px;
+      font-size: 1.25rem;
+    }
+
+    h3 {
+      margin: 16px 0 8px;
+      font-size: 1.07rem;
+    }
+
+    p { margin: 10px 0; }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      padding: 14px 14px 12px;
+      margin: 14px 0;
+    }
+
+    .callout {
+      border-left: 5px solid var(--accent);
+      background: #f3f7ff;
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin: 14px 0;
+    }
+
+    .callout strong { color: #0a3f92; }
+
+    ul { margin: 10px 0 10px 22px; padding: 0; }
+    li { margin: 6px 0; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .kv {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .kv th, .kv td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 0.97rem;
+    }
+    .kv th {
+      width: 34%;
+      background: #fbfbfb;
+      color: #222;
+      font-weight: 700;
+    }
+    .kv tr:last-child th, .kv tr:last-child td { border-bottom: none; }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    pre {
+      margin: 10px 0;
+      padding: 12px;
+      background: #0b1220;
+      color: #e8eefc;
+      border-radius: 10px;
+      overflow: auto;
+      border: 1px solid #1f2a44;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .good { color: var(--good); font-weight: 700; }
+    .warn { color: var(--warn); font-weight: 700; }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 18px 0;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,255,255,0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(6px);
+    }
+
+    .toolbar-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 10px 18px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #111;
+    }
+
+    .btn:focus { outline: 2px solid #cfe2ff; outline-offset: 2px; }
+
+    .btn-primary {
+      border-color: #b8cffc;
+      background: #f3f7ff;
+      color: #0a3f92;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* Print Styles (A4) */
+    @page {
+      size: A4;
+      margin: 14mm 14mm 16mm;
+    }
+
+    @media print {
+      .toolbar { display: none !important; }
+      body { background: #fff !important; }
+      .page { max-width: none; padding: 0; }
+      header, .card, .callout {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      pre { break-inside: avoid; page-break-inside: avoid; }
+      a { color: #000; text-decoration: none; }
+      .pill { background: #fff; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar" role="region" aria-label="Page tools">
+    <div class="toolbar-inner">
+      <div class="small">Print-ready • Single column • A4</div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-primary" onclick="window.print()" type="button">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})" type="button">✅ Quick Check</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <header>
+      <h1>☁️ AWS CLF-C02 Reviewer — CodeBuild & CodeArtifact</h1>
+      <p class="subtitle">Topic: Developer tools for testing/building code and managing packages (artifacts) in AWS.</p>
+      <div class="meta">
+        <span class="pill">🧠 Beginner-friendly</span>
+        <span class="pill">🧾 Print-optimized (A4)</span>
+        <span class="pill">📄 Single-column layout</span>
+        <span class="pill">🎯 Exam-focused takeaways</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="callout">
+        <strong>Big idea 💡</strong>
+        <div>
+          In a typical development workflow, you <b>write code</b> → <b>store it in a repo</b> → <b>test & build</b> → <b>deploy</b>.
+          <br />
+          <b>CodeBuild</b> helps with the <b>test & build</b> step, while <b>CodeArtifact</b> helps you <b>store and control packages</b> your builds depend on.
+        </div>
+      </section>
+
+      <section>
+        <h2>1) Where CodeBuild fits in the workflow 🧩</h2>
+        <div class="card">
+          <p>
+            <b>CodeBuild</b> provides a <b>managed build environment</b> (like a temporary “build server”) where AWS runs your commands to:
+          </p>
+          <ul>
+            <li>🧪 <b>Run tests</b> (unit tests, integration tests, linting)</li>
+            <li>🏗️ <b>Build</b> your app (compile, bundle, package, create Docker image, etc.)</li>
+          </ul>
+          <p class="small">
+            Key point: you don’t manually create or manage an EC2 build server. AWS manages the underlying servers for you.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) CodeBuild basics (what you configure) ⚙️</h2>
+
+        <table class="kv" aria-label="CodeBuild configuration overview">
+          <tr>
+            <th>📦 Code source</th>
+            <td>
+              Where the code comes from (e.g., CodeCommit, GitHub, other supported sources). This is what CodeBuild downloads before running build steps.
+            </td>
+          </tr>
+          <tr>
+            <th>🖥️ Build environment</th>
+            <td>
+              You choose OS/runtime image presets (with common tools preinstalled). You can also add environment variables.
+            </td>
+          </tr>
+          <tr>
+            <th>⏱️ Timeouts</th>
+            <td>
+              Helps avoid paying for “stuck” builds. If the build exceeds the timeout, it stops automatically.
+            </td>
+          </tr>
+          <tr>
+            <th>🧾 BuildSpec file</th>
+            <td>
+              A file that lists the commands to run (install deps → test → build). This is the “recipe” for your build.
+            </td>
+          </tr>
+          <tr>
+            <th>📤 Build output</th>
+            <td>
+              If your build produces an artifact (zip/package/compiled output), you can store it (commonly in S3) for deployment later.
+            </td>
+          </tr>
+          <tr>
+            <th>🔔 Triggers</th>
+            <td>
+              Builds can run manually or automatically (e.g., when code changes happen).
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>3) BuildSpec (simple example) 🧾</h2>
+        <p>
+          The <b>BuildSpec file</b> tells CodeBuild exactly what to do. Think of it like a checklist of commands.
+          A typical pattern is: install dependencies → run tests → build output.
+        </p>
+
+        <pre><code># Example (conceptual) buildspec.yml
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Install dependencies"
+      - npm ci
+  build:
+    commands:
+      - echo "Run tests"
+      - npm test
+      - echo "Build app"
+      - npm run build
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: dist
+</code></pre>
+
+        <div class="card">
+          <h3>Beginner tip 👶</h3>
+          <p>
+            If you are <b>only running tests</b>, you might not produce any build artifacts.
+            If you are <b>building</b>, you typically produce something like a <b>ZIP</b>, <b>binary</b>, or <b>compiled output</b>.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) CodeArtifact (why it exists) 📦</h2>
+        <div class="card">
+          <p>
+            Most projects depend on third‑party libraries (packages) so you don’t reinvent the wheel.
+            Normally, you download these from public package registries.
+          </p>
+          <p>
+            <b>CodeArtifact</b> provides a <b>managed repository</b> where you can:
+          </p>
+          <ul>
+            <li>🌍 Use public packages (via mirroring/proxying) so builds are faster/more controlled</li>
+            <li>🔒 Publish <b>private internal packages</b> (company-only libraries)</li>
+            <li>🧩 Centralize dependency management in AWS</li>
+          </ul>
+          <p class="small">
+            CodeArtifact is optional—use it if you want more control, performance, or private package hosting.
+          </p>
+        </div>
+
+        <div class="callout">
+          <strong>Quick analogy 🧠</strong>
+          <div>
+            If <b>CodeBuild</b> is the “kitchen” where you cook (build) your app, then <b>CodeArtifact</b> is your “pantry” where you store ingredients (packages) — including private ingredients your team doesn’t want to publish publicly.
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>5) CodeBuild vs CodeArtifact (exam-friendly comparison) 📝</h2>
+        <table class="kv" aria-label="Comparison table">
+          <tr>
+            <th>CodeBuild 🏗️</th>
+            <td>
+              Runs <b>tests</b> and <b>build commands</b> in a managed environment. Produces build output (artifacts) you can store.
+            </td>
+          </tr>
+          <tr>
+            <th>CodeArtifact 📦</th>
+            <td>
+              Stores and manages <b>packages/dependencies</b> (public + private). Helps your builds get dependencies reliably.
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>6) Practical mini-scenario (easy to imagine) 🧪</h2>
+        <div class="card">
+          <p><b>Scenario:</b> You have a Node.js app.</p>
+          <ul>
+            <li>📁 Code is stored in Git (CodeCommit or GitHub).</li>
+            <li>🧪 On every push, CodeBuild runs <code>npm test</code> and then <code>npm run build</code>.</li>
+            <li>📤 The build output is uploaded to S3.</li>
+            <li>📦 Dependencies come from npm. If you want tighter control, you can route dependencies through CodeArtifact.</li>
+          </ul>
+          <p class="small">
+            This matches the transcript idea: CodeBuild executes your workflow steps, CodeArtifact is an optional package repository to support builds.
+          </p>
+        </div>
+      </section>
+
+      <section id="quick-check">
+        <h2>7) Quick Check ✅ (self-test)</h2>
+        <div class="card">
+          <h3>Q1: What problem does CodeBuild solve?</h3>
+          <p>
+            ✅ It provides a managed environment to <b>run tests</b> and <b>build your code</b> using commands defined in a BuildSpec.
+          </p>
+
+          <h3>Q2: Do you need to create EC2 instances to use CodeBuild?</h3>
+          <p>
+            ✅ No. You configure the environment, but AWS manages the underlying servers.
+          </p>
+
+          <h3>Q3: What is a BuildSpec file?</h3>
+          <p>
+            ✅ A file that defines <b>the steps/commands</b> (install → test → build) that run during the build.
+          </p>
+
+          <h3>Q4: What problem does CodeArtifact solve?</h3>
+          <p>
+            ✅ It provides a managed <b>package repository</b> so you can use public packages via a controlled source and publish private internal packages.
+          </p>
+
+          <h3>Q5: When is CodeArtifact most useful?</h3>
+          <p>
+            ✅ When you need <b>private packages</b>, better dependency control, and/or more reliable/faster dependency retrieval.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>8) Mini-glossary 📚</h2>
+        <div class="card">
+          <ul>
+            <li>🧪 <b>Test</b>: Checking if code works correctly (unit/integration tests, linting).</li>
+            <li>🏗️ <b>Build</b>: Creating deployable output (bundle, binary, Docker image, ZIP, etc.).</li>
+            <li>🧾 <b>BuildSpec</b>: The “recipe” of commands CodeBuild runs.</li>
+            <li>📦 <b>Package</b>: Reusable library/dependency (public or private).</li>
+            <li>📤 <b>Artifact</b>: Output produced by a build (e.g., ZIP file, compiled output).</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="hr" aria-hidden="true"></div>
+
+      <section>
+        <h2>Key takeaways 🎯</h2>
+        <ul>
+          <li>🏗️ <b>CodeBuild</b> = managed environment to run <b>tests + builds</b> using a <b>BuildSpec</b>.</li>
+          <li>📦 <b>CodeArtifact</b> = managed <b>package repository</b> (public + private) to support builds.</li>
+          <li>🧠 Exam mindset: know the “role” each service plays in the developer workflow.</li>
+        </ul>
+      </section>
+
+      <footer class="small" style="margin-top:18px; color: var(--muted);">
+        End of reviewer — CodeBuild & CodeArtifact (AWS CLF-C02)
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

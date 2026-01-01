@@ -1,0 +1,313 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Amazon Connect — Managed Contact Center (Study Guide)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #666;
+      --border: #e5e5e5;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --good: #0f7b0f;
+      --warn: #8a5a00;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 18px 18px 14px;
+      border-radius: 10px;
+    }
+
+    .kicker {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 0 0 8px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    button {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover { border-color: #cfcfcf; }
+
+    main {
+      margin-top: 16px;
+    }
+
+    section {
+      margin: 14px 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      padding: 16px;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 15px;
+    }
+
+    p { margin: 10px 0; }
+
+    ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .callout {
+      border: 1px dashed var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 12px 12px 10px;
+    }
+
+    .callout strong { display: inline-block; margin-bottom: 6px; }
+
+    .pillrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    .good { border-color: rgba(15,123,15,.25); background: rgba(15,123,15,.06); }
+    .warn { border-color: rgba(138,90,0,.25); background: rgba(138,90,0,.06); }
+
+    .quote {
+      margin: 0;
+      padding: 12px;
+      border-left: 4px solid var(--accent);
+      background: #f6f9ff;
+      border-radius: 8px;
+    }
+
+    .quiz {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .quiz details { margin-top: 8px; }
+
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      padding: 8px 2px 24px;
+    }
+
+    /* Print styles for clean A4 output */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      .toolbar { display: none !important; }
+      section, header { break-inside: avoid; page-break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+      h1 { font-size: 20px; }
+      h2 { font-size: 16px; }
+      p, li { font-size: 11.5pt; }
+      .kicker, .subtitle, footer { font-size: 10pt; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS CLF-C02 • Other Services</p>
+      <h1>📞 Amazon Connect — Managed Contact Center (Cloud Call Center)</h1>
+      <p class="subtitle">Reviewer / study guide (beginner-friendly). Single-column, A4 print-ready.</p>
+      <div class="toolbar">
+        <button type="button" onclick="window.print()">Print / Save as PDF</button>
+        <button type="button" onclick="document.getElementById('answers').open = true; document.getElementById('answers').scrollIntoView({behavior:'smooth'});">Jump to Answers</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Picture (What is Amazon Connect?)</h2>
+        <p class="quote">
+          <strong>✅ Definition:</strong> <em>Amazon Connect</em> is a <strong>managed contact center</strong> (call center) in AWS.
+          You can set up customer support calling in the cloud, with <strong>real agents</strong> and optional <strong>machine-learning features</strong> that help agents get faster insights.
+        </p>
+
+        <div class="grid">
+          <div class="callout">
+            <strong>🧠 Simple way to remember</strong>
+            <p>
+              <strong>Connect = Cloud Call Center</strong>. Instead of building your own call center infrastructure, AWS provides the platform so you can focus on the customer experience.
+            </p>
+          </div>
+
+          <div class="callout">
+            <strong>🎯 What problem does it solve?</strong>
+            <ul>
+              <li>✅ You need a customer support / contact center.</li>
+              <li>✅ You want it <strong>managed</strong> (less infrastructure to operate).</li>
+              <li>✅ You want to scale as calls increase or decrease.</li>
+              <li>✅ You may want <strong>ML-assisted insights</strong> during calls.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pillrow" aria-label="Key tags">
+          <span class="pill good">📌 Managed service</span>
+          <span class="pill good">📈 Scales with demand</span>
+          <span class="pill">🎧 Agents + customers</span>
+          <span class="pill">🤖 Optional ML features</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) How It Works (Beginner View)</h2>
+        <p>
+          Think of Amazon Connect as a ready-made contact center platform:
+        </p>
+        <ul>
+          <li>📞 Customers call your support number.</li>
+          <li>🧭 Connect routes the call to the right place (queue / department / agent).</li>
+          <li>🎧 Agents handle the call using the contact center tools.</li>
+          <li>🤖 (Optional) ML features can help agents with insights (e.g., quick context).</li>
+        </ul>
+
+        <div class="callout">
+          <strong>⚙️ “Managed” means…</strong>
+          <p>
+            You do <strong>not</strong> need to build or maintain the call-center infrastructure yourself. AWS operates the underlying platform so you can configure and use it.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) Practical Example</h2>
+        <p><strong>Scenario:</strong> You run an online store and need a customer support line.</p>
+        <ul>
+          <li>📞 Customer calls about a delayed delivery.</li>
+          <li>🗂️ Call is routed to the “Shipping Support” queue.</li>
+          <li>👩‍💼 Agent answers and resolves the issue.</li>
+          <li>🤖 Optional ML can provide quick insights to help the agent respond faster.</li>
+        </ul>
+
+        <div class="callout warn">
+          <strong>⚠️ Exam-style cue</strong>
+          <p>
+            If the question says: “AWS service for a <strong>cloud-based contact center / call center</strong>” → the answer is <strong>Amazon Connect</strong>.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Quick Recall</h2>
+        <ul>
+          <li>📌 <strong>Amazon Connect</strong> = Managed contact center (call center) in AWS</li>
+          <li>👥 Works with <strong>real human agents</strong></li>
+          <li>🤖 Can use <strong>machine-learning features</strong> to assist with insights</li>
+          <li>✅ Good when you don’t want to build your own contact center infrastructure</li>
+        </ul>
+      </section>
+
+      <section class="quiz">
+        <h2>5) Mini Quiz (Self-check) ✍️</h2>
+        <ol>
+          <li>What is Amazon Connect used for?</li>
+          <li>What does “managed contact center” mean in this context?</li>
+          <li>In an exam question, what keywords should make you think “Amazon Connect”?</li>
+        </ol>
+
+        <details id="answers">
+          <summary><strong>Show answers</strong></summary>
+          <ol>
+            <li>📞 A cloud-based, managed contact center (call center) for customer support.</li>
+            <li>⚙️ AWS runs the underlying platform; you configure and use it without operating the infrastructure yourself.</li>
+            <li>🧩 “Contact center”, “call center”, “customer support calls”, “agents”, “cloud call center”.</li>
+          </ol>
+        </details>
+      </section>
+
+      <footer>
+        <p>
+          Tip for printing: Use your browser’s print dialog → Paper size: <strong>A4</strong> → Margins: <strong>Default</strong> (or “Minimum” if allowed) → Scale: <strong>100%</strong>.
+        </p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

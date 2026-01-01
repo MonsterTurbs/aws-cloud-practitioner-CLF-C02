@@ -1,0 +1,378 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Security: What Should Be Secured</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#5b5b5b;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --panel2:#f3f5f7;
+      --accent:#0b57d0;
+      --ok:#0a7a3d;
+      --warn:#a15c00;
+      --danger:#b00020;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-break:normal;
+      hyphens:auto;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding:18px 16px;
+      border-radius:12px;
+    }
+
+    .kicker{
+      font-size:12px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin:0 0 6px;
+    }
+
+    h1{
+      font-size:24px;
+      line-height:1.2;
+      margin:0 0 6px;
+    }
+
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      padding:9px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:14px;
+    }
+    .btn:hover{border-color:#cfcfcf;}
+    .btn.primary{
+      border-color:rgba(11,87,208,.35);
+      background:rgba(11,87,208,.06);
+      color:#083a87;
+    }
+
+    main{margin-top:16px;}
+
+    h2{
+      font-size:18px;
+      margin:22px 0 10px;
+      padding-bottom:6px;
+      border-bottom:1px solid var(--border);
+    }
+
+    h3{
+      font-size:16px;
+      margin:16px 0 8px;
+    }
+
+    p{margin:10px 0;}
+
+    ul{margin:10px 0 10px 20px; padding:0;}
+    li{margin:6px 0;}
+
+    .card{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:14px 14px;
+      background:#fff;
+      margin:12px 0;
+      break-inside:avoid;
+      page-break-inside:avoid;
+    }
+
+    .callout{
+      border-left:4px solid var(--accent);
+      background:var(--panel2);
+      padding:12px 12px;
+      border-radius:12px;
+      margin:12px 0;
+      break-inside:avoid;
+      page-break-inside:avoid;
+    }
+
+    .callout.ok{border-left-color:var(--ok);}
+    .callout.warn{border-left-color:var(--warn);}
+    .callout.danger{border-left-color:var(--danger);}
+
+    .label{
+      display:inline-block;
+      font-size:12px;
+      padding:2px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--muted);
+      margin-left:6px;
+      vertical-align:middle;
+      white-space:nowrap;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+
+    .mini{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      padding: 1px 6px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .checklist li{list-style:"☐  "; margin-left: 2px;}
+
+    footer{
+      margin-top:28px;
+      color:var(--muted);
+      font-size:12px;
+      border-top:1px solid var(--border);
+      padding-top:10px;
+    }
+
+    /* Print styles */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+    }
+
+    @media print{
+      body{font-size:11.5pt; line-height:1.45;}
+      .page{max-width:none; padding:0;}
+      header{border-radius:0; border:0; background:#fff; padding:0 0 8px;}
+      .toolbar{display:none !important;}
+      a{color:inherit; text-decoration:none;}
+      .card, .callout{border-color:#d8d8d8;}
+      h2{break-after:avoid-page;}
+      .no-print{display:none !important;}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Security (A Closer Look)</p>
+      <h1>What Should Be Secured? (Account, Application, Network, Data)</h1>
+      <p class="subtitle">Reviewer / study guide based on the lecture transcript. Beginner-friendly notes with examples and exam-oriented cues. 🔐</p>
+
+      <div class="toolbar no-print">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-review').scrollIntoView({behavior:'smooth'})">📌 Jump to Quick Review</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="callout">
+        <strong>Big idea 🧠:</strong> Security is not only “protect the AWS account.” It also includes protecting the <strong>apps</strong>, the <strong>network traffic</strong>, and the <strong>data</strong> — plus being able to <strong>detect</strong> and <strong>respond</strong> when something goes wrong.
+      </section>
+
+      <section id="quick-review" class="card">
+        <h2>Quick Review (1-minute)</h2>
+        <ul>
+          <li><strong>Account protection 👤</strong> — secure credentials, MFA, least privilege, detect malicious actions, secure cross-account access, enforce standards &amp; compliance.</li>
+          <li><strong>Application protection 🧩</strong> — find vulnerabilities, detect insecure configs, investigate incidents.</li>
+          <li><strong>Network protection 🌐</strong> — block malicious traffic, protect against DDoS, secure traffic flow.</li>
+          <li><strong>Data protection 🗄️</strong> — encrypt at rest &amp; in transit, protect secrets, prevent accidental public exposure.</li>
+        </ul>
+        <p class="mini">Exam mindset: expect questions that ask <em>“which category is this problem?”</em> and <em>“which AWS service helps?”</em></p>
+      </section>
+
+      <h2>1) Account Protection 👤🔒</h2>
+      <div class="grid">
+        <section class="card">
+          <h3>What it means</h3>
+          <ul>
+            <li>Prevent your AWS account from being compromised (stolen credentials, weak practices, misuse).</li>
+            <li>Limit what people can do even if they have access (least privilege).</li>
+            <li>Detect suspicious or malicious actions quickly so you can respond.</li>
+          </ul>
+        </section>
+
+        <section class="callout ok">
+          <strong>Core controls ✅</strong>
+          <ul>
+            <li>Use <strong>IAM users/roles</strong> (avoid using the <strong>root</strong> user for daily tasks).</li>
+            <li>Enable <strong>MFA (two-factor authentication)</strong> for privileged access (especially root).</li>
+            <li>Use <strong>least privilege</strong>: only the permissions needed for the job.</li>
+          </ul>
+        </section>
+
+        <section class="callout warn">
+          <strong>Threat example ⚠️: insider misuse</strong>
+          <p>
+            Even if an employee has valid access (because they need it), they could still do something malicious.
+            Security therefore includes <strong>guardrails + monitoring</strong> — not only access grants.
+          </p>
+          <ul>
+            <li>Guardrails idea: “You can do your job, but you can’t exceed the organization’s maximum permissions.”</li>
+            <li>Detection idea: “If unusual actions happen, alert and investigate immediately.”</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Cross-account security 🏢↔️🏢</h3>
+          <p>
+            Bigger companies commonly use <strong>multiple AWS accounts</strong> (separate teams, workloads, environments).
+            Those accounts still need to work together <em>securely</em>.
+          </p>
+          <ul>
+            <li>Goal: secure cross-account access patterns (e.g., “Account A can read logs from Account B”).</li>
+            <li>Goal: central governance (policies/standards) without manually policing every account.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Standardization &amp; compliance 📋</h3>
+          <ul>
+            <li><strong>SSO (Single Sign-On)</strong>: employees use one identity to access multiple company systems.</li>
+            <li><strong>Enforced configurations</strong>: avoid random settings per person; follow company standards.</li>
+            <li><strong>Audit evidence</strong>: reports/proof for compliance checks.</li>
+          </ul>
+        </section>
+      </div>
+
+      <h2>2) Application Protection 🧩🛡️</h2>
+      <section class="card">
+        <h3>What it means</h3>
+        <ul>
+          <li>Identify <strong>software vulnerabilities</strong> in what you run (e.g., OS packages, database engines, libraries).</li>
+          <li>Detect <strong>insecure configurations</strong> (e.g., ports exposed that should not be open).</li>
+          <li>Support <strong>incident investigation</strong> (what happened, why, impact, and how to prevent repeat).</li>
+        </ul>
+      </section>
+
+      <section class="callout">
+        <strong>Beginner example 💡</strong>
+        <p>
+          You run a database on an EC2 instance. A security advisory says there is a critical vulnerability.
+          Application protection means you (1) <strong>learn about it quickly</strong>, (2) <strong>patch/update</strong>, and (3) confirm the system is back to a safe state.
+        </p>
+      </section>
+
+      <h2>3) Network Protection 🌐🧱</h2>
+      <section class="card">
+        <h3>What it means</h3>
+        <ul>
+          <li>Protect the network you build in AWS (often inside a VPC) and protect traffic flowing through it.</li>
+          <li>Detect and block malicious traffic before it reaches your applications.</li>
+          <li>Defend against availability attacks like <strong>DDoS</strong> (distributed denial of service).</li>
+        </ul>
+      </section>
+
+      <section class="callout warn">
+        <strong>DDoS in simple terms ⚠️</strong>
+        <p>
+          Attackers send huge amounts of traffic to overwhelm your service so real users can’t access it.
+          Network security includes mitigation tools and designs that absorb/filter this traffic.
+        </p>
+      </section>
+
+      <h2>4) Data Protection 🗄️🔐</h2>
+      <section class="card">
+        <h3>What it means</h3>
+        <ul>
+          <li><strong>Encrypt data at rest</strong>: when stored (e.g., in S3, databases, disks).</li>
+          <li><strong>Encrypt data in transit</strong>: while traveling over the network (e.g., HTTPS/TLS).</li>
+          <li><strong>Protect secrets</strong>: credentials and sensitive config values used by code.</li>
+          <li><strong>Prevent accidental exposure</strong>: e.g., a bucket becoming public by mistake.</li>
+        </ul>
+      </section>
+
+      <section class="callout danger">
+        <strong>Secrets example 🚫🔑</strong>
+        <p>
+          A common mistake is putting database usernames/passwords directly in source code (plain text).
+          If code is shared, leaked, or viewed widely, the credentials leak too.
+        </p>
+        <p>
+          Better pattern: store secrets in a dedicated secure service and let the app fetch them securely at runtime.
+        </p>
+      </section>
+
+      <h2>How to Think About Exam Questions 🎯</h2>
+      <section class="card">
+        <h3>Step-by-step approach</h3>
+        <ol>
+          <li><strong>Classify the problem</strong>: Account vs Application vs Network vs Data.</li>
+          <li><strong>Identify the goal</strong>: prevent, detect, respond, standardize, or prove compliance.</li>
+          <li><strong>Pick the matching AWS concept/service</strong> (you’ll learn these in the next lessons).</li>
+        </ol>
+        <p class="mini">Tip: If the scenario talks about <em>“credentials, MFA, permissions, cross-account governance”</em> → think <strong>Account Protection</strong>. If it talks about <em>“encryption, secrets, public exposure”</em> → think <strong>Data Protection</strong>.</p>
+      </section>
+
+      <h2>Memory Checklist ✅</h2>
+      <section class="card">
+        <ul class="checklist">
+          <li>Root account is not for daily use; use IAM users/roles instead.</li>
+          <li>MFA is a must for privileged access (especially root).</li>
+          <li>Least privilege reduces blast radius if credentials are stolen or misused.</li>
+          <li>Insider threats exist → you need monitoring + guardrails, not only access grants.</li>
+          <li>Application security = vulnerabilities + secure configuration + incident analysis.</li>
+          <li>Network security = malicious traffic detection + DDoS protection.</li>
+          <li>Data security = encryption (at rest/in transit) + secrets management + prevent public exposure.</li>
+        </ul>
+      </section>
+
+      <section class="callout">
+        <strong>Mini recap 🧾</strong>
+        <p>
+          This lesson is a “map” of what security covers. Next lessons typically introduce the AWS services that implement these controls.
+        </p>
+      </section>
+
+      <footer>
+        <div>Print tip: In the browser print dialog, choose <span class="kbd">A4</span>, margins <span class="kbd">Default</span> (or <span class="kbd">None</span>), and enable <span class="kbd">Background graphics</span> if you want callout shading.</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

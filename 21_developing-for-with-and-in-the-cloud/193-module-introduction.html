@@ -1,0 +1,399 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Module 193: Developing for/with/in the Cloud (Introduction)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent-2: #1a73e8;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      font-size: 16px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 22px 48px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 18px 14px;
+      border-radius: 12px;
+    }
+
+    .kicker {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .2px;
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:focus {
+      outline: 3px solid rgba(26,115,232,.25);
+      outline-offset: 2px;
+    }
+
+    .btn.primary {
+      border-color: rgba(11,87,208,.25);
+    }
+
+    main { margin-top: 18px; }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin: 14px 0;
+      background: #fff;
+    }
+
+    h2 {
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      font-size: 14px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 8px 0; }
+
+    .muted { color: var(--muted); }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 12px 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .mini {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .card strong { display: inline-block; margin-bottom: 4px; }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    pre {
+      margin: 10px 0 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+    }
+
+    .no-break { break-inside: avoid; page-break-inside: avoid; }
+
+    footer {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Print-specific rules (A4, margins, clean output) */
+    @page {
+      size: A4;
+      margin: 14mm 14mm;
+    }
+
+    @media print {
+      body { font-size: 11.5pt; line-height: 1.45; }
+      .page { max-width: none; padding: 0; }
+      header, section { border-color: #d9d9d9; }
+      .toolbar { display: none !important; }
+      a { color: inherit; text-decoration: none; }
+      .callout { background: #f7f7f7; }
+      .no-break { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="no-break">
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide</p>
+      <h1>Module 193: Developing for, with, and in the Cloud (Introduction) 🧑‍💻☁️</h1>
+      <p class="subtitle">Focus: what it means to build cloud-ready apps, and what a typical dev-to-deploy workflow looks like on AWS.</p>
+
+      <div class="toolbar" aria-label="Actions">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <a class="btn" href="#quick-recall">🧠 Jump to Quick Recall</a>
+      </div>
+
+      <div class="pill-row" aria-label="Key themes">
+        <span class="pill">Single-column</span>
+        <span class="pill">A4 print-ready</span>
+        <span class="pill">Beginner-friendly</span>
+        <span class="pill">Icons + emoticons</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) What this section is about 🎯</h2>
+        <p>
+          Up to this point, you learned how AWS services run workloads (compute, storage, networking) and how services work together.
+          But before a workload can run, it must be <strong>built</strong>.
+        </p>
+        <p>
+          This section introduces how developers typically build and deliver applications <strong>for the cloud</strong> (cloud-ready),
+          <strong>in the cloud</strong> (using cloud-hosted dev tools), and <strong>with the cloud</strong> (leveraging managed AWS services).
+        </p>
+
+        <div class="callout">
+          <strong>Key idea ✅</strong>
+          <p class="mini">
+            AWS doesn’t just host your app. It can also help you <em>write</em>, <em>build</em>, <em>test</em>, and <em>deploy</em> it—more consistently and at scale.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) “For” vs “With” vs “In” the cloud ☁️</h2>
+        <div class="grid">
+          <div class="card">
+            <strong>✅ Building <em>for</em> the cloud</strong>
+            <p class="mini">Design your app to fit cloud realities: scaling, failures, automation, and security.</p>
+            <ul>
+              <li>Expect failures (design for retries / resilience) 🔁</li>
+              <li>Automate deployments (repeatable releases) 🧩</li>
+              <li>Use managed services when it helps (less ops work) 🛠️</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>✅ Building <em>with</em> the cloud</strong>
+            <p class="mini">Use AWS services as building blocks (instead of reinventing the wheel).</p>
+            <ul>
+              <li>Use managed databases instead of self-managed installs 🗄️</li>
+              <li>Use queues/events for decoupling (e.g., async processing) 📬</li>
+              <li>Use monitoring/logging services for visibility 👀</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>✅ Building <em>in</em> the cloud</strong>
+            <p class="mini">Use cloud-hosted dev tooling and workflows (centralized, scalable, team-friendly).</p>
+            <ul>
+              <li>Cloud-based build/test environments 🧪</li>
+              <li>Hosted pipelines for CI/CD 🚀</li>
+              <li>Centralized artifact storage & versioning 📦</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) Typical development → deployment workflow 🔄</h2>
+        <p class="muted">This is the “big picture” flow you’ll see in many teams (cloud or not). AWS simply provides tools to streamline each step.</p>
+
+        <h3 class="no-break">A. Write code ✍️</h3>
+        <ul>
+          <li>Develop features locally or in a cloud IDE.</li>
+          <li>Follow a branching strategy (feature branches, PRs, etc.).</li>
+        </ul>
+
+        <h3 class="no-break">B. Build & test 🧪</h3>
+        <ul>
+          <li>Compile / package the app (build step).</li>
+          <li>Run automated tests (unit/integration) to catch issues early.</li>
+        </ul>
+
+        <h3 class="no-break">C. Create deployable artifacts 📦</h3>
+        <ul>
+          <li>Examples: a container image, a ZIP bundle, or a compiled binary.</li>
+          <li>Store artifacts in a controlled place (so deployments are repeatable).</li>
+        </ul>
+
+        <h3 class="no-break">D. Deploy 🚀</h3>
+        <ul>
+          <li>Push the artifact to the target environment (dev → staging → prod).</li>
+          <li>Prefer repeatable deployment automation over manual steps.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Beginner mental model 🧠</strong>
+          <p class="mini">Code → Build → Test → Package → Deploy → Monitor</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) How AWS helps (concept-level) 🧰</h2>
+        <p>
+          AWS offers developer-focused services to reduce manual work, make deployments consistent, and help teams move faster.
+          In an exam context, focus on <strong>what problem each tool solves</strong> rather than deep configuration.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <strong>Source control / collaboration 🧑‍🤝‍🧑</strong>
+            <p class="mini">Where code lives (repo) and how teams collaborate safely.</p>
+            <ul>
+              <li>Concept: centralized repositories, permissions, version history</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>CI/CD pipelines 🚦➡️🚀</strong>
+            <p class="mini">Automate the steps from commit to deploy.</p>
+            <ul>
+              <li>Trigger on code changes</li>
+              <li>Run build/test automatically</li>
+              <li>Deploy consistently to environments</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>Deployment automation 🏗️</strong>
+            <p class="mini">Make releases repeatable and reduce human error.</p>
+            <ul>
+              <li>Concept: deployment strategies (rolling / blue-green), safe rollbacks</li>
+            </ul>
+          </div>
+          <div class="card">
+            <strong>Monitoring & troubleshooting 🔍</strong>
+            <p class="mini">Once deployed, you need visibility (logs, metrics, traces).</p>
+            <ul>
+              <li>Confirm “it works” after deployment</li>
+              <li>Investigate issues faster</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="mini"><strong>Note:</strong> Later lessons typically attach specific AWS service names to these categories. For now, learn the workflow and the role each category plays.</p>
+      </section>
+
+      <section class="no-break" id="quick-recall">
+        <h2>5) Quick Recall (exam-friendly) 🧠</h2>
+        <ul>
+          <li><strong>Building apps is a lifecycle</strong>: write → build/test → package → deploy → monitor 🔁</li>
+          <li><strong>Cloud complexity grows with scale</strong>: more apps, more environments, more releases 📈</li>
+          <li><strong>AWS developer tooling helps</strong>: standardize, automate, and reduce manual mistakes ✅</li>
+          <li><strong>Core goal</strong>: faster, safer delivery (repeatable deployments + reliable operations) 🚀</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>6) Mini example (simple scenario) 🧩</h2>
+        <p class="muted">Think of an online shop team pushing a small update (e.g., a bug fix on checkout).</p>
+        <ul>
+          <li>Developer commits code changes ✍️</li>
+          <li>Pipeline runs tests automatically 🧪</li>
+          <li>Build produces a deployable artifact 📦</li>
+          <li>Deployment pushes to staging then production 🚀</li>
+          <li>Monitoring confirms no error spike / latency issues 📈</li>
+        </ul>
+        <pre aria-label="Workflow sketch">Commit → Automated Build/Test → Artifact → Deploy → Observe</pre>
+      </section>
+
+      <footer>
+        <p>
+          Print tip: Use your browser’s print dialog and select <strong>A4</strong>. If available, enable “Background graphics” for slightly cleaner callouts.
+        </p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

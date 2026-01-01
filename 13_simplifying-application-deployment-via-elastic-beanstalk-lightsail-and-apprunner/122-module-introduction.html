@@ -1,0 +1,318 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Module 13 — Simplifying Application Deployment (Elastic Beanstalk, Lightsail, App Runner)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+    }
+
+    header {
+      padding: 18px 16px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 1.55rem;
+      line-height: 1.25;
+      margin: 0 0 8px;
+      letter-spacing: -0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+    }
+
+    main { margin-top: 16px; }
+
+    section {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 1.02rem;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 0 0 10px; }
+
+    ul { margin: 0 0 0 18px; padding: 0; }
+    li { margin: 6px 0; }
+
+    .callout {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-top: 12px;
+    }
+
+    .callout p { margin: 0; }
+
+    .keyline {
+      border-top: 1px dashed var(--border);
+      margin: 12px 0;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 1px 6px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .printbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .printbar-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .btn:hover { border-color: #cfcfcf; }
+
+    .small {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      .printbar { display: none !important; }
+      body { font-size: 11pt; line-height: 1.45; }
+      .page { padding: 0; }
+      header, section { border-color: #dcdcdc; }
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="printbar" role="region" aria-label="Print controls">
+    <div class="printbar-inner">
+      <p class="small">Print-ready reviewer — single column • A4 optimized</p>
+      <button class="btn" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    </div>
+  </div>
+
+  <div class="page">
+    <header>
+      <h1>Module 13: Simplifying Application Deployment ☁️🚀</h1>
+      <p class="subtitle">Reviewer / Study Guide (Beginner-Friendly) — Elastic Beanstalk • Lightsail • App Runner</p>
+      <div class="meta">
+        <span class="pill">✅ Single-column</span>
+        <span class="pill">🧾 A4 print-ready</span>
+        <span class="pill">🧠 CLF-C02 study notes</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Idea: Why This Section Exists 🎯</h2>
+        <p>
+          In the previous section, you learned about <strong>AWS Amplify</strong>, which helps <strong>front-end developers</strong>
+          quickly add a back end (authentication, APIs, databases, hosting) to web/mobile apps.
+        </p>
+        <p>
+          But AWS also has services that simplify <strong>application deployment</strong> in general — even if you are not building a front-end app.
+          This section introduces those “make it easier” services and explains the problem they solve.
+        </p>
+
+        <div class="callout">
+          <p><strong>Key takeaway ✅</strong>: Amplify focuses on <em>front-end app development</em>. This module focuses on <em>simplifying deployment & running workloads</em> for many kinds of cloud users.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) The Problem: Deployment Can Be Complicated 😵‍💫</h2>
+        <p>
+          Deploying an app often means setting up multiple moving parts:
+        </p>
+        <ul>
+          <li>🧱 <strong>Compute</strong>: Where the code runs (EC2, containers, serverless, etc.)</li>
+          <li>🌐 <strong>Networking</strong>: VPC, subnets, security groups, load balancers</li>
+          <li>📦 <strong>Packaging</strong>: ZIP deployments, Docker images, build pipelines</li>
+          <li>📈 <strong>Scaling & availability</strong>: add more instances, handle failures</li>
+          <li>📊 <strong>Monitoring</strong>: logs, metrics, alarms</li>
+        </ul>
+        <p>
+          For beginners and for many common apps, doing all of this manually can be slow and error-prone.
+          That’s where “simplification services” come in.
+        </p>
+      </section>
+
+      <section>
+        <h2>3) What “Simplification” Means in AWS ✅</h2>
+        <p>
+          AWS simplification services reduce the work you must do by offering:
+        </p>
+        <ul>
+          <li>⚙️ <strong>Opinionated defaults</strong> (sensible settings out of the box)</li>
+          <li>🧩 <strong>Bundled setup</strong> (networking + compute + deployment experience together)</li>
+          <li>🔁 <strong>Managed operations</strong> (patching, scaling helpers, health checks)</li>
+          <li>🚀 <strong>Faster time-to-deploy</strong> (deploy in minutes instead of hours/days)</li>
+        </ul>
+
+        <div class="keyline"></div>
+
+        <h3>Beginner Example 💡</h3>
+        <p>
+          Instead of manually launching an EC2 instance, installing Node.js, configuring a reverse proxy, setting up monitoring, and writing deployment scripts,
+          a simplification service might let you deploy by providing:
+        </p>
+        <ul>
+          <li>your code (or container image),</li>
+          <li>the runtime (Node.js / Python / Java), and</li>
+          <li>a few settings (region, scaling, environment variables).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4) What You’ll Learn Next in This Module 📚</h2>
+        <p>
+          This module will introduce services that help you deploy and run apps with less operational overhead.
+          You will see tools like:
+        </p>
+        <ul>
+          <li>🌱 <strong>Elastic Beanstalk</strong> — deploy web apps with managed setup (platform + environment)</li>
+          <li>💡 <strong>Lightsail</strong> — simplified “virtual server + networking” experience for common apps</li>
+          <li>🏃 <strong>App Runner</strong> — run containerized web apps without managing servers</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>Exam mindset 🧠</strong>: You don’t need deep hands-on skills here. You need to recognize <em>what each service is for</em> and why it exists (simplification, faster deployments, less ops work).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>5) Quick Comparison: Amplify vs “Deployment Simplifiers” 🧭</h2>
+        <ul>
+          <li>📱 <strong>Amplify</strong>: Helps front-end developers connect apps to AWS back ends (Auth, APIs, data, hosting).</li>
+          <li>🚀 <strong>Beanstalk/Lightsail/App Runner</strong>: Helps many cloud users deploy/run apps more easily — front-end optional.</li>
+        </ul>
+        <p>
+          A good way to remember it:
+          <span class="kbd">Amplify = build + connect app features</span>
+          vs
+          <span class="kbd">Beanstalk/Lightsail/App Runner = deploy + run apps easier</span>.
+        </p>
+      </section>
+
+      <section>
+        <h2>6) Mini Self-Check ✅</h2>
+        <ul>
+          <li>❓ Why might “simplification” be helpful in AWS?</li>
+          <li>❓ What is the key difference between Amplify and services like Elastic Beanstalk?</li>
+          <li>❓ What is the goal of this module (in one sentence)?</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Answer hint 💭</strong>: This module is about making app deployment/run operations easier and faster by using AWS managed abstractions.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Transcript (Cleaned Summary) 📝</h2>
+        <p>
+          Amplify simplifies AWS usage for front-end developers who need a back end for web/mobile apps.
+          But simplification is a broader topic: AWS also provides services that help many cloud users deploy applications and run workloads more easily.
+          This section will explain the problem (deployment complexity) and introduce solutions like Elastic Beanstalk and other simplification services.
+        </p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

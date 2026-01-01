@@ -1,0 +1,358 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Data Analytics: Typical Tasks & Problems</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --good:#0f7b0f;
+      --warn:#b54708;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 22px 18px 34px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding:16px 16px 14px;
+      border-radius:12px;
+    }
+
+    h1{
+      font-size: 1.35rem;
+      margin:0 0 6px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:.98rem;
+    }
+
+    .meta{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .chip{
+      display:inline-block;
+      border:1px solid var(--border);
+      background:#fff;
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:.86rem;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      margin:14px 0 18px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:.95rem;
+    }
+
+    .btn:hover{ border-color:#cfcfcf; }
+
+    main{ margin-top: 10px; }
+
+    h2{
+      font-size: 1.12rem;
+      margin: 22px 0 10px;
+    }
+
+    h3{
+      font-size: 1.02rem;
+      margin: 16px 0 8px;
+    }
+
+    p{ margin: 10px 0; }
+
+    ul{
+      margin: 8px 0 10px 20px;
+      padding:0;
+    }
+
+    li{ margin: 6px 0; }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:14px 14px 12px;
+      background:#fff;
+      margin: 12px 0;
+    }
+
+    .callout{
+      border-left: 5px solid var(--accent);
+      background: var(--panel);
+      padding: 12px 12px 10px;
+      border-radius:10px;
+      margin: 12px 0;
+    }
+
+    .callout.good{ border-left-color: var(--good); }
+    .callout.warn{ border-left-color: var(--warn); }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:.92em;
+      padding:1px 6px;
+      border:1px solid var(--border);
+      border-bottom-width:2px;
+      border-radius:6px;
+      background:#fff;
+      white-space:nowrap;
+    }
+
+    .divider{ border-top:1px dashed var(--border); margin:18px 0; }
+
+    .tight{ margin-top:6px; }
+
+    /* Strong word wrapping to avoid print cut-offs */
+    p, li, h1, h2, h3, .card, .callout{
+      overflow-wrap:anywhere;
+      word-break: normal;
+      hyphens:auto;
+    }
+
+    /* Print styles (A4 + clean margins) */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 16mm;
+    }
+
+    @media print{
+      body{ background:#fff; }
+      .page{ max-width:none; padding:0; }
+      header{ border-radius:0; }
+      .toolbar{ display:none !important; }
+      a{ color:inherit; text-decoration:none; }
+
+      /* Avoid awkward splits */
+      header, .card, .callout{ break-inside: avoid; page-break-inside: avoid; }
+      h2, h3{ break-after: avoid; page-break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>📊 AWS CLF-C02 Study Guide — Data Analytics: Typical Tasks & Problems</h1>
+      <p class="subtitle">Beginner-friendly reviewer on what “data analytics / data science” means in AWS contexts, common data sources, ingestion frequency, and why streaming requires special handling (Kinesis).</p>
+      <div class="meta">
+        <span class="chip">🧠 Topic: Analytics & Data Science</span>
+        <span class="chip">🧩 Focus: Data ingestion + frequency</span>
+        <span class="chip">📝 Format: Reviewer / Study Guide</span>
+        <span class="chip">🖨️ A4 Print-ready</span>
+      </div>
+    </header>
+
+    <div class="toolbar" role="toolbar" aria-label="Page tools">
+      <button class="btn" onclick="window.print()" type="button">🖨️ Print / Save as PDF</button>
+      <button class="btn" onclick="document.getElementById('selfcheck').scrollIntoView({behavior:'smooth'})" type="button">✅ Jump to Self-Check</button>
+    </div>
+
+    <main>
+      <section class="card">
+        <h2>🎯 Learning goals</h2>
+        <ul>
+          <li>Understand what “data analytics” is in practical terms (why businesses care).</li>
+          <li>Identify common <strong>data sources</strong> (apps, scripts, devices/sensors, manual entry).</li>
+          <li>Explain why <strong>ingestion frequency</strong> matters (slow vs moderate vs high/streaming).</li>
+          <li>Know the typical AWS direction for ingestion: <strong>S3/RDS/DynamoDB</strong> for common workloads and <strong>Kinesis</strong> for streaming data.</li>
+        </ul>
+      </section>
+
+      <h2>1) 🧩 What is data analytics (and data science) in this course?</h2>
+      <p>
+        In this section, “data analytics” and “data science” are treated as closely related. In practice, they both focus on using data to make better decisions and build better products.
+        Modern businesses generate lots of data—especially online businesses—but even traditional companies collect data via IT systems, devices, and sensors.
+      </p>
+
+      <div class="callout good">
+        <strong>✅ Why it matters:</strong> Efficiently structuring and analyzing data can be a competitive advantage because it helps you understand customers, detect issues, measure performance, and improve products.
+      </div>
+
+      <h2>2) 🗂️ Common data sources</h2>
+      <p>Before you can analyze data, you must first <strong>ingest</strong> it (get it into the cloud). Typical sources include:</p>
+
+      <div class="card">
+        <h3>🛒 A) Application data (web/mobile/desktop apps)</h3>
+        <ul>
+          <li><strong>Online shop</strong>: orders, user profiles, clicks, browsing behavior, logs.</li>
+          <li><strong>Apps</strong>: usage analytics, error logs, feature adoption metrics.</li>
+        </ul>
+        <p class="tight"><em>Example:</em> A user places an order → your backend stores order details in a database.</p>
+      </div>
+
+      <div class="card">
+        <h3>🕷️ B) Crawlers, scripts, and scheduled tasks</h3>
+        <ul>
+          <li>Website crawlers that collect public data.</li>
+          <li>Scheduled tasks fetching weather data every hour/day.</li>
+        </ul>
+        <p class="tight"><em>Example:</em> Every hour, a script fetches weather data → stores results for later analysis.</p>
+      </div>
+
+      <div class="card">
+        <h3>🚗 C) Devices and sensors (IoT-style data)</h3>
+        <ul>
+          <li>Cars sending telemetry data (location, engine metrics, sensor readings).</li>
+          <li>Industrial sensors reporting temperature, vibration, or pressure.</li>
+        </ul>
+        <p class="tight"><em>Example:</em> 1,000 vehicles sending readings multiple times per second → continuous stream of events.</p>
+      </div>
+
+      <div class="card">
+        <h3>🧾 D) Manual data entry</h3>
+        <ul>
+          <li>Employees entering accounting or inventory data.</li>
+          <li>Customers filling forms (support tickets, onboarding, documents).</li>
+        </ul>
+        <p class="tight"><em>Example:</em> Staff updates inventory in a UI → backend saves to a database.</p>
+      </div>
+
+      <h2>3) ⏱️ Why ingestion frequency matters</h2>
+      <p>
+        Data sources produce data at different speeds (frequency). This matters because high-frequency data can overwhelm systems if the ingestion pipeline isn’t designed for it.
+      </p>
+
+      <div class="callout warn">
+        <strong>⚠️ Core risk:</strong> If too much data arrives at once and your system can’t keep up, servers may slow down, crash, or start dropping data.
+      </div>
+
+      <div class="card">
+        <h3>🐢 Slow / low-frequency ingestion</h3>
+        <ul>
+          <li>Manual data entry</li>
+          <li>Scheduled scripts (e.g., weather data hourly)</li>
+        </ul>
+        <p class="tight"><strong>Typical handling:</strong> Standard storage + normal request/response patterns are usually enough.</p>
+      </div>
+
+      <div class="card">
+        <h3>🚶 Moderate-frequency ingestion</h3>
+        <ul>
+          <li>Orders from an online shop</li>
+          <li>Typical app events (depending on scale)</li>
+        </ul>
+        <p class="tight"><strong>Typical handling:</strong> Store into databases / object storage as events come in; scale when needed.</p>
+      </div>
+
+      <div class="card">
+        <h3>🏎️ High-frequency ingestion (streaming)</h3>
+        <ul>
+          <li>Website logs at high volume</li>
+          <li>Sensor / device telemetry (dozens/hundreds/thousands per second)</li>
+        </ul>
+        <p class="tight">
+          <strong>Typical handling:</strong> Use a streaming-capable ingestion layer designed for continuous event flow.
+          In AWS, a key service here is <strong>Kinesis</strong>.
+        </p>
+      </div>
+
+      <h2>4) 🧰 How AWS helps with ingestion (big picture)</h2>
+      <p>
+        For many “normal” ingestion cases (apps, scripts, manual entry), you often store data in:
+        <strong>S3</strong> (files/objects), <strong>RDS</strong> (relational databases), or <strong>DynamoDB</strong> (NoSQL).
+      </p>
+
+      <div class="card">
+        <h3>📦 Common AWS ingestion patterns (from the lecture)</h3>
+        <ul>
+          <li>📁 <strong>S3</strong> for file uploads (documents, images, exports).</li>
+          <li>🗄️ <strong>RDS</strong> for structured relational data (orders, transactions).</li>
+          <li>⚡ <strong>DynamoDB</strong> for scalable NoSQL data (high-throughput key/value access).</li>
+          <li>🧰 <strong>AWS Batch</strong> for scheduled scripts/utilities that run as batch jobs.</li>
+          <li>🌐 An API/backend typically receives manual entry (web/app) and stores it in S3/RDS/DynamoDB.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🌊 Streaming ingestion: where Kinesis fits</h3>
+        <p>
+          When you have an “endless stream” of data (high frequency), the lecture points to <strong>Amazon Kinesis</strong> as the key ingestion service.
+          The core idea is that Kinesis helps ingest, handle, and process large volumes of streaming events reliably.
+        </p>
+        <p class="tight"><em>Exam mindset:</em> If the scenario says “lots of events per second” or “continuous stream,” think <strong>Kinesis</strong>.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <section id="selfcheck" class="card">
+        <h2>✅ Self-check (quick exam-style review)</h2>
+        <ol>
+          <li><strong>Why is data ingestion the first step in analytics?</strong><br />Because you can’t analyze data until it exists in a place where you can store and process it.</li>
+          <li><strong>Give 3 common data sources mentioned.</strong><br />Apps (web/mobile), scripts/crawlers, devices/sensors, manual entry.</li>
+          <li><strong>Why does ingestion frequency matter?</strong><br />High-frequency data can overwhelm systems if they’re not designed for it.</li>
+          <li><strong>What AWS service is highlighted for streaming data ingestion?</strong><br /><strong>Kinesis</strong>.</li>
+          <li><strong>For typical app data or file uploads, which storage services are commonly used?</strong><br />S3 for files; RDS/DynamoDB for database-style storage.</li>
+        </ol>
+      </section>
+
+      <section class="callout">
+        <strong>📌 Key takeaway:</strong> Most analytics pipelines start by getting data into AWS. “Normal” workloads often land in <strong>S3/RDS/DynamoDB</strong>, while high-frequency “streaming” workloads commonly start with <strong>Kinesis</strong>.
+      </section>
+
+      <section class="card">
+        <h2>🧾 Mini glossary</h2>
+        <ul>
+          <li><strong>Ingestion</strong>: Getting data into the cloud so it can be stored/processed.</li>
+          <li><strong>Streaming data</strong>: A continuous flow of events (often high frequency).</li>
+          <li><strong>Competitive advantage</strong>: Better decisions and product improvements derived from data insights.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>📝 Notes</h2>
+        <ul>
+          <li>This page focuses on the “problem framing” and ingestion side. Later lessons typically expand into storage, transformation, and analysis services.</li>
+          <li>If you see words like “logs,” “telemetry,” “sensors,” “thousands per second,” treat it as a streaming hint.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

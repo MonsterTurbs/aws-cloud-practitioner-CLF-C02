@@ -1,0 +1,381 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Beyond AWS Services: Module Introduction</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      text-rendering:optimizeLegibility;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 10px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size: 1.55rem;
+      line-height: 1.25;
+      letter-spacing: -0.2px;
+      overflow-wrap:anywhere;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      overflow-wrap:anywhere;
+    }
+
+    .meta{
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    main{ margin-top: 16px; }
+
+    h2{
+      margin: 18px 0 8px;
+      font-size: 1.15rem;
+      line-height: 1.25;
+      overflow-wrap:anywhere;
+    }
+
+    h3{
+      margin: 14px 0 6px;
+      font-size: 1.02rem;
+      line-height: 1.25;
+      overflow-wrap:anywhere;
+    }
+
+    p{ margin: 8px 0; overflow-wrap:anywhere; word-break: break-word; }
+
+    ul, ol{
+      margin: 8px 0 10px 22px;
+      padding: 0;
+    }
+
+    li{ margin: 6px 0; overflow-wrap:anywhere; word-break: break-word; }
+
+    .card{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #fff;
+      margin: 12px 0;
+      page-break-inside: avoid;
+    }
+
+    .callout{
+      border-left: 4px solid var(--accent);
+      background: #fcfdff;
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .tag{
+      display:inline-block;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: #222;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      white-space: nowrap;
+    }
+
+    .mini{
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      padding: 0 6px;
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      background: #fff;
+      white-space: nowrap;
+    }
+
+    .qa{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .qa li{
+      margin: 10px 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      page-break-inside: avoid;
+    }
+
+    .q{
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+
+    .a{
+      margin: 0;
+    }
+
+    .divider{
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    footer{
+      margin-top: 18px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* Print-specific CSS */
+    @media print{
+      @page{
+        size: A4;
+        margin: 16mm;
+      }
+
+      body{
+        background: #fff;
+        color: #000;
+        font-size: 11.5pt;
+        line-height: 1.45;
+      }
+
+      .page{
+        max-width: none;
+        padding: 0;
+      }
+
+      header, .card, .qa li{
+        border-color: #cfcfcf;
+        box-shadow: none !important;
+      }
+
+      a{
+        color: #000;
+        text-decoration: underline;
+      }
+
+      /* Avoid awkward splits */
+      h1, h2, h3{ page-break-after: avoid; }
+      p, li{ orphans: 3; widows: 3; }
+      .card{ page-break-inside: avoid; }
+
+      /* Hide any non-essential UI elements (none right now, but keep future-proof) */
+      .no-print{ display:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Beyond AWS Services — Module Introduction (APN, Marketplace, Pro Services)</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide</p>
+      <div class="meta">
+        <span class="tag">🧭 Module Overview</span>
+        <span class="tag">🤝 Partner Ecosystem</span>
+        <span class="tag">🛒 Marketplace</span>
+        <span class="tag">🧑‍💼 Professional Services</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="card callout">
+        <h2>🎯 What this mini-section is about</h2>
+        <p>
+          Throughout the course, AWS was presented mainly as a huge collection of <strong>cloud services</strong> (compute, storage, networking, etc.).
+          This module highlights that AWS also offers <strong>“extras around the services”</strong> — mainly:
+        </p>
+        <ul>
+          <li><strong>🤝 AWS Partner Network (APN)</strong> — the partner ecosystem around AWS.</li>
+          <li><strong>🛒 AWS Marketplace</strong> — where you can find and deploy third‑party solutions that run on AWS.</li>
+          <li><strong>🧑‍💼 AWS Professional Services</strong> — expert help when you need hands-on guidance (e.g., migrations, architecture).</li>
+        </ul>
+        <p class="mini">Exam mindset: You don’t need deep configuration steps — you mainly need to recognize <em>what each offering is for</em>.</p>
+      </section>
+
+      <section class="card">
+        <h2>🧠 Beginner-friendly explanation</h2>
+        <p>
+          Think of AWS like a big hardware store.
+          AWS services are the <strong>tools</strong> (EC2, S3, RDS, etc.).
+          But when building real projects, you also benefit from:
+        </p>
+        <ul>
+          <li><strong>Partners</strong> who provide expertise and packaged solutions (APN).</li>
+          <li><strong>A “store shelf”</strong> with ready-to-use products you can deploy quickly (Marketplace).</li>
+          <li><strong>Specialists</strong> who can help design, migrate, and implement properly (Professional Services).</li>
+        </ul>
+      </section>
+
+      <section class="grid">
+        <section class="card">
+          <h2>🤝 AWS Partner Network (APN) — the idea</h2>
+          <p>
+            The <strong>AWS Partner Network</strong> is AWS’s ecosystem of <strong>companies</strong> that help customers succeed with AWS.
+            Partners typically fall into two broad buckets:
+          </p>
+          <ul>
+            <li><strong>Technology Partners</strong> — build software that integrates with / runs on AWS.</li>
+            <li><strong>Consulting Partners</strong> — provide expertise, implementation, migrations, managed services.</li>
+          </ul>
+          <h3>✅ When it’s useful</h3>
+          <ul>
+            <li>🏗️ You need an experienced team to implement an AWS solution faster.</li>
+            <li>🔁 You’re migrating to AWS and want guided execution.</li>
+            <li>🧩 You want a validated third‑party tool that works well with AWS.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h2>🛒 AWS Marketplace — the idea</h2>
+          <p>
+            <strong>AWS Marketplace</strong> is like an app store for AWS.
+            It offers <strong>pre-built third‑party software</strong> (and sometimes AWS partner solutions) that you can deploy into your AWS environment.
+          </p>
+          <h3>📌 Beginner example</h3>
+          <ul>
+            <li>🧱 You want a ready-to-run firewall, monitoring tool, database add‑on, or business app.</li>
+            <li>⚡ Instead of installing everything manually, you pick a product in Marketplace and deploy it.</li>
+          </ul>
+          <h3>✅ Why it helps</h3>
+          <ul>
+            <li>⏱️ Faster time-to-value: deploy solutions quickly.</li>
+            <li>🧾 Simplified procurement: often billed through AWS (depends on listing).</li>
+            <li>🔍 Discoverability: browse solutions by category/use case.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h2>🧑‍💼 AWS Professional Services — the idea</h2>
+          <p>
+            <strong>AWS Professional Services</strong> is AWS’s own expert consulting organization.
+            They help customers plan and execute complex work such as migrations, architecture modernization, and large-scale implementations.
+          </p>
+          <h3>📌 Beginner example</h3>
+          <ul>
+            <li>🚚 You’re moving from on‑prem to AWS and need a proven migration approach.</li>
+            <li>🏛️ You want an AWS-aligned architecture (security, reliability, cost).</li>
+            <li>🧑‍🏫 You need guidance + knowledge transfer to your internal team.</li>
+          </ul>
+          <p class="mini">
+            Tip: Professional Services is different from “support plans.” Support plans help with support cases;
+            Professional Services helps deliver projects.
+          </p>
+        </section>
+      </section>
+
+      <section class="card">
+        <h2>🧩 Quick comparison (remember this)</h2>
+        <ul>
+          <li><strong>APN</strong> (🤝) = The <em>partner ecosystem</em> (companies that help or sell AWS-compatible solutions).</li>
+          <li><strong>Marketplace</strong> (🛒) = The <em>catalog/storefront</em> where you can find and deploy solutions.</li>
+          <li><strong>Professional Services</strong> (🧑‍💼) = AWS’s <em>expert team</em> for hands-on project execution.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>💡 Practical mini-scenarios (examples)</h2>
+        <ul>
+          <li>🧠 “We need a vendor to implement AWS Landing Zone fast.” → <strong>APN Consulting Partner</strong> or <strong>AWS Professional Services</strong>.</li>
+          <li>🔐 “We want a WAF / security tool that deploys easily in AWS.” → <strong>AWS Marketplace</strong>.</li>
+          <li>🏗️ “We’re building a big migration plan and need expert guidance.” → <strong>AWS Professional Services</strong> (or APN partner).</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>📝 Quick self-check (mini quiz)</h2>
+        <ol>
+          <li>
+            If you want a ready-to-deploy third-party solution that runs on AWS, where do you look?
+            <div class="mini">Answer: 🛒 AWS Marketplace</div>
+          </li>
+          <li>
+            If you want a company that specializes in implementing AWS solutions and migrations, what umbrella group is that?
+            <div class="mini">Answer: 🤝 AWS Partner Network (APN)</div>
+          </li>
+          <li>
+            If you want AWS’s own experts to help deliver a complex project, what offering is that?
+            <div class="mini">Answer: 🧑‍💼 AWS Professional Services</div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>📌 Key takeaways</h2>
+        <ul>
+          <li>✅ AWS is not only “services” — it also offers <strong>ecosystem + solution + expert help</strong>.</li>
+          <li>✅ <strong>APN</strong> helps you find partners; <strong>Marketplace</strong> helps you find products; <strong>Pro Services</strong> helps you deliver projects.</li>
+          <li>✅ For the CLF-C02 exam, focus on <strong>purpose and recognition</strong>, not deep implementation steps.</li>
+        </ul>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>🔎 Glossary (quick)</h2>
+        <ul>
+          <li><strong>Partner</strong> — a company that builds on AWS or helps customers implement AWS solutions.</li>
+          <li><strong>Marketplace Listing</strong> — a packaged software/solution you can deploy into AWS.</li>
+          <li><strong>Professional Services</strong> — AWS consultants who help execute migrations/architecture/projects.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>Print Tip:</strong> Use your browser print dialog and select <span class="kbd">A4</span>. Keep margins as “Default” or “Custom” (A4 is already configured via CSS).</div>
+      <div class="mini">Single-column layout • White background • Word-wrap enabled • Print CSS included</div>
+    </footer>
+  </div>
+</body>
+</html>

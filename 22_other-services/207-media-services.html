@@ -1,0 +1,341 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS Media Services — Reviewer / Study Guide (Print-Friendly)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      overflow-wrap:anywhere; /* strong wrapping to avoid print cutoffs */
+      word-break:normal;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 22px;
+    }
+
+    header{
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    h1{
+      font-size: 1.6rem;
+      margin: 0 0 6px 0;
+      letter-spacing: -0.2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:0.95rem;
+    }
+
+    .btn:hover{ border-color:#cfcfcf; }
+
+    .pill{
+      display:inline-block;
+      padding: 3px 10px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    section{
+      margin: 16px 0;
+      padding: 14px 14px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+    }
+
+    h2{
+      font-size: 1.15rem;
+      margin: 0 0 10px 0;
+    }
+
+    h3{
+      font-size: 1.02rem;
+      margin: 14px 0 8px 0;
+    }
+
+    p{ margin: 8px 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 12px;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .card{
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .k{
+      font-weight: 700;
+      color: #111;
+    }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    pre{
+      margin: 10px 0 0 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      overflow: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .hr{
+      height:1px;
+      background: var(--border);
+      margin: 14px 0;
+      border:0;
+    }
+
+    .footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    /* Print styles for clean A4 output */
+    @page{
+      size: A4;
+      margin: 12mm 12mm 14mm 12mm;
+    }
+
+    @media print{
+      body{
+        font-size: 11.2pt;
+        line-height: 1.45;
+        background:#fff;
+      }
+      .page{ max-width: none; padding: 0; }
+      header{ border-bottom: 1px solid #bbb; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      .toolbar{ display:none !important; }
+      a{ color: #000; text-decoration: none; }
+      .pill{ border-color:#bbb; background:#fff; }
+      pre{ border-color:#bbb; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>🎬 AWS Media Services — Reviewer / Study Guide</h1>
+      <p class="subtitle">Beginner-friendly notes based on the lecture transcript. Designed for clean A4 printing (single-column, white background).</p>
+      <div class="toolbar" aria-label="Actions">
+        <button class="btn" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-recall').scrollIntoView({behavior:'smooth'})">🧠 Jump to Quick Recall</button>
+      </div>
+      <div class="pill">CLF-C02: Helpful awareness topic (not exam-critical)</div>
+    </header>
+
+    <section>
+      <h2>1) What are AWS Media Services? 🎥</h2>
+      <p>
+        <span class="k">AWS Media Services</span> are services that help you <span class="k">process media in the cloud</span>—mostly video.
+        They are commonly used to build media-heavy products like <span class="k">video streaming platforms</span> (think “YouTube-like” on-demand video) or live streams.
+      </p>
+      <div class="callout">
+        <p><span class="k">Core idea:</span> Move parts (or the entire) video workflow to AWS so you can:</p>
+        <ul>
+          <li>📥 <span class="k">Ingest</span> video (live or on-demand)</li>
+          <li>🧩 <span class="k">Encode / Transcode</span> it into streaming-friendly formats</li>
+          <li>📦 <span class="k">Store</span> video assets and metadata</li>
+          <li>🚀 <span class="k">Deliver / Stream</span> it efficiently to users</li>
+          <li>💰 <span class="k">Monetize</span> by inserting ads into streams</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>2) Why do media workflows need special services? 🤔</h2>
+      <p>
+        Video is large, bandwidth-heavy, and often needs multiple versions.
+        A single uploaded video might need to become different sizes/bitrates (e.g., 1080p, 720p, 480p) so it can stream smoothly on fast and slow connections.
+      </p>
+      <div class="grid">
+        <div class="card">
+          <p class="k">⚙️ Encoding / Transcoding</p>
+          <p>
+            Converting raw video into streaming formats (HLS/DASH) and producing multiple quality levels.
+          </p>
+        </div>
+        <div class="card">
+          <p class="k">📡 Streaming delivery</p>
+          <p>
+            Delivering video reliably worldwide, often via CDNs, while handling spikes in viewers.
+          </p>
+        </div>
+        <div class="card">
+          <p class="k">📣 Ad insertion</p>
+          <p>
+            Adding ads into a live stream or on-demand video without rebuilding the entire platform from scratch.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3) Common media use cases (simple examples) ✅</h2>
+      <h3>Example A: Build a YouTube-style “on-demand” site 📺</h3>
+      <ul>
+        <li>👤 User uploads a video file</li>
+        <li>🧪 Video gets encoded into multiple qualities</li>
+        <li>🗂️ Encoded outputs are stored (e.g., as video segments + manifests)</li>
+        <li>🌍 Users stream the right quality automatically based on their connection</li>
+      </ul>
+
+      <h3>Example B: Live event streaming (concert / webinar) 🔴</h3>
+      <ul>
+        <li>🎥 Live feed is ingested</li>
+        <li>⚙️ Converted to streaming format and distributed</li>
+        <li>📊 Optional real-time monitoring/analytics</li>
+      </ul>
+
+      <h3>Example C: Insert ads into video 💸</h3>
+      <ul>
+        <li>🧾 You define where ads can appear (ad breaks)</li>
+        <li>📣 Ads are stitched into the stream (often “server-side”)</li>
+        <li>👀 End users see ads without you building an ad system from scratch</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4) Key AWS services you may hear about (high-level) 🧩</h2>
+      <p>
+        The exam typically won’t ask you to memorize these, but knowing they exist helps you understand AWS’s ecosystem.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <p class="k">🎞️ AWS Elemental MediaConvert</p>
+          <p>Batch file-based encoding/transcoding (turn uploaded videos into streaming-ready outputs).</p>
+        </div>
+        <div class="card">
+          <p class="k">📡 AWS Elemental MediaLive</p>
+          <p>Live video encoding (good for live events and continuous live channels).</p>
+        </div>
+        <div class="card">
+          <p class="k">📦 AWS Elemental MediaPackage</p>
+          <p>Prepares and packages video for delivery (commonly outputs formats like HLS/DASH for players).</p>
+        </div>
+        <div class="card">
+          <p class="k">🗄️ AWS Elemental MediaStore</p>
+          <p>Storage optimized for media workflows (often used for live streaming segments/origins).</p>
+        </div>
+        <div class="card">
+          <p class="k">📣 AWS Elemental MediaTailor</p>
+          <p>Ad insertion into video streams (helps with monetization).</p>
+        </div>
+        <div class="card">
+          <p class="k">🟣 Amazon IVS (Interactive Video Service)</p>
+          <p>Managed live streaming designed for interactive experiences (e.g., chat, creator streaming).</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><span class="k">Tip:</span> You may also see teams combine media services with “general” AWS building blocks:</p>
+        <ul>
+          <li>🪣 <span class="k">S3</span> for storing source files and encoded outputs</li>
+          <li>🌐 <span class="k">CloudFront</span> for fast global delivery (CDN)</li>
+          <li>🔐 <span class="k">IAM / KMS</span> for access control and encryption</li>
+          <li>📈 <span class="k">CloudWatch</span> for logs/metrics/alarms</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2 id="quick-recall">5) Quick Recall (exam-style memory) 🧠</h2>
+      <ul>
+        <li>🎬 <span class="k">Media services</span> = AWS tools for <span class="k">video workflows</span> (encode, store, stream, ads).</li>
+        <li>📺 Use them to build products like <span class="k">video streaming platforms</span> (on-demand or live).</li>
+        <li>💰 Some services support <span class="k">ad insertion</span> to monetize streams.</li>
+        <li>✅ For CLF-C02: typically <span class="k">awareness</span> only—know they exist and what they generally do.</li>
+      </ul>
+
+      <hr class="hr" />
+
+      <h3>Mini self-check ✅</h3>
+      <ul>
+        <li>Q: What problem do media services solve? → A: Processing and delivering video (encode/stream/store/ads) in the cloud.</li>
+        <li>Q: Why not just do everything manually on EC2? → A: Media processing is heavy; managed services reduce operational overhead and scale better.</li>
+      </ul>
+    </section>
+
+    <div class="footer">
+      <p>
+        Print tip: Use your browser’s <span class="k">Print</span> dialog → select <span class="k">A4</span> and enable <span class="k">Background graphics</span> only if you want the light borders.
+      </p>
+    </div>
+  </main>
+</body>
+</html>

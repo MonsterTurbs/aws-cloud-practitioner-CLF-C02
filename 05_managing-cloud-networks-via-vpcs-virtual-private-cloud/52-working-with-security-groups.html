@@ -1,0 +1,405 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Security Groups (VPC Networking)</title>
+  <meta name="description" content="Print-friendly AWS Cloud Practitioner (CLF-C02) reviewer: Security Groups — inbound/outbound rules, ports, CIDR, best practices." />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --codebg: #f4f6f8;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 20px 18px 40px;
+    }
+
+    header {
+      padding: 14px 14px 10px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .btn.primary {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn:focus {
+      outline: 3px solid rgba(26, 115, 232, 0.25);
+      outline-offset: 2px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    main { margin-top: 16px; }
+
+    h2 {
+      font-size: 16px;
+      margin: 18px 0 8px;
+      padding-top: 2px;
+    }
+
+    h3 {
+      font-size: 14px;
+      margin: 14px 0 6px;
+    }
+
+    p { margin: 8px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px 12px;
+      margin: 12px 0;
+    }
+
+    .callout .title {
+      font-weight: 800;
+      margin: 0 0 6px;
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    ul {
+      margin: 8px 0;
+      padding-left: 18px;
+    }
+
+    li { margin: 6px 0; }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: var(--codebg);
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .mini {
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    .qa {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .qa .q {
+      font-weight: 800;
+      margin: 0 0 6px;
+    }
+
+    .qa .a {
+      margin: 0;
+    }
+
+    footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { font-size: 11pt; }
+      header { border-radius: 0; }
+      .page { max-width: none; padding: 0; }
+      .toolbar { display: none !important; }
+      a { color: #000; text-decoration: underline; }
+      .callout, .qa { break-inside: avoid; page-break-inside: avoid; }
+      h2, h3 { break-after: avoid; page-break-after: avoid; }
+      ul, ol { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>☁️ AWS CLF-C02 Reviewer: Security Groups 🔥</h1>
+      <p class="subtitle">Topic: VPC Networking — controlling allowed traffic to/from EC2 using Security Groups (firewall rules).</p>
+
+      <div class="toolbar" role="toolbar" aria-label="Page tools">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="toggleTips()" aria-pressed="true" id="tipsBtn">💡 Hide Tips</button>
+      </div>
+
+      <div class="meta">
+        <span class="chip">Single-column</span>
+        <span class="chip">A4 print-ready</span>
+        <span class="chip">Beginner-friendly</span>
+        <span class="chip">Icons + emoticons</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 What are Security Groups?</h2>
+        <p>
+          When you launch an <strong>EC2 instance</strong>, you choose the <strong>VPC</strong> and <strong>subnet</strong> it belongs to (this affects <em>connectivity</em>), and you also choose a <strong>Security Group</strong> (this affects what traffic is <em>allowed</em> once it reaches the instance).
+        </p>
+
+        <div class="callout" id="tipsBox">
+          <p class="title">💡 Quick mental model</p>
+          <ul>
+            <li><strong>VPC/Subnet</strong> = “Can the instance be connected to the internet at all?” 🌐</li>
+            <li><strong>Security Group</strong> = “If traffic reaches the instance, is it allowed?” 🚪</li>
+          </ul>
+          <p class="mini">Even if you allow HTTP in the Security Group, a <strong>private subnet</strong> can still prevent internet users from reaching the instance.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧱 Inbound vs Outbound Rules</h2>
+        <div class="grid">
+          <div class="callout">
+            <p class="title">⬇️ Inbound traffic (incoming)</p>
+            <p>
+              These rules control what requests are allowed to <strong>reach</strong> your instance.
+              Example: allow <strong>HTTP</strong> so users can open your website.
+            </p>
+          </div>
+          <div class="callout">
+            <p class="title">⬆️ Outbound traffic (outgoing)</p>
+            <p>
+              These rules control what requests your instance is allowed to <strong>send out</strong>.
+              By default, outbound traffic is typically open so the instance can download updates, packages, etc.
+            </p>
+          </div>
+        </div>
+
+        <p>
+          In practice, you usually tighten <strong>inbound</strong> rules more than outbound rules, because you do not want random, unexpected internet traffic hitting your server. 🔒
+        </p>
+      </section>
+
+      <section>
+        <h2>🔌 Ports, Protocols, and “Traffic Type”</h2>
+        <p>
+          In the launch wizard, when you pick a “traffic type” (like SSH or HTTP), you are effectively selecting a <strong>port</strong> to control.
+          Different network requests go to different ports.
+        </p>
+        <ul>
+          <li>🧑‍💻 <strong>SSH</strong> = remote command-line access (commonly port 22)</li>
+          <li>🌍 <strong>HTTP</strong> = website traffic (commonly port 80)</li>
+          <li>🔐 <strong>HTTPS</strong> = secure website traffic (commonly port 443)</li>
+          <li>⚙️ <strong>Custom</strong> = you manually type the port (useful for special apps)</li>
+        </ul>
+        <p class="mini">You do not need to memorize port numbers for the exam unless your course explicitly requires it—focus on the concept: “traffic type” maps to “port control.”</p>
+      </section>
+
+      <section>
+        <h2>🧭 Source IPs and CIDR (Who is allowed?)</h2>
+        <p>
+          Security group rules also define <strong>where the traffic can come from</strong> (source IP addresses).
+          This is where <strong>CIDR</strong> notation appears.
+        </p>
+
+        <div class="callout">
+          <p class="title">🧠 Example: Allow SSH from your laptop only</p>
+          <p>
+            Instead of allowing SSH “from anywhere”, choose <span class="kbd">My IP</span> so only your current public IP is allowed.
+            That means: SSH requests from other places will be blocked. ✅
+          </p>
+          <p class="mini">
+            If the CIDR ends with <span class="kbd">/32</span>, it usually represents a <strong>single IP address</strong> (all bits locked).
+          </p>
+        </div>
+
+        <div class="qa">
+          <p class="q">🧩 Why is this important?</p>
+          <p class="a">
+            Because opening admin access (like SSH) to the whole internet is risky. Best practice is to allow it only from trusted IPs (your office/VPN/your machine). 🔐
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>♻️ Reusing and Managing Security Groups</h2>
+        <p>
+          You do <strong>not</strong> need to create a new security group every time.
+          You can reuse an existing one when launching new instances.
+        </p>
+        <ul>
+          <li>✅ In the EC2 launch wizard, select an <strong>existing security group</strong>.</li>
+          <li>🧰 Or manage them directly in the EC2 console: scroll to <strong>Security Groups</strong> → view, create, or delete.</li>
+        </ul>
+
+        <div class="callout">
+          <p class="title">🧯 Practical tip</p>
+          <p>
+            Create “standard” security groups for common roles:
+          </p>
+          <ul>
+            <li>🌐 Web Server SG: allow HTTP/HTTPS inbound</li>
+            <li>🧑‍💻 Admin SG: allow SSH inbound from trusted IP(s) only</li>
+            <li>🗄️ Database SG: allow database port inbound only from your web server SG (not from the internet)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧪 Reachability Analyzer</h2>
+        <p>
+          AWS also provides a <strong>Reachability Analyzer</strong> tool.
+          It is useful when you have more complex networking/security group rules and want to verify whether certain requests could reach an instance.
+        </p>
+        <div class="callout">
+          <p class="title">🧭 What it helps with</p>
+          <ul>
+            <li>🔎 “Can traffic from source X reach instance Y?”</li>
+            <li>🧩 Debugging why a connection fails (misconfigured rules, wrong source, etc.)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>📝 Mini Reviewer (Exam-Style Reminders)</h2>
+        <ul>
+          <li>✅ Security groups are attached to EC2 instances and act like a <strong>firewall</strong>.</li>
+          <li>⬇️ <strong>Inbound</strong> rules are usually stricter than outbound.</li>
+          <li>🔌 Picking SSH/HTTP in the wizard is mainly selecting a <strong>port</strong> to control.</li>
+          <li>🧾 CIDR controls the <strong>source range</strong>. <span class="kbd">/32</span> commonly means a single IP.</li>
+          <li>♻️ You can reuse security groups and manage them in the EC2 console.</li>
+          <li>🧪 Reachability Analyzer helps validate whether a request can reach a target instance.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Test</h2>
+        <div class="qa">
+          <p class="q">1) If you want SSH access for yourself only, what should you set as the source?</p>
+          <p class="a">Use <span class="kbd">My IP</span> (or a trusted CIDR range), not “Anywhere.” 🧑‍💻</p>
+        </div>
+        <div class="divider"></div>
+        <div class="qa">
+          <p class="q">2) What’s the difference between subnet type and security group rules?</p>
+          <p class="a">Subnet affects <em>connectivity</em> to the internet; security groups affect which traffic is <em>allowed</em> once it reaches the instance. 🌐🚪</p>
+        </div>
+        <div class="divider"></div>
+        <div class="qa">
+          <p class="q">3) What is the default trend for outbound traffic?</p>
+          <p class="a">Outbound is commonly allowed broadly so instances can send requests (updates/downloads), while inbound is restricted. ⬆️✅</p>
+        </div>
+      </section>
+
+      <footer>
+        <p>
+          Print tip: Use your browser’s Print dialog → choose <strong>A4</strong> → margins “default” (or “none” if your browser adds extra whitespace). The layout is optimized for A4 with clean page breaks.
+        </p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    function toggleTips() {
+      var box = document.getElementById('tipsBox');
+      var btn = document.getElementById('tipsBtn');
+      var isHidden = box.style.display === 'none';
+      box.style.display = isHidden ? '' : 'none';
+      btn.textContent = isHidden ? '💡 Hide Tips' : '💡 Show Tips';
+      btn.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
+    }
+  </script>
+</body>
+</html>

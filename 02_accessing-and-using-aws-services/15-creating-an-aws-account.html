@@ -1,0 +1,289 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 15 Creating an AWS Account</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    a{ color: var(--accent); }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .qna strong{ display:block; margin: 10px 0 4px; }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Accessing & Using AWS Services</p>
+      <h1>15 — Creating an AWS Account 🧾</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Lecture Goal</h2>
+        <p>Know when an AWS account is <strong>required vs optional</strong> for this course and the CLF-C02 exam, and understand what to expect during the AWS signup process (credit card requirement + support plan choice).</p>
+        <div class="callout">
+          <p><strong>Big idea ✅</strong> You can pass the Cloud Practitioner exam by learning AWS concepts in theory—but creating an account helps if you want hands-on practice.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Do You Need an AWS Account to Pass CLF-C02?</h2>
+        <p><strong>No, not necessarily.</strong> According to the lecture, you can pass the exam by:</p>
+        <ul>
+          <li>🎥 Watching the course videos</li>
+          <li>📎 Using attached resources</li>
+          <li>📚 Reading official documentation</li>
+          <li>🧠 Learning services and concepts in theory</li>
+        </ul>
+        <div class="mini">
+          <p><strong>But… 💡</strong> If you want to “play around” with AWS services (hands-on), then you should create an account.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧭 Where Account Creation Starts</h2>
+        <p>Account creation starts at <strong>aws.amazon.com</strong>, where you click the signup/create account button and follow the steps.</p>
+        <div class="callout">
+          <p><strong>What you provide ✅</strong> Personal or business details + payment method information.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>💳 Credit Card Requirement (Important)</h2>
+        <p>The lecture emphasizes: you cannot create an AWS account without a credit card.</p>
+        <div class="warning">
+          <p><strong>Why AWS asks for a credit card ⚠️</strong></p>
+          <ul>
+            <li>🆓 Some services can be used for free (up to limits).</li>
+            <li>📈 If you use paid services or exceed free usage quotas, AWS must be able to bill you.</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <p><strong>If you don’t have a credit card 💡</strong> You can still complete the course and pass the exam by learning the theory and using the resources.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🆘 Support Plan Choice (Pick the Free Plan)</h2>
+        <p>Near the end of signup, you’ll choose a support plan.</p>
+        <div class="callout">
+          <p><strong>For this course ✅</strong> Choose the <strong>Free / Basic support plan</strong>.</p>
+        </div>
+        <p>Paid support plans can include features like:</p>
+        <ul>
+          <li>📞 24/7 hotline support</li>
+          <li>👤 A personal AWS account manager</li>
+        </ul>
+        <div class="warning">
+          <p><strong>Cost reminder ⚠️</strong> Paid plans can be expensive, and costs can depend on your AWS usage.</p>
+        </div>
+        <p>The instructor notes you’ll revisit support plans later when discussing how to get help in AWS.</p>
+      </section>
+
+      <section>
+        <h2>🧠 Beginner Checklist (Safe Learning)</h2>
+        <div class="grid">
+          <div class="mini">
+            <h3>✅ If you create an account</h3>
+            <ul>
+              <li>Pick the free support plan</li>
+              <li>Be cautious with launching paid resources</li>
+              <li>Track usage as you learn (this module covers cost management)</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>✅ If you don’t create an account</h3>
+            <ul>
+              <li>Focus on concepts + service categories</li>
+              <li>Use slides/resources and AWS docs</li>
+              <li>You can still pass CLF-C02 (per lecture)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Exam Focus)</h2>
+        <span class="tag">AWS Account</span>
+        <span class="tag">Free Tier</span>
+        <span class="tag">Quota / Free Usage Limit</span>
+        <span class="tag">Billing</span>
+        <span class="tag">Support Plans</span>
+        <span class="tag">Basic Support</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="qna">
+          <strong>Q1: Do you need an AWS account to pass CLF-C02?</strong>
+          <p>A: Not necessarily. You can learn the theory via videos, resources, and docs and still pass (per lecture).</p>
+
+          <strong>Q2: Why is a credit card required for AWS signup?</strong>
+          <p>A: Because if you use paid services or exceed free quotas, AWS must be able to bill you.</p>
+
+          <strong>Q3: Which support plan should you choose for this course?</strong>
+          <p>A: The free/basic plan.</p>
+
+          <strong>Q4: Give one benefit of creating an AWS account during the course.</strong>
+          <p>A: You can practice hands-on and try services directly instead of only learning in theory.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

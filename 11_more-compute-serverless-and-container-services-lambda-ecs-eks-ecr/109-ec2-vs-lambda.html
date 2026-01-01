@@ -1,0 +1,546 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — EC2 vs Lambda</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --good: #0a7a2f;
+      --warn: #a35a00;
+      --bad: #b00020;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 16px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 1.55rem;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .meta .pill {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    .toolbar {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn.primary {
+      border-color: var(--accent);
+      color: #fff;
+      background: var(--accent);
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    main { margin-top: 18px; }
+
+    h2 {
+      margin: 18px 0 10px;
+      font-size: 1.25rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 1.08rem;
+    }
+
+    p { margin: 10px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      border-left: 6px solid var(--accent);
+      background: #fff;
+      padding: 12px 12px;
+      border-radius: 12px;
+      margin: 12px 0;
+    }
+
+    .callout.good { border-left-color: var(--good); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout.bad  { border-left-color: var(--bad); }
+
+    .callout .title {
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    ul, ol { margin: 8px 0 8px 22px; }
+    li { margin: 6px 0; }
+
+    .toc {
+      border: 1px dashed var(--border);
+      background: #fff;
+      padding: 12px;
+      border-radius: 12px;
+      margin: 14px 0 0;
+    }
+
+    .toc a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .toc a:hover { text-decoration: underline; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kcard {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .kcard .k {
+      font-weight: 700;
+      margin: 0 0 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      vertical-align: top;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: var(--panel);
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      background: #fff;
+      margin-left: 6px;
+      white-space: nowrap;
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 16mm;
+    }
+
+    @media print {
+      body {
+        font-size: 11pt;
+        line-height: 1.45;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      header {
+        border-radius: 0;
+      }
+
+      .toolbar {
+        display: none !important;
+      }
+
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+
+      .callout, .kcard, .toc {
+        page-break-inside: avoid;
+      }
+
+      table {
+        page-break-inside: avoid;
+        font-size: 10.5pt;
+      }
+
+      h2, h3 {
+        page-break-after: avoid;
+      }
+
+      ul, ol {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>EC2 vs Lambda (Serverless) — Reviewer / Study Guide</h1>
+      <p class="subtitle">Beginner-friendly comparison: when to choose EC2 instances vs AWS Lambda functions.</p>
+      <div class="meta">
+        <span class="pill">📘 CLF-C02</span>
+        <span class="pill">🧠 Focus: core differences + use cases</span>
+        <span class="pill">🖨️ A4 print-ready</span>
+      </div>
+      <div class="toolbar" aria-label="Actions">
+        <button class="btn primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Jump to Quick Checklist</button>
+      </div>
+
+      <nav class="toc" aria-label="Table of contents">
+        <strong>Contents</strong>
+        <ul>
+          <li><a href="#big-idea">Big idea: why the choice can be confusing</a></li>
+          <li><a href="#what-is-ec2">EC2 in simple terms</a></li>
+          <li><a href="#what-is-lambda">Lambda in simple terms</a></li>
+          <li><a href="#side-by-side">Side-by-side comparison (table)</a></li>
+          <li><a href="#use-cases">Common use cases and examples</a></li>
+          <li><a href="#decision">How to decide (practical decision rules)</a></li>
+          <li><a href="#exam">Exam-friendly reminders</a></li>
+          <li><a href="#quick-check">Quick checklist (1-minute review)</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section id="big-idea">
+        <h2>Big idea: why the choice can be confusing 🤔</h2>
+        <p>
+          AWS Lambda is excellent for <strong>event-driven</strong> code execution without managing servers.
+          But <strong>EC2</strong> is still the workhorse for <strong>always-on</strong>, highly configurable computing.
+          There is no single rule like “always use Lambda” or “always use EC2” — the best option depends on your workload.
+        </p>
+        <div class="callout warn">
+          <p class="title">Key mindset</p>
+          <p>
+            Instead of memorizing “EC2 vs Lambda” as a strict rule, remember the <strong>trade-offs</strong>:
+            control vs convenience, always-on vs event-driven, and pay-for-uptime vs pay-for-usage.
+          </p>
+        </div>
+      </section>
+
+      <section id="what-is-ec2">
+        <h2>EC2 in simple terms 🖥️</h2>
+        <div class="grid">
+          <div class="kcard">
+            <p class="k">What EC2 is</p>
+            <p>
+              EC2 = you rent a <strong>virtual server</strong> (an “instance”) in the cloud.
+              It’s basically a full computer you can configure.
+            </p>
+          </div>
+          <div class="kcard">
+            <p class="k">What you do with EC2</p>
+            <ul>
+              <li>Install software (web servers, databases, agents, custom tools) ⚙️</li>
+              <li>Deploy code and run <em>multiple</em> processes on the same machine 🧩</li>
+              <li>Control OS settings, packages, ports, and runtime behavior 🔧</li>
+            </ul>
+          </div>
+          <div class="kcard">
+            <p class="k">Key implication</p>
+            <p>
+              You pay for the instance while it is running (uptime) ⏱️, and you handle more setup and operations
+              (patching, monitoring, scaling decisions, etc.).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="what-is-lambda">
+        <h2>Lambda in simple terms ⚡</h2>
+        <div class="grid">
+          <div class="kcard">
+            <p class="k">What Lambda is</p>
+            <p>
+              Lambda = you upload <strong>code</strong> (a “function”) and define <strong>events</strong>
+              that trigger it (e.g., a file upload, an API call, a scheduled event). 🎯
+            </p>
+          </div>
+          <div class="kcard">
+            <p class="k">What you do with Lambda</p>
+            <ul>
+              <li>Focus on the code + trigger, not the server 🚫🖥️</li>
+              <li>Run short tasks that start, run, and finish ✅</li>
+              <li>Use it with other AWS services to complete workflows (very common) 🔗</li>
+            </ul>
+          </div>
+          <div class="kcard">
+            <p class="k">Key implication</p>
+            <p>
+              Lambda is designed for <strong>event-driven execution</strong> and you typically pay based on
+              <strong>actual usage</strong> (when it runs), not when it sits idle. 💸
+            </p>
+          </div>
+        </div>
+
+        <div class="callout bad">
+          <p class="title">Important limitation (conceptual)</p>
+          <p>
+            Lambda is <strong>not</strong> meant for “run forever” workloads. It is designed for code that runs,
+            completes, and stops. Long-running servers (e.g., traditional web servers, databases) belong in EC2 (or other compute services).
+          </p>
+        </div>
+      </section>
+
+      <section id="side-by-side">
+        <h2>EC2 vs Lambda — Side-by-side comparison 📌</h2>
+        <table aria-label="EC2 vs Lambda comparison table">
+          <thead>
+            <tr>
+              <th>Topic</th>
+              <th>EC2 (Instances)</th>
+              <th>Lambda (Functions)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Mental model</strong></td>
+              <td>“Rent a computer, install & run anything.” 🖥️</td>
+              <td>“Upload code, run it when an event happens.” ⚡</td>
+            </tr>
+            <tr>
+              <td><strong>Control</strong></td>
+              <td>High: OS, packages, services, processes, ports 🔧</td>
+              <td>Lower: execution environment is limited and less configurable 🚧</td>
+            </tr>
+            <tr>
+              <td><strong>Typical runtime</strong></td>
+              <td>Great for long-running services (web servers, background workers) ♾️</td>
+              <td>Great for short-lived tasks (event-driven jobs) ✅</td>
+            </tr>
+            <tr>
+              <td><strong>Scaling</strong></td>
+              <td>You usually design scaling (e.g., add instances / autoscaling) 📈</td>
+              <td>Designed for event-driven scaling; runs when triggered 🔁</td>
+            </tr>
+            <tr>
+              <td><strong>Pricing intuition</strong></td>
+              <td>Pay for uptime (running instance time) ⏱️</td>
+              <td>Pay for usage (when code executes) 💵</td>
+            </tr>
+            <tr>
+              <td><strong>Best for</strong></td>
+              <td>Maximum flexibility; install any software; multi-process setups 🧰</td>
+              <td>Simple event-driven automation; glue between services; fast setup 🧷</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="use-cases">
+        <h2>Common use cases and examples 🧪</h2>
+
+        <h3>When EC2 is usually the better fit 🧱</h3>
+        <ul>
+          <li><strong>Web servers</strong> that must run continuously (e.g., Node.js/Express app server) 🌐</li>
+          <li><strong>Databases</strong> or systems that keep running and maintain persistent connections 🗄️</li>
+          <li>Workloads that require <strong>custom software</strong> installations or deep OS control 🔩</li>
+          <li>Multiple processes/services on one machine (web + worker + agent, etc.) 🧩</li>
+        </ul>
+
+        <h3>When Lambda is usually the better fit ⚡</h3>
+        <ul>
+          <li><strong>File processing</strong> (e.g., transform images after upload) 🖼️➡️🖼️</li>
+          <li><strong>Event-driven automation</strong> (e.g., react to S3 uploads, database change streams, schedules) ⏰</li>
+          <li><strong>Small business logic</strong> triggered by requests (e.g., validate data then store it) ✅</li>
+          <li><strong>Integration “glue”</strong>: connect AWS services together with minimal ops work 🔗</li>
+        </ul>
+
+        <div class="callout good">
+          <p class="title">Beginner example: Image optimization pipeline 🖼️⚡</p>
+          <ol>
+            <li>User uploads an image to an S3 bucket (event) 📥</li>
+            <li>S3 triggers a Lambda function (trigger) 🎯</li>
+            <li>Lambda creates a resized/optimized version (code) ✂️</li>
+            <li>Lambda stores the optimized file back to S3 (output) 📤</li>
+          </ol>
+          <p>
+            In this setup, Lambda is ideal because the job is <strong>event-based</strong> and short-lived.
+          </p>
+        </div>
+
+        <div class="callout warn">
+          <p class="title">Common pattern</p>
+          <p>
+            Lambda often “works with other services” to be useful (S3, databases, APIs, queues, etc.).
+            EC2 can run standalone more easily, but you do more setup and maintenance.
+          </p>
+        </div>
+      </section>
+
+      <section id="decision">
+        <h2>How to decide (practical decision rules) 🧭</h2>
+
+        <h3>Rule-of-thumb questions</h3>
+        <ul>
+          <li><strong>Does it need to run continuously?</strong> → choose EC2 (or another always-on compute). ♾️</li>
+          <li><strong>Is it triggered by events and should finish quickly?</strong> → choose Lambda. ⚡</li>
+          <li><strong>Do you need to install custom software / manage multiple processes?</strong> → EC2. 🔧</li>
+          <li><strong>Do you want minimal operations work and pay only for usage?</strong> → Lambda. 💸</li>
+        </ul>
+
+        <div class="callout">
+          <p class="title">Realistic conclusion</p>
+          <p>
+            Many architectures use <strong>both</strong>:
+            EC2 for long-running components (web servers, background services),
+            and Lambda for event-based tasks (file processing, automation, small jobs). 🤝
+          </p>
+        </div>
+
+        <h3>Why “migrating to AWS” changes the decision</h3>
+        <p>
+          If a company already owns/operates traditional servers and apps, it may be simpler to migrate to EC2 first (same model).
+          Moving to Lambda can require a bigger mindset shift (event-driven design). 🧠
+        </p>
+      </section>
+
+      <section id="exam">
+        <h2>Exam-friendly reminders 📝</h2>
+        <ul>
+          <li><strong>EC2</strong> = maximum flexibility; you manage more details. 🛠️</li>
+          <li><strong>Lambda</strong> = serverless, event-driven; limited environment configurability. ⚡</li>
+          <li><strong>Lambda is not for “run forever”</strong> services like a traditional web server or a database. 🚫♾️</li>
+          <li>It’s normal to <strong>mix and match</strong> services based on requirements. 🧩</li>
+        </ul>
+      </section>
+
+      <section id="quick-check">
+        <h2>Quick checklist (1-minute review) ✅</h2>
+        <div class="grid">
+          <div class="kcard">
+            <p class="k">Choose EC2 when…</p>
+            <ul>
+              <li>Need an always-on server/service ♾️</li>
+              <li>Need full OS / software control 🔧</li>
+              <li>Running multiple processes on one machine 🧩</li>
+            </ul>
+          </div>
+          <div class="kcard">
+            <p class="k">Choose Lambda when…</p>
+            <ul>
+              <li>Work is event-driven (S3 upload, request, schedule) 🎯</li>
+              <li>Task runs, finishes, stops ✅</li>
+              <li>Want minimal setup and pay-for-usage 💸</li>
+            </ul>
+          </div>
+          <div class="kcard">
+            <p class="k">Most common reality</p>
+            <p>
+              Use EC2 for the long-running parts and Lambda for event-based automation.
+              Architect based on requirements, not hype. 🧠
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="hr"></div>
+        <p>
+          Tip: When printing, use <strong>“A4”</strong>, margins set to <strong>default</strong>, and enable
+          <strong>background graphics</strong> if you want borders/panels to appear.
+        </p>
+      </footer>
+    </main>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,462 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Module 105: Compute Beyond EC2 (Intro)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --ok:#0a7a2f;
+      --warn:#b45309;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.6;
+      word-wrap:break-word;
+      overflow-wrap:anywhere;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding:16px;
+      border-radius:12px;
+    }
+    h1{
+      margin:0 0 8px 0;
+      font-size: 22px;
+      line-height:1.25;
+    }
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: 14px;
+    }
+
+    .meta{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      color:var(--muted);
+      font-size: 12px;
+    }
+    .pill{
+      display:inline-block;
+      border:1px solid var(--border);
+      padding:3px 10px;
+      border-radius:999px;
+      background:#fff;
+    }
+
+    .toolbar{
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    button{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size: 14px;
+    }
+    button:hover{ border-color:#cfcfcf; }
+    button.primary{
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    main{ margin-top: 16px; }
+
+    h2{
+      font-size: 18px;
+      margin: 18px 0 8px;
+      padding-top: 6px;
+      border-top: 1px solid var(--border);
+    }
+    h3{
+      font-size: 15px;
+      margin: 14px 0 6px;
+    }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:14px;
+      background:#fff;
+      margin: 10px 0;
+    }
+
+    .callout{
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 12px 12px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    ul{ margin: 8px 0 8px 22px; }
+    li{ margin: 6px 0; }
+
+    code, kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background:#f6f6f6;
+      border:1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size: 12px;
+      color: var(--muted);
+      border:1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-left: 6px;
+      vertical-align: middle;
+      background:#fff;
+    }
+
+    /* Simple comparison table (print-friendly) */
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+    th, td{
+      border:1px solid var(--border);
+      padding:10px;
+      text-align:left;
+      vertical-align: top;
+    }
+    th{ background: var(--panel); }
+
+    details{
+      border:1px dashed var(--border);
+      border-radius:12px;
+      padding:10px 12px;
+      background:#fff;
+      margin: 10px 0;
+    }
+    details > summary{
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .quiz .q{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+      margin:10px 0;
+      background:#fff;
+    }
+    .quiz .a{
+      margin-top:8px;
+      padding:10px;
+      border-radius:10px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      display:none;
+    }
+
+    .note{
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hr{
+      height:1px;
+      background:var(--border);
+      border:0;
+      margin: 14px 0;
+    }
+
+    /* Print styles (A4-ready) */
+    @page{
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print{
+      body{
+        font-size: 11.5pt;
+        line-height: 1.45;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page{ max-width: none; padding: 0; }
+      .toolbar{ display:none !important; }
+      a{ color: inherit; text-decoration: none; }
+      header{ border-radius: 0; }
+      .card, details, .callout{ break-inside: avoid; }
+      .quiz .a{ display:block !important; }
+      details{ border-style: solid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Module 105 — Compute Beyond EC2 (Introduction) 🚀</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide (Beginner-Friendly)</p>
+      <div class="meta">
+        <span class="pill">🧠 Focus: why compute ≠ only EC2</span>
+        <span class="pill">⚙️ Services: Lambda, ECS, EKS</span>
+        <span class="pill">📌 Goal: know when each “shines”</span>
+      </div>
+      <div class="toolbar">
+        <button class="primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button type="button" onclick="toggleAllAnswers()">✅ Toggle all quiz answers</button>
+      </div>
+      <p class="note">Print tip: Use <kbd>Ctrl</kbd> + <kbd>P</kbd> (Windows) or <kbd>Cmd</kbd> + <kbd>P</kbd> (Mac), choose <strong>A4</strong>, and enable “Background graphics” only if you want light boxes printed.</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>1) What the lecture is saying (in plain words) 🙂</h2>
+        <p>
+          Up to now, you mostly learned <strong>EC2</strong> — servers in the cloud that you rent and manage.
+          But AWS also offers other compute options for running code.
+          This module introduces two big categories beyond EC2:
+        </p>
+        <ul>
+          <li><strong>Serverless compute</strong> → mainly <strong>AWS Lambda</strong> ⚡</li>
+          <li><strong>Container-based compute</strong> → mainly <strong>ECS</strong> and <strong>EKS</strong> 📦</li>
+        </ul>
+        <div class="callout">
+          <strong>Key idea:</strong> EC2 is important, but it’s not always the best tool. AWS gives multiple compute services because different workloads have different needs.
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>2) Quick definitions (exam-friendly) 🧾</h2>
+        <div class="grid">
+          <div class="card" style="margin:0;">
+            <h3>EC2 (baseline reference) 🖥️ <span class="tag">Servers you manage</span></h3>
+            <ul>
+              <li>You pick instance type, OS, networking, storage.</li>
+              <li>You manage patching, scaling setup, uptime strategy, etc.</li>
+              <li>Great when you need full control (custom software, special configs).</li>
+            </ul>
+          </div>
+
+          <div class="card" style="margin:0;">
+            <h3>AWS Lambda ⚡ <span class="tag">Serverless</span></h3>
+            <ul>
+              <li>You upload code as a <strong>function</strong>.</li>
+              <li>AWS runs it when triggered (events), and scales automatically.</li>
+              <li>You don’t manage servers (no EC2 instances to patch).</li>
+            </ul>
+            <p class="note">Think: “Run my code when something happens.”</p>
+          </div>
+
+          <div class="card" style="margin:0;">
+            <h3>ECS 📦 <span class="tag">Containers (AWS-managed orchestration)</span></h3>
+            <ul>
+              <li>Run containerized apps (Docker containers) with AWS tooling.</li>
+              <li>You define tasks/services, ECS schedules and manages them.</li>
+              <li>Often used with <strong>Fargate</strong> (serverless containers) or with EC2-backed clusters.</li>
+            </ul>
+          </div>
+
+          <div class="card" style="margin:0;">
+            <h3>EKS ☸️ <span class="tag">Kubernetes on AWS</span></h3>
+            <ul>
+              <li>Run containers using <strong>Kubernetes</strong> (industry-standard orchestrator).</li>
+              <li>AWS manages the Kubernetes control plane; you run workloads on worker nodes or Fargate.</li>
+              <li>Preferred when your team already uses Kubernetes or needs its ecosystem.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>3) Beginner-friendly mental model (simple analogy) 🧩</h2>
+        <ul>
+          <li><strong>EC2</strong> = renting an apartment. You decide what to install and maintain inside.</li>
+          <li><strong>Lambda</strong> = ordering a meal per request. You only “pay” when you order; no kitchen to maintain.</li>
+          <li><strong>Containers (ECS/EKS)</strong> = renting a commercial kitchen where each dish is packaged in a standardized box (container). The system schedules and runs those boxes for you.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>4) When to use what (practical guidance + examples) 🎯</h2>
+
+        <h3>When EC2 “shines” ✅</h3>
+        <ul>
+          <li>You need <strong>full OS-level control</strong> (custom agents, special networking, niche software).</li>
+          <li>You have a long-running app that’s easier to manage as a server.</li>
+          <li>You already have a traditional server setup and want a straightforward migration.</li>
+        </ul>
+        <div class="callout">
+          Example: “We run a legacy app that needs specific OS packages and background services.”</div>
+
+        <h3>When Lambda “shines” ⚡</h3>
+        <ul>
+          <li>You want <strong>event-driven</strong> execution (something triggers your code).</li>
+          <li>You want <strong>automatic scaling</strong> without managing servers.</li>
+          <li>You have tasks like small APIs, file processing, automation, scheduled jobs.</li>
+        </ul>
+        <div class="callout">
+          Example: “A user uploads an image to S3 → Lambda resizes it → saves the thumbnail.” 🖼️➡️⚡➡️🗂️</div>
+
+        <h3>When Containers (ECS/EKS) “shine” 📦</h3>
+        <ul>
+          <li>You want to package an application with its dependencies in a <strong>container</strong>.</li>
+          <li>You want consistent runs across environments: laptop → staging → production.</li>
+          <li>You have microservices or multiple components that need orchestration.</li>
+        </ul>
+        <div class="callout">
+          Example: “We deploy 5 microservices. Each service is a container. ECS/EKS keeps the desired number running and replaces unhealthy ones.”</div>
+      </section>
+
+      <section class="card">
+        <h2>5) EC2 vs Lambda vs ECS vs EKS (very quick compare) 🧠</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>What you manage</th>
+              <th>Best for</th>
+              <th>Simple phrase</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>EC2</strong></td>
+              <td>Servers/OS, scaling setup, patching strategy</td>
+              <td>Full control, custom setups, traditional workloads</td>
+              <td>“Rent servers.”</td>
+            </tr>
+            <tr>
+              <td><strong>Lambda</strong></td>
+              <td>Only your function code + config</td>
+              <td>Event-driven jobs, lightweight APIs, automation</td>
+              <td>“Run code on events.”</td>
+            </tr>
+            <tr>
+              <td><strong>ECS</strong></td>
+              <td>Containers, task/service definitions (AWS orchestration)</td>
+              <td>Container apps without Kubernetes overhead</td>
+              <td>“Run containers (AWS-managed).”</td>
+            </tr>
+            <tr>
+              <td><strong>EKS</strong></td>
+              <td>Kubernetes workloads + cluster setup decisions</td>
+              <td>Standard Kubernetes deployments, portability</td>
+              <td>“Kubernetes on AWS.”</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">For CLF-C02, focus on the core idea and typical use cases—not deep configuration details.</p>
+      </section>
+
+      <section class="card">
+        <h2>6) Key takeaways (memorize these) 📌</h2>
+        <ul>
+          <li>✅ <strong>EC2</strong> is important, but AWS compute includes <strong>serverless</strong> and <strong>containers</strong>.</li>
+          <li>⚡ <strong>Lambda</strong> = run code without managing servers (event-driven).</li>
+          <li>📦 <strong>ECS/EKS</strong> = run containerized workloads (different orchestration styles).</li>
+          <li>🎯 Choose based on <strong>control vs convenience</strong>, and workload shape (event-driven, long-running, microservices).</li>
+        </ul>
+      </section>
+
+      <section class="card quiz" id="quiz">
+        <h2>7) Mini quiz (with answers) ✍️</h2>
+
+        <div class="q">
+          <strong>Q1.</strong> What is the main “message” of this module intro?
+          <button type="button" onclick="toggleAnswer(this)">Show answer</button>
+          <div class="a"><strong>A:</strong> EC2 is not the only compute option. AWS also offers serverless (Lambda) and container compute (ECS/EKS), and you should understand when they’re better than EC2.</div>
+        </div>
+
+        <div class="q">
+          <strong>Q2.</strong> Which service is the most associated with “serverless functions”?
+          <button type="button" onclick="toggleAnswer(this)">Show answer</button>
+          <div class="a"><strong>A:</strong> AWS Lambda.</div>
+        </div>
+
+        <div class="q">
+          <strong>Q3.</strong> If you want Kubernetes on AWS, which service should you remember?
+          <button type="button" onclick="toggleAnswer(this)">Show answer</button>
+          <div class="a"><strong>A:</strong> Amazon EKS.</div>
+        </div>
+
+        <div class="q">
+          <strong>Q4.</strong> Give one simple example where Lambda is a good fit.
+          <button type="button" onclick="toggleAnswer(this)">Show answer</button>
+          <div class="a"><strong>A:</strong> Image resize after S3 upload; scheduled cleanup job; small API endpoint; reacting to database changes—anything event-driven.</div>
+        </div>
+
+        <p class="note">Tip: For exam questions, look for keywords like “event-driven,” “no servers to manage,” “containers,” and “Kubernetes.”</p>
+      </section>
+
+      <details>
+        <summary>Optional: ultra-short memory hooks (1-liners) 🧷</summary>
+        <ul>
+          <li>🖥️ EC2: “I manage the server.”</li>
+          <li>⚡ Lambda: “AWS runs my function when triggered.”</li>
+          <li>📦 ECS: “AWS runs my containers.”</li>
+          <li>☸️ EKS: “Kubernetes runs my containers (on AWS).”</li>
+        </ul>
+      </details>
+
+      <hr class="hr" />
+      <p class="note">End of Module 105 (Intro). Next lectures will dive deeper into Lambda, ECS, and EKS.</p>
+    </main>
+  </div>
+
+  <script>
+    function toggleAnswer(btn){
+      const a = btn.parentElement.querySelector('.a');
+      const isHidden = getComputedStyle(a).display === 'none';
+      a.style.display = isHidden ? 'block' : 'none';
+      btn.textContent = isHidden ? 'Hide answer' : 'Show answer';
+    }
+
+    function toggleAllAnswers(){
+      const answers = document.querySelectorAll('.quiz .a');
+      const anyHidden = Array.from(answers).some(a => getComputedStyle(a).display === 'none');
+      answers.forEach(a => a.style.display = anyHidden ? 'block' : 'none');
+      const buttons = document.querySelectorAll('.quiz .q button');
+      buttons.forEach(b => b.textContent = anyHidden ? 'Hide answer' : 'Show answer');
+    }
+  </script>
+</body>
+</html>

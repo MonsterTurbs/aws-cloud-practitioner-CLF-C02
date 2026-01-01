@@ -1,0 +1,318 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 24 Service Quotas</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+      --ok:#0f7b0f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    a{ color: var(--accent); }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .qna strong{ display:block; margin: 10px 0 4px; }
+
+    .steps{
+      margin: 8px 0 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .steps li{
+      margin: 8px 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+      .steps li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Accessing & Using AWS Services</p>
+      <h1>24 — Service Quotas (Service Limits) 📏🚦</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Lecture Goal</h2>
+        <p>Understand that AWS services come with <strong>limits</strong> (also called <strong>quotas</strong>), learn what that means in practice, and know how to view/request quota increases using the <strong>Service Quotas</strong> service.</p>
+        <div class="callout">
+          <p><strong>Big idea ✅</strong> Almost every AWS service has some kind of limit to protect the platform and encourage controlled usage.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>📌 What Are Service Quotas?</h2>
+        <p><strong>Service quotas</strong> are limits on how much of a specific resource you can use in AWS.</p>
+        <ul>
+          <li>They can apply per account, per region, per resource type, etc.</li>
+          <li>Some are <strong>hard limits</strong> (cannot be exceeded).</li>
+          <li>Some can be <strong>increased</strong> by requesting a quota increase.</li>
+        </ul>
+        <div class="mini">
+          <p><strong>Beginner-friendly explanation 💡</strong> Think of quotas as AWS “guardrails” so one account doesn’t accidentally (or intentionally) consume too many resources.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧪 Example from the Lecture: EC2 Elastic IP Limit</h2>
+        <p>The lecture mentions an example in the <strong>EC2</strong> service: <strong>Elastic IPs</strong> (public IP addresses you can allocate).</p>
+        <div class="mini">
+          <h3>Example limit</h3>
+          <ul>
+            <li>📌 You can allocate up to <strong>5 Elastic IP addresses</strong> per account (as stated in the lecture)</li>
+            <li>⛔ This is presented as a <strong>hard limit</strong> in the lecture example</li>
+          </ul>
+          <p><em>Note:</em> You don’t need to fully understand Elastic IPs yet—the key takeaway is that limits exist.</p>
+        </div>
+        <div class="callout">
+          <p><strong>Exam angle ✅</strong> You should know that AWS enforces quotas and that quotas can affect what you can provision.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🛠️ The “Service Quotas” Service (Where You Manage Limits)</h2>
+        <p>AWS provides a dedicated service for viewing and managing service limits: <strong>Service Quotas</strong>.</p>
+
+        <div class="grid">
+          <div class="mini">
+            <h3>✅ What you can do there</h3>
+            <ul>
+              <li>Browse AWS services that have quotas</li>
+              <li>View specific quota values (limits)</li>
+              <li>Request quota increases (for eligible quotas)</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>🔁 Quota increases</h3>
+            <p>Some quotas can be increased, while some cannot. If a quota is eligible, you can submit an increase request through Service Quotas.</p>
+          </div>
+        </div>
+
+        <div class="good">
+          <p><strong>Practical tip ✅</strong> Request an increase only when you actually need it. Many quotas are already generous for normal usage.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 When Do Quotas Matter Most?</h2>
+        <p>You’ll notice quotas more often when:</p>
+        <ul>
+          <li>📈 You scale up (more resources, more services)</li>
+          <li>🏢 You build production workloads</li>
+          <li>🧩 You run multiple environments (dev/test/prod)</li>
+          <li>⚙️ You automate provisioning (fast growth = you hit limits faster)</li>
+        </ul>
+        <div class="warning">
+          <p><strong>Heads-up ⚠️</strong> Hitting a quota can block resource creation (e.g., “you can’t launch more of X”), so it can look like a “broken service” if you don’t recognize quota errors.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧭 Simple Troubleshooting: “Why can’t I create this resource?”</h2>
+        <ol class="steps">
+          <li>1) 🔎 Check if you hit a quota/limit (error message often hints at this)</li>
+          <li>2) 📏 Open <strong>Service Quotas</strong> and find the service + quota</li>
+          <li>3) ✅ If eligible, request an increase</li>
+          <li>4) 🧩 Or adjust your design/usage to stay within quota</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Exam Focus)</h2>
+        <span class="tag">Service Quotas</span>
+        <span class="tag">Service Limits</span>
+        <span class="tag">Quota Increase</span>
+        <span class="tag">Hard Limit</span>
+        <span class="tag">EC2</span>
+        <span class="tag">Elastic IP</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="qna">
+          <strong>Q1: What are service quotas?</strong>
+          <p>A: Limits on AWS resource usage (per service), sometimes called service limits.</p>
+
+          <strong>Q2: Give one example of a quota mentioned in the lecture.</strong>
+          <p>A: EC2 Elastic IPs limited to 5 per account (lecture example).</p>
+
+          <strong>Q3: What AWS service helps manage quotas?</strong>
+          <p>A: The Service Quotas service.</p>
+
+          <strong>Q4: Can all quotas be increased?</strong>
+          <p>A: No. Some can be increased; some cannot.</p>
+
+          <strong>Q5: When should you request a quota increase?</strong>
+          <p>A: Only when you actually need it—many default limits are generous.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

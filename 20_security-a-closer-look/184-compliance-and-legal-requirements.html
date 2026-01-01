@@ -1,0 +1,399 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Compliance & Legal Requirements</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --accent2:#1a73e8;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 18px 60px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 16px;
+      border-radius: 10px;
+    }
+
+    h1{
+      font-size: 1.6rem;
+      margin: 0 0 6px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .meta{
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .chip{
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .actions{
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn{
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: .95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn.primary{
+      border-color: rgba(11,87,208,.35);
+      background: rgba(11,87,208,.06);
+      color: #0b57d0;
+    }
+
+    .btn:focus{
+      outline: 3px solid rgba(26,115,232,.25);
+      outline-offset: 2px;
+    }
+
+    main{ margin-top: 16px; }
+
+    section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 12px;
+      background: #fff;
+    }
+
+    h2{
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+    }
+
+    h3{
+      margin: 14px 0 6px;
+      font-size: 1.05rem;
+    }
+
+    p{ margin: 8px 0; }
+
+    ul{
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li{ margin: 6px 0; }
+
+    .callout{
+      border-left: 4px solid rgba(11,87,208,.55);
+      background: rgba(11,87,208,.05);
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .card{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: var(--panel);
+    }
+
+    .k{
+      font-weight: 700;
+    }
+
+    .muted{ color: var(--muted); }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: .92em;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-bottom-width: 2px;
+      padding: 1px 6px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .qa{
+      margin-top: 10px;
+      border-top: 1px dashed var(--border);
+      padding-top: 10px;
+    }
+
+    details{
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+      margin-top: 10px;
+    }
+
+    summary{ cursor: pointer; font-weight: 700; }
+
+    footer{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: .9rem;
+      text-align: center;
+    }
+
+    /* Print styles (A4, single column, clean output) */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+    }
+
+    @media print{
+      body{
+        font-size: 11.5pt;
+        line-height: 1.45;
+      }
+      .page{
+        max-width: none;
+        padding: 0;
+      }
+      header, section{
+        border-color: #d9d9d9;
+        box-shadow: none;
+      }
+      .actions{ display:none !important; }
+      a{ color: inherit; text-decoration: none; }
+      details{ break-inside: avoid; }
+      section{ break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Compliance & Legal Requirements (AWS) 🧾⚖️</h1>
+      <p class="subtitle">Reviewer / Study Guide (Beginner-friendly) — focused on AWS services that help you <span class="k">enforce</span> and <span class="k">prove</span> compliance.</p>
+      <div class="meta">
+        <span class="chip">🎓 CLF-C02</span>
+        <span class="chip">🛡️ Security (closer look)</span>
+        <span class="chip">🧠 Key services: Config, Artifact, Audit Manager</span>
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <a class="btn" href="#quick-review">✅ Jump to Quick Review</a>
+        <a class="btn" href="#mini-quiz">🧪 Mini Quiz</a>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) What “Compliance” Means (in simple terms) 🧩</h2>
+        <p><span class="k">Compliance</span> means your company follows required rules such as laws, regulations, or industry standards (e.g., security, privacy, auditing). Even if your AWS account is secure, you may still need to <span class="k">prove</span> you meet requirements.</p>
+        <div class="callout">
+          <p><span class="k">Why it matters:</span> If you cannot prove compliance during an audit, it can become a business risk (fines, loss of customer trust, or being blocked from doing business). 😬</p>
+        </div>
+        <h3>Two big compliance needs</h3>
+        <ul>
+          <li>✅ <span class="k">Enforce</span> your internal rules (how resources should be configured).</li>
+          <li>✅ <span class="k">Prove</span> compliance to auditors (reports + evidence).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2) The 3 AWS Services You Must Know 🧰</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="k">1) AWS Config 🛠️</div>
+            <p class="muted">Enforce configuration rules. Detect “non-compliant” resources.</p>
+            <ul>
+              <li><span class="k">What it does:</span> Lets you define rules for services (what “correct” configuration looks like) and checks if resources match.</li>
+              <li><span class="k">What you get:</span> A list of compliant vs non-compliant resources, so you can fix misconfigurations early.</li>
+            </ul>
+            <p class="callout"><span class="k">Beginner example:</span> “All S3 buckets must block public access.” If a bucket becomes public, Config flags it as <span class="k">non-compliant</span>. 🚨</p>
+          </div>
+
+          <div class="card">
+            <div class="k">2) AWS Artifact 📄</div>
+            <p class="muted">Download AWS compliance reports (AWS proves its compliance).</p>
+            <ul>
+              <li><span class="k">What it does:</span> Provides audit and compliance documents published by AWS (useful for your auditors).</li>
+              <li><span class="k">Use case:</span> You need proof that <span class="k">AWS</span> meets certain standards, and you present AWS reports from Artifact.</li>
+            </ul>
+            <p class="callout"><span class="k">Beginner example:</span> An auditor asks: “Is your cloud provider compliant with a specific standard?” You retrieve AWS reports via <span class="k">Artifact</span>. ✅</p>
+          </div>
+
+          <div class="card">
+            <div class="k">3) AWS Audit Manager 🧾</div>
+            <p class="muted">Track compliance evidence and generate auditor-friendly reports.</p>
+            <ul>
+              <li><span class="k">What it does:</span> Helps you assess your AWS usage against compliance frameworks by collecting evidence automatically.</li>
+              <li><span class="k">Key idea:</span> You define requirements/rules, and Audit Manager gathers related data from AWS services to support an audit.</li>
+              <li><span class="k">Extra:</span> Can integrate with <span class="k">AWS Config</span> for deeper evidence collection.</li>
+            </ul>
+            <p class="callout"><span class="k">Beginner example:</span> You want a report showing “encryption is enabled” for storage resources. Audit Manager helps generate an audit-ready report. 🧠</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) How They Work Together (simple flow) 🔁</h2>
+        <ul>
+          <li>🛠️ <span class="k">AWS Config</span> checks your resources against rules and flags non-compliance.</li>
+          <li>📄 <span class="k">AWS Artifact</span> gives you AWS-owned compliance documents (proof about AWS itself).</li>
+          <li>🧾 <span class="k">AWS Audit Manager</span> gathers evidence + generates reports about <span class="k">your</span> AWS usage and controls.</li>
+        </ul>
+        <div class="callout">
+          <p><span class="k">Memory trick:</span> <span class="k">Config</span> = “Are we configured correctly?” ✅ | <span class="k">Artifact</span> = “Show me AWS reports.” 📄 | <span class="k">Audit Manager</span> = “Build the audit evidence for our account.” 🧾</p>
+        </div>
+      </section>
+
+      <section id="quick-review">
+        <h2>4) Quick Review (Exam-style) ✅</h2>
+        <ul>
+          <li>🧾 If the question is about <span class="k">meeting compliance requirements</span> by enforcing resource configuration rules → <span class="k">AWS Config</span>.</li>
+          <li>📄 If the question is about <span class="k">downloading AWS compliance reports</span> (AWS’s audit documents) → <span class="k">AWS Artifact</span>.</li>
+          <li>🧠 If the question is about <span class="k">collecting evidence</span> and generating <span class="k">auditor-friendly reports</span> for your account → <span class="k">AWS Audit Manager</span>.</li>
+        </ul>
+
+        <details>
+          <summary>Common confusion (read this) 😵</summary>
+          <p><span class="k">AWS Artifact</span> does not validate your own resource settings. It provides documentation about AWS’s compliance.</p>
+          <p><span class="k">AWS Config</span> is about configuration compliance (rules + evaluation), not delivering AWS audit PDFs.</p>
+          <p><span class="k">Audit Manager</span> is for audit preparation: evidence gathering and reporting.</p>
+        </details>
+      </section>
+
+      <section>
+        <h2>5) Practical Examples (Beginner-friendly) 🧪</h2>
+        <h3>Example A: Enforce a rule across services</h3>
+        <p>Goal: Ensure no one makes storage publicly accessible by mistake.</p>
+        <ul>
+          <li>Use <span class="k">AWS Config</span> rules to detect non-compliant resources (e.g., public S3 buckets).</li>
+          <li>Then your team fixes or remediates the configuration so it matches the rule again.</li>
+        </ul>
+
+        <h3>Example B: Provide AWS compliance proof to an auditor</h3>
+        <p>Goal: Show official AWS compliance documentation during an audit.</p>
+        <ul>
+          <li>Use <span class="k">AWS Artifact</span> to download AWS compliance reports and provide them to auditors.</li>
+        </ul>
+
+        <h3>Example C: Prepare an audit package for your account</h3>
+        <p>Goal: Generate a report that proves your account controls are in place.</p>
+        <ul>
+          <li>Use <span class="k">AWS Audit Manager</span> to define requirements and collect evidence automatically.</li>
+          <li>Optionally integrate <span class="k">AWS Config</span> to strengthen evidence collection.</li>
+        </ul>
+      </section>
+
+      <section id="mini-quiz">
+        <h2>6) Mini Quiz (with answers) 🧠</h2>
+        <div class="qa">
+          <p><span class="k">Q1.</span> “Which service helps detect when resources deviate from your required configuration rules?”</p>
+          <details>
+            <summary>Show answer</summary>
+            <p>✅ <span class="k">AWS Config</span> (configuration rules + compliance status)</p>
+          </details>
+        </div>
+
+        <div class="qa">
+          <p><span class="k">Q2.</span> “Which service is used to download AWS compliance reports for auditors?”</p>
+          <details>
+            <summary>Show answer</summary>
+            <p>✅ <span class="k">AWS Artifact</span> (AWS publishes compliance documents there)</p>
+          </details>
+        </div>
+
+        <div class="qa">
+          <p><span class="k">Q3.</span> “Which service helps you generate auditor-friendly reports based on collected evidence from your AWS environment?”</p>
+          <details>
+            <summary>Show answer</summary>
+            <p>✅ <span class="k">AWS Audit Manager</span> (evidence collection + reports)</p>
+          </details>
+        </div>
+
+        <div class="qa">
+          <p><span class="k">Q4.</span> “You want deeper evidence collection by connecting your compliance checks with rule evaluations. What pairing makes sense?”</p>
+          <details>
+            <summary>Show answer</summary>
+            <p>✅ <span class="k">Audit Manager + AWS Config</span> (Audit Manager can pull additional data, including from Config)</p>
+          </details>
+        </div>
+      </section>
+
+      <section>
+        <h2>7) Key Terms to Remember 🗂️</h2>
+        <ul>
+          <li>🧾 <span class="k">Compliance</span>: following laws/standards + being able to prove it.</li>
+          <li>🛠️ <span class="k">Config Rule</span>: definition of “correct configuration” (used by AWS Config).</li>
+          <li>📄 <span class="k">Compliance Reports</span>: documents you can provide to auditors (AWS Artifact).</li>
+          <li>🧠 <span class="k">Evidence Collection</span>: gathering proof that controls are in place (Audit Manager).</li>
+        </ul>
+        <div class="callout">
+          <p><span class="k">Exam hint:</span> If the question mentions “auditor-friendly report” or “evidence,” think <span class="k">Audit Manager</span>. If it mentions “AWS compliance documents,” think <span class="k">Artifact</span>. If it mentions “resource is non-compliant,” think <span class="k">Config</span>. 🎯</p>
+        </div>
+      </section>
+
+      <footer>
+        <p>Tip: In the browser, use <span class="kbd">Ctrl</span>+<span class="kbd">P</span> (Windows) or <span class="kbd">Cmd</span>+<span class="kbd">P</span> (Mac) → choose “Save as PDF” for a clean A4 handout.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

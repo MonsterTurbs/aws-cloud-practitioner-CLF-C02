@@ -1,0 +1,369 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — EC2 Instance Store vs EBS-backed Storage</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --callout: #f3f7ff;
+      --callout-border: #cfe0ff;
+      --warn: #fff7ed;
+      --warn-border: #fed7aa;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 28px 22px 40px;
+    }
+
+    header {
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    h2 {
+      margin: 18px 0 8px;
+      font-size: 16px;
+    }
+
+    h3 {
+      margin: 14px 0 6px;
+      font-size: 14px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 8px 20px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .muted { color: var(--muted); }
+
+    .chiprow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin: 12px 0;
+      page-break-inside: avoid;
+    }
+
+    .callout {
+      border: 1px solid var(--callout-border);
+      background: var(--callout);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 12px 0;
+      page-break-inside: avoid;
+    }
+
+    .warn {
+      border: 1px solid var(--warn-border);
+      background: var(--warn);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 12px 0;
+      page-break-inside: avoid;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      page-break-inside: avoid;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px;
+      vertical-align: top;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: #f6f6f6;
+      text-align: left;
+      font-size: 12.5px;
+    }
+
+    td { font-size: 12.5px; }
+
+    .label {
+      font-weight: 700;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    /* Print rules */
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
+
+    @media print {
+      body { font-size: 12pt; }
+      .page { max-width: none; padding: 0; }
+      a, a:visited { color: inherit; text-decoration: none; }
+      .chip { background: #fff; }
+      table { page-break-inside: avoid; }
+      .card, .callout, .warn, .mono { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>EC2 Instance Store vs EBS-backed Storage (Root Volume)</h1>
+      <p class="subtitle">AWS CLF-C02 Reviewer / Study Guide — EC2 storage basics, AMI “root device type”, and exam-friendly takeaways</p>
+      <div class="chiprow" aria-label="topic chips">
+        <span class="chip">🖥️ EC2</span>
+        <span class="chip">💽 Storage</span>
+        <span class="chip">🧩 AMI</span>
+        <span class="chip">🔐 Reliability</span>
+        <span class="chip">📝 Exam Tips</span>
+      </div>
+    </header>
+
+    <section class="callout">
+      <h2>Big Idea (In One Minute) ⏱️</h2>
+      <p>
+        Every EC2 instance needs a <span class="label">root (base) storage</span> where the operating system and default software
+        from the <span class="label">AMI</span> get installed.
+      </p>
+      <ul>
+        <li>✅ Most AMIs today are <span class="label">EBS-backed</span> (root storage is an EBS volume).</li>
+        <li>⚡ Some AMIs can use <span class="label">EC2 Instance Store</span> (root storage is on the physical host machine).</li>
+        <li>🎯 For the exam: know that both exist, and that EBS-backed is the common default.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Key Terms You Must Know 📌</h2>
+
+      <div class="card">
+        <h3>🧩 AMI (Amazon Machine Image)</h3>
+        <p>
+          Think of an AMI as a <span class="label">starter kit</span> for your EC2 instance. It includes the operating system
+          and (sometimes) preinstalled tools.
+        </p>
+        <p class="muted">
+          Important detail: the AMI also determines the <span class="label">root device type</span> (where the base OS is stored).
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>💽 Root Volume / Base Storage</h3>
+        <p>
+          The disk that holds the OS (Linux/Windows) + base packages. Without it, the instance can’t boot.
+        </p>
+        <ul>
+          <li>Example: Your Amazon Linux instance boots from the root volume.</li>
+          <li>Example: Your web server software (from the AMI or startup scripts) lives on that disk unless stored elsewhere.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🧱 EBS-backed (Most common)</h3>
+        <p>
+          Root storage is an <span class="label">EBS volume</span> (Elastic Block Store) attached to the instance.
+        </p>
+        <ul>
+          <li>✅ Persistent-style block storage managed by AWS</li>
+          <li>🧰 Works with snapshots (backup/restore concept)</li>
+          <li>🌍 Regional service (region matters)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>⚡ EC2 Instance Store (Alternative)</h3>
+        <p>
+          Root storage comes from a <span class="label">disk physically attached</span> to the host machine running your instance.
+        </p>
+        <ul>
+          <li>🚀 Often very fast I/O (good performance characteristics)</li>
+          <li>🧊 Typically treated as <span class="label">ephemeral</span> storage (don’t rely on it for long-term persistence)</li>
+          <li>🧠 You’ll mainly “see” this concept as an AMI setting: <span class="label">root device type</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>What “Root Device Type” Means 🔎</h2>
+      <p>
+        In the EC2 launch flow (when selecting an AMI), AWS shows a field like <span class="label">Root device type</span>.
+        This tells you where the base OS disk lives.
+      </p>
+
+      <div class="mono" aria-label="example root device type">
+        Root device type: ebs
+        (Common default in modern AMIs)
+      </div>
+
+      <p class="muted">
+        Exam mindset: if you see an AMI described as “instance store-backed”, that’s the alternative to the typical “EBS-backed” AMI.
+      </p>
+    </section>
+
+    <section>
+      <h2>Quick Comparison (Exam-Friendly) 🧠</h2>
+      <table aria-label="EBS-backed vs Instance Store comparison">
+        <thead>
+          <tr>
+            <th style="width: 28%;">Feature</th>
+            <th style="width: 36%;">EBS-backed (Default)</th>
+            <th style="width: 36%;">EC2 Instance Store</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="label">Where the root disk lives</span></td>
+            <td>On an EBS volume attached to the instance</td>
+            <td>On storage physically attached to the host machine</td>
+          </tr>
+          <tr>
+            <td><span class="label">Typical use</span></td>
+            <td>General workloads, most production setups</td>
+            <td>Specialized cases where local/host storage is desired</td>
+          </tr>
+          <tr>
+            <td><span class="label">Persistence mindset</span></td>
+            <td>More “durable/persistent” style; supports snapshots</td>
+            <td>Ephemeral mindset; do not rely on it for long-term storage</td>
+          </tr>
+          <tr>
+            <td><span class="label">Exam tip</span></td>
+            <td>Most AMIs show <span class="mono">root device type: ebs</span></td>
+            <td>Know it exists; appears as <span class="label">instance store-backed AMI</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Beginner Examples (When This Matters) 👶➡️🧑‍💻</h2>
+
+      <div class="card">
+        <h3>🌐 Example 1: Simple Website on EC2</h3>
+        <ul>
+          <li>You launch an EC2 instance using an Amazon Linux AMI.</li>
+          <li>The OS lives on the <span class="label">root volume</span> (usually EBS-backed).</li>
+          <li>You install a web server (Apache/Nginx) and deploy your site.</li>
+        </ul>
+        <p class="muted">
+          If the site stores uploads (images, PDFs), you typically store them on additional storage (EBS/EFS/S3) depending on the need.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>🧪 Example 2: Temporary Processing / Scratch Space</h3>
+        <ul>
+          <li>You run a job that creates temporary files (e.g., image processing, batch conversion).</li>
+          <li>Instance Store-style storage can be useful for <span class="label">temporary</span> data if performance matters.</li>
+          <li>Final results should be copied to durable storage (e.g., S3 or EBS snapshots / another service).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="warn">
+      <h2>Common Mistakes to Avoid ⚠️</h2>
+      <ul>
+        <li>❌ Assuming “instance store” is the same thing as “an extra EBS volume”. It’s different: it’s host-based storage.</li>
+        <li>❌ Treating instance store as a permanent storage location for important business data.</li>
+        <li>❌ Ignoring the AMI details: the root device type is an AMI-level characteristic.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Mini-Checklist for the Exam ✅</h2>
+      <ul>
+        <li>✅ Every EC2 instance needs a root device (base storage) to boot.</li>
+        <li>✅ The AMI determines whether root storage is <span class="label">EBS-backed</span> or <span class="label">instance store-backed</span>.</li>
+        <li>✅ Modern default: <span class="label">EBS-backed</span>.</li>
+        <li>✅ Instance store exists; think <span class="label">host-based / ephemeral</span> mindset.</li>
+      </ul>
+
+      <div class="divider"></div>
+
+      <p class="muted">
+        Next topic suggestion: EFS (Elastic File System) and when you need a shared network file system for multiple instances.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

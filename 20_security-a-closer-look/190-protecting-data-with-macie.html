@@ -1,0 +1,435 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS Security — Protecting Data with Amazon Macie (Study Guide)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent2: #0f766e;
+      --warn: #b42318;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 42px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: linear-gradient(0deg, #fff, #fbfbfb);
+      padding: 16px 16px 14px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: -0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 12.5px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13.5px;
+    }
+
+    .btn.primary {
+      border-color: #cfe0ff;
+      background: #edf4ff;
+    }
+
+    .btn:focus {
+      outline: 3px solid rgba(11, 87, 208, 0.25);
+      outline-offset: 2px;
+    }
+
+    main {
+      margin-top: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    section {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
+    h2 {
+      font-size: 16.5px;
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 14.5px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 0 0 10px; }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 10px;
+    }
+
+    .callout.good { border-left-color: var(--accent2); }
+    .callout.warn { border-left-color: var(--warn); }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 1px 6px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    .transcript {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #fff;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: #222;
+      font-size: 13.5px;
+    }
+
+    footer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12.5px;
+      text-align: center;
+    }
+
+    /* Print styles */
+    @media print {
+      @page { size: A4; margin: 14mm; }
+      body { font-size: 11.5pt; line-height: 1.45; }
+      .page { max-width: none; padding: 0; }
+      header, section { border-radius: 0; }
+      .actions { display: none !important; }
+      a { color: inherit; text-decoration: none; }
+      section, header { break-inside: avoid; page-break-inside: avoid; }
+      .card, .callout, .transcript { break-inside: avoid; page-break-inside: avoid; }
+      .pill { border: 1px solid #ccc; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>🔐 Protecting Data with Amazon Macie — Reviewer / Study Guide</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) • Single-column • A4 print-ready</p>
+      <div class="meta">
+        <span class="pill">🧠 Topic: Data Protection</span>
+        <span class="pill">🪣 Focus: S3 Sensitive Data Discovery</span>
+        <span class="pill">🎯 Exam-ready summary + examples</span>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('mini-quiz').scrollIntoView({behavior:'smooth'})">🧩 Jump to Mini Quiz</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>✅ What you must remember (in 30 seconds)</h2>
+        <div class="callout good">
+          <p><strong>Amazon Macie</strong> helps you <strong>discover sensitive data</strong> and <strong>data protection issues</strong>—primarily by <strong>scanning S3 buckets</strong> and identifying data that looks like it should be protected (e.g., personal data, confidential documents). 🕵️‍♂️</p>
+        </div>
+        <ul>
+          <li>🪣 <strong>Where it scans:</strong> S3 buckets + objects (files).</li>
+          <li>🤖 <strong>How it detects:</strong> Machine learning + (optional) custom rules.</li>
+          <li>🔎 <strong>What it flags:</strong> sensitive data that is <strong>public</strong>, <strong>unencrypted</strong>, or otherwise <strong>risky</strong>.</li>
+          <li>🏢 <strong>Scope:</strong> works for a single account and can support multi-account setups.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧩 Beginner-friendly explanation</h2>
+        <p>
+          Think of Macie like a <strong>security scanner for your S3 files</strong>. It looks inside objects stored in S3 and tries to answer:
+          <strong>“Does this file contain sensitive information?”</strong> If yes, it then checks: <strong>“Is that sensitive file protected properly?”</strong>
+        </p>
+        <div class="callout">
+          <p><strong>Why this matters:</strong> Many data leaks happen because someone accidentally made an S3 bucket public or forgot to enable encryption. 😬</p>
+        </div>
+        <h3>📌 What counts as “sensitive” data?</h3>
+        <ul>
+          <li>👤 Customer/user information (PII) like names, addresses, IDs</li>
+          <li>📄 Legal/contract documents</li>
+          <li>🧾 Financial records</li>
+          <li>🔑 Credentials/secrets accidentally uploaded (bad practice!)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>⚙️ How Macie works (simple flow)</h2>
+        <div class="two-col">
+          <div class="card">
+            <h3>1) Enable + Configure</h3>
+            <ul>
+              <li>Turn on Macie in your account (or organization).</li>
+              <li>Choose <strong>which S3 buckets</strong> to scan.</li>
+              <li>Set scan frequency: <strong>one-time</strong> or <strong>scheduled</strong>. ⏱️</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>2) Scan + Classify</h3>
+            <ul>
+              <li>Macie inspects objects and uses <strong>ML</strong> to detect sensitive content. 🤖</li>
+              <li>You can add <strong>custom rules</strong> for patterns that matter to your business.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>3) Findings + Alerts</h3>
+            <ul>
+              <li>Macie reports findings like: <strong>sensitive data in a public bucket</strong> or <strong>unencrypted sensitive objects</strong>.</li>
+              <li>You use those findings to fix permissions/encryption. 🛠️</li>
+            </ul>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="callout warn">
+          <p><strong>Exam cue:</strong> If a question says “discover sensitive data in S3 and alert if it’s publicly accessible,” the answer is almost always <strong>Amazon Macie</strong>. ✅</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧪 Examples (practical scenarios)</h2>
+        <h3>Example 1: Public bucket accident 😱</h3>
+        <p>
+          Your team stores PDF contracts in S3. Someone accidentally sets the bucket policy to public. Macie detects that the PDFs look sensitive and flags that they’re publicly accessible.
+        </p>
+        <ul>
+          <li>✅ Fix: remove public access, enable “Block Public Access,” apply least-privilege bucket policy.</li>
+        </ul>
+
+        <h3>Example 2: Unencrypted sensitive data 🔓</h3>
+        <p>
+          You store customer exports (CSV) in S3, but encryption at rest is not enabled. Macie flags unencrypted sensitive objects.
+        </p>
+        <ul>
+          <li>✅ Fix: enable S3 default encryption (often with <span class="kbd">KMS</span>), re-encrypt existing objects if needed.</li>
+        </ul>
+
+        <h3>Example 3: Custom rules 🎯</h3>
+        <p>
+          Your business uses a unique internal customer ID format like <span class="kbd">CUST-####-PH</span>. You can define a custom pattern so Macie treats files containing that pattern as sensitive.
+        </p>
+      </section>
+
+      <section>
+        <h2>📝 Quick checklist (what to do when Macie reports a finding)</h2>
+        <ul>
+          <li>🛑 If public: enable <strong>S3 Block Public Access</strong> and fix bucket policy/ACLs.</li>
+          <li>🔐 If unencrypted: enable <strong>S3 encryption</strong> (preferably KMS for managed keys).</li>
+          <li>👥 Review IAM/bucket permissions: apply <strong>least privilege</strong>.</li>
+          <li>📣 Route findings to alerting (common pattern: findings → monitoring/notifications) so issues are not missed.</li>
+        </ul>
+      </section>
+
+      <section id="mini-quiz">
+        <h2>🧩 Mini Quiz (CLF-C02 style)</h2>
+        <div class="card">
+          <p><strong>1)</strong> You want to automatically discover sensitive data stored in S3 and be alerted if it’s publicly accessible. What service should you use?</p>
+          <p class="small"><strong>Answer:</strong> ✅ Amazon Macie</p>
+        </div>
+        <div class="card">
+          <p><strong>2)</strong> Your goal is storing database passwords securely for apps (not scanning S3). Which service is best?</p>
+          <p class="small"><strong>Answer:</strong> ✅ AWS Secrets Manager (not Macie)</p>
+        </div>
+        <div class="card">
+          <p><strong>3)</strong> Macie finds sensitive data in a bucket. What is a common “first fix” to prevent exposure?</p>
+          <p class="small"><strong>Answer:</strong> ✅ Enable S3 Block Public Access + tighten bucket policy/permissions</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>📜 Original lecture transcript (for reference)</h2>
+        <div class="transcript">Now another service
+
+that helps with protecting data,
+
+sensitive data specifically, is Amazon Macie.
+
+Amazon Macie is a service which helps you
+
+discover data protection issues in your AWS accounts.
+
+So like many other services
+
+it works inside a single account, but also cross account.
+
+Now it starts with configuring and using this service
+
+which is quite straightforward because out of the box
+
+it uses machine learning to detect sensitive data.
+
+In the end, what Macie does is it scans your S3 buckets
+
+and all the files in there
+
+and determines whether a file looks
+
+like sensitive data that should be well protected or not.
+
+So maybe some user data
+
+or legal documents that should not be exposed.
+
+Macie uses machine learning to identify them.
+
+In addition, you can use your own rules to inform Macie
+
+about other kinds of data
+
+that should also be treated as sensitive data.
+
+And you can control how often Macie should
+
+then scan your S3 buckets.
+
+On a schedule or maybe just one time, both is possible.
+
+And when Macie scans your buckets
+
+and it then determines which kind of data looks sensitive,
+
+it also checks whether such sensitive data is maybe exposed
+
+or if there are any issues related to it.
+
+It highlights exposed or unprotected sensitive data.
+
+And lets you know, for example,
+
+about unencrypted data or public data.
+
+Maybe some data is shared publicly in an AWS's free bucket
+
+and you don't wanna share that data publicly.
+
+Macie would let you know
+
+about sensitive data that is shared publicly.
+
+So Macie can be a great service for finding out
+
+whether maybe somewhere in your AWS accounts,
+
+you are storing some sensitive data
+
+in a suboptimal or even dangerous way.</div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Tip: To print cleanly, use your browser print dialog and select <strong>“Save as PDF”</strong> or your printer. Page is optimized for A4.</p>
+    </footer>
+  </div>
+</body>
+
+</html>

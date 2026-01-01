@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 — Table of Contents (Print to PDF)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --soft: #fafafa;
+      --chip: #f3f4f6;
+      --focus: #1a73e8;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 20px 48px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--soft);
+      padding: 18px 16px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn:hover { border-color: #cfcfcf; }
+
+    .search {
+      flex: 1;
+      min-width: 220px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .search input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      outline: none;
+    }
+    .search input:focus {
+      border-color: #b7cdfa;
+      box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+    }
+
+    .hint {
+      margin: 12px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .toc {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    details.module {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      overflow: hidden;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    details.module > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 14px;
+      background: var(--soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 700;
+    }
+    details.module > summary::-webkit-details-marker { display: none; }
+
+    .meta {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--chip);
+      color: #222;
+      font-weight: 700;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .content {
+      padding: 12px 14px 14px;
+    }
+
+    /* IMPORTANT CHANGE:
+       No links shown visually. We keep the href in data-href so you can still open on screen if you want
+       (optional via JS), but printing will show plain text only. */
+    .lessons {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .lessons li {
+      margin: 6px 0;
+      line-height: 1.45;
+    }
+
+    .lesson-text {
+      display: inline;
+    }
+
+    /* Hidden "Open" button per lesson (optional). Visible only on screen if you enable it. */
+    .open-link {
+      display: none;
+      margin-left: 10px;
+      font-size: 12px;
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      cursor: pointer;
+    }
+    .open-link:hover { border-color: #cfcfcf; }
+
+    /* Toggle if you want per-item open buttons on screen:
+       add class "show-open-buttons" to <body> */
+    body.show-open-buttons .open-link { display: inline-flex; }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Print */
+    @page {
+      size: A4;
+      margin: 14mm 12mm;
+    }
+
+    @media print {
+      body { font-size: 11pt; }
+      .page { max-width: none; padding: 0; }
+      header { border-radius: 0; }
+
+      /* hide UI tools in print */
+      .toolbar, .hint, .footer { display: none !important; }
+
+      details.module {
+        border-radius: 0;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      details.module > summary {
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+      }
+
+      /* CRITICAL: ensure no URLs are printed */
+      a[href]:after { content: "" !important; }
+      a[href] { text-decoration: none !important; color: inherit !important; }
+
+      /* Ensure open-link buttons never print */
+      .open-link { display: none !important; }
+
+      .chip { background: #fff; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header>
+      <h1>📚 AWS Certified Cloud Practitioner (CLF-C02) — Table of Contents</h1>
+      <p class="subtitle">Print-ready single-page index. Print will be plain text only (no URLs/links).</p>
+
+      <div class="toolbar">
+        <button class="btn" type="button" id="printBtn">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" id="expandAllBtn">➕ Expand all</button>
+        <button class="btn" type="button" id="collapseAllBtn">➖ Collapse all</button>
+        <div class="search">
+          <input id="q" type="search" placeholder="🔎 Search lessons (e.g., IAM, EC2, S3, VPC, Well-Architected)"
+                 aria-label="Search lessons" />
+        </div>
+      </div>
+
+      <p class="hint">
+        Tip: When printing, all sections auto-expand and the output shows text only (no URLs).
+      </p>
+    </header>
+
+    <section class="toc" id="toc">
+
+      <!-- 01 -->
+      <details class="module" data-module="01" open>
+        <summary>
+          <span>01 — Getting Started 🚀</span>
+          <span class="meta"><span class="chip">13 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">01 Welcome to this Course</span><button class="open-link" type="button" data-href="01_getting-started/01-welcome-to-this-course.html">Open</button></li>
+            <li><span class="lesson-text">02 What is AWS? What is Cloud Computing?</span><button class="open-link" type="button" data-href="01_getting-started/02-what-is-aws-what-is-cloud-computing.html">Open</button></li>
+            <li><span class="lesson-text">03 Join our Learning Community</span><button class="open-link" type="button" data-href="01_getting-started/03-join-our-learning-community.html">Open</button></li>
+            <li><span class="lesson-text">04 A World without Cloud Computing</span><button class="open-link" type="button" data-href="01_getting-started/04-a-world-without-cloud-computing.html">Open</button></li>
+            <li><span class="lesson-text">05 Cloud Advantage: Reliability</span><button class="open-link" type="button" data-href="01_getting-started/05-cloud-advantage-reliability.html">Open</button></li>
+            <li><span class="lesson-text">06 Cloud Advantages: Agility, Elasticity &amp; Scalability</span><button class="open-link" type="button" data-href="01_getting-started/06-cloud-advantages-agility-elasticity-and-scalability.html">Open</button></li>
+            <li><span class="lesson-text">07 Cloud Advantage: Pay-as-you-go Pricing</span><button class="open-link" type="button" data-href="01_getting-started/07-cloud-advantage-pay-as-you-go-pricing.html">Open</button></li>
+            <li><span class="lesson-text">08 Cloud Advantage: Global Reach</span><button class="open-link" type="button" data-href="01_getting-started/08-cloud-advantage-global-reach.html">Open</button></li>
+            <li><span class="lesson-text">09 Cloud Advantages: AWS Summaries</span><button class="open-link" type="button" data-href="01_getting-started/09-cloud-advantages-aws-summaries.html">Open</button></li>
+            <li><span class="lesson-text">10 AWS Infrastructure: Regions &amp; Availability Zones</span><button class="open-link" type="button" data-href="01_getting-started/10-the-aws-infrastructure-regions-and-availability-zones.html">Open</button></li>
+            <li><span class="lesson-text">11 Self-Service vs Managed Services</span><button class="open-link" type="button" data-href="01_getting-started/11-self-service-vs-managed-services.html">Open</button></li>
+            <li><span class="lesson-text">12 Service Categories</span><button class="open-link" type="button" data-href="01_getting-started/12-service-categories.html">Open</button></li>
+            <li><span class="lesson-text">13 Course Slides</span><button class="open-link" type="button" data-href="01_getting-started/13-course-slides.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 02 -->
+      <details class="module" data-module="02">
+        <summary>
+          <span>02 — Accessing &amp; Using AWS Services 🧭</span>
+          <span class="meta"><span class="chip">12 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">14 Module Introduction</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/14-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">15 Creating an AWS Account</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/15-creating-an-aws-account.html">Open</button></li>
+            <li><span class="lesson-text">16 The Management Console</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/16-the-management-console.html">Open</button></li>
+            <li><span class="lesson-text">17 CLI, SDKs &amp; AWS API</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/17-different-ways-of-using-aws-services-cli-sdks-and-the-aws-api.html">Open</button></li>
+            <li><span class="lesson-text">18 Using the CLI &amp; CloudShell</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/18-using-the-cli-and-cloudshell.html">Open</button></li>
+            <li><span class="lesson-text">19 Important AWS Pricing</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/19-important-aws-pricing.html">Open</button></li>
+            <li><span class="lesson-text">20 Free Tier</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/20-get-started-for-free-with-the-free-tier.html">Open</button></li>
+            <li><span class="lesson-text">21 Cost Management &amp; Budgets</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/21-cost-management-and-working-with-budgets.html">Open</button></li>
+            <li><span class="lesson-text">22 Pricing &amp; Region Selection</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/22-important-pricing-and-selecting-regions.html">Open</button></li>
+            <li><span class="lesson-text">23 AWS Support, Health Dashboard &amp; Docs</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/23-get-help-aws-support-personal-health-dashboard-and-documentation.html">Open</button></li>
+            <li><span class="lesson-text">24 Service Quotas</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/24-service-quotas.html">Open</button></li>
+            <li><span class="lesson-text">25 Module Summary</span><button class="open-link" type="button" data-href="02_accessing-and-using-aws-services/25-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 03 -->
+      <details class="module" data-module="03">
+        <summary>
+          <span>03 — Account Security, Permissions &amp; IAM 🔐</span>
+          <span class="meta"><span class="chip">9 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">26 Module Introduction</span><button class="open-link" type="button" data-href="03_account-security-permissions-and-the-iam-service-identity-and-access-management/26-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">27 Shared Responsibility Model</span><button class="open-link" type="button" data-href="03_account-security-permissions-and-the-iam-service-identity-and-access-management/27-the-aws-security-model-the-shared-responsibility-model.html">Open</button></li>
+            <li><span class="lesson-text">28 Protecting Your Account</span><button class="open-link" type="button" data-href="03_account-security-permissions-and-the-iam-service-identity-and-access-management/28-protecting-your-account.html">Open</button></li>
+            <li><span class="lesson-text">29 IAM Users, Groups &amp; Roles</span><button class="open-link" type="button" data-href="03_account-security-permissions-and-the-iam-service-identity-and-access-management/29-understanding-iam-users-user-groups-and-roles.html">Open</button></li>
+            <li><span class="lesson-text">30 Creating Users &amp; Assigning Permissions</span><button class="open-link" type="button" data-href="03_account-security-permissions-and-the-iam-service-identity-and-access-management/30-creating-users-and-assigning-permissions.html">Open</button></li>
+            <li><span class="lesson-text">31 Understanding Roles</span><button class="open-link" type="button" data-href="03_account-security-permissions-and-the-iam-service-identity-and-access-management/31-understanding-roles.html">Open</button></li>
+            <li><span class="lesson-text">32 Policy Evaluation Logic</span><button class="open-link" type="button" data-href="03_account-security-permissions-and-the-iam-service-identity-and-access-management/32-how-policies-and-permissions-are-evaluated.html">Open</button></li>
+            <li><span class="lesson-text">33 Least Privilege</span><button class="open-link" type="button" data-href="03_account-security-permissions-and-the-iam-service-identity-and-access-management/33-granting-least-privilege.html">Open</button></li>
+            <li><span class="lesson-text">34 Module Summary</span><button class="open-link" type="button" data-href="03_account-security-permissions-and-the-iam-service-identity-and-access-management/34-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 04 -->
+      <details class="module" data-module="04">
+        <summary>
+          <span>04 — Compute Services &amp; EC2 🖥️</span>
+          <span class="meta"><span class="chip">9 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">35 Module Introduction</span><button class="open-link" type="button" data-href="04_getting-started-with-compute-services-and-ec2/35-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">36 Key Compute Services Overview</span><button class="open-link" type="button" data-href="04_getting-started-with-compute-services-and-ec2/36-key-compute-services-an-overview.html">Open</button></li>
+            <li><span class="lesson-text">37 Understanding EC2</span><button class="open-link" type="button" data-href="04_getting-started-with-compute-services-and-ec2/37-understanding-ec2-and-ec2-instances.html">Open</button></li>
+            <li><span class="lesson-text">38 Launching EC2 Instances</span><button class="open-link" type="button" data-href="04_getting-started-with-compute-services-and-ec2/38-configuring-and-launching-ec2-instances.html">Open</button></li>
+            <li><span class="lesson-text">39 Inspecting &amp; Connecting</span><button class="open-link" type="button" data-href="04_getting-started-with-compute-services-and-ec2/39-inspecting-instances-and-connecting-to-instances.html">Open</button></li>
+            <li><span class="lesson-text">40 SSH &amp; Key Pairs</span><button class="open-link" type="button" data-href="04_getting-started-with-compute-services-and-ec2/40-connecting-via-local-ssh-and-key-pairs.html">Open</button></li>
+            <li><span class="lesson-text">41 Running a Web Server</span><button class="open-link" type="button" data-href="04_getting-started-with-compute-services-and-ec2/41-running-a-web-server-via-ec2.html">Open</button></li>
+            <li><span class="lesson-text">42 EC2 Pricing Models</span><button class="open-link" type="button" data-href="04_getting-started-with-compute-services-and-ec2/42-ec2-pricing-models.html">Open</button></li>
+            <li><span class="lesson-text">43 Module Summary</span><button class="open-link" type="button" data-href="04_getting-started-with-compute-services-and-ec2/43-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 05 -->
+      <details class="module" data-module="05">
+        <summary>
+          <span>05 — VPCs &amp; Networking 🌐</span>
+          <span class="meta"><span class="chip">14 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">44 Module Introduction</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/44-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">45 Why VPCs?</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/45-whats-the-problem-and-how-do-vpcs-help.html">Open</button></li>
+            <li><span class="lesson-text">46 VPCs &amp; Subnets</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/46-vpcs-and-subnets.html">Open</button></li>
+            <li><span class="lesson-text">47 Creating a VPC</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/47-creating-a-vpc.html">Open</button></li>
+            <li><span class="lesson-text">48 Connecting Subnets &amp; EC2</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/48-connecting-subnets-and-ec2-instances.html">Open</button></li>
+            <li><span class="lesson-text">49 Beyond EC2</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/49-beyond-ec2-instances.html">Open</button></li>
+            <li><span class="lesson-text">50 CIDR &amp; IP Ranges</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/50-understanding-ip-ranges-cidr-blocks-and-why-they-exist.html">Open</button></li>
+            <li><span class="lesson-text">51 Public IPs &amp; Elastic IPs</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/51-public-ip-addresses-and-elastic-ip-addresses.html">Open</button></li>
+            <li><span class="lesson-text">52 Security Groups</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/52-working-with-security-groups.html">Open</button></li>
+            <li><span class="lesson-text">53 NACLs</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/53-understanding-network-access-control-lists-nacls.html">Open</button></li>
+            <li><span class="lesson-text">54 Security Groups vs NACLs</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/54-security-groups-vs-nacls.html">Open</button></li>
+            <li><span class="lesson-text">55 VPC Peering &amp; Transit Gateway</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/55-vpc-peering-and-transit-gateways.html">Open</button></li>
+            <li><span class="lesson-text">56 PrivateLink &amp; VPC Endpoints</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/56-private-connections-via-privatelink-and-vpc-endpoints.html">Open</button></li>
+            <li><span class="lesson-text">57 Module Summary</span><button class="open-link" type="button" data-href="05_managing-cloud-networks-via-vpcs-virtual-private-cloud/57-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 06 -->
+      <details class="module" data-module="06">
+        <summary>
+          <span>06 — Scaling &amp; Load Balancing 📈</span>
+          <span class="meta"><span class="chip">7 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">58 Module Introduction</span><button class="open-link" type="button" data-href="06_scaling-and-load-balancing-from-small-to-big-and-back/58-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">59 Why Dynamic Scaling?</span><button class="open-link" type="button" data-href="06_scaling-and-load-balancing-from-small-to-big-and-back/59-why-dynamic-scaling-is-important.html">Open</button></li>
+            <li><span class="lesson-text">60 AWS Auto Scaling</span><button class="open-link" type="button" data-href="06_scaling-and-load-balancing-from-small-to-big-and-back/60-scaling-with-aws-auto-scaling.html">Open</button></li>
+            <li><span class="lesson-text">61 Auto Scaling Groups</span><button class="open-link" type="button" data-href="06_scaling-and-load-balancing-from-small-to-big-and-back/61-working-with-autoscaling-groups.html">Open</button></li>
+            <li><span class="lesson-text">62 ELB (ALB &amp; NLB)</span><button class="open-link" type="button" data-href="06_scaling-and-load-balancing-from-small-to-big-and-back/62-using-elastic-load-balancers-alb-and-nlb.html">Open</button></li>
+            <li><span class="lesson-text">63 Load Balancers + Scaling</span><button class="open-link" type="button" data-href="06_scaling-and-load-balancing-from-small-to-big-and-back/63-creating-load-balancers-and-combining-them-with-scaling.html">Open</button></li>
+            <li><span class="lesson-text">64 Module Summary</span><button class="open-link" type="button" data-href="06_scaling-and-load-balancing-from-small-to-big-and-back/64-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 07 -->
+      <details class="module" data-module="07">
+        <summary>
+          <span>07 — File Storage (EBS &amp; EFS) 💾</span>
+          <span class="meta"><span class="chip">8 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">65 Module Introduction</span><button class="open-link" type="button" data-href="07_storing-files-with-ebs-and-efs-elastic-block-store-and-elastic-file-system/65-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">66 Why File Storage?</span><button class="open-link" type="button" data-href="07_storing-files-with-ebs-and-efs-elastic-block-store-and-elastic-file-system/66-why-file-storage-is-important.html">Open</button></li>
+            <li><span class="lesson-text">67 File Storage Options</span><button class="open-link" type="button" data-href="07_storing-files-with-ebs-and-efs-elastic-block-store-and-elastic-file-system/67-different-kinds-of-file-storage-and-aws-services.html">Open</button></li>
+            <li><span class="lesson-text">68 EBS</span><button class="open-link" type="button" data-href="07_storing-files-with-ebs-and-efs-elastic-block-store-and-elastic-file-system/68-understanding-ebs-elastic-block-store.html">Open</button></li>
+            <li><span class="lesson-text">69 Instance Store vs EBS</span><button class="open-link" type="button" data-href="07_storing-files-with-ebs-and-efs-elastic-block-store-and-elastic-file-system/69-ec2-instance-store-and-ebs.html">Open</button></li>
+            <li><span class="lesson-text">70 EFS vs EBS</span><button class="open-link" type="button" data-href="07_storing-files-with-ebs-and-efs-elastic-block-store-and-elastic-file-system/70-understanding-efs-and-efs-vs-ebs.html">Open</button></li>
+            <li><span class="lesson-text">71 EFS &amp; FSx</span><button class="open-link" type="button" data-href="07_storing-files-with-ebs-and-efs-elastic-block-store-and-elastic-file-system/71-using-efs-and-exploring-fsx-file-system-services.html">Open</button></li>
+            <li><span class="lesson-text">72 Module Summary</span><button class="open-link" type="button" data-href="07_storing-files-with-ebs-and-efs-elastic-block-store-and-elastic-file-system/72-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 08 -->
+      <details class="module" data-module="08">
+        <summary>
+          <span>08 — S3 (Object Storage) 🪣</span>
+          <span class="meta"><span class="chip">9 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">73 Module Introduction</span><button class="open-link" type="button" data-href="08_s3-simple-storage-service-storing-any-objects-from-anywhere/73-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">74 S3 Overview</span><button class="open-link" type="button" data-href="08_s3-simple-storage-service-storing-any-objects-from-anywhere/74-s3-an-overview.html">Open</button></li>
+            <li><span class="lesson-text">75 S3 Buckets</span><button class="open-link" type="button" data-href="08_s3-simple-storage-service-storing-any-objects-from-anywhere/75-working-with-s3-and-buckets.html">Open</button></li>
+            <li><span class="lesson-text">76 Storage Classes (incl. Glacier)</span><button class="open-link" type="button" data-href="08_s3-simple-storage-service-storing-any-objects-from-anywhere/76-understanding-s3-storage-classes-incl-glacier.html">Open</button></li>
+            <li><span class="lesson-text">77 S3 Glacier</span><button class="open-link" type="button" data-href="08_s3-simple-storage-service-storing-any-objects-from-anywhere/77-highlighting-s3-glacier.html">Open</button></li>
+            <li><span class="lesson-text">78 Advanced S3 Features</span><button class="open-link" type="button" data-href="08_s3-simple-storage-service-storing-any-objects-from-anywhere/78-advanced-s3-features.html">Open</button></li>
+            <li><span class="lesson-text">79 Demo: Public Buckets &amp; Static Hosting</span><button class="open-link" type="button" data-href="08_s3-simple-storage-service-storing-any-objects-from-anywhere/79-demo-public-buckets-and-static-website-hosting.html">Open</button></li>
+            <li><span class="lesson-text">80 S3 vs EBS vs EFS</span><button class="open-link" type="button" data-href="08_s3-simple-storage-service-storing-any-objects-from-anywhere/80-s3-vs-ebs-vs-efs.html">Open</button></li>
+            <li><span class="lesson-text">81 Module Summary</span><button class="open-link" type="button" data-href="08_s3-simple-storage-service-storing-any-objects-from-anywhere/81-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 09 -->
+      <details class="module" data-module="09">
+        <summary>
+          <span>09 — Databases 🗄️</span>
+          <span class="meta"><span class="chip">13 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">82 Module Introduction</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/82-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">83 DB Options</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/83-databases-and-the-cloud-you-got-multiple-options.html">Open</button></li>
+            <li><span class="lesson-text">84 RDS Overview</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/84-rds-relational-database-service-an-overview.html">Open</button></li>
+            <li><span class="lesson-text">85 RDS In Action</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/85-rds-configuration-and-in-action.html">Open</button></li>
+            <li><span class="lesson-text">86 Aurora</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/86-exploring-aurora.html">Open</button></li>
+            <li><span class="lesson-text">87 Databases &amp; VPCs</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/87-databases-and-vpcs.html">Open</button></li>
+            <li><span class="lesson-text">88 ElastiCache</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/88-caching-and-elasticache.html">Open</button></li>
+            <li><span class="lesson-text">89 DynamoDB</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/89-understanding-dynamodb-nosql-database.html">Open</button></li>
+            <li><span class="lesson-text">90 DynamoDB In Action</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/90-dynamodb-in-action.html">Open</button></li>
+            <li><span class="lesson-text">91 DynamoDB Advanced</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/91-dynamodb-advanced-features.html">Open</button></li>
+            <li><span class="lesson-text">92 Other DB Services</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/92-other-aws-database-services.html">Open</button></li>
+            <li><span class="lesson-text">93 AWS Backup</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/93-saving-data-with-aws-backup.html">Open</button></li>
+            <li><span class="lesson-text">94 Module Summary</span><button class="open-link" type="button" data-href="09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb/94-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 10 -->
+      <details class="module" data-module="10">
+        <summary>
+          <span>10 — Global Networking &amp; Content Delivery 🌍</span>
+          <span class="meta"><span class="chip">10 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">95 Module Introduction</span><button class="open-link" type="button" data-href="10_global-networking-and-content-delivery-with-route53-cloudfront-and-more/95-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">96 DNS</span><button class="open-link" type="button" data-href="10_global-networking-and-content-delivery-with-route53-cloudfront-and-more/96-understanding-domains-and-dns-domain-name-systems.html">Open</button></li>
+            <li><span class="lesson-text">97 Route 53</span><button class="open-link" type="button" data-href="10_global-networking-and-content-delivery-with-route53-cloudfront-and-more/97-route-53-custom-domains-and-domain-routing.html">Open</button></li>
+            <li><span class="lesson-text">98 CDNs &amp; CloudFront</span><button class="open-link" type="button" data-href="10_global-networking-and-content-delivery-with-route53-cloudfront-and-more/98-understanding-cdns-edge-locations-and-cloudfront.html">Open</button></li>
+            <li><span class="lesson-text">99 Using CloudFront</span><button class="open-link" type="button" data-href="10_global-networking-and-content-delivery-with-route53-cloudfront-and-more/99-using-cloudfront.html">Open</button></li>
+            <li><span class="lesson-text">100 Local Zones, Outposts, Wavelength</span><button class="open-link" type="button" data-href="10_global-networking-and-content-delivery-with-route53-cloudfront-and-more/100-more-aws-infrastructure-local-zones-outposts-and-wavelength.html">Open</button></li>
+            <li><span class="lesson-text">101 Global Accelerator &amp; S3 Transfer Acceleration</span><button class="open-link" type="button" data-href="10_global-networking-and-content-delivery-with-route53-cloudfront-and-more/101-speed-boosts-via-global-accelerator-and-s3-transfer-acceleration.html">Open</button></li>
+            <li><span class="lesson-text">102 Global Accelerator as Load Balancer</span><button class="open-link" type="button" data-href="10_global-networking-and-content-delivery-with-route53-cloudfront-and-more/102-using-global-accelerator-as-a-load-balancer.html">Open</button></li>
+            <li><span class="lesson-text">103 SSL &amp; ACM</span><button class="open-link" type="button" data-href="10_global-networking-and-content-delivery-with-route53-cloudfront-and-more/103-encrypting-network-traffic-via-ssl-and-acm-aws-certificate-manager.html">Open</button></li>
+            <li><span class="lesson-text">104 Module Summary</span><button class="open-link" type="button" data-href="10_global-networking-and-content-delivery-with-route53-cloudfront-and-more/104-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 11 -->
+      <details class="module" data-module="11">
+        <summary>
+          <span>11 — More Compute: Serverless &amp; Containers ⚙️</span>
+          <span class="meta"><span class="chip">10 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">105 Module Introduction</span><button class="open-link" type="button" data-href="11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr/105-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">106 Serverless &amp; Lambda</span><button class="open-link" type="button" data-href="11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr/106-introducing-serverless-services-and-aws-lambda.html">Open</button></li>
+            <li><span class="lesson-text">107 Lambda Theory</span><button class="open-link" type="button" data-href="11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr/107-aws-lambda-theory.html">Open</button></li>
+            <li><span class="lesson-text">108 Using Lambda</span><button class="open-link" type="button" data-href="11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr/108-using-aws-lambda.html">Open</button></li>
+            <li><span class="lesson-text">109 EC2 vs Lambda</span><button class="open-link" type="button" data-href="11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr/109-ec2-vs-lambda.html">Open</button></li>
+            <li><span class="lesson-text">110 Containers</span><button class="open-link" type="button" data-href="11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr/110-working-with-containers-and-understanding-the-idea-behind-containers.html">Open</button></li>
+            <li><span class="lesson-text">111 ECS &amp; EKS</span><button class="open-link" type="button" data-href="11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr/111-ecs-and-eks-elastic-container-service-and-elastic-kubernetes-service.html">Open</button></li>
+            <li><span class="lesson-text">112 Fargate</span><button class="open-link" type="button" data-href="11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr/112-understanding-ecs-and-fargate.html">Open</button></li>
+            <li><span class="lesson-text">113 ECR</span><button class="open-link" type="button" data-href="11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr/113-managing-images-via-ecr-elastic-container-registry.html">Open</button></li>
+            <li><span class="lesson-text">114 Module Summary</span><button class="open-link" type="button" data-href="11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr/114-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 12 -->
+      <details class="module" data-module="12">
+        <summary>
+          <span>12 — APIs: API Gateway &amp; AppSync 🔌</span>
+          <span class="meta"><span class="chip">7 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">115 Module Introduction</span><button class="open-link" type="button" data-href="12_building-serverless-rest-and-graphql-apis-via-api-gateway-and-appsync/115-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">116 Why APIs?</span><button class="open-link" type="button" data-href="12_building-serverless-rest-and-graphql-apis-via-api-gateway-and-appsync/116-why-apis.html">Open</button></li>
+            <li><span class="lesson-text">117 API Gateway (REST)</span><button class="open-link" type="button" data-href="12_building-serverless-rest-and-graphql-apis-via-api-gateway-and-appsync/117-building-rest-apis-via-api-gateway.html">Open</button></li>
+            <li><span class="lesson-text">118 AppSync (GraphQL)</span><button class="open-link" type="button" data-href="12_building-serverless-rest-and-graphql-apis-via-api-gateway-and-appsync/118-building-graphql-apis-via-appsync.html">Open</button></li>
+            <li><span class="lesson-text">119 Cognito</span><button class="open-link" type="button" data-href="12_building-serverless-rest-and-graphql-apis-via-api-gateway-and-appsync/119-adding-user-authentication-via-cognito.html">Open</button></li>
+            <li><span class="lesson-text">120 Amplify</span><button class="open-link" type="button" data-href="12_building-serverless-rest-and-graphql-apis-via-api-gateway-and-appsync/120-frontend-plus-aws-equals-amplify.html">Open</button></li>
+            <li><span class="lesson-text">121 Module Summary</span><button class="open-link" type="button" data-href="12_building-serverless-rest-and-graphql-apis-via-api-gateway-and-appsync/121-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 13 -->
+      <details class="module" data-module="13">
+        <summary>
+          <span>13 — Deployment Simplifiers 🚀</span>
+          <span class="meta"><span class="chip">5 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">122 Module Introduction</span><button class="open-link" type="button" data-href="13_simplifying-application-deployment-via-elastic-beanstalk-lightsail-and-apprunner/122-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">123 Elastic Beanstalk</span><button class="open-link" type="button" data-href="13_simplifying-application-deployment-via-elastic-beanstalk-lightsail-and-apprunner/123-using-elastic-beanstalk-for-deploying-application-environments.html">Open</button></li>
+            <li><span class="lesson-text">124 Lightsail</span><button class="open-link" type="button" data-href="13_simplifying-application-deployment-via-elastic-beanstalk-lightsail-and-apprunner/124-lightsail-turning-aws-into-a-simple-web-hosting-provider.html">Open</button></li>
+            <li><span class="lesson-text">125 App Runner</span><button class="open-link" type="button" data-href="13_simplifying-application-deployment-via-elastic-beanstalk-lightsail-and-apprunner/125-simplifying-container-deployment-via-apprunner.html">Open</button></li>
+            <li><span class="lesson-text">126 Module Summary</span><button class="open-link" type="button" data-href="13_simplifying-application-deployment-via-elastic-beanstalk-lightsail-and-apprunner/126-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 14 -->
+      <details class="module" data-module="14">
+        <summary>
+          <span>14 — App Integration (SQS, SNS, EventBridge) 🧩</span>
+          <span class="meta"><span class="chip">9 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">127 Module Introduction</span><button class="open-link" type="button" data-href="14_app-integration-with-sqs-sns-and-eventbridge/127-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">128 Why App Integration?</span><button class="open-link" type="button" data-href="14_app-integration-with-sqs-sns-and-eventbridge/128-whats-the-problem-why-app-integration.html">Open</button></li>
+            <li><span class="lesson-text">129 Service Overview</span><button class="open-link" type="button" data-href="14_app-integration-with-sqs-sns-and-eventbridge/129-key-aws-app-integration-services-an-overview.html">Open</button></li>
+            <li><span class="lesson-text">130 SQS/SNS/EventBridge In Action</span><button class="open-link" type="button" data-href="14_app-integration-with-sqs-sns-and-eventbridge/130-sqs-sns-and-eventbridge-in-action.html">Open</button></li>
+            <li><span class="lesson-text">131 Amazon MQ</span><button class="open-link" type="button" data-href="14_app-integration-with-sqs-sns-and-eventbridge/131-amazon-mq.html">Open</button></li>
+            <li><span class="lesson-text">132 SES</span><button class="open-link" type="button" data-href="14_app-integration-with-sqs-sns-and-eventbridge/132-a-brief-look-at-ses.html">Open</button></li>
+            <li><span class="lesson-text">133 Cloud Map</span><button class="open-link" type="button" data-href="14_app-integration-with-sqs-sns-and-eventbridge/133-introducing-cloudmap.html">Open</button></li>
+            <li><span class="lesson-text">134 Step Functions</span><button class="open-link" type="button" data-href="14_app-integration-with-sqs-sns-and-eventbridge/134-understanding-step-functions.html">Open</button></li>
+            <li><span class="lesson-text">135 Module Summary</span><button class="open-link" type="button" data-href="14_app-integration-with-sqs-sns-and-eventbridge/135-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 15 -->
+      <details class="module" data-module="15">
+        <summary>
+          <span>15 — Monitoring Workloads 📊</span>
+          <span class="meta"><span class="chip">7 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">136 Module Introduction</span><button class="open-link" type="button" data-href="15_monitoring-workloads/136-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">137 Why Monitoring?</span><button class="open-link" type="button" data-href="15_monitoring-workloads/137-why-monitoring-matters.html">Open</button></li>
+            <li><span class="lesson-text">138 CloudWatch Theory</span><button class="open-link" type="button" data-href="15_monitoring-workloads/138-cloudwatch-theory.html">Open</button></li>
+            <li><span class="lesson-text">139 CloudWatch In Action</span><button class="open-link" type="button" data-href="15_monitoring-workloads/139-cloudwatch-in-action.html">Open</button></li>
+            <li><span class="lesson-text">140 Beyond Basics &amp; X-Ray</span><button class="open-link" type="button" data-href="15_monitoring-workloads/140-beyond-the-basics-and-x-ray.html">Open</button></li>
+            <li><span class="lesson-text">141 VPC Flow Logs &amp; Advanced Monitoring</span><button class="open-link" type="button" data-href="15_monitoring-workloads/141-vpc-flow-logs-and-enabling-advanced-monitoring-in-services.html">Open</button></li>
+            <li><span class="lesson-text">142 Module Summary</span><button class="open-link" type="button" data-href="15_monitoring-workloads/142-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 16 -->
+      <details class="module" data-module="16">
+        <summary>
+          <span>16 — Managing Compute at Scale 🏗️</span>
+          <span class="meta"><span class="chip">8 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">143 Module Introduction</span><button class="open-link" type="button" data-href="16_managing-compute-resources-at-scale/143-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">144 AWS Batch</span><button class="open-link" type="button" data-href="16_managing-compute-resources-at-scale/144-aws-batch-for-batch-jobs.html">Open</button></li>
+            <li><span class="lesson-text">145 Compute Optimizer</span><button class="open-link" type="button" data-href="16_managing-compute-resources-at-scale/145-optimizing-compute-resources-with-compute-optimizer.html">Open</button></li>
+            <li><span class="lesson-text">146 Systems Manager</span><button class="open-link" type="button" data-href="16_managing-compute-resources-at-scale/146-introducing-systems-manager.html">Open</button></li>
+            <li><span class="lesson-text">147 AppConfig &amp; Parameter Store</span><button class="open-link" type="button" data-href="16_managing-compute-resources-at-scale/147-systems-manager-appconfig-and-parameter-store.html">Open</button></li>
+            <li><span class="lesson-text">148 OpsWorks</span><button class="open-link" type="button" data-href="16_managing-compute-resources-at-scale/148-aws-opsworks.html">Open</button></li>
+            <li><span class="lesson-text">149 Standardizing Solutions</span><button class="open-link" type="button" data-href="16_managing-compute-resources-at-scale/149-standardizing-service-implementations-and-solutions.html">Open</button></li>
+            <li><span class="lesson-text">150 Module Summary</span><button class="open-link" type="button" data-href="16_managing-compute-resources-at-scale/150-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 17 -->
+      <details class="module" data-module="17">
+        <summary>
+          <span>17 — Cloud Migration &amp; Hybrid ☁️↔️🏢</span>
+          <span class="meta"><span class="chip">9 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">151 Module Introduction</span><button class="open-link" type="button" data-href="17_cloud-migration-and-hybrid-cloud-solutions/151-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">152 What &amp; Why</span><button class="open-link" type="button" data-href="17_cloud-migration-and-hybrid-cloud-solutions/152-what-and-why.html">Open</button></li>
+            <li><span class="lesson-text">153 Challenges</span><button class="open-link" type="button" data-href="17_cloud-migration-and-hybrid-cloud-solutions/153-cloud-migration-challenges.html">Open</button></li>
+            <li><span class="lesson-text">154 Solutions</span><button class="open-link" type="button" data-href="17_cloud-migration-and-hybrid-cloud-solutions/154-cloud-migration-solutions.html">Open</button></li>
+            <li><span class="lesson-text">155 Key Migration Services</span><button class="open-link" type="button" data-href="17_cloud-migration-and-hybrid-cloud-solutions/155-key-migration-services.html">Open</button></li>
+            <li><span class="lesson-text">156 Snow Family</span><button class="open-link" type="button" data-href="17_cloud-migration-and-hybrid-cloud-solutions/156-the-snow-family-and-snowball-edge.html">Open</button></li>
+            <li><span class="lesson-text">157 Hybrid Services</span><button class="open-link" type="button" data-href="17_cloud-migration-and-hybrid-cloud-solutions/157-hybrid-cloud-computing-key-services.html">Open</button></li>
+            <li><span class="lesson-text">158 VPN &amp; Direct Connect</span><button class="open-link" type="button" data-href="17_cloud-migration-and-hybrid-cloud-solutions/158-connecting-to-the-aws-cloud-via-vpn-and-directconnect.html">Open</button></li>
+            <li><span class="lesson-text">159 Module Summary</span><button class="open-link" type="button" data-href="17_cloud-migration-and-hybrid-cloud-solutions/159-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 18 -->
+      <details class="module" data-module="18">
+        <summary>
+          <span>18 — Data Analytics &amp; Data Science 📚</span>
+          <span class="meta"><span class="chip">10 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">160 Module Introduction</span><button class="open-link" type="button" data-href="18_data-analytics-and-data-science/160-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">161 Typical Tasks</span><button class="open-link" type="button" data-href="18_data-analytics-and-data-science/161-data-analytics-typical-tasks-and-problems.html">Open</button></li>
+            <li><span class="lesson-text">162 Kinesis</span><button class="open-link" type="button" data-href="18_data-analytics-and-data-science/162-introducing-aws-kinesis.html">Open</button></li>
+            <li><span class="lesson-text">163 Redshift &amp; Data Lakes</span><button class="open-link" type="button" data-href="18_data-analytics-and-data-science/163-data-warehouses-redshift-and-data-lakes.html">Open</button></li>
+            <li><span class="lesson-text">164 Redshift Deep Dive</span><button class="open-link" type="button" data-href="18_data-analytics-and-data-science/164-a-closer-look-at-redshift.html">Open</button></li>
+            <li><span class="lesson-text">165 Glue</span><button class="open-link" type="button" data-href="18_data-analytics-and-data-science/165-extracting-data-with-glue.html">Open</button></li>
+            <li><span class="lesson-text">166 EMR</span><button class="open-link" type="button" data-href="18_data-analytics-and-data-science/166-self-managed-big-data-workloads-with-emr.html">Open</button></li>
+            <li><span class="lesson-text">167 QuickSight &amp; Athena</span><button class="open-link" type="button" data-href="18_data-analytics-and-data-science/167-analysing-data-with-quicksight-and-athena.html">Open</button></li>
+            <li><span class="lesson-text">168 Search &amp; Visualization</span><button class="open-link" type="button" data-href="18_data-analytics-and-data-science/168-searching-and-visualizing-data.html">Open</button></li>
+            <li><span class="lesson-text">169 Module Summary</span><button class="open-link" type="button" data-href="18_data-analytics-and-data-science/169-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 19 -->
+      <details class="module" data-module="19">
+        <summary>
+          <span>19 — Cloud Management 🧰</span>
+          <span class="meta"><span class="chip">9 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">170 Module Introduction</span><button class="open-link" type="button" data-href="19_cloud-management/170-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">171 Organizations</span><button class="open-link" type="button" data-href="19_cloud-management/171-introducing-aws-organizations-multi-account-environments.html">Open</button></li>
+            <li><span class="lesson-text">172 Control Tower</span><button class="open-link" type="button" data-href="19_cloud-management/172-getting-started-with-control-tower.html">Open</button></li>
+            <li><span class="lesson-text">173 Cost Management</span><button class="open-link" type="button" data-href="19_cloud-management/173-very-important-cost-management.html">Open</button></li>
+            <li><span class="lesson-text">174 Tags</span><button class="open-link" type="button" data-href="19_cloud-management/174-using-tags.html">Open</button></li>
+            <li><span class="lesson-text">175 Consolidated Billing</span><button class="open-link" type="button" data-href="19_cloud-management/175-consolidated-billing.html">Open</button></li>
+            <li><span class="lesson-text">176 CloudFormation</span><button class="open-link" type="button" data-href="19_cloud-management/176-introducing-cloudformation-for-reproducible-cloud-resources.html">Open</button></li>
+            <li><span class="lesson-text">177 Managing Configurations</span><button class="open-link" type="button" data-href="19_cloud-management/177-managing-service-and-app-configurations.html">Open</button></li>
+            <li><span class="lesson-text">178 Module Summary</span><button class="open-link" type="button" data-href="19_cloud-management/178-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 20 -->
+      <details class="module" data-module="20">
+        <summary>
+          <span>20 — Security: A Closer Look 🛡️</span>
+          <span class="meta"><span class="chip">14 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">179 Module Introduction</span><button class="open-link" type="button" data-href="20_security-a-closer-look/179-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">180 What Should Be Secured?</span><button class="open-link" type="button" data-href="20_security-a-closer-look/180-what-should-be-secured.html">Open</button></li>
+            <li><span class="lesson-text">181 Re-introducing IAM</span><button class="open-link" type="button" data-href="20_security-a-closer-look/181-re-introducing-iam.html">Open</button></li>
+            <li><span class="lesson-text">182 SSO &amp; Managed Directory</span><button class="open-link" type="button" data-href="20_security-a-closer-look/182-user-authentication-sso-and-managed-directory.html">Open</button></li>
+            <li><span class="lesson-text">183 CloudTrail &amp; GuardDuty</span><button class="open-link" type="button" data-href="20_security-a-closer-look/183-track-account-usage-via-cloudtrail-and-guardduty.html">Open</button></li>
+            <li><span class="lesson-text">184 Compliance</span><button class="open-link" type="button" data-href="20_security-a-closer-look/184-compliance-and-legal-requirements.html">Open</button></li>
+            <li><span class="lesson-text">185 Inspector &amp; Detective</span><button class="open-link" type="button" data-href="20_security-a-closer-look/185-app-protection-with-inspector-and-detective.html">Open</button></li>
+            <li><span class="lesson-text">186 WAF &amp; Network Firewall</span><button class="open-link" type="button" data-href="20_security-a-closer-look/186-protecting-traffic-with-waf-and-network-firewall.html">Open</button></li>
+            <li><span class="lesson-text">187 Shield (DDoS)</span><button class="open-link" type="button" data-href="20_security-a-closer-look/187-protecting-against-ddos-attacks-with-shield.html">Open</button></li>
+            <li><span class="lesson-text">188 Encryption (KMS/ACM)</span><button class="open-link" type="button" data-href="20_security-a-closer-look/188-encrypting-data-at-rest-and-in-transit.html">Open</button></li>
+            <li><span class="lesson-text">189 Secrets Manager</span><button class="open-link" type="button" data-href="20_security-a-closer-look/189-managing-code-secrets-with-secrets-manager.html">Open</button></li>
+            <li><span class="lesson-text">190 Macie</span><button class="open-link" type="button" data-href="20_security-a-closer-look/190-protecting-data-with-macie.html">Open</button></li>
+            <li><span class="lesson-text">191 Security Hub</span><button class="open-link" type="button" data-href="20_security-a-closer-look/191-introducing-security-hub.html">Open</button></li>
+            <li><span class="lesson-text">192 Module Summary</span><button class="open-link" type="button" data-href="20_security-a-closer-look/192-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 21 -->
+      <details class="module" data-module="21">
+        <summary>
+          <span>21 — Developing for the Cloud 👩‍💻</span>
+          <span class="meta"><span class="chip">9 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">193 Module Introduction</span><button class="open-link" type="button" data-href="21_developing-for-with-and-in-the-cloud/193-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">194 Development Workflow</span><button class="open-link" type="button" data-href="21_developing-for-with-and-in-the-cloud/194-a-typical-development-workflow.html">Open</button></li>
+            <li><span class="lesson-text">195 Cloud9 &amp; CodeCommit</span><button class="open-link" type="button" data-href="21_developing-for-with-and-in-the-cloud/195-writing-code-with-cloud9-and-using-codecommit.html">Open</button></li>
+            <li><span class="lesson-text">196 CodeBuild &amp; CodeArtifact</span><button class="open-link" type="button" data-href="21_developing-for-with-and-in-the-cloud/196-building-code-with-codebuild-and-codeartifact.html">Open</button></li>
+            <li><span class="lesson-text">197 CodeDeploy</span><button class="open-link" type="button" data-href="21_developing-for-with-and-in-the-cloud/197-deployments-with-codedeploy.html">Open</button></li>
+            <li><span class="lesson-text">198 CodePipeline &amp; CodeStar</span><button class="open-link" type="button" data-href="21_developing-for-with-and-in-the-cloud/198-automated-code-workflows-with-codepipeline-and-codestar.html">Open</button></li>
+            <li><span class="lesson-text">199 CodeGuru &amp; DevOpsGuru</span><button class="open-link" type="button" data-href="21_developing-for-with-and-in-the-cloud/199-introducing-codeguru-and-devopsguru.html">Open</button></li>
+            <li><span class="lesson-text">200 AWS CDK</span><button class="open-link" type="button" data-href="21_developing-for-with-and-in-the-cloud/200-a-brief-note-about-the-aws-cdk.html">Open</button></li>
+            <li><span class="lesson-text">201 Module Summary</span><button class="open-link" type="button" data-href="21_developing-for-with-and-in-the-cloud/201-module-summary.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 22 -->
+      <details class="module" data-module="22">
+        <summary>
+          <span>22 — Other Services (ML, IoT, Media, etc.) 🧠</span>
+          <span class="meta"><span class="chip">7 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">202 Module Introduction</span><button class="open-link" type="button" data-href="22_other-services/202-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">203 Machine Learning on AWS</span><button class="open-link" type="button" data-href="22_other-services/203-machine-learning-on-aws.html">Open</button></li>
+            <li><span class="lesson-text">204 AI Services</span><button class="open-link" type="button" data-href="22_other-services/204-artificial-intelligence-services.html">Open</button></li>
+            <li><span class="lesson-text">205 IoT on AWS</span><button class="open-link" type="button" data-href="22_other-services/205-internet-of-things-iot-on-aws.html">Open</button></li>
+            <li><span class="lesson-text">206 Business Applications</span><button class="open-link" type="button" data-href="22_other-services/206-business-applications.html">Open</button></li>
+            <li><span class="lesson-text">207 Media Services</span><button class="open-link" type="button" data-href="22_other-services/207-media-services.html">Open</button></li>
+            <li><span class="lesson-text">208 Amazon Connect</span><button class="open-link" type="button" data-href="22_other-services/208-amazon-connect-a-cloud-call-center.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 23 -->
+      <details class="module" data-module="23">
+        <summary>
+          <span>23 — Cloud Best Practices ✅</span>
+          <span class="meta"><span class="chip">5 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">209 Module Introduction</span><button class="open-link" type="button" data-href="23_cloud-best-practices/209-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">210 Well-Architected Framework</span><button class="open-link" type="button" data-href="23_cloud-best-practices/210-the-well-architected-framework.html">Open</button></li>
+            <li><span class="lesson-text">211 Well-Architected Tool</span><button class="open-link" type="button" data-href="23_cloud-best-practices/211-the-well-architected-tool.html">Open</button></li>
+            <li><span class="lesson-text">212 Trusted Advisor</span><button class="open-link" type="button" data-href="23_cloud-best-practices/212-automated-suggestions-with-trusted-advisor.html">Open</button></li>
+            <li><span class="lesson-text">213 Acceptable Use Policy</span><button class="open-link" type="button" data-href="23_cloud-best-practices/213-allowed-or-not-allowed-acceptable-use-policy.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 24 -->
+      <details class="module" data-module="24">
+        <summary>
+          <span>24 — Beyond AWS Services (APN, Marketplace, Pro Services) 🤝</span>
+          <span class="meta"><span class="chip">4 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">214 Module Introduction</span><button class="open-link" type="button" data-href="24_beyond-aws-services-additional-offerings/214-module-introduction.html">Open</button></li>
+            <li><span class="lesson-text">215 AWS Partner Network (APN)</span><button class="open-link" type="button" data-href="24_beyond-aws-services-additional-offerings/215-the-aws-partner-network-apn.html">Open</button></li>
+            <li><span class="lesson-text">216 AWS Marketplace</span><button class="open-link" type="button" data-href="24_beyond-aws-services-additional-offerings/216-the-aws-marketplace.html">Open</button></li>
+            <li><span class="lesson-text">217 Professional &amp; Managed Services</span><button class="open-link" type="button" data-href="24_beyond-aws-services-additional-offerings/217-aws-professional-and-managed-services.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+      <!-- 25 -->
+      <details class="module" data-module="25">
+        <summary>
+          <span>25 — Preparing for the Exam 📝</span>
+          <span class="meta"><span class="chip">7 lessons</span></span>
+        </summary>
+        <div class="content">
+          <ol class="lessons">
+            <li><span class="lesson-text">218 How to Prepare</span><button class="open-link" type="button" data-href="25_preparing-for-the-exam/218-how-to-prepare-for-the-exam.html">Open</button></li>
+            <li><span class="lesson-text">219 Exam Structure</span><button class="open-link" type="button" data-href="25_preparing-for-the-exam/219-cloud-practitioner-exam-content-and-structure.html">Open</button></li>
+            <li><span class="lesson-text">220 Additional Reading</span><button class="open-link" type="button" data-href="25_preparing-for-the-exam/220-exam-preparation-additional-reading.html">Open</button></li>
+            <li><span class="lesson-text">221 ESL +30 Minutes</span><button class="open-link" type="button" data-href="25_preparing-for-the-exam/221-english-as-a-second-language-get-30-minutes-extra.html">Open</button></li>
+            <li><span class="lesson-text">222 Exam Recommendations</span><button class="open-link" type="button" data-href="25_preparing-for-the-exam/222-exam-recommendations-and-share-your-success.html">Open</button></li>
+            <li><span class="lesson-text">223 Example Question</span><button class="open-link" type="button" data-href="25_preparing-for-the-exam/223-an-example-question-and-how-to-approach-exam-questions.html">Open</button></li>
+            <li><span class="lesson-text">224 Bonus Lecture</span><button class="open-link" type="button" data-href="25_preparing-for-the-exam/224-bonus-lecture.html">Open</button></li>
+          </ol>
+        </div>
+      </details>
+
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const q = document.getElementById('q');
+      const toc = document.getElementById('toc');
+      const printBtn = document.getElementById('printBtn');
+      const expandAllBtn = document.getElementById('expandAllBtn');
+      const collapseAllBtn = document.getElementById('collapseAllBtn');
+
+      const modules = () => Array.from(toc.querySelectorAll('details.module'));
+
+      function setAll(open) {
+        modules().forEach(d => { d.open = open; });
+      }
+
+      function normalize(s) {
+        return (s || '').toLowerCase().trim();
+      }
+
+      function applyFilter(term) {
+        const t = normalize(term);
+        const allModules = modules();
+
+        if (!t) {
+          allModules.forEach(d => {
+            d.style.display = '';
+            d.querySelectorAll('li').forEach(li => (li.style.display = ''));
+          });
+          return;
+        }
+
+        allModules.forEach(d => {
+          let anyVisible = false;
+          const items = Array.from(d.querySelectorAll('li'));
+          items.forEach(li => {
+            const text = normalize(li.textContent);
+            const href = normalize(li.querySelector('button.open-link')?.getAttribute('data-href') || '');
+            const match = text.includes(t) || href.includes(t);
+            li.style.display = match ? '' : 'none';
+            if (match) anyVisible = true;
+          });
+          d.style.display = anyVisible ? '' : 'none';
+          if (anyVisible) d.open = true;
+        });
+      }
+
+      // Expand all sections before printing so PDF includes everything
+      let beforePrintState = null;
+
+      function captureOpenState() {
+        beforePrintState = modules().map(d => d.open);
+      }
+      function restoreOpenState() {
+        if (!beforePrintState) return;
+        const ms = modules();
+        ms.forEach((d, i) => { d.open = !!beforePrintState[i]; });
+        beforePrintState = null;
+      }
+
+      window.addEventListener('beforeprint', () => {
+        captureOpenState();
+        setAll(true);
+      });
+      window.addEventListener('afterprint', () => {
+        restoreOpenState();
+      });
+
+      // Buttons
+      printBtn.addEventListener('click', () => {
+        captureOpenState();
+        setAll(true);
+        window.print();
+      });
+
+      expandAllBtn.addEventListener('click', () => setAll(true));
+      collapseAllBtn.addEventListener('click', () => setAll(false));
+
+      q.addEventListener('input', (e) => applyFilter(e.target.value));
+
+      // Optional: open lesson file when clicking the "Open" pill button (only if enabled via body class)
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest && e.target.closest('button.open-link');
+        if (!btn) return;
+        const href = btn.getAttribute('data-href');
+        if (!href) return;
+        window.location.href = href;
+      });
+    })();
+  </script>
+</body>
+</html>

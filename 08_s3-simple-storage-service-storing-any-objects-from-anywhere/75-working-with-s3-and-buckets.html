@@ -1,0 +1,336 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>AWS S3 — Working with Buckets (Reviewer / Study Guide)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --good: #0a7a2f;
+      --warn: #9a5b00;
+      --bad: #b00020;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+    }
+
+    header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 1.65rem;
+      line-height: 1.25;
+      margin: 0 0 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    h2 {
+      margin: 18px 0 8px;
+      font-size: 1.22rem;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin: 14px 0 6px;
+      font-size: 1.05rem;
+      line-height: 1.35;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 10px;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    .card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin: 10px 0;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .callout.good { border-left-color: var(--good); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout.bad  { border-left-color: var(--bad); }
+
+    .kbd {
+      font-family: var(--mono);
+      font-size: 0.92em;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 1px 6px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .mono {
+      font-family: var(--mono);
+      font-size: 0.95em;
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .twoCol {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .tiny {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .checklist li { list-style: none; padding-left: 0; }
+    .checklist li::before { content: "☑️ "; }
+
+    .steps li { margin: 8px 0; }
+
+    /* Print (A4) */
+    @media print {
+      @page { size: A4; margin: 16mm; }
+      body {
+        font-size: 11.5pt;
+        line-height: 1.35;
+        color: #000;
+      }
+      .page {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+      header { border-bottom: 1px solid #000; }
+      .chip, .card, .callout {
+        background: #fff !important;
+        box-shadow: none !important;
+      }
+      a { color: #000; text-decoration: underline; }
+      .no-print { display: none !important; }
+      .card, .callout { break-inside: avoid; page-break-inside: avoid; }
+      h2, h3 { break-after: avoid; page-break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>🪣 AWS S3 — Working with Buckets (Reviewer / Study Guide)</h1>
+      <p class="subtitle">Beginner-friendly notes on creating an S3 bucket, uploading files, and the key security defaults you must understand for the CLF-C02 exam.</p>
+      <div class="meta">
+        <span class="chip">📄 Single-column</span>
+        <span class="chip">🖨️ A4 print-ready</span>
+        <span class="chip">🔐 Security-first defaults</span>
+        <span class="chip">🧠 Examples included</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>1) What you’re learning in this lecture</h2>
+      <ul>
+        <li>How to find <b>S3</b> in the AWS Console 🔎</li>
+        <li>How to <b>create an S3 bucket</b> and why bucket names must be <b>globally unique</b> 🌍</li>
+        <li>How to <b>choose a region</b> for your bucket and why it matters 📍</li>
+        <li>How to <b>upload files</b> in the console (drag-and-drop or file picker) ⬆️</li>
+        <li>Why files are usually <b>private by default</b> and how “Block Public Access” protects you 🛡️</li>
+      </ul>
+
+      <div class="callout warn">
+        <b>Exam mindset 🧪</b>
+        <p>Remember: an S3 bucket name must be unique across <b>all</b> AWS accounts (not just your account). Also remember: S3 is <b>regional</b> (you pick a region per bucket).</p>
+      </div>
+    </section>
+
+    <div class="hr"></div>
+
+    <section>
+      <h2>2) How to create an S3 bucket (Console flow)</h2>
+      <ol class="steps">
+        <li>Open the AWS Console and search for <span class="kbd">S3</span> 🔎</li>
+        <li>Click <b>Create bucket</b> ➕</li>
+        <li>Set the bucket <b>Name</b> and <b>Region</b> 📛📍</li>
+        <li>Review security and permission settings (especially public access) 🔐</li>
+        <li>Click <b>Create bucket</b> ✅</li>
+      </ol>
+
+      <div class="card">
+        <h3>🪣 Bucket naming (why “unique” is a big deal)</h3>
+        <p>A bucket name is not only unique within your account — it must be unique across the entire AWS global namespace.</p>
+        <ul>
+          <li>✅ Good: <span class="mono">reymond-bpims-aws-course-demo-bucket-1</span></li>
+          <li>❌ Risky: <span class="mono">demo-bucket</span> (likely already taken)</li>
+        </ul>
+        <p class="tiny">Tip: Include your company name, project name, and a random suffix (numbers/date) to avoid collisions.</p>
+      </div>
+
+      <div class="card">
+        <h3>📍 Region selection (S3 bucket location)</h3>
+        <p>You choose where the bucket lives. That determines where your files are stored.</p>
+        <ul>
+          <li>⚡ <b>Latency:</b> choose a region closer to your users for faster access.</li>
+          <li>⚖️ <b>Compliance:</b> some organizations must store data in specific countries/regions.</li>
+          <li>💸 <b>Cost:</b> pricing can vary by region, so check S3 pricing for your chosen region.</li>
+        </ul>
+        <div class="callout">
+          <b>Important note 🧭</b>
+          <p>In the bucket creation screen, you pick the region for the bucket in that flow. Don’t confuse this with the general top-right region selector used in many other services.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="hr"></div>
+
+    <section>
+      <h2>3) Permissions & “Block Public Access” (must-know security default)</h2>
+      <div class="callout good">
+        <b>Default behavior ✅</b>
+        <p>By default, your bucket is private. Most setups start with “Block Public Access” enabled so you don’t accidentally expose files to the internet.</p>
+      </div>
+
+      <p><b>Why this matters:</b> If a bucket becomes public (via policies/settings), anyone with the right URL could access your files. Sometimes that’s intended (public downloads or static website hosting), but often it’s a serious security incident. 😬</p>
+
+      <div class="card">
+        <h3>🛡️ Beginner example: Private vs Public</h3>
+        <ul>
+          <li><b>Private bucket</b> 🔒: only approved identities can access objects (typical default).</li>
+          <li><b>Public bucket</b> 🌐: objects can be fetched over HTTP by anyone (only enable if you truly need this).</li>
+        </ul>
+        <p class="tiny">In the console demo, copying the object URL won’t work publicly unless you intentionally make the bucket/object public via policy/config.</p>
+      </div>
+    </section>
+
+    <div class="hr"></div>
+
+    <section>
+      <h2>4) Uploading files to your bucket (Console)</h2>
+      <p>Once your bucket exists, you can open it and upload files directly from the AWS Console.</p>
+
+      <ul>
+        <li>Drag-and-drop a file into the bucket area 🖱️⬇️</li>
+        <li>Or click <b>Upload</b> and choose a file via file picker 📁</li>
+      </ul>
+
+      <div class="card">
+        <h3>⚙️ Upload options you may see</h3>
+        <ul>
+          <li><b>Storage Class</b> 🧊: controls cost/performance characteristics. (You’ll learn details later.)</li>
+          <li><b>Encryption</b> 🔐: can be applied per object, and can also be enforced at the bucket level.</li>
+        </ul>
+        <div class="callout">
+          <b>Beginner-friendly idea 💡</b>
+          <p>Think “Storage Class” as: how quickly you need the file and how much you want to pay. Think “Encryption” as: protecting data at rest so stored files are unreadable without proper keys.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🔗 Accessing an uploaded file</h3>
+        <ul>
+          <li>You can click the object in the bucket to view its details.</li>
+          <li>You can copy the object URL to share it.</li>
+        </ul>
+        <div class="callout warn">
+          <b>But… ⚠️</b>
+          <p>If public access is blocked (typical default), opening that URL in a browser will fail unless the requester is authorized (e.g., signed in with permissions or using a signed URL).</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🗑️ Cleaning up</h3>
+        <p>If you don’t need the object anymore, you can delete it from the bucket. This matters because storage costs depend on how much you store and for how long.</p>
+      </div>
+    </section>
+
+    <div class="hr"></div>
+
+    <section>
+      <h2>5) Key takeaways (quick reviewer)</h2>
+      <ul class="checklist">
+        <li>S3 buckets are containers for objects (files) 🪣</li>
+        <li>Bucket names must be globally unique 🌍</li>
+        <li>Each bucket belongs to a specific region 📍</li>
+        <li>You can upload files directly in the console (no EC2 required) ⬆️</li>
+        <li>“Block Public Access” helps prevent accidental exposure 🛡️</li>
+        <li>Object URLs don’t automatically mean “public” — permissions decide 🔐</li>
+      </ul>
+
+      <div class="callout good">
+        <b>One-sentence summary ✅</b>
+        <p>S3 is an object storage service where you create region-based buckets with globally unique names, upload files directly, and control access via strong defaults like blocking public access unless explicitly enabled.</p>
+      </div>
+    </section>
+
+    <p class="tiny no-print">Tip: Print this page using your browser’s print dialog. Ensure “Paper size: A4” and “Margins: Default” (or “Custom” ~16mm) for best results.</p>
+  </main>
+</body>
+</html>

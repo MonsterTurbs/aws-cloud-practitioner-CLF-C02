@@ -1,0 +1,428 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — VPC Flow Logs & Advanced Monitoring</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #666;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --ok: #0f7b3a;
+      --warn: #8a5a00;
+      --danger: #9b1c1c;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px 56px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 16px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn:hover { border-color: #cfcfcf; }
+
+    .btn.primary {
+      border-color: #c9dafc;
+      background: #eef4ff;
+      color: #083b9a;
+    }
+
+    main { margin-top: 16px; }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin: 12px 0;
+      background: #fff;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 17px;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 15px;
+    }
+
+    p { margin: 10px 0; }
+
+    ul {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      border-left: 5px solid var(--accent);
+      background: #f5f9ff;
+      padding: 12px 12px;
+      border-radius: 8px;
+      margin: 12px 0;
+    }
+
+    .callout.ok {
+      border-left-color: var(--ok);
+      background: #f3fbf6;
+    }
+
+    .callout.warn {
+      border-left-color: var(--warn);
+      background: #fff8ee;
+    }
+
+    .callout.danger {
+      border-left-color: var(--danger);
+      background: #fff2f2;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      background: #fff;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+      padding: 12px;
+    }
+
+    .kvs {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .kvs li {
+      display: flex;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px dashed #e2e2e2;
+    }
+
+    .kvs li:last-child { border-bottom: 0; }
+
+    .k {
+      min-width: 190px;
+      font-weight: 700;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+    }
+
+    pre {
+      background: #0b1020;
+      color: #e9eefc;
+      padding: 12px;
+      border-radius: 10px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 10px 0 0;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      padding: 10px 12px;
+      margin-top: 12px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .muted { color: var(--muted); }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { color: #000; }
+      .page { max-width: none; padding: 0; }
+      header, section { border-color: #cfcfcf; }
+      .toolbar, .no-print { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      pre { background: #fff; color: #000; border: 1px solid #cfcfcf; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>Monitoring Workloads — VPC Flow Logs & Advanced Monitoring in Services</h1>
+      <p class="subtitle">
+        Reviewer / Study Guide (Beginner-Friendly) • Single-column • A4 Print Ready
+      </p>
+
+      <div class="toolbar no-print">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" id="toggleAnswers">✅ Show/Hide Answers</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Idea: Monitoring is everywhere in AWS 👀</h2>
+        <p>
+          Many AWS services can publish <strong>logs</strong> and <strong>metrics</strong> into <strong>CloudWatch</strong> automatically.
+          Some services also let you enable <strong>advanced monitoring</strong> for deeper visibility (often with extra cost).
+        </p>
+        <div class="callout ok">
+          <strong>Exam mindset:</strong> Basic monitoring is often available out of the box, but <strong>advanced</strong> monitoring features can be optional and may cost more. 💡
+        </div>
+      </section>
+
+      <section>
+        <h2>2) VPC Flow Logs 🧾: Traffic visibility inside your network</h2>
+        <p>
+          A <strong>VPC Flow Log</strong> records information about network traffic in your AWS network.
+          Think of it as a <em>traffic logbook</em> for your VPC.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <h3>What it answers</h3>
+            <ul>
+              <li>“Is traffic being <strong>allowed</strong> or <strong>denied</strong>?” ✅❌</li>
+              <li>“Which source talked to which destination?” ↔️</li>
+              <li>“Are there suspicious connection attempts?” 🕵️</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Where the logs go</h3>
+            <ul>
+              <li>Flow log data can be aggregated and stored in a <strong>CloudWatch Log Group</strong>.</li>
+              <li>Once in CloudWatch Logs, you can search/analyze it (e.g., with Logs Insights later in the course).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Simple mental model:</strong><br>
+          VPC Flow Logs = “Networking layer log data” → stored as CloudWatch Logs → you analyze and alert from there.
+        </div>
+
+        <h3>Mini example (story)</h3>
+        <p>
+          You have an EC2 web server in a VPC. Users report the site is “down.”
+          You enable <strong>VPC Flow Logs</strong> and see many <strong>REJECT/DENY</strong>-type entries around port 443.
+          That suggests a security rule (e.g., Security Group / NACL) might be blocking traffic.
+        </p>
+      </section>
+
+      <section>
+        <h2>3) Lambda monitoring 📈: CloudWatch behind the scenes</h2>
+        <p>
+          AWS Lambda has monitoring capabilities available <strong>by default</strong>.
+          Under the hood, Lambda publishes data to <strong>CloudWatch</strong>.
+        </p>
+
+        <ul class="kvs">
+          <li><span class="k">Default monitoring</span><span class="v">Lambda publishes metrics/logs to CloudWatch automatically (so you can view them in CloudWatch or Lambda monitoring screens). ✅</span></li>
+          <li><span class="k">Deeper insights</span><span class="v">You can view richer details via areas like <strong>Lambda Insights</strong> (in CloudWatch) for more visibility. 🔍</span></li>
+          <li><span class="k">Advanced tracing</span><span class="v">You can enable <strong>X-Ray</strong> to trace requests and execution behavior more deeply. 🧭</span></li>
+        </ul>
+
+        <div class="callout warn">
+          <strong>Remember:</strong> “Basic” monitoring is usually simpler and cheaper; “advanced / detailed” monitoring can be optional and may add cost. 💸
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Advanced monitoring often costs extra 💰</h2>
+        <p>
+          AWS frequently provides <strong>basic monitoring for free</strong> (or included in the service), but it may offer optional “enhanced” or “advanced” monitoring modes.
+          Those modes can provide more granular data, longer retention, or deeper analysis.
+        </p>
+
+        <div class="callout ok">
+          <strong>Why pay for advanced monitoring?</strong> Because catching issues early can prevent outages and expensive incidents later. 🧯
+        </div>
+
+        <details>
+          <summary>Beginner-friendly rule of thumb 🧠</summary>
+          <ul>
+            <li>If it’s a personal project / small demo: start with basic monitoring.</li>
+            <li>If it’s production / business-critical: consider advanced monitoring where it clearly reduces risk and speeds up troubleshooting.</li>
+            <li>Always check pricing pages when turning on “extra” features.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section>
+        <h2>5) Quick reviewer: Key terms (CLF-level) 🧩</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>VPC Flow Logs</h3>
+            <p class="muted">Logs network traffic information in your VPC.</p>
+            <ul>
+              <li>Created in the VPC console</li>
+              <li>Sent to CloudWatch Logs (Log Groups)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>CloudWatch</h3>
+            <p class="muted">Central monitoring for metrics, logs, dashboards, alarms.</p>
+            <ul>
+              <li>Many services publish automatically</li>
+              <li>You can alert via alarms (often with SNS)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Advanced Monitoring / X-Ray</h3>
+            <p class="muted">Deeper visibility (tracing, detailed insights).</p>
+            <ul>
+              <li>Often optional</li>
+              <li>Can cost extra</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Self-test (with answers) 📝</h2>
+        <ol>
+          <li>
+            What AWS service typically stores VPC Flow Log data for analysis?
+            <div class="answer" hidden><strong>Answer:</strong> CloudWatch Logs (in a Log Group). ✅</div>
+          </li>
+          <li>
+            Lambda monitoring is enabled by default. Where does it publish data?
+            <div class="answer" hidden><strong>Answer:</strong> CloudWatch. 📈</div>
+          </li>
+          <li>
+            True or False: Advanced monitoring features always cost nothing.
+            <div class="answer" hidden><strong>Answer:</strong> False — advanced/detailed monitoring often costs extra. 💸</div>
+          </li>
+          <li>
+            What is one common benefit of paying for advanced monitoring?
+            <div class="answer" hidden><strong>Answer:</strong> Faster troubleshooting and earlier detection of issues (which can save money). 🧯</div>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>7) One-page checklist ✅</h2>
+        <ul>
+          <li>☑️ Know that <strong>CloudWatch</strong> is the core monitoring hub (logs + metrics + alarms + dashboards).</li>
+          <li>☑️ <strong>VPC Flow Logs</strong> = network traffic visibility; often stored in CloudWatch Logs.</li>
+          <li>☑️ Many services publish monitoring data “out of the box” (e.g., Lambda → CloudWatch).</li>
+          <li>☑️ <strong>Advanced monitoring</strong> exists and may cost more, but can be worth it for production systems.</li>
+        </ul>
+      </section>
+
+      <p class="muted" style="margin:14px 2px 0;">
+        Tip: When printing, use “Save as PDF” and keep margins enabled to prevent text from being cut off.
+      </p>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const btn = document.getElementById('toggleAnswers');
+      const answers = Array.from(document.querySelectorAll('.answer'));
+      let visible = false;
+
+      function setVisible(v) {
+        visible = v;
+        answers.forEach(a => a.hidden = !visible);
+        if (btn) btn.textContent = visible ? '🙈 Hide Answers' : '✅ Show Answers';
+      }
+
+      if (btn) {
+        btn.addEventListener('click', function () {
+          setVisible(!visible);
+        });
+      }
+
+      // Default: answers hidden
+      setVisible(false);
+    })();
+  </script>
+</body>
+</html>

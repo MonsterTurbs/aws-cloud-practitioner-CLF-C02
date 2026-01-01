@@ -1,0 +1,334 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>AWS CLF-C02 Study Guide — Why File Storage Is Important</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --focus: #1a73e8;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column layout */
+    .page {
+      max importing: none;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 10px;
+    }
+
+    .kicker {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0.2px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main {
+      margin-top: 18px;
+    }
+
+    h2 {
+      margin: 18px 0 10px;
+      font-size: 18px;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 15px;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    ul {
+      margin: 8px 0 10px;
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    .callout {
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      background: #fff;
+      padding: 12px 12px 10px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .callout .title {
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .label {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+
+    /* Word wrapping: prevent cut-offs in print */
+    body, p, li, h1, h2, h3, .card, .callout {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    /* Print styling (A4) */
+    @page {
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+    }
+
+    @media print {
+      .wrap {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      header, .card, .callout {
+        border-radius: 0;
+      }
+
+      a { color: #000; text-decoration: none; }
+
+      h1, h2, h3 {
+        break-after: avoid-page;
+        page-break-after: avoid;
+      }
+
+      .card, .callout, ul, li {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      footer {
+        break-before: avoid-page;
+        page-break-before: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="wrap">
+      <header>
+        <p class="kicker">📘 AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide</p>
+        <h1>📁 Why File Storage Is Important</h1>
+        <p class="subtitle">
+          Focus: why most cloud workloads need file storage, common use-cases, and how this connects to AWS storage services (EBS / EFS / S3).
+        </p>
+      </header>
+
+      <main>
+        <div class="callout">
+          <p class="title">🧠 Core idea (one-liner)</p>
+          <p>
+            Most workloads generate data, and a lot of that data must be stored as <strong>files</strong> (not only in databases) — so the cloud needs reliable file storage options.
+          </p>
+        </div>
+
+        <h2>☁️ What is “file storage” in simple terms?</h2>
+        <p>
+          <strong>File storage</strong> means saving data as files (e.g., images, PDFs, logs, backups, documents) so you can retrieve and use them later.
+          In cloud setups, the key question is: <em>Where will my files live, and how will my app access them?</em>
+        </p>
+
+        <h2>✅ Why do cloud workloads need file storage?</h2>
+        <p>
+          In real systems, applications often produce or consume files. Common reasons include:
+        </p>
+        <ul>
+          <li>📤 <strong>User uploads</strong> (photos, attachments, profile pictures, receipts)</li>
+          <li>🧾 <strong>Generated documents</strong> (invoices, certificates, statements, PDF reports)</li>
+          <li>🖼️ <strong>Processed outputs</strong> (resized/optimized images, converted videos, thumbnails)</li>
+          <li>📊 <strong>Analytics/reporting artifacts</strong> (exported CSVs, daily/weekly reports)</li>
+          <li>🗂️ <strong>Archiving</strong> for business, compliance, or personal use (legal docs, finance records, memories)</li>
+        </ul>
+
+        <div class="grid">
+          <section class="card">
+            <div class="label">Example 1</div>
+            <h3>🛒 Online Shop (Invoices + Uploads)</h3>
+            <p>
+              A checkout system might generate a <strong>PDF invoice</strong> per order. Customers might also upload proof-of-payment images.
+              Those files must be stored somewhere durable and retrievable later.
+            </p>
+          </section>
+
+          <section class="card">
+            <div class="label">Example 2</div>
+            <h3>🖼️ Image Optimization Pipeline</h3>
+            <p>
+              Users upload an image → your system creates a smaller “web-optimized” version.
+              The optimized file is also a file that must be stored (often alongside the original).
+            </p>
+          </section>
+
+          <section class="card">
+            <div class="label">Example 3</div>
+            <h3>📈 Internal Analytics Reports</h3>
+            <p>
+              A scheduled analytics job produces weekly PDF reports for your company.
+              You store the PDFs so people can download or review them anytime.
+            </p>
+          </section>
+        </div>
+
+        <h2>🗃️ Files vs Databases (quick comparison)</h2>
+        <p>
+          In many systems, both are used — they solve different problems:
+        </p>
+        <ul>
+          <li>📁 <strong>Files</strong> are great for <em>documents/media</em> (images, PDFs, backups, large binary data).</li>
+          <li>🧮 <strong>Databases</strong> are great for <em>structured data</em> you query (orders, users, transactions, relationships).</li>
+        </ul>
+        <div class="callout">
+          <p class="title">💡 Practical pattern you’ll see often</p>
+          <p>
+            Save the <strong>file</strong> in a storage service, then save the <strong>file metadata</strong> (like filename, URL, owner, timestamps) in a database.
+          </p>
+        </div>
+
+        <h2>🧭 Why AWS has multiple “file storage” services</h2>
+        <p>
+          Not all file storage is the same. Different applications need different capabilities:
+        </p>
+        <ul>
+          <li>⚡ Fast storage attached to a single server</li>
+          <li>🤝 Shared storage that multiple servers can access at the same time</li>
+          <li>🏗️ Massive scalable object storage for uploads and archives</li>
+        </ul>
+
+        <div class="card">
+          <div class="label">Coming next in the course</div>
+          <h3>🔑 Services to remember</h3>
+          <ul>
+            <li>🧱 <strong>EBS</strong> (Elastic Block Store): “disk-like” storage typically attached to an EC2 instance.</li>
+            <li>🧵 <strong>EFS</strong> (Elastic File System): shared file system that multiple instances can mount.</li>
+            <li>🪣 <strong>S3</strong> (Simple Storage Service): object storage for uploads, assets, and archiving (covered deeper later).</li>
+          </ul>
+          <p class="mono">
+            Exam mindset: AWS offers multiple storage options because workloads have different storage requirements.
+          </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>📝 Quick self-check (mini reviewer)</h2>
+        <ul>
+          <li>✅ Why do most workloads need storage? <em>They generate data that must persist.</em></li>
+          <li>✅ Give 3 file examples: <em>uploads, invoices/PDFs, optimized images, reports, archives.</em></li>
+          <li>✅ Why not store everything in a database? <em>Files and DBs serve different purposes; many files are large binary objects.</em></li>
+          <li>✅ Why multiple AWS storage services? <em>Different performance/sharing/scaling needs.</em></li>
+        </ul>
+
+        <div class="callout">
+          <p class="title">⚠️ Cost + safety reminder</p>
+          <p>
+            Storage is usually not “free forever.” Always check pricing pages and (when using AWS) monitor billing to avoid surprises.
+          </p>
+        </div>
+
+        <footer>
+          <div>Module: Storing Files with EBS & EFS (Intro) — Lesson 66</div>
+          <div>Tip: Print via browser → ensure “Paper size: A4” and “Margins: Default” (or “Custom” if needed).</div>
+        </footer>
+      </main>
+    </div>
+  </div>
+</body>
+
+</html>

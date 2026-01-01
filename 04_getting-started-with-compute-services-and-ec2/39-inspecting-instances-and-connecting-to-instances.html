@@ -1,0 +1,340 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 39 Inspecting & Connecting to EC2 Instances</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+      --ok:#0f7b0f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 10px;
+    }
+
+    .steps{
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .steps li{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin: 10px 0;
+      background: #fff;
+    }
+    .steps strong{
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • EC2 Basics</p>
+      <h1>39 — Inspecting Instances & Connecting to Instances 🔍🔌</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Goal of This Lecture</h2>
+        <p>
+          After launching an EC2 instance, you should know how to:
+          <strong>(1)</strong> inspect its status and details,
+          <strong>(2)</strong> connect to it (SSH / EC2 Instance Connect / Session Manager), and
+          <strong>(3)</strong> stop vs terminate (and optionally hibernate).
+        </p>
+      </section>
+
+      <section>
+        <h2>📍 Where to Inspect an Instance</h2>
+        <p>
+          In the <strong>EC2 console</strong>, open the <strong>Instances</strong> dashboard:
+        </p>
+        <ul>
+          <li>Go to the EC2 Service page → click <strong>Instances</strong> (either on the page or in the left sidebar)</li>
+          <li>Select an instance to view details</li>
+        </ul>
+
+        <div class="mini">
+          <h3>What you can see there 🧾</h3>
+          <ul>
+            <li><strong>Status</strong> (running / stopped / terminated, etc.)</li>
+            <li><strong>Monitoring</strong> (e.g., CPU utilization) 📈</li>
+            <li><strong>Public DNS</strong> (auto-assigned in many setups) 🌐</li>
+            <li><strong>Public IPv4 address</strong> (often auto-assigned) 🧭</li>
+          </ul>
+          <div class="callout">
+            <p><strong>Practical note ✅</strong> Public DNS / Public IP are used to reach the instance from the internet (e.g., HTTP requests) <em>only if</em> the network rules allow it and your workload (like a web server) is actually running.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔌 How to Connect to an EC2 Instance</h2>
+        <p>
+          Select the instance and click <strong>Connect</strong>. AWS shows multiple connection options.
+        </p>
+
+        <ol class="steps">
+          <li>
+            <strong>Option A: Local SSH Client (classic) 💻🔑</strong>
+            <p>
+              You connect from your computer using SSH. This typically requires a <strong>key pair</strong> created during launch.
+              AWS provides step-by-step instructions for your OS in the documentation.
+            </p>
+            <div class="warning">
+              <p><strong>Requirement ⚠️</strong> No key pair = SSH auth won’t work (you need the private key file to authenticate).</p>
+            </div>
+          </li>
+
+          <li>
+            <strong>Option B: EC2 Instance Connect (browser-based) 🌐🧑‍💻</strong>
+            <p>
+              A convenient approach: connect directly <strong>from the browser</strong> without managing a key pair.
+              You get a terminal session inside the console.
+            </p>
+            <div class="good">
+              <p><strong>Typical setup ✅</strong> Ensure SSH traffic is allowed by the instance’s Security Group. Then you can click <strong>Connect</strong> and get a shell session in the browser.</p>
+            </div>
+          </li>
+
+          <li>
+            <strong>Option C: Session Manager (advanced) 🛠️</strong>
+            <p>
+              Session Manager is a more advanced AWS option for managing fleets of instances.
+              At Cloud Practitioner level, you mainly need to know it exists as a managed way to connect/manage.
+            </p>
+          </li>
+        </ol>
+
+        <div class="mini">
+          <h3>What you do after connecting 🧰</h3>
+          <p>
+            Once connected, you run commands on the remote machine:
+            install software, start services (e.g., a web server), download code, run scripts, and so on.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧯 Stop vs Terminate vs Hibernate</h2>
+        <p>
+          When you’re done with an instance, select it → <strong>Instance state</strong>.
+        </p>
+
+        <div class="mini">
+          <h3>Key differences (exam-friendly) ✅</h3>
+          <ul>
+            <li><strong>Stop</strong> ⏸️ — Instance is not running (typically no compute charges), but it still exists and can be restarted. Installed software remains.</li>
+            <li><strong>Terminate</strong> 🗑️ — Instance is deleted and cannot be restarted. Use this when you’re sure you don’t need it anymore.</li>
+            <li><strong>Hibernate</strong> 💤 — Like stop, but also saves the in-memory state (RAM). Must be enabled during instance launch.</li>
+          </ul>
+        </div>
+
+        <div class="warning">
+          <p><strong>Cost & hygiene ⚠️</strong> Don’t accumulate many stopped instances without a reason. Typically, terminate what you no longer need.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧾 Key Terms to Remember</h2>
+        <span class="tag">Instances Dashboard</span>
+        <span class="tag">Status</span>
+        <span class="tag">Monitoring</span>
+        <span class="tag">CPU Utilization</span>
+        <span class="tag">Public DNS</span>
+        <span class="tag">Public IPv4</span>
+        <span class="tag">SSH</span>
+        <span class="tag">Key Pair</span>
+        <span class="tag">EC2 Instance Connect</span>
+        <span class="tag">Session Manager</span>
+        <span class="tag">Stop</span>
+        <span class="tag">Terminate</span>
+        <span class="tag">Hibernate</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="mini">
+          <h3>Answer fast ⚡</h3>
+          <ul>
+            <li>Where do you go in the console to inspect instance details?</li>
+            <li>Why might SSH not work for an instance you launched?</li>
+            <li>What’s the main difference between Stop and Terminate?</li>
+            <li>What special thing does Hibernate do (vs Stop)?</li>
+          </ul>
+          <div class="good">
+            <p><strong>Expected ✅</strong> EC2 → Instances • Missing key pair / auth + security group rules • Stop keeps instance, Terminate deletes it • Hibernate saves in-memory state.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,361 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Cloud Best Practices (Module Intro)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover { border-color: #cfcfcf; }
+
+    main { margin-top: 16px; }
+
+    h2 {
+      margin: 18px 0 8px;
+      font-size: 18px;
+    }
+
+    h3 {
+      margin: 14px 0 6px;
+      font-size: 15px;
+    }
+
+    p { margin: 8px 0; }
+
+    .card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 14px 12px;
+      margin: 12px 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 12px 12px;
+      border-radius: 10px;
+      color: #1a1a1a;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    ul {
+      margin: 8px 0 8px 22px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .term {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .icon {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      background: #fff;
+      font-size: 16px;
+    }
+
+    .term strong { display: block; }
+
+    .muted { color: var(--muted); }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #fff;
+      white-space: nowrap;
+    }
+
+    .qa {
+      padding-left: 0;
+      margin-left: 0;
+      list-style: none;
+    }
+
+    .qa li {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 10px 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .answer {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Print rules: A4, clean margins, no buttons */
+    @page {
+      size: A4;
+      margin: 16mm;
+    }
+
+    @media print {
+      body { font-size: 11pt; }
+      .page { max-width: none; padding: 0; }
+      header { background: #fff; }
+      .actions { display: none !important; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Cloud Best Practices — Module Introduction 🧭</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide</p>
+      <div class="meta">
+        <span class="pill">Single-column</span>
+        <span class="pill">White background</span>
+        <span class="pill">A4 print-ready</span>
+        <span class="pill">Topic: Well-Architected Framework</span>
+      </div>
+      <div class="actions">
+        <button type="button" onclick="window.print()">Print / Save as PDF 🖨️</button>
+        <button type="button" onclick="document.getElementById('answers').scrollIntoView({behavior:'smooth'})">Jump to Answers ✅</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>1) Big Idea: You already know AWS services — now you learn how to use them well 🎯</h2>
+        <p>
+          After learning many AWS services, the next step is <strong>using AWS correctly</strong>: following best practices,
+          spotting weak designs, and continuously improving your architecture.
+        </p>
+        <div class="callout">
+          <strong>Key mindset:</strong> Cloud work is not “set-and-forget.” It’s “build → review → improve” ♻️
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>2) The Well-Architected Framework (WAF) 📚</h2>
+        <div class="grid">
+          <div class="term">
+            <div class="icon">🧱</div>
+            <div>
+              <strong>What it is</strong>
+              <div class="muted">A collection of AWS documents and guidance to evaluate and improve cloud architectures.</div>
+            </div>
+          </div>
+          <div class="term">
+            <div class="icon">🔍</div>
+            <div>
+              <strong>What it helps you do</strong>
+              <div class="muted">Find risks, identify missing best practices, and discover improvements over time.</div>
+            </div>
+          </div>
+          <div class="term">
+            <div class="icon">🧠</div>
+            <div>
+              <strong>How to think about it (beginner-friendly)</strong>
+              <div class="muted">Like a “checklist + coaching guide” for your AWS setup.</div>
+            </div>
+          </div>
+        </div>
+
+        <h3>Example (simple) 💡</h3>
+        <p>
+          You deployed an app on an EC2 instance. It works, but… is it resilient? secure? cost-effective?
+          The Well-Architected Framework helps you ask the right questions and improve the design.
+        </p>
+        <ul>
+          <li>Do you have backups? 💾</li>
+          <li>Can it handle failures (multi-AZ)? 🛡️</li>
+          <li>Are permissions least-privilege? 🔐</li>
+          <li>Are you overspending (right-sizing)? 💸</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>3) Tools AWS gives you to evaluate and improve 🛠️</h2>
+        <p>
+          AWS doesn’t just publish guidance — it also provides tools that can <strong>check</strong> your environment
+          and recommend improvements.
+        </p>
+        <div class="callout">
+          <strong>What to remember for the exam:</strong> this module is about <em>best practices</em> + <em>evaluation tools</em>.
+          You don’t need deep configuration steps — focus on what each thing is for.
+        </div>
+        <ul>
+          <li><strong>Architecture review tooling</strong> (guided reviews + recommendations) 🧭</li>
+          <li><strong>Automated checks</strong> that spot common issues (security, reliability, cost, etc.) 🤖</li>
+          <li><strong>Continuous improvement</strong>: run checks regularly, not only once 📈</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>4) Terms of Use / Acceptable Use ✅🚫</h2>
+        <p>
+          AWS is powerful, but it’s not a “do anything” platform. AWS has terms that define what’s allowed.
+          You should understand the idea that cloud usage must follow rules (legal + policy).
+        </p>
+        <ul>
+          <li>✅ Use AWS for building, hosting, storing, analyzing, deploying, and operating workloads.</li>
+          <li>🚫 Don’t use AWS in ways that violate laws, abuse services, or break AWS acceptable use policies.</li>
+        </ul>
+        <p class="muted">Exam mindset: know that policies and compliance matter; don’t memorize legal text.</p>
+      </section>
+
+      <section class="card">
+        <h2>5) Quick Memory Hooks (for fast recall) 🧠⚡</h2>
+        <ul>
+          <li><strong>WAF</strong> = “How do I build better on AWS?” 🏗️</li>
+          <li><strong>Review</strong> = “What risks exist in my current setup?” 🔎</li>
+          <li><strong>Improve</strong> = “Fix gaps and follow best practices over time.” ♻️</li>
+          <li><strong>Tools</strong> = “AWS can help detect issues + recommend fixes.” 🛠️</li>
+          <li><strong>Terms</strong> = “Use AWS responsibly and legally.” ✅</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Mini Quiz (self-check) 📝</h2>
+        <ol class="qa">
+          <li>
+            <strong>Q1:</strong> What is the Well-Architected Framework in simple words? 🤔
+            <div class="answer"><strong>Answer:</strong> A set of AWS best-practice documents and guidance to review and improve your architecture over time.</div>
+          </li>
+          <li>
+            <strong>Q2:</strong> Why is this section important after learning many AWS services? 📚➡️🏗️
+            <div class="answer"><strong>Answer:</strong> Knowing services is step one; using them correctly (best practices, reviews, continuous improvements) is step two.</div>
+          </li>
+          <li>
+            <strong>Q3:</strong> Name two example questions you would ask when reviewing an AWS architecture. 🔍
+            <div class="answer"><strong>Answer:</strong> “Is it secure (least privilege, encryption)?” and “Is it reliable (handles failures, backups/multi-AZ)?”</div>
+          </li>
+          <li>
+            <strong>Q4:</strong> What’s the general point of AWS evaluation tools in this module? 🛠️
+            <div class="answer"><strong>Answer:</strong> They help detect common issues and provide improvement recommendations, often automatically.</div>
+          </li>
+          <li>
+            <strong>Q5:</strong> Why should you care about AWS terms of use at a high level? ⚖️
+            <div class="answer"><strong>Answer:</strong> Because cloud usage must follow rules and acceptable use; violations can create business and security risk.</div>
+          </li>
+        </ol>
+        <div id="answers" class="muted"></div>
+      </section>
+
+      <footer>
+        <div><strong>Print tip:</strong> Use <span class="kbd">Ctrl</span> + <span class="kbd">P</span> (Windows) or <span class="kbd">Cmd</span> + <span class="kbd">P</span> (Mac) and select “Save as PDF” if needed.</div>
+        <div>Module: Cloud Best Practices — File: <span class="kbd">209-module-introduction.html</span></div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

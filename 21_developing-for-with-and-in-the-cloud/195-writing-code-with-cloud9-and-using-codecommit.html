@@ -1,0 +1,425 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Reviewer — Writing Code with Cloud9 & Using CodeCommit</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    /* Single-column, print-safe layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px 44px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.55rem;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    .toolbar {
+      margin: 14px 0 2px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: #111;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    main { margin-top: 18px; }
+
+    h2 {
+      margin: 18px 0 8px;
+      font-size: 1.18rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
+    }
+
+    h3 {
+      margin: 14px 0 6px;
+      font-size: 1.04rem;
+    }
+
+    p { margin: 8px 0; }
+
+    ul { margin: 8px 0 10px 20px; padding: 0; }
+    li { margin: 6px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin: 12px 0;
+    }
+
+    .callout .title {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 12px 12px;
+    }
+
+    .card p { margin: 6px 0; }
+
+    .mini {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 6px;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: #fff;
+      font-weight: 700;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.92rem;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    pre {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px 0;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    footer {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* Print styles (A4) */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { color: #000; }
+      .page { max-width: none; padding: 0; }
+      header, .card, .callout, pre, table { break-inside: avoid; page-break-inside: avoid; }
+      a { color: #000; text-decoration: none; }
+      .toolbar { display: none !important; }
+      .pill { border-color: #bbb; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>🧑‍💻 AWS CLF-C02 Reviewer: Writing Code with Cloud9 & Using CodeCommit</h1>
+      <p class="subtitle">Study guide for the <strong>“Write Code → Store Code”</strong> step in an application build & deployment workflow.</p>
+      <div class="meta">
+        <span class="pill">🧠 Topic: Developer Tools</span>
+        <span class="pill">🖨️ A4 Print-Ready</span>
+        <span class="pill">📄 Single Column</span>
+        <span class="pill">✅ Beginner-Friendly</span>
+      </div>
+      <div class="toolbar" role="toolbar" aria-label="Page tools">
+        <button class="btn" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">🧪 Jump to Quick Check</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Picture: Where Cloud9 + CodeCommit Fit</h2>
+        <p>
+          In a typical development workflow, you do this repeatedly: <strong>write code</strong> ✍️ → <strong>store code</strong> 🗂️ → test 🧪 → build 🏗️ → deploy 🚀.
+          This page focuses on the first two steps.
+        </p>
+
+        <table aria-label="Workflow mapping">
+          <thead>
+            <tr>
+              <th style="width: 34%">Workflow step</th>
+              <th style="width: 33%">AWS service</th>
+              <th style="width: 33%">Purpose (easy meaning)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Write code ✍️</td>
+              <td><strong>Cloud9</strong> 🧑‍💻</td>
+              <td>Cloud-based IDE (coding environment) you open in the browser.</td>
+            </tr>
+            <tr>
+              <td>Store code 🗂️</td>
+              <td><strong>CodeCommit</strong> 🧾</td>
+              <td>Private Git repository hosting for saving code history (commits) and sharing with a team.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <div class="title">⭐ Exam mindset</div>
+          <p>
+            For CLF-C02, focus on <strong>what each service does</strong> (the “job”) more than the deep setup details.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) Cloud9 🧑‍💻 (Write Code in the Cloud)</h2>
+
+        <div class="grid">
+          <div class="card">
+            <h3>What it is (beginner explanation) 🙂</h3>
+            <p>
+              <strong>Cloud9</strong> is a <strong>cloud-based IDE</strong> (Integrated Development Environment).
+              Think of it as “VS Code in the browser” (conceptually), where AWS prepares a development machine for you.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>How it works under the hood ⚙️</h3>
+            <ul>
+              <li>When you create a Cloud9 environment, AWS uses an <strong>EC2 instance</strong> behind it.</li>
+              <li>You choose the <strong>instance type</strong> (the size/capacity of the dev machine).</li>
+              <li>After ~30 minutes of inactivity, the instance may be <strong>hibernated</strong> (paused) to reduce costs while preserving state (memory saved).</li>
+            </ul>
+            <p class="mini">Note: You don’t pay “for the editor UI,” you pay for the compute (the EC2 instance) that runs it.</p>
+          </div>
+
+          <div class="card">
+            <h3>What you can do inside Cloud9 🧰</h3>
+            <ul>
+              <li>Write code in many programming languages 🧑‍💻</li>
+              <li>Use an <strong>integrated terminal</strong> 💻 (run commands, install packages, build demos)</li>
+              <li>Preview and test your work while coding 👀</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="title">🧠 Quick analogy</div>
+          <p>
+            Cloud9 is like renting a “developer laptop” in AWS (EC2), opening it through a browser, and coding there.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) CodeCommit 🧾 (Store Code + History with Git)</h2>
+
+        <h3>What it is (beginner explanation) 🙂</h3>
+        <p>
+          <strong>CodeCommit</strong> is AWS’s managed Git repository service. It stores your code in a <strong>private repository</strong> by default.
+          Only you (and people you allow) can access it.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Git basics (must-know) 🧠</h3>
+            <ul>
+              <li><strong>Git</strong> = source control tool (not AWS-specific).</li>
+              <li><strong>Commit</strong> = a saved “snapshot” of your code changes 📸.</li>
+              <li><strong>History</strong> = list of commits, so you can go back if something breaks ⏪.</li>
+              <li><strong>Push</strong> = upload commits from your machine (or Cloud9) to the remote repo ☁️.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Why teams use a remote repo 👥</h3>
+            <ul>
+              <li>Share code with colleagues (collaboration) 🤝</li>
+              <li>Back up your work (laptop lost? still safe) 🔒</li>
+              <li>Enable automation later (tests/build/deploy pipelines) 🔁</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Security & access 🔐</h3>
+            <ul>
+              <li>Repos are <strong>private</strong> by default.</li>
+              <li>Access is controlled by who you grant permissions to (IAM policies / permissions).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="title">✅ Key takeaway</div>
+          <p>
+            <strong>Cloud9 helps you write code.</strong> <strong>CodeCommit helps you store and share code safely</strong> (including its full change history).
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Simple Example Workflow (Cloud9 + CodeCommit) 🧪</h2>
+        <p>Here’s a beginner-friendly, realistic sequence:</p>
+
+        <ol>
+          <li>Open Cloud9 🧑‍💻 and create a small project folder.</li>
+          <li>Initialize Git in the project folder.</li>
+          <li>Make changes (write code) ✍️ and create a commit 📸.</li>
+          <li>Push commits to CodeCommit ☁️ so your code is saved remotely and shareable.</li>
+        </ol>
+
+        <pre><code># Example Git commands (conceptual)
+# 1) Initialize a local repo
+git init
+
+# 2) Add files to commit
+git add .
+
+# 3) Create a snapshot (commit)
+git commit -m "Add first version"
+
+# 4) Push to a remote repository (CodeCommit remote)
+# (remote setup varies, but the idea is always: push your commits)
+git push</code></pre>
+
+        <p class="mini">
+          You don’t need to memorize exact commands for CLF-C02, but you should understand the concepts: commit = snapshot, push = upload to remote repo.
+        </p>
+      </section>
+
+      <section id="quick-check">
+        <h2>5) Quick Check (Exam-Style) 🧪</h2>
+
+        <div class="card">
+          <h3>Questions</h3>
+          <ul>
+            <li>Q1: Which service provides a cloud-based IDE? 🙂</li>
+            <li>Q2: Which service stores your Git repositories privately in AWS? 🔐</li>
+            <li>Q3: What are you paying for when using Cloud9? 💸</li>
+            <li>Q4: What is a “commit” in Git? 📸</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Answers</h3>
+          <ul>
+            <li>A1: <strong>Cloud9</strong> 🧑‍💻</li>
+            <li>A2: <strong>CodeCommit</strong> 🧾</li>
+            <li>A3: The <strong>EC2 instance</strong> running under the hood (compute), not “the editor UI” 💻</li>
+            <li>A4: A <strong>snapshot of code changes</strong> stored in history 📸</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Tiny Glossary 📚</h2>
+        <ul>
+          <li><strong>IDE</strong>: A tool for writing code, often with editor + terminal + debugging.</li>
+          <li><strong>Repository (repo)</strong>: A folder tracked by Git with full change history.</li>
+          <li><strong>Private repo</strong>: Only authorized users can view/clone/push to it.</li>
+          <li><strong>Hibernation</strong>: Pausing an instance while preserving memory state (as described in the lecture).</li>
+        </ul>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <footer>
+        <p><strong>Reminder:</strong> Keep your notes exam-focused: identify each AWS service’s role in the workflow.</p>
+        <p class="mini">Print tip: Use A4 paper size and “Margins: Default” (or similar) for best results.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

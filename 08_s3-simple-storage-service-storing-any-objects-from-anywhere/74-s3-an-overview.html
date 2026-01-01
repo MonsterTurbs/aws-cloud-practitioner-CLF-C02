@@ -1,0 +1,338 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS S3 — Overview (Study Guide / Reviewer)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --accent2:#0f766e;
+      --danger:#b42318;
+      --warn:#b54708;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.6;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 22px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px;
+      border-radius: 12px;
+    }
+
+    h1{
+      margin:0 0 6px 0;
+      font-size: 1.55rem;
+      line-height:1.25;
+    }
+
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      color:var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .chip{
+      border:1px solid var(--border);
+      background:#fff;
+      padding:4px 10px;
+      border-radius:999px;
+    }
+
+    main{
+      margin-top: 18px;
+    }
+
+    h2{
+      margin: 18px 0 8px;
+      font-size: 1.18rem;
+      line-height:1.25;
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
+    }
+
+    h3{
+      margin: 14px 0 6px;
+      font-size: 1.02rem;
+      line-height:1.25;
+      color:#0a0a0a;
+    }
+
+    p{ margin: 8px 0; }
+
+    ul,ol{ margin: 8px 0 8px 20px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .box{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 12px;
+      padding: 14px 14px;
+      margin: 12px 0;
+      page-break-inside: avoid;
+    }
+
+    .box.soft{
+      background: var(--panel);
+    }
+
+    .box.good{ border-left: 5px solid var(--accent2); }
+    .box.warn{ border-left: 5px solid var(--warn); }
+    .box.danger{ border-left: 5px solid var(--danger); }
+
+    .kvs{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kv{
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background:#fff;
+      page-break-inside: avoid;
+    }
+
+    .kv b{ display:inline-block; min-width: 220px; }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.92em;
+    }
+
+    pre{
+      border:1px solid var(--border);
+      background: var(--panel);
+      padding: 12px;
+      border-radius: 12px;
+      overflow: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      page-break-inside: avoid;
+    }
+
+    .hr{
+      height:1px;
+      background: var(--border);
+      margin: 18px 0;
+    }
+
+    .small{ color:var(--muted); font-size:0.95rem; }
+
+    .print-hint{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* Print styles (A4, clean margins, readable sizing) */
+    @page{
+      size: A4;
+      margin: 14mm 14mm;
+    }
+
+    @media print{
+      body{ font-size: 11.5pt; }
+      .page{ max-width: none; padding: 0; }
+      header{ border-radius: 0; }
+      a{ color: inherit; text-decoration: none; }
+      .chip{ border-color:#d0d0d0; }
+      .box{ border-color:#d0d0d0; }
+      h1{ font-size: 16pt; }
+      h2{ font-size: 13pt; }
+      h3{ font-size: 11.5pt; }
+      pre{ border-color:#d0d0d0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Amazon S3 — Overview (Reviewer / Study Guide)</h1>
+      <p class="subtitle">Focus: Object Storage basics, buckets, organization, regions, and access control (AWS CLF-C02 level).</p>
+      <div class="meta">
+        <span class="chip">🗂️ Topic: S3 Object Storage</span>
+        <span class="chip">🧠 Level: Beginner / Exam-ready</span>
+        <span class="chip">🖨️ Print: A4 single-column</span>
+      </div>
+      <p class="print-hint">Tip: Use your browser’s Print dialog → Paper size: <b>A4</b> → Margins: <b>Default</b> (or “Custom” close to default) → Scale: <b>100%</b>.</p>
+    </header>
+
+    <main>
+      <h2>1) What “Object Storage” Means (and why it matters) 🧩</h2>
+      <div class="box soft">
+        <p><b>Core idea:</b> With <b>object storage</b>, you focus on the <b>file (object)</b> itself — not the hard drive and not the file system.</p>
+        <ul>
+          <li>✅ You store <b>files directly</b> (images, PDFs, videos, backups, logs, etc.).</li>
+          <li>✅ You do <b>not</b> manage disks, partitions, or formatting.</li>
+          <li>✅ You do <b>not</b> “mount” S3 like a traditional drive (unlike EBS/EFS).</li>
+        </ul>
+      </div>
+
+      <div class="box good">
+        <h3>Beginner mental model 🧠</h3>
+        <p>Think of S3 like a highly durable online “storage service” where you upload and download files on demand.</p>
+        <ul>
+          <li>📦 You put files into containers called <b>buckets</b>.</li>
+          <li>🔎 You retrieve files by their name (key) and permissions.</li>
+        </ul>
+      </div>
+
+      <h2>2) What is S3? 🪣</h2>
+      <div class="kvs">
+        <div class="kv"><b>Meaning of S3:</b> Simple Storage Service ("3" because it’s <b>S</b>imple <b>S</b>torage <b>S</b>ervice).</div>
+        <div class="kv"><b>Main purpose:</b> Store and retrieve files (objects) from anywhere.</div>
+        <div class="kv"><b>How you access it:</b> Console, CLI, SDKs, and an HTTP-based API.</div>
+        <div class="kv"><b>Object size limit:</b> Up to <b>5 TB per object</b> (file).</div>
+        <div class="kv"><b>Number of objects:</b> Practically “no fixed limit” for most use cases.</div>
+      </div>
+
+      <div class="box warn">
+        <h3>Key difference vs EBS / EFS ⚖️</h3>
+        <ul>
+          <li>🧱 <b>EBS</b> = attach a raw “disk” to <b>EC2</b>, then you format/mount it.</li>
+          <li>🗃️ <b>EFS</b> = managed <b>network file system</b>, mountable by multiple services.</li>
+          <li>🪣 <b>S3</b> = upload/download <b>objects</b>; no disk/file-system management from your side.</li>
+        </ul>
+      </div>
+
+      <h2>3) Buckets: Your Top-Level Organization 🪣</h2>
+      <div class="box">
+        <p><b>You must create a bucket</b> to store objects in S3.</p>
+        <ul>
+          <li>🧺 Bucket ≈ “folder” conceptually, but it’s actually a top-level container.</li>
+          <li>📍 Buckets are <b>regional</b> → you pick the region when creating them.</li>
+          <li>📈 You don’t pre-allocate size; buckets scale automatically.</li>
+        </ul>
+      </div>
+
+      <div class="box danger">
+        <h3>Bucket name must be globally unique 🌍</h3>
+        <p>Not just unique in your account — unique across <b>all AWS accounts worldwide</b>.</p>
+        <p class="small">Practical tip: include your company/project name + environment + random suffix.</p>
+        <pre>Example bucket names:
+mycompany-bpims-uploads-prod-9f3a
+reymond-aws-clf-s3-notes-dev-2025</pre>
+      </div>
+
+      <h2>4) “Folders” in S3: Flat Storage + Prefixes 📁</h2>
+      <div class="box">
+        <p><b>S3 is technically flat:</b> all objects sit “next to each other” inside a bucket.</p>
+        <p>But you can simulate folders using <b>prefixes</b> in object keys (names).</p>
+        <pre>Example object keys (look like folders, but are really just names):
+photos/2025/boracay/img_0001.jpg
+photos/2025/boracay/img_0002.jpg
+invoices/2025/12/invoice-1031.pdf</pre>
+        <p class="small">When you view these in the console, S3 shows them like folders for convenience.</p>
+      </div>
+
+      <h2>5) How Files Get Into S3 (and out of S3) 🚚</h2>
+      <div class="box good">
+        <ul>
+          <li>🖥️ <b>AWS Console</b>: Upload/download through the UI.</li>
+          <li>⌨️ <b>AWS CLI</b>: Script uploads/downloads (great for automation).</li>
+          <li>🧩 <b>SDKs</b>: Your application uses APIs to store/retrieve objects.</li>
+          <li>🌐 <b>HTTP API</b>: Under the hood, S3 exposes HTTP endpoints.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h3>Simple real-life examples 💡</h3>
+        <ul>
+          <li>🖼️ Website image uploads: user uploads images → app stores them in S3.</li>
+          <li>🧾 Invoices: system generates PDFs → saves PDFs to S3 for later download.</li>
+          <li>🗄️ Backups/archives: store documents safely off your local machine.</li>
+        </ul>
+      </div>
+
+      <h2>6) Permissions: Keeping Files Secure 🔐</h2>
+      <div class="box">
+        <p>S3 includes a detailed permission model to control <b>who</b> can access <b>which</b> bucket/object and <b>what actions</b> they can do.</p>
+        <ul>
+          <li>✅ Common actions: read (download), write (upload), delete, list.</li>
+          <li>✅ Permissions can be applied at bucket-level and/or object-level.</li>
+        </ul>
+      </div>
+
+      <div class="box good">
+        <h3>Bucket Policies (recommended) 🧾</h3>
+        <p>Bucket policies are policy documents (similar style to IAM policies) attached to a <b>bucket</b> to define access.</p>
+        <ul>
+          <li>👍 Recommended approach for most scenarios.</li>
+          <li>🧠 Exam-level takeaway: they exist, they control access, and they look like IAM policies.</li>
+        </ul>
+      </div>
+
+      <div class="box warn">
+        <h3>ACLs (not recommended for most modern setups) ⚠️</h3>
+        <p>Access Control Lists can be used and can be detailed, but generally bucket policies are preferred.</p>
+        <p class="small">Exam note: If you see “ACL” in a question, remember it’s an older/more complex access mechanism compared to bucket policies.</p>
+      </div>
+
+      <div class="hr"></div>
+
+      <h2>7) Quick Exam Pointers ✅</h2>
+      <div class="box">
+        <ul>
+          <li>🪣 S3 stores <b>objects</b> in <b>buckets</b>.</li>
+          <li>📍 Buckets are <b>regional</b>.</li>
+          <li>🌍 Bucket names must be <b>globally unique</b>.</li>
+          <li>📦 Object size limit: <b>5 TB</b>.</li>
+          <li>📁 “Folders” are really <b>prefixes</b> (flat storage underneath).</li>
+          <li>🔐 Access is controlled via <b>bucket policies</b> (recommended) and/or <b>ACLs</b> (less recommended).</li>
+          <li>🌐 You can use S3 directly from your computer (console/CLI) — it doesn’t need to be “attached” like EBS/EFS.</li>
+        </ul>
+      </div>
+
+      <h2>8) Mini Review Questions (Self-Check) 📝</h2>
+      <div class="box soft">
+        <ol>
+          <li>What is the main difference between object storage (S3) and block storage (EBS)?</li>
+          <li>Why must S3 bucket names be unique globally?</li>
+          <li>How does S3 “simulate” folders?</li>
+          <li>What is the recommended way to manage access to S3 buckets?</li>
+        </ol>
+      </div>
+
+      <p class="small">End of reviewer. Next topics typically include: S3 settings, storage classes, versioning, lifecycle rules, encryption, and static website hosting.</p>
+    </main>
+  </div>
+</body>
+</html>

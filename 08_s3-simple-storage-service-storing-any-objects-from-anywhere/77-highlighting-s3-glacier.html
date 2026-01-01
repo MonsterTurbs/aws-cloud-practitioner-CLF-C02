@@ -1,0 +1,290 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Highlighting S3 Glacier — Reviewer / Study Guide</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --good:#0f7b3a;
+      --warn:#9a5b00;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-wrap:anywhere;
+      word-break: normal;
+      hyphens:auto;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 22px 40px;
+    }
+
+    header{
+      padding: 0 0 14px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    h1{ margin:0 0 6px; font-size:1.7rem; letter-spacing:.2px; }
+    .subtitle{ margin:0; color:var(--muted); font-size:.98rem; }
+
+    .meta{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      color:var(--muted);
+      font-size:.92rem;
+    }
+
+    .chip{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 6px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    h2{ margin:18px 0 10px; font-size:1.25rem; }
+    h3{ margin:14px 0 8px; font-size:1.06rem; }
+    p{ margin: 8px 0; }
+
+    ul,ol{ margin: 8px 0 10px 22px; padding:0; }
+    li{ margin: 6px 0; }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin: 10px 0 14px;
+      table-layout: fixed;
+    }
+
+    th, td{
+      border:1px solid var(--border);
+      padding:10px;
+      vertical-align: top;
+      overflow-wrap:anywhere;
+    }
+
+    th{ background: var(--panel); text-align:left; font-weight:700; }
+
+    .callout{
+      border:1px solid var(--border);
+      background: var(--panel);
+      padding: 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .callout strong{ display:inline-block; margin-bottom:4px; }
+    .callout.good{ border-left: 6px solid var(--good); }
+    .callout.warn{ border-left: 6px solid var(--warn); }
+
+    .small{ color:var(--muted); font-size:.94rem; }
+
+    .kbd{
+      border:1px solid var(--border);
+      background:#fff;
+      padding:2px 6px;
+      border-radius: 6px;
+      display:inline-block;
+      white-space: nowrap;
+    }
+
+    .divider{ height:1px; background:var(--border); margin:16px 0; }
+
+    .checklist li{ list-style:none; margin-left:-22px; }
+    .checklist li::before{ content:"☐ "; }
+
+    footer{
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    /* Print (A4) */
+    @media print{
+      @page{ size:A4; margin: 16mm; }
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width:none; padding:0; }
+      header{ border-bottom: 1px solid #000; }
+      .chip{ border-color:#000; background:#fff; }
+      .callout{ background:#fff; }
+      th{ background:#fff; }
+      a{ color:#000; text-decoration:none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>🧊 Highlighting S3 Glacier — Reviewer / Study Guide</h1>
+      <p class="subtitle">What “Glacier” means in AWS, the 3 Glacier storage classes, and how to recognize them in exam questions.</p>
+      <div class="meta">
+        <span class="chip">🧠 Exam note: “Glacier” usually means <strong>S3 Glacier</strong></span>
+        <span class="chip">🗄️ Use case: long-term storage, low-frequency access</span>
+        <span class="chip">💰 Benefit: cheaper storage (trade-offs apply)</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>1) What Is “Glacier”? 🧊</h2>
+      <p>
+        In AWS conversations and exam questions, <strong>“Glacier” is sometimes referenced like a standalone service</strong>.
+        What it usually means is <strong>S3 Glacier</strong> — i.e., the <strong>archival storage classes</strong> in Amazon S3.
+      </p>
+
+      <div class="callout good">
+        <strong>✅ Key takeaway (memorize)</strong>
+        <p>
+          <strong>S3 Glacier</strong> = S3 storage optimized for <strong>long-term retention</strong> and <strong>rare access</strong>.
+        </p>
+      </div>
+
+      <p>
+        Glacier classes are ideal when you must keep files for months/years (compliance, backups, historical logs), but you don’t open them often.
+      </p>
+    </section>
+
+    <section>
+      <h2>2) The 3 S3 Glacier Storage Classes 🧾</h2>
+      <p>The lecture highlights these three Glacier options:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 30%;">Glacier class</th>
+            <th style="width: 35%;">Best for</th>
+            <th style="width: 35%;">What you trade off</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>🧊 S3 Glacier Instant Retrieval</strong></td>
+            <td>Archive data that must still be retrieved fast (but not accessed often)</td>
+            <td>
+              ✅ Very fast retrieval<br/>
+              💸 Retrieval costs apply<br/>
+              💰 Storage cheaper than “hot” tiers
+            </td>
+          </tr>
+          <tr>
+            <td><strong>🧊 S3 Glacier Flexible Retrieval</strong><br/><span class="small">(formerly “S3 Glacier”)</span></td>
+            <td>Backups / DR data accessed 1–2× per year</td>
+            <td>
+              ⏳ Often involves a restore step (minutes to hours)<br/>
+              💸 Retrieval costs apply<br/>
+              💰 Lower ongoing storage cost
+            </td>
+          </tr>
+          <tr>
+            <td><strong>🧊 S3 Glacier Deep Archive</strong></td>
+            <td>Compliance archives, “almost never” accessed</td>
+            <td>
+              🕰️ Slowest retrieval (hours)<br/>
+              💸 Retrieval costs apply<br/>
+              💰 Cheapest long-term storage
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>🧠 Beginner translation</strong>
+        <ul>
+          <li><strong>Instant Retrieval</strong> = “Archive it, but if I need it, I need it now.”</li>
+          <li><strong>Flexible Retrieval</strong> = “I can wait a bit when I need it.”</li>
+          <li><strong>Deep Archive</strong> = “I can wait hours; I mostly just need to keep it.”</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>3) Why Glacier Is Cheaper (Simple Mental Model) 💰</h2>
+      <p>
+        AWS can reduce your cost when it expects <strong>low access frequency</strong>.
+        The trade-off is typically:
+      </p>
+      <ul>
+        <li>💸 <strong>Retrieval fees</strong> when you actually read/download the object</li>
+        <li>⏳ <strong>Potential waiting time</strong> (restore) for deeper archive tiers</li>
+      </ul>
+
+      <div class="callout warn">
+        <strong>⚠️ Don’t do this</strong>
+        <p>
+          If users or apps need files instantly (e.g., profile images), avoid Glacier Flexible/Deep Archive.
+          Use a frequent-access class instead, or Glacier Instant Retrieval if it truly is archival.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>4) Exam Pattern: How to Spot Glacier Questions 🧠</h2>
+      <p>In questions, look for phrases like:</p>
+      <ul>
+        <li>🗄️ “Long-term retention” / “Archive” / “Compliance”</li>
+        <li>📉 “Rarely accessed” / “Accessed once per year”</li>
+        <li>💰 “Lowest cost storage”</li>
+        <li>⏳ “Can wait minutes/hours to retrieve”</li>
+      </ul>
+
+      <div class="callout good">
+        <strong>✅ Exam tip</strong>
+        <p>
+          If the question says <strong>“Glacier”</strong> without “S3” — interpret it as <strong>S3 Glacier storage class(es)</strong> unless the question clearly says otherwise.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>5) Quick Examples (Choose the Right Glacier Class) 🧪</h2>
+      <ul>
+        <li>📑 Audit documents kept 7 years, accessed rarely → <strong>Glacier Deep Archive</strong></li>
+        <li>💾 Disaster recovery backups, might be needed urgently sometimes → <strong>Glacier Flexible Retrieval</strong></li>
+        <li>🏥 Archived medical images, rare access but must be quick → <strong>Glacier Instant Retrieval</strong></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6) Mini Reviewer Checklist ✅</h2>
+      <ul class="checklist">
+        <li>“Glacier” on the exam usually means <strong>S3 Glacier</strong> storage classes.</li>
+        <li>Glacier is optimized for <strong>long-term storage</strong> with <strong>low-frequency access</strong>.</li>
+        <li>There are 3 classes: <strong>Instant Retrieval</strong>, <strong>Flexible Retrieval</strong> (formerly “S3 Glacier”), <strong>Deep Archive</strong>.</li>
+        <li>Trade-offs: <strong>retrieval fees</strong> and sometimes <strong>restore time</strong>.</li>
+      </ul>
+    </section>
+
+    <div class="divider"></div>
+
+    <footer>
+      <p><strong>Source:</strong> Lecture transcript notes (Highlighting S3 Glacier). Designed for A4 printing (single-column, white background, print CSS included).</p>
+      <p class="small">Tip: If you want, I can also generate a combined “S3 Storage Classes + Glacier” page with a unified table and practice questions.</p>
+    </footer>
+  </main>
+</body>
+</html>

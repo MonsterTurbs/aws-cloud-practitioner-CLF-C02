@@ -1,0 +1,490 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Reviewer — Using CloudFront (S3 Static Website)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #5a5a5a;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --chip: #f3f5ff;
+      --accent: #0b57d0;
+      --accent2: #188038;
+      --warn: #b3261e;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 18px 16px;
+    }
+
+    .title {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .btn:focus {
+      outline: 2px solid rgba(11,87,208,.35);
+      outline-offset: 2px;
+    }
+
+    .btn.primary {
+      border-color: rgba(11,87,208,.25);
+      background: var(--chip);
+    }
+
+    .meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    main { margin-top: 18px; }
+
+    h2 {
+      font-size: 16px;
+      margin: 18px 0 8px;
+    }
+
+    h3 {
+      font-size: 14px;
+      margin: 14px 0 6px;
+    }
+
+    p { margin: 8px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px 12px;
+      margin: 10px 0;
+    }
+
+    .callout .label {
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .callout.good { border-left: 6px solid rgba(24,128,56,.55); }
+    .callout.info { border-left: 6px solid rgba(11,87,208,.55); }
+    .callout.warn { border-left: 6px solid rgba(179,38,30,.55); }
+
+    .box {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+
+    ul { margin: 8px 0 8px 22px; }
+    li { margin: 6px 0; }
+
+    .toc {
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+      margin-top: 14px;
+    }
+
+    .toc a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .toc a:hover { text-decoration: underline; }
+
+    .kv {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .kv .row {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      padding: 10px 12px;
+    }
+
+    .kv .k {
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Print: A4, clean, single column, no cutoffs */
+    @page {
+      size: A4;
+      margin: 14mm 14mm 16mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+      header {
+        border-radius: 0;
+        border: 1px solid #000;
+        background: #fff;
+      }
+      .toolbar { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      .chip { border-color: #000; }
+      .callout, .box, .kv .row {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      h2, h3 { break-after: avoid; }
+      .toc { border-style: solid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="title">
+        <div>
+          <h1>🌍 AWS CLF-C02 Reviewer: Using CloudFront (CDN) with an S3 Static Website</h1>
+          <div class="subtitle">Single-column • White background • A4 print-ready • Beginner-friendly notes + examples</div>
+        </div>
+        <div class="toolbar" aria-label="Actions">
+          <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        </div>
+      </div>
+
+      <div class="meta" aria-label="Quick tags">
+        <span class="chip">✅ Topic: CloudFront Distribution</span>
+        <span class="chip">🗂️ Origin: S3 Static Website</span>
+        <span class="chip">⚡ Goal: Lower latency globally</span>
+        <span class="chip">🧠 Exam focus: concepts + key terms</span>
+      </div>
+
+      <div class="toc" role="navigation" aria-label="Table of contents">
+        <strong>Contents</strong>
+        <ul>
+          <li><a href="#big-picture">Big Picture</a></li>
+          <li><a href="#terms">Key Terms</a></li>
+          <li><a href="#steps">How to Use CloudFront (Step-by-Step)</a></li>
+          <li><a href="#cache">Cache Behavior & Policies</a></li>
+          <li><a href="#domains">Custom Domain via Route 53</a></li>
+          <li><a href="#exam">Exam Tips & Common Traps</a></li>
+          <li><a href="#mini">Mini Scenario (Easy Example)</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <section id="big-picture">
+        <h2>1) Big Picture (What you’re doing and why) 🚀</h2>
+        <p>
+          You already have a <strong>static website hosted on S3</strong>. S3 provides a URL, but your bucket lives in a
+          <strong>specific AWS Region</strong> (example: North Virginia / <span class="mono">us-east-1</span>). If users are far away (e.g., Asia),
+          they may experience <strong>higher latency</strong>.
+        </p>
+
+        <div class="callout info">
+          <div class="label">💡 Core idea</div>
+          <p>
+            <strong>CloudFront</strong> creates a <strong>Distribution</strong> that caches your website content in AWS <strong>Edge Locations</strong>
+            worldwide, so users download content from a nearby location.
+          </p>
+        </div>
+
+        <div class="box">
+          <h3>🧭 Simple mental model</h3>
+          <div class="mono" aria-label="Flow diagram">
+User (PH/Asia) → CloudFront (nearest Edge Location) → Origin (S3 bucket in us-east-1)
+            
+First request: Edge pulls from S3 (cache miss)
+Next requests: Edge serves cached copy (cache hit) ✅
+          </div>
+        </div>
+      </section>
+
+      <section id="terms">
+        <h2>2) Key Terms (Know these for CLF-C02) 🧠</h2>
+
+        <div class="kv">
+          <div class="row">
+            <div class="k">🌐 CDN (Content Delivery Network)</div>
+            <div class="v">A network that serves content from locations closer to users to reduce latency.</div>
+          </div>
+          <div class="row">
+            <div class="k">📦 CloudFront Distribution</div>
+            <div class="v">A CloudFront configuration that defines what to deliver, from where (origin), and how to cache it.</div>
+          </div>
+          <div class="row">
+            <div class="k">🏁 Origin</div>
+            <div class="v">The source of your content (e.g., S3 bucket, ALB, EC2/website server). CloudFront fetches from here.</div>
+          </div>
+          <div class="row">
+            <div class="k">🗺️ Edge Location</div>
+            <div class="v">AWS global locations that cache and serve content close to users.</div>
+          </div>
+          <div class="row">
+            <div class="k">⚙️ Cache Behavior</div>
+            <div class="v">Rules that control what gets cached, for how long, and what request data is forwarded to the origin.</div>
+          </div>
+          <div class="row">
+            <div class="k">🔐 HTTPS / SSL</div>
+            <div class="v">CloudFront can serve content over HTTPS; you can attach a certificate (ACM) for custom domains.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="steps">
+        <h2>3) How to Use CloudFront (Step-by-Step) 🧩</h2>
+
+        <div class="callout good">
+          <div class="label">✅ Starting point</div>
+          <p>You have an S3 bucket hosting a static website (HTML/CSS/JS). You can access it via the S3 website endpoint/URL.</p>
+        </div>
+
+        <h3>Step 1 — Open CloudFront</h3>
+        <ul>
+          <li>Go to the AWS Console → search for <strong>CloudFront</strong>.</li>
+          <li>Create a <strong>Distribution</strong> (CloudFront is a global service, so you do not “pick a region” for the distribution).</li>
+        </ul>
+
+        <h3>Step 2 — Choose your Origin (S3)</h3>
+        <ul>
+          <li>In the distribution wizard, set <strong>Origin domain</strong> to your S3 website/bucket.</li>
+          <li>CloudFront will typically suggest S3 automatically. (It can also suggest an ALB, since CloudFront can front many origins.)</li>
+        </ul>
+
+        <h3>Step 3 — Name & identify the distribution (optional)</h3>
+        <ul>
+          <li>You can assign a <strong>friendly name/description</strong> to identify the distribution in your account.</li>
+          <li>CloudFront also generates a default domain like <span class="mono">d123abcd.cloudfront.net</span>.</li>
+        </ul>
+
+        <h3>Step 4 — Keep defaults first (recommended for learning)</h3>
+        <ul>
+          <li>For beginners, keep the default settings and create the distribution.</li>
+          <li>Deployment takes some time; once deployed, your CloudFront domain becomes active.</li>
+        </ul>
+
+        <h3>Step 5 — Test the CloudFront URL</h3>
+        <ul>
+          <li>Open the CloudFront domain in your browser.</li>
+          <li>CloudFront routes you to a nearby Edge Location and serves cached copies of your static files.</li>
+        </ul>
+
+        <div class="callout info">
+          <div class="label">🌍 Important note</div>
+          <p>
+            <strong>Distributions are global</strong>, but <strong>origins are regional</strong> (S3 bucket / ALB / EC2 lives in a specific region).
+          </p>
+        </div>
+      </section>
+
+      <section id="cache">
+        <h2>4) Cache Behavior & Policies (Why “it feels faster”) ⚡</h2>
+
+        <p>
+          When creating a distribution, you can define caching behavior either by:
+          <strong>(a) selecting a caching policy</strong> or <strong>(b) configuring behavior in the wizard</strong>.
+        </p>
+
+        <div class="box">
+          <h3>📌 What you control (conceptually)</h3>
+          <ul>
+            <li><strong>What gets cached</strong> (static assets like images/CSS/JS are ideal).</li>
+            <li><strong>How long it stays cached</strong> (TTL-like behavior).</li>
+            <li><strong>What CloudFront forwards to the origin</strong> (headers, query strings, cookies — more forwarding often means less caching efficiency).</li>
+          </ul>
+        </div>
+
+        <div class="callout warn">
+          <div class="label">⚠️ Beginner trap</div>
+          <p>
+            If you forward “too much” (cookies/query strings/headers for every request), CloudFront may cache less effectively.
+            For a simple static website, you usually want <strong>high cacheability</strong>.
+          </p>
+        </div>
+      </section>
+
+      <section id="domains">
+        <h2>5) Custom Domain via Route 53 (Optional but common) 🧭</h2>
+
+        <p>
+          By default, CloudFront gives you a domain. If you want <strong>your own domain</strong> (e.g., <span class="mono">www.example.com</span>),
+          you can connect it using <strong>Route 53</strong>.
+        </p>
+
+        <div class="box">
+          <h3>✅ High-level steps</h3>
+          <ul>
+            <li>In Route 53, create (or use) a hosted zone for your domain.</li>
+            <li>Create an <strong>A / AAAA record</strong> (Alias) pointing to the <strong>CloudFront distribution</strong>.</li>
+            <li>(Common in practice) Attach an SSL certificate so your custom domain works with HTTPS.</li>
+          </ul>
+        </div>
+
+        <div class="callout info">
+          <div class="label">🔎 Exam-friendly wording</div>
+          <p>
+            Route 53 can create an <strong>Alias record</strong> that points to AWS resources (including CloudFront).
+          </p>
+        </div>
+      </section>
+
+      <section id="exam">
+        <h2>6) Exam Tips & Common Traps ✅</h2>
+        <ul>
+          <li><strong>CloudFront = CDN</strong> that uses <strong>Edge Locations</strong> to cache content near users. 🌍</li>
+          <li><strong>Distribution is global</strong>; <strong>origin is regional</strong>. 🧭</li>
+          <li>CloudFront is not only for S3 — it can use origins like <strong>ALB</strong> / web servers as well. 🔁</li>
+          <li>Default CloudFront domain works immediately after deployment; custom domains require DNS (Route 53 or other registrar). 🧾</li>
+          <li><strong>Cache behavior matters</strong>: better caching = better performance, but you must avoid stale content by using correct policies/TTL. ⚙️</li>
+        </ul>
+
+        <div class="divider" aria-hidden="true"></div>
+
+        <div class="callout good">
+          <div class="label">🧠 10-second memory hook</div>
+          <p><strong>CloudFront = “Copy my content closer to users.”</strong> First request pulls from origin; next requests are served from Edge cache.</p>
+        </div>
+      </section>
+
+      <section id="mini">
+        <h2>7) Mini Scenario (Beginner-friendly example) 🙂</h2>
+        <p>
+          You have an S3 static website in <span class="mono">us-east-1</span>. Users in the Philippines report slow loading.
+          You add CloudFront:
+        </p>
+        <ul>
+          <li>Origin: S3 bucket website</li>
+          <li>Distribution: created globally</li>
+          <li>Result: CloudFront caches your <span class="mono">index.html</span>, <span class="mono">styles.css</span>, and images at Edge Locations closer to PH/Asia.</li>
+        </ul>
+
+        <div class="callout info">
+          <div class="label">🎯 Outcome</div>
+          <p>Lower latency, faster page loads, better user experience — without deploying servers worldwide.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p>
+          Reviewer generated from your lecture transcript (CloudFront usage with S3 static website). Print tip: use browser Print → “Save as PDF”.
+        </p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Keep this minimal for print-friendly output.
+    // No dynamic layout changes needed.
+  </script>
+</body>
+</html>

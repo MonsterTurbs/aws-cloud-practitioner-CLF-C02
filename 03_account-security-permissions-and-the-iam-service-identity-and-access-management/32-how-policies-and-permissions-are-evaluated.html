@@ -1,0 +1,320 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 32 How Policies & Permissions Are Evaluated</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+      --ok:#0f7b0f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .steps{
+      margin: 8px 0 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .steps li{
+      margin: 8px 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+      .steps li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • IAM Policies & Permissions</p>
+      <h1>32 — How Policies & Permissions Are Evaluated 🧾✅❌</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Lecture Goal</h2>
+        <p>Understand how AWS combines multiple IAM policies, what happens when policies “clash,” and when AWS evaluates permissions (under the hood).</p>
+        <div class="callout">
+          <p><strong>Big idea ✅</strong> An identity’s final permissions are the <strong>combination</strong> of all attached policies—but <strong>Explicit Deny</strong> always wins.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Start Here: Default Deny</h2>
+        <p>By default, no permissions are granted to any identity (users, user groups, roles). You grant permissions by attaching policies.</p>
+        <div class="warning">
+          <p><strong>Exam phrase ⚠️</strong> “By default, everything is denied unless explicitly allowed.”</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧩 How Policies Are Combined</h2>
+        <p>A user can have multiple sources of policies:</p>
+        <ul>
+          <li>Policies attached <strong>directly</strong> to the user</li>
+          <li>Policies attached to <strong>groups</strong> the user belongs to (a user can be in multiple groups)</li>
+        </ul>
+        <div class="good">
+          <p><strong>Result ✅</strong> The user effectively gets the <strong>union</strong> of all permissions across all those policies—unless an explicit deny applies.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Scenario 1: No Clash (Policies Add Permissions)</h2>
+        <p>If one policy grants permissions the other policy doesn’t, they simply combine.</p>
+        <div class="mini">
+          <h3>Example (EC2 Read + EC2 Write)</h3>
+          <ul>
+            <li>Policy A: allows <strong>read/inspect</strong> EC2 (view instances)</li>
+            <li>Policy B: allows <strong>write/change</strong> EC2 (start/stop instances)</li>
+          </ul>
+          <p><strong>Final result:</strong> the identity can do <strong>both</strong> read and write (effectively full EC2 access).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>❌ Scenario 2: Clash (Explicit Deny Wins)</h2>
+        <p>If one policy allows something and another policy explicitly denies it, AWS will deny it.</p>
+        <div class="warning">
+          <p><strong>Rule to memorize ⚠️</strong> <strong>Explicit Deny overrides Explicit Allow.</strong> Deny always wins.</p>
+        </div>
+        <div class="mini">
+          <h3>Example</h3>
+          <ul>
+            <li>Policy A: allows reading EC2</li>
+            <li>Policy B: explicitly denies all EC2 access</li>
+          </ul>
+          <p><strong>Final result:</strong> EC2 access is denied, even though an allow exists.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>⏱️ When Permissions Are Evaluated</h2>
+        <p>AWS evaluates permissions at the moment an identity sends a request/command (via Console, CLI, SDK, etc.).</p>
+        <div class="mini">
+          <h3>Step-by-step (from the lecture)</h3>
+          <ol class="steps">
+            <li>1) An identity (user/role) tries to do something (e.g., list EC2 instances)</li>
+            <li>2) That action triggers a command/request to AWS</li>
+            <li>3) AWS checks the identity’s attached policies <em>at that moment</em></li>
+            <li>4) If the action is allowed → request runs ✅</li>
+            <li>5) If the action is not allowed (or is explicitly denied) → request is blocked ❌</li>
+          </ol>
+        </div>
+        <div class="callout">
+          <p><strong>Practical takeaway ✅</strong> If you get “AccessDenied” errors, it means the required permission was not granted (or a deny overrides it).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 One-Page Summary (Exam-Ready)</h2>
+        <ol class="steps">
+          <li>1) Default = no permissions (implicit deny) 🚫</li>
+          <li>2) Permissions come from attached policies (user + group policies) 🧾</li>
+          <li>3) Policies combine (permissions add up) ✅</li>
+          <li>4) If there’s a conflict: <strong>Explicit Deny wins</strong> ❌</li>
+          <li>5) AWS evaluates permissions when a request/command is made ⏱️</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Exam Focus)</h2>
+        <span class="tag">Policy</span>
+        <span class="tag">Permission</span>
+        <span class="tag">Default deny</span>
+        <span class="tag">Explicit allow</span>
+        <span class="tag">Explicit deny</span>
+        <span class="tag">Deny overrides allow</span>
+        <span class="tag">Evaluation at request time</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="mini">
+          <h3>Answer these without looking 👀</h3>
+          <ul>
+            <li>What happens if multiple policies grant different permissions?</li>
+            <li>What happens if one policy allows and another explicitly denies the same action?</li>
+            <li>When does AWS check permissions—before or during the request?</li>
+          </ul>
+          <div class="good">
+            <p><strong>Expected answers ✅</strong> Permissions combine • Deny wins • AWS checks at request/command time.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

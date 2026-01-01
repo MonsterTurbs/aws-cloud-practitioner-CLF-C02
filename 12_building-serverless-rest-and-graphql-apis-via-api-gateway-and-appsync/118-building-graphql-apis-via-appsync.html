@@ -1,0 +1,383 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — AppSync (GraphQL APIs)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --accent2:#1a73e8;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 18px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 18px 16px;
+    }
+
+    h1{
+      font-size: 1.55rem;
+      margin: 0 0 6px 0;
+      letter-spacing: .2px;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:.98rem;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      padding:8px 12px;
+      border-radius:10px;
+      font-size:.95rem;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn:focus{
+      outline: 3px solid rgba(26,115,232,.25);
+      outline-offset: 2px;
+    }
+
+    main{margin-top: 16px;}
+
+    section{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 14px 0;
+      background:#fff;
+    }
+
+    h2{
+      margin: 0 0 10px 0;
+      font-size: 1.15rem;
+    }
+
+    h3{
+      margin: 14px 0 6px 0;
+      font-size: 1.02rem;
+    }
+
+    .pill{
+      display:inline-block;
+      font-size:.85rem;
+      padding: 2px 10px;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      color: var(--muted);
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    ul{margin: 8px 0 0 20px;}
+    li{margin: 6px 0;}
+
+    .callout{
+      border-left: 5px solid var(--accent2);
+      background: #f7fbff;
+      padding: 12px 12px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    .grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns: 1fr;
+    }
+
+    .card{
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: var(--panel);
+    }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .92rem;
+      white-space: pre-wrap;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+
+    pre{
+      margin: 10px 0 0 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+    }
+
+    .two{
+      display:grid;
+      gap:12px;
+      grid-template-columns: 1fr;
+    }
+
+    .muted{color:var(--muted);}
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .9rem;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    .hr{height:1px;background:var(--border);margin:12px 0;}
+
+    /* Print settings */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ background:#fff; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      .toolbar{ display:none !important; }
+      a{ color: var(--text); text-decoration: none; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      pre{ border-color:#ddd; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>AppSync (GraphQL APIs) — Reviewer / Study Guide</h1>
+      <p class="sub">AWS Certified Cloud Practitioner (CLF-C02) • Print-friendly, single-column A4</p>
+      <div class="toolbar">
+        <button class="btn" onclick="window.print()" aria-label="Print or Save as PDF">🖨️ Print / Save as PDF</button>
+        <a class="btn" href="#quick-check" aria-label="Jump to quick check">✅ Quick Check</a>
+        <a class="btn" href="#exam-tips" aria-label="Jump to exam tips">🧠 Exam Tips</a>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) What is AppSync? <span class="pill">Core idea</span></h2>
+        <p>
+          🧩 <strong>AWS AppSync</strong> is a <strong>managed GraphQL API service</strong>. It helps you build a GraphQL API
+          <strong>without writing the “API boilerplate”</strong> (request parsing, routing, deployment, scaling).
+        </p>
+        <div class="callout">
+          💡 Think of it like this: <strong>API Gateway is commonly used for REST</strong>, while <strong>AppSync is for GraphQL</strong>.
+          Both services help you expose an API without you running your own API server 24/7.
+        </div>
+        <ul>
+          <li>📌 You define the <strong>GraphQL schema</strong> (the “contract” of what clients can ask for).</li>
+          <li>🔌 You connect schema operations to <strong>data sources</strong> and <strong>resolvers</strong> (how AppSync gets the data).</li>
+          <li>🔒 You can add <strong>authentication/authorization</strong>.</li>
+          <li>⚡ It supports <strong>real-time</strong> and <strong>on-demand</strong> access patterns and can provide <strong>caching</strong> and optimizations.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2) GraphQL terms you must recognize <span class="pill">Vocabulary</span></h2>
+        <div class="grid">
+          <div class="card">
+            <h3>📜 Schema</h3>
+            <p class="muted">Defines types and what operations are allowed.</p>
+            <ul>
+              <li><strong>Types</strong>: the shapes of your data (e.g., <code>Book</code>, <code>User</code>)</li>
+              <li><strong>Operations</strong>: what clients can do (Queries / Mutations)</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🔎 Query</h3>
+            <p class="muted">Read/fetch data (like “GET”, but in GraphQL style).</p>
+          </div>
+          <div class="card">
+            <h3>✍️ Mutation</h3>
+            <p class="muted">Create/update/delete data (like “POST/PUT/DELETE”, but in GraphQL style).</p>
+          </div>
+          <div class="card">
+            <h3>🧠 Resolver + 🔗 Data Source</h3>
+            <p class="muted">Resolver = logic that turns a GraphQL request into a call to a data source.</p>
+            <ul>
+              <li>Data sources can be databases or compute that returns data.</li>
+              <li>Resolver “wires” schema operations to those sources.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) How AppSync works (high-level flow) <span class="pill">Beginner map</span></h2>
+        <ol>
+          <li>📱 A web/mobile client sends a GraphQL request to AppSync.</li>
+          <li>🧾 AppSync validates it against your <strong>schema</strong> (only allowed fields/operations).</li>
+          <li>🧩 AppSync runs the correct <strong>resolver</strong> for that query/mutation.</li>
+          <li>🔌 The resolver fetches/changes data via a <strong>data source</strong> (database/service).</li>
+          <li>📤 AppSync returns the response to the client.</li>
+        </ol>
+        <div class="callout">
+          🎯 Key point for the exam: AppSync lets you get a <strong>GraphQL API</strong> without deploying your own API server.
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Simple GraphQL example (schema + requests) <span class="pill">Examples</span></h2>
+        <p class="muted">This is just to make the concepts “click”. You don’t need to code this for CLF-C02.</p>
+
+        <h3>🧾 Example schema</h3>
+        <pre><code>type Book {
+  id: ID!
+  title: String!
+  author: String!
+}
+
+type Query {
+  getBook(id: ID!): Book
+  listBooks: [Book!]!
+}
+
+type Mutation {
+  addBook(id: ID!, title: String!, author: String!): Book
+}</code></pre>
+
+        <div class="two">
+          <div class="card">
+            <h3>🔎 Example Query request</h3>
+            <pre><code>query {
+  getBook(id: "1") {
+    title
+    author
+  }
+}</code></pre>
+            <p class="muted">✅ Notice: client asks only for <code>title</code> and <code>author</code> (not every field).</p>
+          </div>
+          <div class="card">
+            <h3>✍️ Example Mutation request</h3>
+            <pre><code>mutation {
+  addBook(id: "2", title: "AWS Basics", author: "Max") {
+    id
+    title
+  }
+}</code></pre>
+            <p class="muted">✅ Mutation changes data, then returns selected fields.</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          🧠 Memory hook: REST often has <strong>many URLs</strong> (e.g., <code>/books/1</code>), while GraphQL often uses <strong>one endpoint</strong>
+          and the <strong>request body</strong> describes what data is needed.
+        </div>
+      </section>
+
+      <section>
+        <h2>5) AppSync features mentioned in the lecture <span class="pill">What to remember</span></h2>
+        <ul>
+          <li>🧱 <strong>Managed GraphQL API</strong>: you focus on schema + connections to data.</li>
+          <li>🔒 <strong>Authentication</strong>: protect your API (who can call what).</li>
+          <li>⚡ <strong>Performance</strong>: built-in query optimizations + caching capabilities.</li>
+          <li>🔁 <strong>Real-time + on-demand</strong>: supports continuous connections (real-time) and per-request usage.</li>
+          <li>🧰 <strong>Console / CLI / SDK</strong>: build and manage via multiple interfaces.</li>
+          <li>📦 <strong>Blueprints</strong>: start from templates/sample projects for faster learning.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>6) AppSync vs API Gateway (conceptual) <span class="pill">Compare</span></h2>
+        <div class="grid">
+          <div class="card">
+            <h3>🌐 API Gateway (REST/HTTP APIs)</h3>
+            <ul>
+              <li>Often: many routes/paths + HTTP methods (GET/POST/etc.)</li>
+              <li>Common pairing: API Gateway → Lambda</li>
+              <li>Great when you want traditional REST endpoints</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>🧠 AppSync (GraphQL APIs)</h3>
+            <ul>
+              <li>Often: single endpoint + GraphQL schema</li>
+              <li>Client requests exactly what it needs (reduced over-fetching)</li>
+              <li>Great when clients need flexible, “ask-for-what-you-need” data</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">
+          ✅ CLF-C02 level takeaway: <strong>API Gateway = managed REST</strong> (commonly), <strong>AppSync = managed GraphQL</strong>.
+        </div>
+      </section>
+
+      <section id="exam-tips">
+        <h2>7) Exam tips (CLF-C02) <span class="pill">High-yield</span></h2>
+        <ul>
+          <li>🧷 If the question says <strong>GraphQL</strong> → think <strong>AppSync</strong>.</li>
+          <li>🧷 If the question says <strong>REST API without managing servers</strong> → think <strong>API Gateway</strong> (often with Lambda).</li>
+          <li>🧷 If the question says <strong>schema, queries, mutations, resolvers</strong> → that’s <strong>GraphQL/AppSync</strong> language.</li>
+          <li>🧷 Managed service theme: you avoid “running your own API server” on EC2.</li>
+          <li>⚠️ Cost note (general): always check pricing pages and monitor your bill when experimenting.</li>
+        </ul>
+      </section>
+
+      <section id="quick-check">
+        <h2>8) Quick Check (self-test) <span class="pill">1–2 minutes</span></h2>
+        <ol>
+          <li>✅ What AWS service is “managed GraphQL API”? <strong>AppSync</strong></li>
+          <li>✅ In GraphQL, what’s the “read operation”? <strong>Query</strong></li>
+          <li>✅ In GraphQL, what’s the “write/change operation”? <strong>Mutation</strong></li>
+          <li>✅ What connects schema fields to how data is fetched? <strong>Resolvers</strong></li>
+          <li>✅ What is the big benefit of AppSync for beginners? <strong>No need to deploy/manage an API server</strong></li>
+        </ol>
+        <div class="hr"></div>
+        <p class="muted">Tip: When printing, use <span class="kbd">Ctrl</span>+<span class="kbd">P</span> (Windows) or <span class="kbd">Cmd</span>+<span class="kbd">P</span> (Mac), then choose “Save as PDF”.</p>
+      </section>
+
+      <section>
+        <h2>Lecture-to-notes summary <span class="pill">Source recap</span></h2>
+        <p>
+          🙂 AppSync is the GraphQL counterpart to API Gateway’s managed-API idea: you define the API structure (GraphQL schema)
+          and wire it to data sources via resolvers, optionally enforce auth, and benefit from performance features like caching.
+          You can start from scratch or use blueprints, and you mainly need to understand what it is (not master the console) for the exam.
+        </p>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

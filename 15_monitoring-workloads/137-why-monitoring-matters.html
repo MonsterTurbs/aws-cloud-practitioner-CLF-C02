@@ -1,0 +1,304 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Why Monitoring Matters</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Single-column, print-first layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 22px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 16px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.6rem;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    main { display: block; }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 14px 0;
+      background: #fff;
+      page-break-inside: avoid;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+    }
+
+    p { margin: 10px 0; }
+
+    ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 8px 0; }
+
+    .callout {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin-top: 10px;
+    }
+
+    .callout strong { color: #000; }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 6px;
+      padding: 1px 6px;
+      white-space: nowrap;
+    }
+
+    .muted { color: var(--muted); }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    .qa {
+      padding: 10px 12px;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .qa p { margin: 8px 0; }
+
+    .footer {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    /* Make sure long words/URLs never overflow when printing */
+    p, li, code, pre, .callout, .qa {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    /* Simple toolbar (hidden on print) */
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0 4px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    /* PRINT SETTINGS (A4) */
+    @page {
+      size: A4;
+      margin: 14mm 14mm;
+    }
+
+    @media print {
+      body {
+        font-size: 11pt;
+        line-height: 1.55;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      header, section {
+        border-color: #d9d9d9;
+        box-shadow: none !important;
+      }
+
+      .toolbar {
+        display: none !important;
+      }
+
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>📊 Monitoring Workloads — Why Monitoring Matters</h1>
+      <p class="subtitle">CLF-C02 reviewer: meaning of monitoring + why it is critical for reliability, correctness, and cost control.</p>
+      <div class="meta">
+        <span class="chip">✅ Single-column</span>
+        <span class="chip">🖨️ A4 print-ready</span>
+        <span class="chip">🧠 Beginner-friendly</span>
+        <span class="chip">⏱️ ~5–10 min review</span>
+      </div>
+
+      <div class="toolbar" aria-label="actions">
+        <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">🧪 Quick Check</button>
+      </div>
+
+      <p class="muted">Tip: On Windows use <span class="kbd">Ctrl</span> + <span class="kbd">P</span>. On Mac use <span class="kbd">Cmd</span> + <span class="kbd">P</span>.</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) ✅ What does “monitoring” mean?</h2>
+        <p><strong>Monitoring</strong> means <strong>watching your workloads and services continuously</strong> so you can detect problems early and take action.</p>
+        <div class="callout">
+          <p><strong>Simple definition:</strong> Monitoring = “Are my systems healthy, correct, and cost-efficient right now?” 👀</p>
+        </div>
+        <ul>
+          <li>🩺 <strong>Health:</strong> Is the service up? Is it responding?</li>
+          <li>🎯 <strong>Correctness:</strong> Are responses correct (not just “up”)?</li>
+          <li>💸 <strong>Cost:</strong> Are we paying more than expected due to unusual usage?</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2) 🌩️ Why monitoring matters in the cloud</h2>
+        <p>In AWS, you can run many types of workloads (e.g., EC2 web servers, Lambda functions, containers). Even if everything was working yesterday, <strong>things can still break today</strong> due to bugs, traffic spikes, configuration issues, or dependency failures.</p>
+        <div class="callout">
+          <p><strong>Key idea:</strong> “Should work” is not the same as “is working.” 😅</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) ⚠️ Common “things that go wrong” (from the lecture)</h2>
+        <ul>
+          <li>💥 <strong>Web server crash:</strong> The app stops responding (downtime).</li>
+          <li>🐛 <strong>Incorrect responses:</strong> The server responds, but the output is wrong (users get bad data).</li>
+          <li>📈 <strong>Lambda runs too often:</strong> Unexpected triggers or loops → higher cost than expected.</li>
+        </ul>
+
+        <div class="hr"></div>
+
+        <div class="callout">
+          <p><strong>Beginner example:</strong> If a Lambda function is triggered by S3 uploads, a misconfigured app might upload the same file repeatedly → Lambda fires repeatedly → cost increases. 💸</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) 🎛️ What should you monitor? (practical checklist)</h2>
+        <p class="muted">You do not need all the details for CLF-C02, but you should understand the categories.</p>
+        <ul>
+          <li>📊 <strong>Metrics:</strong> numbers over time (CPU usage, errors, latency).</li>
+          <li>🧾 <strong>Logs:</strong> detailed records of events (errors, warnings, request traces).</li>
+          <li>🚨 <strong>Alarms/alerts:</strong> notifications when something crosses a threshold.</li>
+          <li>🔎 <strong>Symptoms:</strong> slow performance, spikes in error rates, sudden cost changes.</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>Remember:</strong> Monitoring is about <em>detecting</em> issues early so you can <em>fix</em> them before customers notice. 🧯</p>
+        </div>
+      </section>
+
+      <section id="quick-check">
+        <h2>5) 🧪 Quick Check (exam-style)</h2>
+        <div class="qa">
+          <p><strong>Q1:</strong> Why do we monitor workloads?</p>
+          <p class="muted">A: To detect failures or incorrect behavior early, and to control cost (e.g., unexpected Lambda invocations). ✅</p>
+          <div class="hr"></div>
+          <p><strong>Q2:</strong> Give 2 examples of problems monitoring can reveal.</p>
+          <p class="muted">A: A web server crash; incorrect responses; Lambda executing too often. ✅</p>
+          <div class="hr"></div>
+          <p><strong>Q3:</strong> True or False: “If a workload is deployed, it will always behave as intended.”</p>
+          <p class="muted">A: False. Bugs, traffic spikes, and failures can happen anytime. ❌</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>6) 🧠 Mini-summary (1-minute recap)</h2>
+        <ul>
+          <li>👀 Monitoring = checking that workloads are <strong>healthy</strong>, <strong>correct</strong>, and <strong>cost-efficient</strong>.</li>
+          <li>💥 Things can fail (crash), behave wrongly (bad output), or cost more than expected (over-invoked Lambda).</li>
+          <li>🧯 Monitoring helps you catch issues early and fix them before they escalate.</li>
+        </ul>
+      </section>
+
+      <p class="footer">Next up in this section: AWS will introduce its key monitoring service (CloudWatch) and related tools that integrate with other AWS services.</p>
+    </main>
+  </div>
+</body>
+</html>

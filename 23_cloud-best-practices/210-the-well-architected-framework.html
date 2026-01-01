@@ -1,0 +1,481 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS Well-Architected Framework — Reviewer / Study Guide (Print-Friendly)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #dddddd;
+      --panel: #f7f7f7;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Single-column, print-safe layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 22px 40px;
+    }
+
+    header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: -0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 4px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    h2 {
+      margin: 18px 0 8px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 14px 0 6px;
+      font-size: 15.5px;
+      line-height: 1.3;
+    }
+
+    p { margin: 8px 0; }
+
+    ul, ol { margin: 8px 0 10px 20px; padding: 0; }
+    li { margin: 4px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 12px 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .callout strong { display: inline-block; margin-bottom: 4px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 10px 0 0;
+    }
+
+    .box {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .pillars {
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .pillars .row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      padding: 10px 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .pillars .row:first-child { border-top: 0; }
+
+    .tag {
+      display: inline-block;
+      font-size: 12.5px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      margin-right: 6px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .tag b { font-weight: 700; }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    .kbd {
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      padding: 1px 6px;
+      background: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin: 10px 0;
+      background: #fff;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    .muted { color: var(--muted); }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    footer {
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Print rules */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { background: #fff !important; }
+      .page { max-width: none; padding: 0; }
+      a { color: #000; text-decoration: none; }
+      .chip, .tag, .callout, details, .box, .pillars { border-color: #bbb; }
+      details { page-break-inside: avoid; }
+      .callout, .box, .pillars .row { page-break-inside: avoid; }
+
+      /* Make quiz answers visible on paper */
+      details { padding-bottom: 10px; }
+      details > summary { margin-bottom: 6px; }
+      details[open] { }
+      details:not([open]) > *:not(summary) { display: block; }
+
+      /* Remove UI-only affordances */
+      summary { cursor: default; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>🧱 AWS Well-Architected Framework — Reviewer / Study Guide</h1>
+      <p class="subtitle">Beginner-friendly notes based on the lecture transcript. Single-column, A4 print-ready.</p>
+      <div class="meta">
+        <span class="chip">Format: 1 column</span>
+        <span class="chip">Print: A4 margins + word-wrap</span>
+        <span class="chip">Focus: 6 Pillars</span>
+        <span class="chip">Exam level: CLF-C02 (overview)</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>🎯 What is the Well-Architected Framework?</h2>
+      <p>
+        The <b>AWS Well-Architected Framework</b> is a set of best practices and a <b>structured way to review</b>
+        your cloud architecture. Its goal is simple: help you <b>spot weaknesses</b> and <b>improve</b> how you design and run workloads.
+      </p>
+      <div class="callout">
+        <strong>🧠 Think of it like a “cloud architecture checklist.”</strong>
+        <div class="muted">You periodically review your system using the 6 pillars to find improvements (reliability, security, cost, etc.).</div>
+      </div>
+
+      <h3>✅ The 6 pillars (memorize this list)</h3>
+      <div class="pillars" aria-label="Six pillars summary">
+        <div class="row"><div><span class="tag"><b>🛠️ Operational Excellence</b></span> Run and improve workloads effectively (monitoring + automation + processes).</div></div>
+        <div class="row"><div><span class="tag"><b>🔒 Security</b></span> Protect data, systems, and assets with proper controls and best practices.</div></div>
+        <div class="row"><div><span class="tag"><b>✅ Reliability</b></span> Recover from failures and meet demand consistently.</div></div>
+        <div class="row"><div><span class="tag"><b>⚡ Performance Efficiency</b></span> Use resources efficiently as requirements and tech change.</div></div>
+        <div class="row"><div><span class="tag"><b>💸 Cost Optimization</b></span> Avoid unnecessary costs while meeting requirements.</div></div>
+        <div class="row"><div><span class="tag"><b>🌱 Sustainability</b></span> Reduce environmental impact (optimize energy and resource usage).</div></div>
+      </div>
+
+      <div class="callout">
+        <strong>📌 Exam cue (CLF-C02):</strong>
+        If a question asks, “Which pillar is this about?”, match the scenario to the pillar keyword:
+        <ul>
+          <li><b>Monitoring, automation, processes</b> → 🛠️ Operational Excellence</li>
+          <li><b>Access control, encryption, threats</b> → 🔒 Security</li>
+          <li><b>High availability, failover, recovery</b> → ✅ Reliability</li>
+          <li><b>Right-sizing, serverless, scaling patterns</b> → ⚡ Performance Efficiency</li>
+          <li><b>Reduce spend, remove waste, budgets</b> → 💸 Cost Optimization</li>
+          <li><b>Energy/resource efficiency</b> → 🌱 Sustainability</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="hr" role="separator"></div>
+
+    <section>
+      <h2>🧩 Pillar-by-pillar (Beginner explanations + examples)</h2>
+
+      <h3>1) 🛠️ Operational Excellence</h3>
+      <p>
+        This pillar is about <b>running workloads well</b> and <b>improving how you operate</b> in the cloud.
+        You monitor what’s happening, measure results, automate repeatable work, and continuously improve.
+      </p>
+      <div class="grid">
+        <div class="box">
+          <b>✅ What “good” looks like</b>
+          <ul>
+            <li>Monitoring and logging enabled (you can see what’s happening).</li>
+            <li>Infrastructure changes are <b>repeatable</b> (Infrastructure as Code).</li>
+            <li>Clear operational processes: deploy, rollback, incident response.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <b>🧪 Simple example</b>
+          <p>
+            Instead of clicking around the console each time, you use
+            <b>CloudFormation</b> to create the same environment repeatedly.
+            That reduces human error and helps standardize deployments.
+          </p>
+        </div>
+      </div>
+
+      <h3>2) 🔒 Security</h3>
+      <p>
+        Security means protecting <b>accounts</b>, <b>workloads</b>, <b>network traffic</b>, and <b>data</b>.
+        You apply least privilege, encryption, and detection services.
+      </p>
+      <div class="grid">
+        <div class="box">
+          <b>✅ What “good” looks like</b>
+          <ul>
+            <li>Least privilege access (only the permissions needed).</li>
+            <li>MFA enabled where appropriate.</li>
+            <li>Encryption at rest and in transit.</li>
+            <li>Threat detection and monitoring enabled.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <b>🧰 Example tools you might mention</b>
+          <ul>
+            <li>IAM (users/roles/policies), KMS (encryption keys), ACM (TLS certs)</li>
+            <li>CloudTrail (API logging), GuardDuty (threat detection)</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>3) ✅ Reliability</h3>
+      <p>
+        Reliability is about making sure your system <b>keeps working</b> and can <b>recover from failures</b>.
+        It should handle changes in demand (traffic spikes) and still behave consistently.
+      </p>
+      <div class="grid">
+        <div class="box">
+          <b>✅ What “good” looks like</b>
+          <ul>
+            <li>Design for failure (assume something will break).</li>
+            <li>Use redundancy (multiple AZs/instances) where appropriate.</li>
+            <li>Auto Scaling + Load Balancing to handle demand.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <b>🌐 Simple example</b>
+          <p>
+            A web app runs behind a load balancer with instances in multiple Availability Zones.
+            If one instance or AZ fails, traffic is routed to healthy targets.
+          </p>
+        </div>
+      </div>
+
+      <h3>4) ⚡ Performance Efficiency</h3>
+      <p>
+        Performance efficiency means using the <b>right resource types and sizes</b> for your workload,
+        and adapting as demand and technology change.
+      </p>
+      <div class="grid">
+        <div class="box">
+          <b>✅ What “good” looks like</b>
+          <ul>
+            <li>Right-sized resources (not too big, not too small).</li>
+            <li>Choose managed/serverless services when it fits.</li>
+            <li>Regularly review and improve architecture with new options.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <b>⚙️ Simple example</b>
+          <p>
+            Instead of running an always-on EC2 instance for a periodic job,
+            you use <b>Lambda</b> (event-driven) so you only pay when it runs.
+          </p>
+        </div>
+      </div>
+
+      <h3>5) 💸 Cost Optimization</h3>
+      <p>
+        Cost optimization is about <b>avoiding unnecessary spending</b> while still meeting requirements.
+        You challenge assumptions: “Do we really need this?” “Is there a cheaper approach?”
+      </p>
+      <div class="grid">
+        <div class="box">
+          <b>✅ What “good” looks like</b>
+          <ul>
+            <li>Measure costs and make them visible (Cost Explorer/Budgets).</li>
+            <li>Remove waste (unused instances, over-provisioned storage).</li>
+            <li>Use the pricing model that fits (Reserved/Savings Plans where applicable).</li>
+          </ul>
+        </div>
+        <div class="box">
+          <b>💡 Simple example</b>
+          <p>
+            If an EC2 instance is at 5% CPU most of the time, you right-size it.
+            Reliability stays acceptable, but cost improves.
+          </p>
+        </div>
+      </div>
+
+      <h3>6) 🌱 Sustainability</h3>
+      <p>
+        Sustainability focuses on <b>reducing environmental impact</b>.
+        In practice: reduce wasted resources, use managed services where efficient,
+        and design architectures that consume less energy.
+      </p>
+      <div class="grid">
+        <div class="box">
+          <b>✅ What “good” looks like</b>
+          <ul>
+            <li>Right-size and scale down when demand is low.</li>
+            <li>Prefer efficient managed services when suitable.</li>
+            <li>Continuously improve resource efficiency over time.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <b>🌿 Simple example</b>
+          <p>
+            Turning off dev/test environments after-hours reduces cost <i>and</i> energy usage.
+            This supports both 💸 Cost Optimization and 🌱 Sustainability.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>⚖️ Real-world note:</strong>
+        Pillars overlap. For example, right-sizing improves <b>Performance</b>, <b>Cost</b>, and <b>Sustainability</b> at the same time.
+        The framework helps you balance trade-offs instead of optimizing only one dimension.
+      </div>
+    </section>
+
+    <div class="hr" role="separator"></div>
+
+    <section>
+      <h2>🔍 “Lenses” (What are they?)</h2>
+      <p>
+        <b>Lenses</b> are specialized guidance sets that apply the 6 pillars to a specific scenario,
+        industry, or technology area. They help you evaluate architecture decisions in context.
+      </p>
+      <div class="callout">
+        <strong>🧠 Beginner interpretation:</strong>
+        The pillars are the universal checklist; <b>lenses</b> are the “industry-specific version” of that checklist.
+      </div>
+    </section>
+
+    <section>
+      <h2>📝 Quick self-check questions (mini quiz)</h2>
+      <p class="muted">Tip: Try answering first before opening the answer.</p>
+
+      <details>
+        <summary>Q1) You switch from manual console setup to CloudFormation templates. Which pillar is this primarily?</summary>
+        <div><b>Answer:</b> 🛠️ Operational Excellence (automation + repeatable processes). It can also help with Reliability and Security, but the primary match is OpEx.</div>
+      </details>
+
+      <details>
+        <summary>Q2) You add Auto Scaling + Load Balancer so your web app stays available during traffic spikes.</summary>
+        <div><b>Answer:</b> ✅ Reliability (handle demand + remain available). It may also improve Performance Efficiency.</div>
+      </details>
+
+      <details>
+        <summary>Q3) You enable encryption for S3 objects and use TLS certificates for HTTPS traffic.</summary>
+        <div><b>Answer:</b> 🔒 Security (encryption at rest + in transit).</div>
+      </details>
+
+      <details>
+        <summary>Q4) You downsize an EC2 instance because CPU usage is consistently low.</summary>
+        <div><b>Answer:</b> 💸 Cost Optimization and ⚡ Performance Efficiency (right-sizing). It can also help 🌱 Sustainability.</div>
+      </details>
+
+      <details>
+        <summary>Q5) You redesign the system to reduce wasted compute and energy usage.</summary>
+        <div><b>Answer:</b> 🌱 Sustainability (and often 💸 Cost Optimization as a side benefit).</div>
+      </details>
+    </section>
+
+    <footer>
+      <div><b>Print tip:</b> Use your browser print dialog and select <span class="kbd">A4</span>. Margins are already configured via CSS.</div>
+      <div class="muted">Source: lecture transcript — Well-Architected Framework overview (6 pillars + lenses).</div>
+    </footer>
+  </main>
+</body>
+</html>

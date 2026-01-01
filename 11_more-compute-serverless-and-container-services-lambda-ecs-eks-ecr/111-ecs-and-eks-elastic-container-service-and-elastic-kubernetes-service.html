@@ -1,0 +1,345 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — ECS & EKS (Running Containers)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12.5px;
+      color: #222;
+    }
+
+    .toolbar {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13.5px;
+    }
+
+    .btn.primary {
+      border-color: #cfe0ff;
+      background: #eef4ff;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    main {
+      margin-top: 14px;
+    }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 12px 0;
+      background: #fff;
+    }
+
+    h2 {
+      font-size: 16.5px;
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 14.5px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      border: 1px dashed var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin-top: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .k {
+      font-weight: 700;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 12.5px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      border: 0;
+      margin: 12px 0;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 12.5px;
+      margin: 14px 0 0;
+      text-align: center;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { padding: 0; }
+      header, section { box-shadow: none; }
+      .toolbar { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      section { break-inside: avoid; page-break-inside: avoid; }
+      h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+      ul, ol { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>📦 ECS & EKS — Running Containers on AWS</h1>
+      <p class="subtitle">
+        Reviewer / Study Guide (Beginner-friendly) — CLF-C02 focus: what these services do, why they exist, and when to use them.
+      </p>
+      <div class="meta">
+        <span class="chip">✅ Single-column</span>
+        <span class="chip">🖨️ A4 Print-ready</span>
+        <span class="chip">🧠 Exam-focused</span>
+        <span class="chip">📌 Topic: Container orchestration</span>
+      </div>
+      <div class="toolbar">
+        <button class="btn primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Quick Check</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Idea (in simple terms) 🧠</h2>
+        <p>
+          You created <span class="k">container images</span> (blueprints) and you want to <span class="k">run containers</span> (running copies).
+          To run containers, you need machines that can run Docker (or a similar container runtime).
+        </p>
+        <div class="callout">
+          <p><span class="k">Core problem:</span> You <em>can</em> run containers on EC2 by installing Docker yourself… but that creates a lot of operations work.</p>
+          <ul>
+            <li>⚙️ Install Docker + keep it updated</li>
+            <li>📥 Pull images and start containers</li>
+            <li>📈 Scale containers across multiple servers</li>
+            <li>🔗 Connect containers (networking, discovery)</li>
+            <li>🩺 Handle failures (restarts, re-scheduling)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) Two Ways to Run Containers on AWS 🚀</h2>
+        <div class="grid">
+          <div class="callout">
+            <p><span class="k">Option A: DIY on EC2</span> (Manual)</p>
+            <ul>
+              <li>Start EC2 instances</li>
+              <li>Install Docker</li>
+              <li>Run containers yourself</li>
+            </ul>
+            <p class="subtitle">👍 More control, 👎 more operational burden.</p>
+          </div>
+
+          <div class="callout">
+            <p><span class="k">Option B: Use managed container services</span> (Recommended for most cases)</p>
+            <ul>
+              <li><span class="k">ECS</span> — Elastic Container Service (Amazon’s orchestration)</li>
+              <li><span class="k">EKS</span> — Elastic Kubernetes Service (Kubernetes orchestration)</li>
+            </ul>
+            <p class="subtitle">👍 Less ops work, 👎 less “low-level” control.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) What ECS and EKS Actually Do 🧩</h2>
+        <p>
+          Think of <span class="k">ECS/EKS</span> as “container cluster managers.” They help you run many containers reliably.
+          They reduce your need to personally handle the hard parts.
+        </p>
+        <h3>They help with:</h3>
+        <ul>
+          <li>🧱 <span class="k">Cluster</span> creation (group of servers that run containers)</li>
+          <li>📦 <span class="k">Scheduling</span> containers across servers (where should each container run?)</li>
+          <li>🔁 <span class="k">Restart / self-healing</span> (if a container crashes, bring it back)</li>
+          <li>📈 <span class="k">Scaling</span> (run more containers when traffic increases)</li>
+          <li>🔗 <span class="k">Networking</span> between containers/services</li>
+          <li>🧩 <span class="k">Rolling updates</span> (deploy a new version gradually)</li>
+        </ul>
+
+        <div class="callout">
+          <p><span class="k">Memory hook:</span> ECS/EKS = “Run containers in a cluster without doing everything by hand.” 😌</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) ECS vs EKS (Exam-level comparison) ⚖️</h2>
+        <p>
+          Both run container clusters. The main difference is the orchestration technology:
+        </p>
+        <ul>
+          <li>🟦 <span class="k">ECS</span> uses an <span class="k">AWS-native</span> orchestration approach (Amazon’s solution).</li>
+          <li>🟩 <span class="k">EKS</span> uses <span class="k">Kubernetes</span> (open-source, widely used standard).</li>
+        </ul>
+
+        <div class="callout">
+          <p><span class="k">Practical meaning (beginner-friendly):</span></p>
+          <ul>
+            <li>✅ Choose <span class="k">ECS</span> when you want a more AWS-integrated experience and don’t specifically need Kubernetes.</li>
+            <li>✅ Choose <span class="k">EKS</span> when you want Kubernetes (e.g., your team already uses K8s tooling/skills or portability matters).</li>
+          </ul>
+          <p class="subtitle">For CLF-C02: you mainly need to remember the names and the “AWS-native vs Kubernetes” distinction.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>5) Simple Example Scenarios (to make it stick) 🧪</h2>
+        <h3>Example 1: You want to run a web app container</h3>
+        <ul>
+          <li>📦 You build an image: <span class="mono">my-web-app:1.0</span></li>
+          <li>🚀 You want 3 running containers for high availability</li>
+          <li>📈 During peak traffic, scale to 10 containers</li>
+        </ul>
+        <p>
+          With ECS/EKS, you describe the desired state (e.g., “keep 3 containers running”), and the service helps keep it true.
+        </p>
+
+        <hr class="divider" />
+
+        <h3>Example 2: Multi-container app (microservices)</h3>
+        <ul>
+          <li>🧩 Image A: API service</li>
+          <li>🧩 Image B: Worker service</li>
+          <li>🧩 Image C: Frontend</li>
+        </ul>
+        <p>
+          ECS/EKS help run each component as its own service, and scale them independently.
+        </p>
+      </section>
+
+      <section id="quick-check">
+        <h2>6) Quick Check (Exam-style) ✅</h2>
+        <ul>
+          <li>❓ <span class="k">Why not just EC2?</span> You can, but you must manage Docker installs/updates, scheduling, scaling, and recovery yourself.</li>
+          <li>❓ <span class="k">What are ECS and EKS?</span> Managed services for running container clusters.</li>
+          <li>❓ <span class="k">Difference between ECS and EKS?</span> ECS is AWS-native; EKS is Kubernetes-based.</li>
+          <li>❓ <span class="k">Do you need to know Kubernetes details for CLF-C02?</span> No—just what EKS is and why it exists.</li>
+        </ul>
+
+        <div class="callout">
+          <p><span class="k">One-liner memory aid:</span> “ECS/EKS run many containers for you; EKS = Kubernetes.” 🧠</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>7) Key Takeaways (What to memorize) 📌</h2>
+        <ul>
+          <li>📦 Containers need a runtime (e.g., Docker) to run.</li>
+          <li>🛠️ Running containers on EC2 is possible but operationally heavy.</li>
+          <li>🚀 ECS and EKS are managed container orchestration services on AWS.</li>
+          <li>🟦 ECS = AWS-native orchestration; 🟩 EKS = Kubernetes orchestration.</li>
+          <li>✅ For the exam: know the purpose + the difference (no deep configuration details required).</li>
+        </ul>
+      </section>
+
+      <footer>
+        Print tip: Use your browser’s “Save as PDF” to keep an offline reviewer copy.
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

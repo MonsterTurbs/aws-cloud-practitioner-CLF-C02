@@ -1,0 +1,456 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — ECS, EKS & Fargate</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --link: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 22px 18px 40px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.55rem;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .btn:focus {
+      outline: 2px solid #000;
+      outline-offset: 2px;
+    }
+
+    main { margin-top: 16px; }
+
+    h2 {
+      margin: 22px 0 10px;
+      font-size: 1.2rem;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+
+    h3 {
+      margin: 16px 0 8px;
+      font-size: 1.05rem;
+    }
+
+    p { margin: 8px 0; }
+
+    ul, ol {
+      margin: 8px 0 10px;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    .note, .tip, .warn {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 12px 10px;
+      background: #fff;
+      margin: 12px 0;
+    }
+
+    .note { border-left: 6px solid #cfcfcf; }
+    .tip  { border-left: 6px solid #9fd3a5; }
+    .warn { border-left: 6px solid #f0c36d; }
+
+    .kvs {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: var(--panel);
+      margin: 12px 0;
+    }
+
+    .kvs dl { margin: 0; }
+    .kvs dt {
+      font-weight: 700;
+      margin-top: 10px;
+    }
+    .kvs dt:first-child { margin-top: 0; }
+    .kvs dd {
+      margin: 4px 0 0;
+      color: var(--muted);
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.92em;
+    }
+
+    pre {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 18px 0;
+    }
+
+    .checklist {
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 12px 0;
+    }
+
+    .checklist label {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 8px 0;
+    }
+
+    .checklist input { margin-top: 3px; }
+
+    footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .page { max-width: none; padding: 0; }
+      header { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+      .note, .tip, .warn, .kvs, pre, .checklist { break-inside: avoid; }
+      .toolbar { display: none !important; }
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>☁️ AWS CLF-C02 Reviewer — ECS, EKS & Fargate</h1>
+      <p class="subtitle">Single-column • A4 print-ready • Beginner-friendly notes, examples, and exam tips</p>
+      <div class="toolbar">
+        <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">🧠 Jump to Quick Quiz</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Idea (in plain words)</h2>
+        <p>
+          🧱 <strong>Containers</strong> are “packages” that include your app + everything it needs to run (runtime, libraries, config).
+          Instead of installing software on a server manually, you run containers built from <strong>images</strong> (often Docker images).
+        </p>
+        <p>
+          🧰 <strong>ECS</strong> and <strong>EKS</strong> help you <strong>launch, scale, and manage containers</strong> in AWS.
+          You define what to run (images + settings), and AWS helps handle the operational work.
+        </p>
+        <div class="tip">
+          ✅ Exam mindset: <strong>ECS/EKS = container orchestration</strong>. <strong>Fargate = serverless way to run containers</strong>.
+        </div>
+      </section>
+
+      <section>
+        <h2>2) Key Terms You Must Know</h2>
+        <div class="kvs">
+          <dl>
+            <dt>📦 Cluster</dt>
+            <dd>A logical group where your container workloads run. You create a cluster, then run tasks/services inside it.</dd>
+
+            <dt>🧾 Task Definition</dt>
+            <dd>The “blueprint” describing how to run containers: image, CPU/memory, ports, environment variables, IAM role, etc.</dd>
+
+            <dt>🏃 Task</dt>
+            <dd>A container run that usually <strong>finishes</strong> (batch job style). Example: run a nightly report, then stop.</dd>
+
+            <dt>🧑‍💼 Service</dt>
+            <dd>An <strong>ongoing</strong> task that should keep running (web server / API). ECS/EKS keeps the desired number running.</dd>
+
+            <dt>🛠️ Launch Type / Infrastructure</dt>
+            <dd>Where containers run: either <strong>EC2</strong> (you choose instance types) or <strong>Fargate</strong> (serverless).</dd>
+
+            <dt>🚀 Fargate</dt>
+            <dd><strong>Serverless container execution</strong>: you don’t manage EC2 instances. You specify CPU/memory; AWS runs it.</dd>
+          </dl>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) ECS vs EKS (What’s the Difference?)</h2>
+        <p>
+          🆚 Both run containers, but the “control plane” differs:
+        </p>
+        <ul>
+          <li>🧩 <strong>ECS (Elastic Container Service)</strong>: AWS-native container orchestration (simpler for many AWS-first teams).</li>
+          <li>☸️ <strong>EKS (Elastic Kubernetes Service)</strong>: managed Kubernetes (useful if you want Kubernetes portability/standard ecosystem).</li>
+        </ul>
+        <div class="note">
+          📝 For CLF-C02: you typically just need to know <strong>ECS and EKS run containers</strong>, and
+          <strong>EKS = Kubernetes</strong>.
+        </div>
+      </section>
+
+      <section>
+        <h2>4) How ECS/EKS Work (Workflow)</h2>
+        <p>Think of it as: <strong>Define → Choose where to run → Deploy → Scale/Monitor</strong> ✅</p>
+        <ol>
+          <li>🧾 <strong>Define task(s)</strong> (task definition): which image(s) to run + settings.</li>
+          <li>🏗️ <strong>Create a cluster</strong>: choose networking + infrastructure (EC2 or Fargate).</li>
+          <li>🏃 <strong>Run as a Task</strong> (one-off) or 🧑‍💼 <strong>Run as a Service</strong> (always-on).</li>
+          <li>📈 <strong>Scale and operate</strong>: set desired count, auto scaling, rolling updates, health checks.</li>
+          <li>🔍 <strong>Monitor</strong>: logs/metrics; investigate failures; adjust capacity/policies.</li>
+        </ol>
+
+        <div class="warn">
+          ⚠️ Common confusion: <strong>“Task” vs “Task Definition”</strong>
+          <ul>
+            <li><strong>Task Definition</strong> = blueprint (like a recipe)</li>
+            <li><strong>Task</strong> = running instance of that blueprint (like the cooked dish)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>5) Infrastructure Choices: EC2 vs Fargate</h2>
+
+        <h3>Option A — EC2 Launch Type 🖥️</h3>
+        <ul>
+          <li>You (or your team) choose <strong>EC2 instance types</strong> and how many instances to run in the cluster.</li>
+          <li>AWS helps orchestrate containers on those instances, but you still think in “servers.”</li>
+          <li>Good when you want more control, special instance types, or you already manage EC2 heavily.</li>
+        </ul>
+
+        <h3>Option B — Fargate (Serverless) ✨</h3>
+        <ul>
+          <li>You <strong>don’t</strong> manage EC2 instances.</li>
+          <li>You specify simplified settings like <strong>CPU and memory</strong>, and AWS runs the containers for you.</li>
+          <li>Popular choice because it reduces operational work (no “how many servers?” problem).</li>
+        </ul>
+
+        <div class="tip">
+          ✅ CLF-C02 takeaway: <strong>Fargate = serverless containers</strong> used with ECS or EKS.
+          You focus on the container/task; AWS focuses on the servers.
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Mini Examples (Beginner-Friendly)</h2>
+
+        <h3>Example 1: One-off nightly job 🌙</h3>
+        <p>
+          You need a container to run a script daily (e.g., generate a report) and then stop.
+        </p>
+        <ul>
+          <li>Use an ECS/EKS <strong>Task</strong> (not a Service) ✅</li>
+          <li>Schedule it (e.g., once per day) 🗓️</li>
+        </ul>
+
+        <h3>Example 2: Web API that must always run 🌐</h3>
+        <p>
+          You need a containerized Node.js API that should always be available.
+        </p>
+        <ul>
+          <li>Use an ECS/EKS <strong>Service</strong> ✅</li>
+          <li>Set <strong>desired count</strong> (e.g., 2 tasks) for redundancy 📌</li>
+          <li>Optionally place a <strong>Load Balancer</strong> in front ⚖️</li>
+        </ul>
+
+        <h3>Example 3: “I don’t want to manage servers” 🙅‍♂️</h3>
+        <p>
+          You still want containers, but you don’t want to pick EC2 types or keep track of instances.
+        </p>
+        <ul>
+          <li>Choose <strong>Fargate</strong> ✅</li>
+          <li>Provide CPU/memory; AWS runs it ✨</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>7) Task Definition (What You Configure)</h2>
+        <p>
+          🧾 A task definition describes how to run your container(s). Typical settings include:
+        </p>
+        <ul>
+          <li>📦 Image name (e.g., from a registry like Amazon ECR)</li>
+          <li>🧠 CPU + memory limits</li>
+          <li>🔌 Ports to expose (e.g., 80/443/3000)</li>
+          <li>🌱 Environment variables (e.g., <code>NODE_ENV=production</code>)</li>
+          <li>🔐 IAM role (permissions for the running task to access AWS services)</li>
+          <li>🌐 Networking mode + security settings</li>
+        </ul>
+
+        <p>Simple “pseudo” task definition idea (for understanding):</p>
+        <pre>{
+  "container": {
+    "image": "my-app:1.0",
+    "cpu": 256,
+    "memory": 512,
+    "portMappings": [3000],
+    "env": {"NODE_ENV": "production"}
+  }
+}
+</pre>
+        <div class="note">
+          📝 You do <strong>not</strong> need to memorize JSON fields for CLF-C02.
+          Just know the concept: task definition = container blueprint.
+        </div>
+      </section>
+
+      <section>
+        <h2>8) Networking & Security (High-Level)</h2>
+        <ul>
+          <li>🌐 You typically run clusters inside a <strong>VPC</strong>.</li>
+          <li>🧱 You configure <strong>subnets</strong> and <strong>security groups</strong> so containers can reach what they need.</li>
+          <li>🔐 You can grant containers permissions via <strong>IAM roles</strong> (e.g., write to S3).</li>
+        </ul>
+        <div class="tip">
+          ✅ Exam-friendly mental model: 
+          <strong>Security Groups</strong> control network traffic, <strong>IAM Roles</strong> control AWS permissions.
+        </div>
+      </section>
+
+      <section>
+        <h2>9) Operations: Scaling, Monitoring, and Scheduling</h2>
+        <h3>Scaling 📈</h3>
+        <ul>
+          <li>Services can maintain a <strong>desired count</strong> (e.g., always keep 3 tasks running).</li>
+          <li>You can scale up/down based on demand (auto scaling concepts).</li>
+        </ul>
+
+        <h3>Monitoring 🔎</h3>
+        <ul>
+          <li>Check if containers are healthy, restarting if needed.</li>
+          <li>View logs/metrics to detect issues and tune performance.</li>
+        </ul>
+
+        <h3>Scheduling 🗓️</h3>
+        <ul>
+          <li>Run tasks once per day/week/month (batch-style jobs).</li>
+          <li>Keep services always running (web workloads).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>10) When to Use What (Simple Decision Guide)</h2>
+        <ul>
+          <li>⚙️ Want maximum control + you’re comfortable managing servers → <strong>EC2 launch type</strong></li>
+          <li>✨ Want containers but minimal server management → <strong>Fargate</strong></li>
+          <li>🧩 Want AWS-native orchestration and simpler onboarding → <strong>ECS</strong></li>
+          <li>☸️ Want Kubernetes ecosystem/skills/portability → <strong>EKS</strong></li>
+        </ul>
+        <div class="warn">
+          ⚠️ Don’t confuse <strong>Lambda</strong> vs <strong>Fargate</strong>:
+          <ul>
+            <li>⚡ Lambda: event-driven functions (short-running code)</li>
+            <li>📦 Fargate: run <strong>containers</strong> without managing servers</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 id="quiz">🧠 Quick Quiz (Self-check)</h2>
+        <div class="checklist">
+          <label><input type="checkbox" /> ECS and EKS are both used to run and manage <strong>containers</strong>.</label>
+          <label><input type="checkbox" /> EKS is AWS’s managed service for <strong>Kubernetes</strong>.</label>
+          <label><input type="checkbox" /> A <strong>task definition</strong> is the blueprint for running containers.</label>
+          <label><input type="checkbox" /> A <strong>task</strong> is usually a one-off run; a <strong>service</strong> is typically always-on.</label>
+          <label><input type="checkbox" /> <strong>Fargate</strong> lets you run containers without choosing or managing EC2 instances.</label>
+          <label><input type="checkbox" /> With EC2 launch type, you still need to think about instance types and capacity planning.</label>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>Flashcards (Quick Recall) 🎴</h3>
+        <ul>
+          <li><strong>ECS</strong> = AWS-native container orchestration</li>
+          <li><strong>EKS</strong> = managed Kubernetes</li>
+          <li><strong>Fargate</strong> = serverless containers</li>
+          <li><strong>Task Definition</strong> = blueprint</li>
+          <li><strong>Task</strong> = one-off run (often)</li>
+          <li><strong>Service</strong> = keep running</li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>
+          End of reviewer for this lecture: <strong>Understanding ECS/EKS & Fargate</strong>.
+          Print tip: use “Save as PDF” and ensure paper size is set to <strong>A4</strong>.
+        </p>
+      </footer>
+    </main>
+  </div>
+</body>
+
+</html>

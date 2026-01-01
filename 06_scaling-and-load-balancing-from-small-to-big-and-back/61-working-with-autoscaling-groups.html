@@ -1,0 +1,417 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Auto Scaling Groups (ASG)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent2: #0f766e;
+      --warn: #b45309;
+      --danger: #b91c1c;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column container */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 18px 40px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 14px 14px;
+      border-radius: 10px;
+    }
+
+    .kicker {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 8px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .btn:focus {
+      outline: 3px solid rgba(11, 87, 208, 0.25);
+      outline-offset: 2px;
+    }
+
+    .btn.primary {
+      border-color: rgba(11, 87, 208, 0.35);
+      background: rgba(11, 87, 208, 0.06);
+      color: #0b57d0;
+    }
+
+    main { margin-top: 16px; }
+
+    h2 {
+      font-size: 18px;
+      margin: 18px 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-size: 15.5px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 10px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-left: 6px solid var(--accent);
+      padding: 12px 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .callout.good { border-left-color: var(--accent2); }
+    .callout.warn { border-left-color: var(--warn); }
+    .callout.danger { border-left-color: var(--danger); }
+
+    .callout .title {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin: 0 0 6px;
+      font-weight: 800;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    ul {
+      margin: 8px 0 8px 20px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .card .hd {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .muted { color: var(--muted); }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    .mini {
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    /* Print-friendly rules */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      header { border-radius: 0; }
+      .toolbar { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      .callout, .card, header { box-shadow: none !important; }
+
+      /* Avoid ugly breaks */
+      h1, h2, h3 { break-after: avoid-page; }
+      p, li, .callout, .card { break-inside: avoid; }
+
+      /* Slightly tighter for print */
+      body { font-size: 11.5pt; line-height: 1.5; }
+      h1 { font-size: 18pt; }
+      h2 { font-size: 14pt; }
+      h3 { font-size: 12pt; }
+      .mini { font-size: 10.5pt; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide</p>
+      <h1>EC2 Auto Scaling Groups (ASG): Launch Templates, Scaling, and Load Balancers</h1>
+      <p class="subtitle">
+        Focus: what an <b>Auto Scaling Group</b> is, why it exists, and how it works with <b>Launch Templates</b>, <b>VPC subnets</b>, and <b>Elastic Load Balancing</b>.
+      </p>
+      <div class="toolbar" role="toolbar" aria-label="Actions">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <a class="btn" href="#quick-check">✅ Quick Check</a>
+        <a class="btn" href="#exam-notes">🧠 Exam Notes</a>
+      </div>
+      <p class="mini" style="margin-top:10px;">
+        Tip: For the cleanest print, choose <b>A4</b>, margins = <b>default</b>, and enable <b>background graphics</b> if your browser offers it.
+      </p>
+    </header>
+
+    <main>
+      <h2>1) Big Picture: What is EC2 Auto Scaling?</h2>
+      <div class="callout good">
+        <p class="title">📌 Core idea <span class="badge">Definition</span></p>
+        <p style="margin:0;">
+          <b>EC2 Auto Scaling</b> automatically <b>adds</b> or <b>removes</b> EC2 instances so you keep enough capacity during traffic spikes and avoid paying for unused capacity when traffic drops.
+        </p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="hd">
+            <div><b>🎯 What you configure</b></div>
+            <div class="badge">Auto Scaling Group</div>
+          </div>
+          <ul>
+            <li><b>Desired capacity</b>: how many instances you want running right now.</li>
+            <li><b>Min</b> and <b>Max</b>: lower and upper limits for scaling.</li>
+            <li><b>Rules / policies</b>: when to scale out (add) or scale in (remove).</li>
+            <li><b>Where to launch</b>: which <b>VPC</b> and which <b>subnets</b> can be used.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="hd">
+            <div><b>🧩 What AWS needs from you</b></div>
+            <div class="badge">Launch Template</div>
+          </div>
+          <ul>
+            <li><b>AMI</b> (operating system + base software)</li>
+            <li><b>Instance type</b> (ex: t2.micro)</li>
+            <li><b>Security group</b> (firewall rules)</li>
+            <li><b>Key pair</b> (optional, if you need SSH from your local PC)</li>
+            <li>Optional: user data scripts, storage settings, etc.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p class="title">🧠 Beginner-friendly analogy <span class="badge">Memory hook</span></p>
+        <p style="margin:0;">
+          Think of the <b>Launch Template</b> as the <b>recipe</b> 🍳, and the <b>Auto Scaling Group</b> as the <b>kitchen manager</b> 👨‍🍳 that decides how many dishes (instances) should be cooked based on demand.
+        </p>
+      </div>
+
+      <h2>2) Key Terms You Must Recognize</h2>
+      <ul>
+        <li>🧱 <b>Auto Scaling Group (ASG)</b> — the group + rules that maintain a certain number of EC2 instances.</li>
+        <li>📄 <b>Launch Template</b> — the “instance configuration blueprint” used by ASG to launch instances.</li>
+        <li>🌐 <b>VPC + Subnets</b> — ASG needs to know <i>where</i> it is allowed to launch instances (which subnets).</li>
+        <li>🧯 <b>Security Group</b> — firewall rules for the instances (e.g., allow HTTP/SSH).</li>
+        <li>⚖️ <b>Load Balancer</b> — distributes incoming requests across all healthy instances.</li>
+      </ul>
+
+      <h2>3) How the Setup Works in the AWS Console</h2>
+      <p>
+        You can reach Auto Scaling from the <b>EC2 Console</b> (Management Console → EC2). In the left sidebar, look for the <b>Auto Scaling</b> section and open <b>Auto Scaling Groups</b>.
+      </p>
+
+      <div class="card">
+        <div class="hd">
+          <div><b>🧭 Typical flow (high level)</b></div>
+          <div class="badge">Console steps</div>
+        </div>
+        <ol style="margin:8px 0 0 18px;">
+          <li><b>Create a Launch Template</b> (AMI, instance type, security group, etc.).</li>
+          <li><b>Create an Auto Scaling Group</b> and select that Launch Template.</li>
+          <li><b>Choose VPC + Subnets</b> where ASG may launch instances.</li>
+          <li>(Optional but common) <b>Attach a Load Balancer</b> so traffic is shared across instances.</li>
+          <li>Set <b>desired/min/max</b> and scaling rules.</li>
+        </ol>
+      </div>
+
+      <div class="callout warn">
+        <p class="title">⚠️ Important detail <span class="badge">Concept</span></p>
+        <p style="margin:0;">
+          With Auto Scaling, <b>you</b> are not clicking “Launch instance” repeatedly. Instead, AWS launches instances <b>for you</b> using the Launch Template.
+        </p>
+      </div>
+
+      <h2>4) Practical Example</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="hd">
+            <div><b>Example scenario</b> 🌍</div>
+            <div class="badge">Web app</div>
+          </div>
+          <p style="margin:0;">
+            You run a website that normally has low traffic, but during a sale you suddenly get a surge. You want AWS to:
+          </p>
+          <ul>
+            <li>Spin up more EC2 instances during the surge 📈</li>
+            <li>Remove extra instances after the surge 📉</li>
+            <li>Split incoming requests across all instances ⚖️</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="hd">
+            <div><b>What you would configure</b> 🛠️</div>
+            <div class="badge">ASG + LB</div>
+          </div>
+          <ul>
+            <li><b>Launch Template</b>: Amazon Linux AMI + t2.micro + security group (allow HTTP/HTTPS; optional SSH).</li>
+            <li><b>ASG</b>: Min=1, Desired=2, Max=6 (example numbers).</li>
+            <li><b>Scaling rule</b>: add instances when CPU or request count is high; remove when low.</li>
+            <li><b>Load Balancer</b>: distribute traffic so no single instance gets overloaded.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 id="exam-notes">5) Exam Notes (CLF-C02 Level)</h2>
+      <div class="callout good">
+        <p class="title">✅ What the exam expects <span class="badge">High yield</span></p>
+        <ul style="margin:0 0 0 18px;">
+          <li>You should know <b>what</b> an Auto Scaling Group does: automatic scaling of EC2 instances.</li>
+          <li>You should recognize the term <b>Launch Template</b> as the configuration used to create EC2 instances automatically.</li>
+          <li>You should understand why a <b>Load Balancer</b> is often paired with Auto Scaling: to distribute incoming requests across instances.</li>
+          <li>You should know Auto Scaling needs a <b>VPC</b> and <b>subnets</b> to know where instances are allowed to launch.</li>
+        </ul>
+      </div>
+
+      <div class="callout warn">
+        <p class="title">⚠️ Common confusion <span class="badge">Avoid mistakes</span></p>
+        <ul style="margin:0 0 0 18px;">
+          <li><b>ASG ≠ Load Balancer</b>: ASG changes the number of instances; a Load Balancer distributes traffic across them.</li>
+          <li><b>Launch Template ≠ running instance</b>: a template is a blueprint, not an EC2 instance.</li>
+        </ul>
+      </div>
+
+      <h2 id="quick-check">6) Quick Check (Self-Test)</h2>
+      <div class="card">
+        <div class="hd">
+          <div><b>Answer these from memory</b> 📝</div>
+          <div class="badge">1–2 mins</div>
+        </div>
+        <ol style="margin:8px 0 0 18px;">
+          <li>What does an Auto Scaling Group maintain? (Hint: desired/min/max)</li>
+          <li>Why do you need a Launch Template for Auto Scaling?</li>
+          <li>Why is a Load Balancer useful when you have multiple instances?</li>
+          <li>Where do you specify which subnets Auto Scaling can use?</li>
+        </ol>
+      </div>
+
+      <h2>7) Mini Glossary</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="hd"><div><b>ASG</b></div><div class="badge">Auto Scaling Group</div></div>
+          <p class="muted" style="margin:0;">A set of rules that automatically ensures a chosen number of EC2 instances are running.</p>
+        </div>
+        <div class="card">
+          <div class="hd"><div><b>Launch Template</b></div><div class="badge">Blueprint</div></div>
+          <p class="muted" style="margin:0;">Defines how instances should be created (AMI, instance type, security group, etc.).</p>
+        </div>
+        <div class="card">
+          <div class="hd"><div><b>Subnet</b></div><div class="badge">Placement</div></div>
+          <p class="muted" style="margin:0;">A network segment inside a VPC; Auto Scaling needs subnets to know where instances may launch.</p>
+        </div>
+        <div class="card">
+          <div class="hd"><div><b>Load Balancer</b></div><div class="badge">Traffic splitter</div></div>
+          <p class="muted" style="margin:0;">Distributes inbound requests across healthy instances to avoid overload.</p>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+      <p class="mini">
+        End of lesson: Auto Scaling Groups. Next topics typically continue with deeper Auto Scaling settings and Elastic Load Balancing types.
+      </p>
+    </main>
+  </div>
+
+  <script>
+    // No tracking, no external dependencies.
+  </script>
+</body>
+
+</html>

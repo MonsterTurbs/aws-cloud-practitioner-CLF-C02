@@ -1,0 +1,395 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 38 Configuring & Launching EC2 Instances</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+      --ok:#0f7b0f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 10px;
+    }
+
+    .steps{
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .steps li{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin: 10px 0;
+      background: #fff;
+    }
+    .steps strong{
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • EC2 Hands-on Concepts</p>
+      <h1>38 — Configuring & Launching EC2 Instances 🚀🖥️</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Goal of This Lecture</h2>
+        <p>
+          EC2 can look overwhelming at first because the console shows many options.
+          The good news: launching an instance is mostly a <strong>simple wizard</strong>.
+          Your job is to pick a few key settings: <strong>Region</strong>, <strong>AMI</strong>, <strong>Instance Type</strong>, <strong>Key Pair</strong>, <strong>Security Group</strong>, and <strong>Storage</strong>.
+        </p>
+        <div class="callout">
+          <p><strong>Key idea ✅</strong> EC2 is a <strong>regional</strong> service — you choose where (which Region) your instance runs.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧭 Where to Launch an Instance in the Console</h2>
+        <p>You can start the wizard from the EC2 console in a few common ways:</p>
+        <ul>
+          <li>Click <strong>Launch instance</strong> on the EC2 dashboard</li>
+          <li>Go to <strong>Instances</strong> → click <strong>Launch instances</strong></li>
+        </ul>
+        <div class="mini">
+          <h3>Beginner tip 💡</h3>
+          <p>If the page feels overwhelming, focus only on the wizard fields that affect <strong>where</strong>, <strong>what OS/software</strong>, <strong>how powerful</strong>, and <strong>who can connect</strong>.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧩 The Launch Wizard: What You Configure</h2>
+        <ol class="steps">
+          <li>
+            <strong>1) Choose a Region 🌍</strong>
+            <p>
+              Region selection affects <strong>pricing</strong>, <strong>latency</strong> (distance to users), <strong>legal requirements</strong> (data residency), and <strong>service availability</strong>.
+              EC2 is regional, so your instance physically runs in the Region you pick.
+            </p>
+            <div class="callout">
+              <p><strong>Example ✅</strong> Many demos use <code>us-east-1</code> (N. Virginia) since it’s commonly cost-effective, but your best Region depends on your use case.</p>
+            </div>
+          </li>
+
+          <li>
+            <strong>2) Name (Optional) 🏷️</strong>
+            <p>
+              Naming helps identify instances (e.g., in the console and sometimes when reviewing costs). Even if optional, it’s a good habit.
+            </p>
+          </li>
+
+          <li>
+            <strong>3) Choose an AMI (Amazon Machine Image) 🧰</strong>
+            <p>
+              An <strong>AMI</strong> is a base image: it includes the <strong>operating system</strong> and may include pre-installed tools/software.
+            </p>
+            <ul>
+              <li>Examples: Amazon Linux, Ubuntu, Windows Server 🐧🪟</li>
+              <li>Some AMIs are <strong>Free Tier eligible</strong> (good for practice)</li>
+              <li>Marketplace/Community AMIs may be free or paid 🛒</li>
+            </ul>
+            <div class="mini">
+              <h3>Custom AMIs (extra) 🧱</h3>
+              <p>
+                You can create your own AMIs (e.g., snapshot a configured instance) or use <strong>EC2 Image Builder</strong> to automate building/updating images.
+                <em>Cloud Practitioner note:</em> you don’t need to build AMIs for the exam, but knowing they exist is helpful.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <strong>4) Choose an Instance Type (Hardware Profile) ⚙️</strong>
+            <p>
+              Instance type defines the compute capacity: <strong>CPU</strong>, <strong>memory</strong>, sometimes <strong>storage options</strong>, and <strong>network performance</strong>.
+            </p>
+            <ul>
+              <li>Different types are optimized for different workloads (compute-heavy vs memory-heavy, etc.)</li>
+              <li>Free Tier practice often uses <code>t2.micro</code> or similar 🆓</li>
+            </ul>
+            <div class="callout">
+              <p><strong>Exam mindset ✅</strong> You don’t memorize all instance types—just know that different types/families exist and they’re optimized for different workloads.</p>
+            </div>
+          </li>
+
+          <li>
+            <strong>5) Key Pair (for SSH access) 🔑</strong>
+            <p>
+              If you want to connect to the instance from your machine (commonly via <strong>SSH</strong>), you use a <strong>key pair</strong>.
+              AWS will download a key file that you keep safely.
+            </p>
+            <ul>
+              <li>Create a new key pair or choose an existing one</li>
+              <li>You can proceed without a key pair if you won’t connect directly (not recommended for most real use cases)</li>
+            </ul>
+            <div class="warning">
+              <p><strong>Security ⚠️</strong> Treat your private key file like a password. Don’t share it and don’t commit it to Git.</p>
+            </div>
+          </li>
+
+          <li>
+            <strong>6) Network Settings + Security Group (Firewall) 🧱🔥</strong>
+            <p>
+              Network settings include your instance’s firewall rules. In EC2, firewall rules are managed via a <strong>Security Group</strong>.
+            </p>
+            <ul>
+              <li>Allow <strong>SSH</strong> (port 22) if you need command-line access</li>
+              <li>Allow <strong>HTTP</strong> (80) / <strong>HTTPS</strong> (443) if hosting a web server 🌐</li>
+              <li>Security groups can be reused across multiple instances ♻️</li>
+            </ul>
+            <div class="good">
+              <p><strong>Best practice ✅</strong> Only open the ports you truly need (least exposure). Reuse a good Security Group setup when launching similar instances.</p>
+            </div>
+          </li>
+
+          <li>
+            <strong>7) Storage 💾</strong>
+            <p>
+              You can attach storage to the instance (often the defaults are fine for learning and may be Free Tier eligible).
+              Advanced options give more control over size and type.
+            </p>
+          </li>
+
+          <li>
+            <strong>8) Advanced Settings (Optional) 🧠</strong>
+            <p>
+              Many additional settings exist for specific use cases. For Cloud Practitioner level, you usually don’t need these details.
+            </p>
+          </li>
+
+          <li>
+            <strong>9) Review & Launch ✅</strong>
+            <p>
+              After reviewing settings, click <strong>Launch instance</strong>. AWS allocates capacity in your chosen Region and applies the AMI + configuration.
+              When it’s ready, you can connect and run your workload.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>💡 Mini Scenario (Putting It Together)</h2>
+        <div class="mini">
+          <h3>Example: Simple practice web server 🌐</h3>
+          <ul>
+            <li>Region: closest to users (or cheap for practice) 🌍</li>
+            <li>AMI: Amazon Linux (Free Tier eligible) 🐧</li>
+            <li>Instance Type: <code>t2.micro</code> (practice) ⚙️</li>
+            <li>Security Group: allow HTTP/HTTPS + optionally SSH 🔥</li>
+            <li>Storage: default (practice) 💾</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧾 Cost & Safety Reminders</h2>
+        <p>Even when using Free Tier, always double-check limits and pricing per Region.</p>
+        <div class="warning">
+          <p><strong>Cost safety ⚠️</strong> Running instances can generate charges if you exceed Free Tier quotas or pick non-free resources. Regularly check Billing / Budgets.</p>
+        </div>
+        <div class="good">
+          <p><strong>Practice habit ✅</strong> After testing, stop/terminate resources you don’t need so you don’t pay for idle usage.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Memorize)</h2>
+        <span class="tag">EC2</span>
+        <span class="tag">Region</span>
+        <span class="tag">AMI</span>
+        <span class="tag">Amazon Machine Image</span>
+        <span class="tag">Instance Type</span>
+        <span class="tag">Key Pair</span>
+        <span class="tag">SSH</span>
+        <span class="tag">Security Group</span>
+        <span class="tag">Firewall Rules</span>
+        <span class="tag">Storage</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="mini">
+          <h3>Answer fast ⚡</h3>
+          <ul>
+            <li>Why does Region matter for EC2?</li>
+            <li>What is an AMI?</li>
+            <li>What does “instance type” control?</li>
+            <li>What is a security group used for?</li>
+          </ul>
+          <div class="good">
+            <p><strong>Expected ✅</strong> Pricing/latency/legal/service availability • Base OS/software image • Hardware profile (CPU/RAM/etc.) • Firewall rules for allowed traffic.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,388 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — EBS (Elastic Block Store)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e7e7e7;
+      --soft:#f7f7f7;
+      --soft2:#fbfbfb;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    header{
+      padding: 18px 18px 14px;
+      border: 1px solid var(--border);
+      background: var(--soft2);
+      border-radius: 12px;
+    }
+
+    h1{
+      margin: 0 0 6px;
+      font-size: 1.55rem;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .meta{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .pill{
+      display:inline-block;
+      border:1px solid var(--border);
+      background:#fff;
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    main{ margin-top: 16px; }
+
+    h2{
+      margin: 22px 0 10px;
+      font-size: 1.22rem;
+    }
+
+    h3{
+      margin: 18px 0 8px;
+      font-size: 1.06rem;
+    }
+
+    p{ margin: 10px 0; }
+
+    ul,ol{ margin: 8px 0 12px 20px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .card{
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 12px 0;
+    }
+
+    .callout{
+      border: 1px solid var(--border);
+      background: var(--soft);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    .callout strong{ font-weight: 700; }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .two{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kvs{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+    .kvs th,.kvs td{
+      border: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+      text-align: left;
+    }
+    .kvs th{ background: var(--soft2); }
+
+    .muted{ color: var(--muted); }
+
+    .mini{
+      font-size: .95rem;
+      color: var(--muted);
+    }
+
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    /* Prevent long text from being cut off */
+    p, li, td, th, code, pre{
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .95em;
+      background: var(--soft);
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 8px;
+    }
+
+    pre{
+      background: var(--soft);
+      border: 1px solid var(--border);
+      padding: 12px 12px;
+      border-radius: 12px;
+      white-space: pre-wrap;
+      margin: 10px 0;
+    }
+
+    .divider{
+      height:1px;
+      background: var(--border);
+      margin: 18px 0;
+    }
+
+    /* Print styling */
+    @page{
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print{
+      body{ background:#fff; }
+      .page{ max-width: none; padding: 0; }
+      header, .card, .callout{
+        box-shadow: none !important;
+      }
+      header, .card, .callout{
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      h1{ font-size: 16pt; }
+      h2{ font-size: 13pt; }
+      h3{ font-size: 11.5pt; }
+      p, li, td, th{ font-size: 10.5pt; line-height: 1.45; }
+      a{ color: #000; text-decoration: underline; }
+      .pill{ border-color:#ddd; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🧱 EBS (Elastic Block Store) — Reviewer / Study Guide</h1>
+      <p class="subtitle">AWS CLF-C02 • Beginner-friendly notes from the lecture transcript (EC2 storage: “attach a hard drive”)</p>
+      <div class="meta">
+        <span class="pill">🧩 Topic: EC2 Storage</span>
+        <span class="pill">📌 Core Idea: Block Storage</span>
+        <span class="pill">🗺️ Scope: Regional</span>
+        <span class="pill">🧠 Exam Cues: Snapshots, Volumes, Multi-Attach</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>✅ EBS in One Minute</h2>
+        <p><strong>Amazon EBS</strong> is a service that lets you create <strong>virtual hard drives</strong> (called <strong>volumes</strong>) and <strong>attach</strong> them to <strong>EC2 instances</strong> (virtual servers). 🖥️💽</p>
+        <ul>
+          <li>Think of it like: <strong>plugging an extra disk</strong> into a server.</li>
+          <li>After attaching: you typically must <strong>format</strong> and <strong>mount</strong> it from inside the instance (manual OS work).</li>
+          <li><strong>EBS is EC2-focused</strong>: EBS volumes attach to EC2 instances (per the lecture).</li>
+        </ul>
+      </section>
+
+      <section class="callout">
+        <strong>🎯 Key takeaway:</strong> EBS = <em>block storage</em>. You get a disk-like device. You (or your OS) manage the file system.
+      </section>
+
+      <section>
+        <h2>🧠 Core Concepts (Beginner-friendly)</h2>
+
+        <table class="kvs">
+          <tr>
+            <th style="width: 32%;">Term</th>
+            <th>Meaning (simple)</th>
+          </tr>
+          <tr>
+            <td><strong>Volume</strong> 💽</td>
+            <td>A virtual hard drive created in EBS. You attach it to an EC2 instance.</td>
+          </tr>
+          <tr>
+            <td><strong>Attach</strong> 🔗</td>
+            <td>Connect the volume to an EC2 instance so the instance can use it.</td>
+          </tr>
+          <tr>
+            <td><strong>Format</strong> 🧰</td>
+            <td>Prepare the disk with a file system (e.g., EXT4 on Linux) before you can store files.</td>
+          </tr>
+          <tr>
+            <td><strong>Mount</strong> 📁</td>
+            <td>Make the disk accessible at a folder path inside the OS (e.g., <code>/data</code>).</td>
+          </tr>
+          <tr>
+            <td><strong>Snapshot</strong> 📸</td>
+            <td>A backup copy of a volume’s data/state that you can use later to restore data.</td>
+          </tr>
+        </table>
+
+        <div class="divider"></div>
+
+        <h3>📦 Why “Block Storage” Matters</h3>
+        <p>Block storage means you’re working with something that behaves like a raw disk. You can build any folder/file structure you want — but you’re also responsible for the setup steps (format + mount). 🛠️</p>
+
+        <div class="callout">
+          <strong>Example:</strong> You launch an EC2 instance for a web app. You attach an EBS volume to store uploaded images. You then mount it to a folder like <code>/var/www/uploads</code> so your app can save files there.
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>🧩 How You Use EBS with EC2</h2>
+        <ol>
+          <li><strong>Create or add a volume</strong> during EC2 launch (or later after the instance is running). ➕</li>
+          <li><strong>Connect (SSH / Instance Connect)</strong> into the instance. 🔐</li>
+          <li><strong>Format the volume</strong> (first-time use). 🧰</li>
+          <li><strong>Mount the volume</strong> to a directory (so apps can store files). 📁</li>
+        </ol>
+        <p class="mini">Note: The lecture emphasizes the manual nature of these steps compared to “managed” storage services.</p>
+      </section>
+
+      <section>
+        <h2>⭐ Useful EBS Features Mentioned in the Lecture</h2>
+
+        <div class="grid">
+          <div class="card">
+            <h3>1) Different volume types (SSD vs HDD) ⚙️</h3>
+            <p>You can choose different disk types optimized for different workloads (e.g., speed vs cost). You don’t need the deep details for CLF-C02, but you should remember that <strong>options exist</strong>.</p>
+          </div>
+
+          <div class="card">
+            <h3>2) Elastic volumes (resize) 📈</h3>
+            <p>“Elastic” here means volumes can be <strong>scaled</strong> (increase size) when you need more storage. You may add a new volume, or resize an existing one.</p>
+            <div class="callout">
+              <strong>Example:</strong> Your app grows from 50 GB uploads to 120 GB. Instead of migrating to a new disk, you can increase the EBS volume size.
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>3) Snapshots (backups / restore) 📸</h3>
+            <p>You can create <strong>snapshots</strong> to preserve data so you can restore it later (useful when instances are terminated or replaced).</p>
+            <ul>
+              <li>Use snapshots as a safety net before big changes.</li>
+              <li>Use snapshots to restore data onto a new instance.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>4) Multi-Attach (advanced) 🧲</h3>
+            <p>EBS can be attached to multiple EC2 instances in some cases (not all instance/volume types). This is <strong>tricky</strong> because you must manage file conflicts (two servers writing the same file at the same time).</p>
+            <div class="callout">
+              <strong>Exam mindset:</strong> Multi-Attach exists, but it’s not the default and requires careful design.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>🗺️ Scope and Placement</h2>
+        <ul>
+          <li><strong>EBS is regional</strong> 🌍 — volumes are created in a specific region and you must attach them to EC2 instances in the <strong>same region</strong> (as highlighted in the lecture).</li>
+          <li>Always confirm your selected region in the AWS console (top-right) before creating resources.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>💰 Cost & Safety Reminders</h2>
+        <ul>
+          <li>EBS volumes can cost money. ⚠️</li>
+          <li>Check the <strong>pricing page</strong> and the <strong>Free Tier quotas/limits</strong> before you start using a service.</li>
+          <li>Regularly review your bill and consider budgets/alerts so you don’t spend more than intended.</li>
+        </ul>
+        <p class="mini">This aligns with the course’s repeated guidance: always verify pricing and Free Tier limits.</p>
+      </section>
+
+      <section>
+        <h2>🧪 Quick Examples (Practice Your Understanding)</h2>
+
+        <div class="card">
+          <h3>Example A — “My EC2 needs more disk space”</h3>
+          <p>✅ Use <strong>EBS</strong>: create a volume → attach to EC2 → format/mount → store files.</p>
+        </div>
+
+        <div class="card">
+          <h3>Example B — “I’m terminating my instance; I don’t want to lose files”</h3>
+          <p>✅ Create an <strong>EBS snapshot</strong> first. Later, restore the snapshot to a new volume and attach it to a new instance.</p>
+        </div>
+
+        <div class="card">
+          <h3>Example C — “Two instances must access the same disk”</h3>
+          <p>⚠️ Consider <strong>EBS Multi-Attach</strong> (advanced, limited support) and plan for file-write conflicts. In real architectures, shared file access is often handled via other storage patterns/services.</p>
+        </div>
+      </section>
+
+      <section class="callout">
+        <strong>🧠 Exam-friendly summary:</strong>
+        <ul>
+          <li>📌 EBS = block storage volumes for <strong>EC2</strong>.</li>
+          <li>🛠️ After attach, you typically <strong>format + mount</strong>.</li>
+          <li>📸 Snapshots = backup/restore of volume data.</li>
+          <li>🌍 Regional: keep region selection consistent.</li>
+          <li>💰 Always check pricing + Free Tier limits.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>📝 Mini Self-Check (Quick Quiz)</h2>
+        <ol>
+          <li>What AWS service gives you “virtual hard drives” attached to EC2? <span class="muted">(Answer: EBS)</span></li>
+          <li>After attaching a new volume, what two common steps do you perform inside the OS? <span class="muted">(Answer: format + mount)</span></li>
+          <li>What feature lets you back up and restore volume data later? <span class="muted">(Answer: snapshots)</span></li>
+          <li>Can you create an EBS volume in one region and attach it to an EC2 instance in another region? <span class="muted">(Answer: no; EBS is regional)</span></li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>🔎 Where to Find EBS in the AWS Console (as described)</h2>
+        <ul>
+          <li>During EC2 launch wizard: add storage volumes (EBS) as part of instance configuration.</li>
+          <li>From EC2 console: manage <strong>Volumes</strong> and <strong>Snapshots</strong> in the EBS area.</li>
+        </ul>
+      </section>
+
+      <section class="callout">
+        <strong>Next topic hint:</strong> After EBS (block storage), the course transitions to other file storage styles like <strong>EFS</strong> (network file system) and <strong>S3</strong> (object storage). 📦
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

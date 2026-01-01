@@ -1,0 +1,366 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Data Lakes (S3) vs Data Warehouses (Redshift)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --accent2:#0a7f5a;
+      --warn:#8a5b00;
+      --shadow:0 1px 0 rgba(0,0,0,.06);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column wrapper */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, #ffffff, #fbfbfb);
+      box-shadow: var(--shadow);
+      border-radius: 12px;
+      padding: 18px 16px;
+    }
+
+    .title{ margin:0 0 6px; font-size: 22px; letter-spacing: .2px; }
+    .subtitle{ margin:0; color:var(--muted); font-size: 13.5px; }
+
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 12px;
+      align-items:center;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size: 13.5px;
+    }
+    .btn.primary{ border-color: rgba(11,87,208,.35); box-shadow: 0 1px 0 rgba(11,87,208,.12); }
+    .btn:focus{ outline: 2px solid rgba(11,87,208,.25); outline-offset: 2px; }
+    .hint{ font-size: 12.5px; color: var(--muted); }
+
+    h2{ margin: 22px 0 10px; font-size: 18px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+    h3{ margin: 16px 0 8px; font-size: 15.5px; }
+    p{ margin: 8px 0; }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius:12px;
+      background: var(--panel);
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+      margin: 12px 0;
+      page-break-inside: avoid;
+    }
+
+    .callout{
+      border-left: 4px solid var(--accent);
+      background:#fff;
+      border-radius: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      page-break-inside: avoid;
+    }
+    .callout.good{ border-left-color: var(--accent2); }
+    .callout.warn{ border-left-color: var(--warn); }
+
+    ul{ margin: 8px 0 8px 22px; }
+    li{ margin: 6px 0; }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+    }
+    pre{
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin: 10px 0;
+      page-break-inside: avoid;
+    }
+
+    .two-col{ display:grid; grid-template-columns: 1fr; gap: 12px; }
+
+    .pill{
+      display:inline-block;
+      border: 1px solid var(--border);
+      background:#fff;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-right: 6px;
+      margin-top: 4px;
+    }
+
+    .table{
+      width:100%;
+      border-collapse: collapse;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: 10px;
+      overflow:hidden;
+      margin: 10px 0;
+      page-break-inside: avoid;
+    }
+    .table th, .table td{ padding: 10px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .table th{ text-align:left; background: #fcfcfc; font-size: 13px; }
+    .table td{ font-size: 13px; }
+
+    .footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12.5px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    /* Print styling */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ background:#fff; }
+      .page{ max-width: none; padding: 0; }
+      header{ box-shadow:none; }
+      .btn, .hint{ display:none !important; }
+      a{ color: inherit; text-decoration: none; }
+      pre{ border-color:#ddd; }
+      .card, .callout{ box-shadow:none; }
+      h2{ break-after: avoid; }
+      h3{ break-after: avoid; }
+      .table tr{ break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1 class="title">📊 AWS CLF-C02 Reviewer: Data Lakes (S3) vs Data Warehouses (Redshift)</h1>
+      <p class="subtitle">Single-column • White background • A4 print-ready • Beginner-friendly explanations + examples</p>
+      <div class="toolbar">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <span class="hint">Tip: In the print dialog, choose “A4”, margins “Default”, and enable “Background graphics” if available.</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>1) Big Picture: You ingest data… then you store it</h2>
+      <div class="callout">
+        <p><strong>Goal:</strong> After data enters AWS (ingestion), it must live somewhere so you can analyze it later (BI dashboards, reports) or explore it (data science / ML). ✅</p>
+        <p><span class="pill">🧠 Exam mindset</span> Know the difference between a <strong>data lake</strong> and a <strong>data warehouse</strong>, and when you might use <strong>both</strong>.</p>
+      </div>
+
+      <div class="card">
+        <h3>Key two storage patterns</h3>
+        <ul>
+          <li>🌊 <strong>Data Lake</strong> (usually <strong>Amazon S3</strong>): store <em>all</em> data (structured + unstructured) as files in one place.</li>
+          <li>🏢 <strong>Data Warehouse</strong> (often <strong>Amazon Redshift</strong>): store <em>structured, analytics-ready</em> data optimized for BI + SQL reporting.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>2) Data Lake (S3): “Store everything in one big lake” 🌊</h2>
+      <div class="card">
+        <h3>Beginner definition</h3>
+        <p>A <strong>data lake</strong> is a central place where you store <strong>raw data</strong> in files—CSV/JSON/Parquet/images/logs—typically in <strong>S3</strong>.</p>
+
+        <h3>Why it’s useful</h3>
+        <ul>
+          <li>🧪 Great for <strong>data discovery</strong>: you keep raw data so you can ask new questions later.</li>
+          <li>🤖 Great for <strong>machine learning</strong>: ML pipelines often like large, raw datasets.</li>
+          <li>🧩 Flexible: you don’t need to decide the final schema immediately.</li>
+        </ul>
+
+        <h3>Simple example</h3>
+        <pre>
+S3 Bucket: company-analytics-lake
+  /raw/web-logs/2025/12/22/log-001.json
+  /raw/orders/2025/12/orders.csv
+  /raw/images/uploads/img-abc.png
+  /processed/orders/2025/12/orders.parquet
+        </pre>
+        <p>📌 Notice how you can store <strong>different formats</strong> together (structured and unstructured).</p>
+      </div>
+
+      <div class="callout good">
+        <p><strong>Memory trick:</strong> Data lake = “dump everything into S3” 🪣🌊 and analyze later with tools that can read from S3.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>3) Data Warehouse (Redshift): “Structured data for fast analytics” 🏢</h2>
+      <div class="card">
+        <h3>Beginner definition</h3>
+        <p><strong>Amazon Redshift</strong> is a data-warehouse service: think “analytics database” designed for <strong>BI reporting</strong> and <strong>SQL queries</strong> over large datasets.</p>
+
+        <h3>What it is not (important for exams)</h3>
+        <ul>
+          <li>🚫 Not your primary <strong>application</strong> database for day-to-day transactions (e.g., order processing).</li>
+          <li>✅ Better for <strong>analytics</strong>: dashboards, trends, aggregates, reporting.</li>
+        </ul>
+
+        <h3>Simple example</h3>
+        <p>Instead of storing each new order and updating inventory live, Redshift is used later to answer questions like:</p>
+        <ul>
+          <li>📈 “What were total sales per region per week?”</li>
+          <li>🧾 “Which products have the highest return rate?”</li>
+          <li>🕒 “How long from sign-up to first purchase, on average?”</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <p><strong>Important nuance from the lecture:</strong> Redshift is flexible and can also <strong>query data stored in S3</strong> (so you can combine data-lake + warehouse patterns). 🔎</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>4) Data Lake vs Data Warehouse: Quick comparison</h2>
+      <table class="table" aria-label="Comparison table: Data Lake vs Data Warehouse">
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>🌊 Data Lake (S3)</th>
+            <th>🏢 Data Warehouse (Redshift)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Data type</strong></td>
+            <td>Structured + unstructured (raw files)</td>
+            <td>Mostly structured, analytics-ready</td>
+          </tr>
+          <tr>
+            <td><strong>Typical use</strong></td>
+            <td>ML, exploration, discovery, raw storage</td>
+            <td>BI reporting, dashboards, heavy SQL analytics</td>
+          </tr>
+          <tr>
+            <td><strong>Schema approach</strong></td>
+            <td>“Schema-on-read” (decide structure later)</td>
+            <td>“Schema-first” (define tables/structure up front)</td>
+          </tr>
+          <tr>
+            <td><strong>Storage pattern</strong></td>
+            <td>Files in S3 buckets/prefixes</td>
+            <td>Warehouse tables (plus optional S3 querying)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout warn">
+        <p><strong>Common exam confusion:</strong> S3 is often the “data lake” foundation, while Redshift is the “data warehouse”. They are not mutually exclusive. You can use both. ✅</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>5) Typical architecture flow (simple mental model)</h2>
+      <div class="card">
+        <pre>
+Data Sources
+  (apps, logs, devices, manual entry)
+        |
+        v
+Ingest
+  (APIs, batch jobs, streams)
+        |
+        v
+Store
+  🌊 S3 Data Lake   and/or   🏢 Redshift Warehouse
+        |
+        v
+Analyze
+  (SQL queries, BI dashboards, ML training)
+        </pre>
+        <p>🧩 Next, other services “build on top” of these storage layers (ETL/extraction, SQL querying, BI dashboards like QuickSight).</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>6) Quick “Beginner Examples” you can memorize</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Example A: Data Lake on S3 🌊</h3>
+          <p><strong>Scenario:</strong> You want to keep everything: raw logs, images, exports, CSVs, JSON events.</p>
+          <ul>
+            <li>✅ Put raw data into <strong>S3</strong>.</li>
+            <li>✅ Later, run analytics/ML using tools that can read from S3.</li>
+            <li>😌 Good when you are unsure what questions you will ask later.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Example B: Data Warehouse in Redshift 🏢</h3>
+          <p><strong>Scenario:</strong> Management needs fast reporting dashboards and consistent KPIs.</p>
+          <ul>
+            <li>✅ Load cleaned/structured data into <strong>Redshift</strong>.</li>
+            <li>✅ Run SQL analytics to power BI/visualization tools.</li>
+            <li>🎯 Best when you have well-defined reporting needs.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>7) Mini self-check (CLF-C02 style)</h2>
+      <div class="card">
+        <ol>
+          <li>✅ Which AWS service is commonly used as the foundation of a <strong>data lake</strong>?
+            <ul><li><strong>Answer:</strong> Amazon S3</li></ul>
+          </li>
+          <li>✅ Which AWS service is commonly used as a <strong>data warehouse</strong> for analytics?
+            <ul><li><strong>Answer:</strong> Amazon Redshift</li></ul>
+          </li>
+          <li>✅ True/False: Redshift is typically used as the main transactional database for an online shop.
+            <ul><li><strong>Answer:</strong> False (it’s mainly for analytics/BI)</li></ul>
+          </li>
+          <li>✅ Can companies use both a data lake and a data warehouse?
+            <ul><li><strong>Answer:</strong> Yes—often they combine them.</li></ul>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="footer">
+      <p><strong>Print note:</strong> Designed for A4 printing. If you still see cut-off, reduce print scale to ~95% and keep margins on “Default”.</p>
+      <p><strong>File:</strong> 18_data-analytics-and-data-science/163-data-warehouses-redshift-and-data-lakes.html</p>
+    </section>
+  </main>
+</body>
+</html>

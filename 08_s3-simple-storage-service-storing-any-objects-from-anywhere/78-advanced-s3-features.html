@@ -1,0 +1,351 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS S3 — Advanced Features (Reviewer / Study Guide)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --soft:#f7f7f7;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-break:normal;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    h1{
+      font-size: 1.7rem;
+      margin: 0 0 8px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .meta{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    h2{
+      font-size: 1.25rem;
+      margin: 18px 0 10px;
+    }
+
+    h3{
+      font-size: 1.08rem;
+      margin: 14px 0 8px;
+    }
+
+    p{ margin: 8px 0; }
+
+    .card{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      background: #fff;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .card .kicker{
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .tag{
+      display:inline-block;
+      border:1px solid var(--border);
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: .86rem;
+      color: var(--muted);
+      margin-left: 8px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    ul{
+      margin: 8px 0 8px 20px;
+      padding: 0;
+    }
+
+    li{ margin: 6px 0; }
+
+    .note{
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .note strong{ display:inline-block; margin-bottom: 4px; }
+
+    .qa{
+      border-top: 1px dashed var(--border);
+      margin-top: 10px;
+      padding-top: 10px;
+      color: var(--text);
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      padding: 1px 6px;
+      font-size: .92em;
+      white-space: nowrap;
+    }
+
+    .mini{
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .two-col{
+      display:block; /* must remain single-column */
+    }
+
+    .hr{
+      height:1px;
+      background:var(--border);
+      margin: 14px 0;
+    }
+
+    /* Print styles (A4, clean margins, no cut-offs) */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+    }
+
+    @media print{
+      body{
+        font-size: 11pt;
+        line-height: 1.45;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .page{
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+      a{ color: var(--text); text-decoration: none; }
+      .tag{ border-color: #cfcfcf; }
+      header{ margin-bottom: 14px; }
+      .card, .note{ border-color: #d8d8d8; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>🪣 AWS S3 — Advanced Features</h1>
+      <p class="subtitle">Reviewer / Study Guide (Beginner-friendly) • Single-column • A4 print-ready</p>
+      <p class="meta">Focus: features beyond storage classes (versioning, lifecycle rules, analytics, compliance controls, replication, encryption, and static website hosting).</p>
+    </header>
+
+    <section class="note">
+      <strong>🎯 Big idea</strong>
+      <p>
+        Amazon S3 is <b>object storage</b>. After you understand <i>buckets</i>, <i>objects</i>, and <i>storage classes</i>, the next step is learning features that help with:
+        <b>cost optimization</b> 💰, <b>data protection</b> 🔐, <b>compliance</b> 🧾, and <b>distribution</b> 🌍.
+      </p>
+    </section>
+
+    <section>
+      <h2>1) Versioning 🧾</h2>
+      <div class="card">
+        <div class="kicker">What it is <span class="tag">Data protection</span></div>
+        <p>
+          With <b>Versioning</b>, uploading a file with the <b>same object key</b> (same “filename”) does <b>not overwrite</b> the old one. Instead, S3 keeps <b>multiple versions</b>.
+        </p>
+        <ul>
+          <li>✅ Helps you <b>roll back</b> to an older version if a new upload was wrong.</li>
+          <li>⚠️ Costs more because you store <b>more data</b> (multiple versions).</li>
+        </ul>
+        <div class="qa">
+          <p><b>Example 🧠</b>: You upload <span class="kbd">report.pdf</span> every week. If week 3 has a mistake, you can restore week 2’s version.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2) Lifecycle Management ♻️</h2>
+      <div class="card">
+        <div class="kicker">What it is <span class="tag">Cost optimization</span></div>
+        <p>
+          <b>Lifecycle rules</b> automatically move objects between storage classes over time.
+          This is useful when access patterns change (hot → warm → cold).
+        </p>
+        <ul>
+          <li>✅ Automatically transition objects to <b>Infrequent Access</b> after (e.g.) 30 days.</li>
+          <li>✅ Later transition to <b>Glacier</b> / archive tiers for long-term retention.</li>
+          <li>⚠️ You must pick rules carefully—frequent retrieval from “cold” classes can increase costs.</li>
+        </ul>
+        <div class="qa">
+          <p><b>Example 🧠</b>: Website logs are read often in the first month → move to IA after 30 days → Glacier after 180 days.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3) Analytics & Inventory 📊</h2>
+      <div class="card">
+        <div class="kicker">What it is <span class="tag">Visibility</span></div>
+        <p>
+          Large buckets can contain <b>thousands or millions</b> of objects. S3 provides features to help you understand what you store and how it’s used.
+        </p>
+        <ul>
+          <li>📦 <b>Inventory</b>: get a report-like listing of objects and metadata.</li>
+          <li>📈 <b>Analytics</b>: insights that can support decisions (e.g., storage class usage patterns).</li>
+        </ul>
+        <p class="mini">Tip: In exams, “analytics/inventory” usually maps to: “How do we gain visibility into lots of objects?”</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>4) Object Lock 🔒</h2>
+      <div class="card">
+        <div class="kicker">What it is <span class="tag">Compliance</span></div>
+        <p>
+          <b>Object Lock</b> can enforce retention rules so objects <b>cannot be deleted</b> or changed for a defined period (or potentially indefinitely).
+          This supports compliance and audit requirements.
+        </p>
+        <ul>
+          <li>✅ Helps prove files were not tampered with (useful for auditors).</li>
+          <li>🧾 Common for legal/regulatory retention (e.g., financial records).</li>
+        </ul>
+        <div class="qa">
+          <p><b>Example 🧠</b>: Keep invoices immutable for 7 years to satisfy legal retention policies.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5) Replication 🧬</h2>
+      <div class="card">
+        <div class="kicker">What it is <span class="tag">Resilience</span></div>
+        <p>
+          <b>Replication</b> copies objects automatically to another bucket for redundancy and disaster recovery.
+        </p>
+        <ul>
+          <li>🏠 <b>Same-Region Replication (SRR)</b>: copy to another bucket in the same region.</li>
+          <li>🌍 <b>Cross-Region Replication (CRR)</b>: copy to a bucket in a different region.</li>
+          <li>✅ Helps with backup, resilience, and sometimes compliance (geo-redundancy).</li>
+        </ul>
+        <div class="qa">
+          <p><b>Example 🧠</b>: Replicate a bucket from Singapore to Frankfurt so files remain available even if a region has issues.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>6) Encryption 🔐</h2>
+      <div class="card">
+        <div class="kicker">What it is <span class="tag">Security</span></div>
+        <p>
+          S3 supports <b>automatic encryption</b> so files are stored encrypted “at rest.”
+          You can apply encryption at the <b>bucket level</b> or <b>object level</b>.
+        </p>
+        <ul>
+          <li>✅ You don’t need to manually encrypt files before upload (S3 can do it automatically).</li>
+          <li>✅ Protects against data exposure if someone lacks the decryption permissions/keys.</li>
+        </ul>
+        <div class="qa">
+          <p><b>Example 🧠</b>: HR uploads employee documents; encryption ensures stored files remain unreadable without proper access.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>7) Static Website Hosting 🌐</h2>
+      <div class="card">
+        <div class="kicker">What it is <span class="tag">Low-cost hosting</span></div>
+        <p>
+          If your site is <b>static</b> (HTML, CSS, JS only), you can store those files in a bucket and enable <b>Static Website Hosting</b>.
+          S3 then serves the files like a simple web server.
+        </p>
+        <ul>
+          <li>✅ Great low-cost option for static sites (portfolio, docs, landing pages).</li>
+          <li>⚠️ Not suitable for <b>server-side code</b> (no PHP/Node/Python execution in S3).</li>
+        </ul>
+        <div class="qa">
+          <p><b>Example 🧠</b>: A company marketing page (static) hosted in S3 instead of running an EC2 web server.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="note">
+      <strong>🧩 Exam-ready mapping</strong>
+      <ul>
+        <li>“Need rollback / keep old copies” → <b>Versioning</b> 🧾</li>
+        <li>“Move files to cheaper storage over time automatically” → <b>Lifecycle rules</b> ♻️</li>
+        <li>“Immutable / can’t delete for compliance” → <b>Object Lock</b> 🔒</li>
+        <li>“Copy to another bucket / another region” → <b>Replication (SRR/CRR)</b> 🧬</li>
+        <li>“Encrypt automatically at rest” → <b>Bucket/Object encryption</b> 🔐</li>
+        <li>“Host a static website cheaply” → <b>S3 Static Website Hosting</b> 🌐</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Quick self-check ✅</h2>
+      <div class="card">
+        <ul>
+          <li>🙂 If I upload the same filename again, what feature preserves the older copy? <b>Versioning</b></li>
+          <li>🙂 If files become less used after 30 days, what feature moves them to cheaper storage? <b>Lifecycle</b></li>
+          <li>🙂 If auditors require “cannot delete,” what feature helps? <b>Object Lock</b></li>
+          <li>🙂 If I want a backup in another region, what feature helps? <b>Cross-Region Replication</b></li>
+          <li>🙂 If I want a simple HTML/CSS/JS site without servers, what feature helps? <b>Static Website Hosting</b></li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="mini">
+      <div class="hr"></div>
+      <p>
+        End of reviewer. Print tip: Use your browser print dialog and select <b>A4</b>, <b>Margins: Default</b> (or “Minimum”), and disable headers/footers if you want a cleaner output.
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

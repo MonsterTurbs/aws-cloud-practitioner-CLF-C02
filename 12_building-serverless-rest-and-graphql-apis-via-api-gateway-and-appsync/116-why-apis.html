@@ -1,0 +1,407 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 116: Why APIs (REST & GraphQL)</title>
+  <style>
+    :root{
+      --bg:#fff;
+      --ink:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --good:#0f7b0f;
+      --warn:#8a5a00;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    /* Single-column layout */
+    .wrap{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 22px 18px;
+    }
+
+    header{
+      padding: 14px 14px 10px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      border-radius: 12px;
+    }
+
+    h1{
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size: 13.5px;
+    }
+
+    .toolbar{
+      margin-top: 12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    button{
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--ink);
+      padding:8px 10px;
+      border-radius:10px;
+      font-size: 13px;
+      cursor:pointer;
+    }
+    button:hover{border-color:#cfcfcf;}
+
+    a{color:var(--accent); text-decoration:none;}
+    a:hover{text-decoration:underline;}
+
+    main{margin-top:14px;}
+
+    section{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 12px;
+      padding: 14px;
+      margin: 12px 0;
+    }
+
+    h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    h3{
+      margin: 14px 0 8px;
+      font-size: 15.5px;
+    }
+
+    p{margin: 8px 0;}
+
+    ul{
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    li{margin: 6px 0;}
+
+    .callout{
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .callout.good{border-left-color: var(--good);}
+    .callout.warn{border-left-color: var(--warn);}
+
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
+    .chip{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius:999px;
+      padding: 6px 10px;
+      font-size: 12.5px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .label{
+      display:inline-block;
+      font-size: 12px;
+      color: var(--muted);
+      border:1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 8px;
+      margin-bottom: 8px;
+      background: var(--panel);
+    }
+
+    pre, code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    pre{
+      margin: 10px 0 0;
+      border:1px solid var(--border);
+      background: var(--panel);
+      padding: 10px;
+      border-radius: 10px;
+      overflow:auto;
+      white-space: pre-wrap;            /* wrap for printing */
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .muted{color:var(--muted);}
+
+    /* Prevent ugly print cut-offs */
+    .wrap, section, .card, pre, li, p{
+      overflow-wrap:anywhere;
+      word-break:break-word;
+      hyphens:auto;
+    }
+
+    /* Print styles */
+    @media print{
+      @page{ size: A4; margin: 14mm; }
+      body{ background:#fff; }
+      .wrap{ max-width: none; padding: 0; }
+      header{ border-radius: 0; border: 0; padding: 0 0 6mm; background: #fff; }
+      .toolbar{ display:none !important; }
+      section{ border: 0; padding: 0 0 5mm; margin: 0; border-radius: 0; }
+      .card{ break-inside: avoid; page-break-inside: avoid; }
+      pre{ break-inside: avoid; page-break-inside: avoid; }
+      a{ color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>116 — Why APIs (REST & GraphQL) ☁️📲</h1>
+      <p class="sub">AWS Certified Cloud Practitioner (CLF-C02) • Print-friendly reviewer / study guide (single-column, A4-ready)</p>
+
+      <div class="toolbar" aria-label="Actions">
+        <button type="button" onclick="window.print()">Print / Save as PDF 🖨️</button>
+        <button type="button" onclick="toggleTips()" id="tipsBtn">Hide Tips 💡</button>
+      </div>
+
+      <div class="chips" role="list" aria-label="Quick topics">
+        <span class="chip" role="listitem">Front-end apps → Backend API</span>
+        <span class="chip" role="listitem">REST basics</span>
+        <span class="chip" role="listitem">GraphQL basics</span>
+        <span class="chip" role="listitem">AWS API Gateway preview</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>Big Picture: Why do apps need APIs? 🌐🔌</h2>
+        <p>
+          When you build a <strong>web app</strong> (browser) or <strong>mobile app</strong> (phone), the app often needs data and actions from the cloud:
+          product lists, user profiles, orders, image processing, and more.
+        </p>
+        <p>
+          That cloud logic usually lives behind a <strong>backend HTTP API</strong>. The app sends a request, the backend returns a response.
+        </p>
+
+        <div class="callout">
+          <strong>Simple mental model:</strong> App (client) ➜ <strong>HTTP API</strong> ➜ Cloud code + database ➜ Response back to the app.
+          <span class="muted">(The app shows the data to the user.)</span>
+        </div>
+
+        <h3>Beginner example 🧠</h3>
+        <ul>
+          <li>📱 Mobile app needs <strong>all products</strong> to display a shop screen.</li>
+          <li>☁️ Database is in the cloud (e.g., RDS/DynamoDB). Code to fetch products runs in the cloud.</li>
+          <li>🔁 App sends a request → backend fetches from DB → returns product data (usually JSON).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Two common styles of data-focused web APIs 🧭</h2>
+        <p>
+          In practice, these “data-driven APIs” are commonly built as either:
+        </p>
+        <ul>
+          <li><strong>REST APIs</strong> 🧩 — many URLs (endpoints) that represent resources (e.g., books, products).</li>
+          <li><strong>GraphQL APIs</strong> 🧠 — typically one URL (one endpoint), but the request contains a query telling the server exactly what data is needed.</li>
+        </ul>
+
+        <div class="callout good">
+          <strong>Exam-friendly takeaway ✅</strong>
+          <ul>
+            <li>REST is extremely common.</li>
+            <li>GraphQL is also popular and helps request <em>exact</em> data (often less over-fetching).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>REST API basics (easy picture) 🧱</h2>
+        <p>
+          With REST, you usually have <strong>multiple URLs</strong>, and each URL represents a resource.
+          You use common HTTP methods (verbs) like <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code> to express the action.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <div class="label">Example: Read data</div>
+            <p><strong>Goal:</strong> Fetch book with ID <code>1</code>.</p>
+            <pre>GET https://yourdomain.com/books/1</pre>
+            <p class="muted">Typical result: the server returns the full “book” object (all fields it decides to return).</p>
+          </div>
+
+          <div class="card">
+            <div class="label">Example: Create data</div>
+            <p><strong>Goal:</strong> Add a new book.</p>
+            <pre>POST https://yourdomain.com/books
+
+Body (example):
+{
+  "title": "Cloud Basics",
+  "author": "A. Student"
+}</pre>
+            <p class="muted">POST requests commonly carry data in the request body (e.g., JSON).</p>
+          </div>
+        </div>
+
+        <div class="callout warn" id="tips">
+          <strong>Tip 💡</strong> Don’t overthink the REST rules for this exam.
+          Just remember: REST = resource URLs + HTTP methods.
+        </div>
+      </section>
+
+      <section>
+        <h2>GraphQL API basics (easy picture) 🧠</h2>
+        <p>
+          With GraphQL, you often send requests to <strong>one endpoint</strong>.
+          Instead of many URLs, the request body contains a <strong>GraphQL query</strong> describing exactly what data you want.
+        </p>
+
+        <div class="card">
+          <div class="label">Example: One endpoint, query controls the data</div>
+          <p><strong>Goal:</strong> Get only the book title (and not the entire object).</p>
+          <pre>POST https://yourdomain.com/graphql
+
+Body (example):
+{
+  "query": "query { book(id: 1) { title } }"
+}</pre>
+          <p class="muted">
+            Key idea: the client asks for specific fields, which can reduce redundancy / over-fetching.
+          </p>
+        </div>
+
+        <div class="callout">
+          <strong>Key takeaway:</strong> GraphQL makes it easier to request <em>partial data</em> in a structured way.
+        </div>
+      </section>
+
+      <section>
+        <h2>REST vs GraphQL (what matters for CLF-C02) ⚖️</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="label">REST 🧩</div>
+            <ul>
+              <li>Multiple endpoints (URLs) for different resources.</li>
+              <li>Uses HTTP methods like GET/POST/etc.</li>
+              <li>Very common in real-world systems.</li>
+              <li>May return “more data than needed” depending on endpoint design.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="label">GraphQL 🧠</div>
+            <ul>
+              <li>Often a single endpoint.</li>
+              <li>Client sends a query specifying fields to return.</li>
+              <li>Can reduce over-fetching (leaner responses).</li>
+              <li>Also popular; choice depends on team/company preferences.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout good">
+          <strong>Remember ✅</strong> Both REST and GraphQL are just “ways to design APIs”.
+          You can implement either style using code running on EC2, containers, or Lambda.
+        </div>
+      </section>
+
+      <section>
+        <h2>Where AWS helps: API Gateway (preview) 🧰</h2>
+        <p>
+          You <em>can</em> build APIs by writing and running code yourself (EC2, containers, Lambda).
+          But AWS also provides services to make this easier.
+        </p>
+        <p>
+          From the transcript’s key point: AWS offers a service that helps you build <strong>REST APIs without writing the full server from scratch</strong> —
+          that service is <strong>Amazon API Gateway</strong>.
+        </p>
+        <div class="callout">
+          <strong>Practical idea:</strong> API Gateway can sit in front of your backend (often Lambda) and handle API routing.
+          <span class="muted">(More details come in later lessons.)</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Quick self-check (1–2 minutes) ✅📝</h2>
+        <ol>
+          <li><strong>Why do mobile/web apps need APIs?</strong> (Answer: to talk to cloud code & data.)</li>
+          <li><strong>REST:</strong> What do you normally use to represent resources? (Answer: URLs/endpoints.)</li>
+          <li><strong>GraphQL:</strong> What controls the shape of the response? (Answer: the query.)</li>
+          <li><strong>AWS service mentioned</strong> for building REST APIs easier: (Answer: API Gateway.)</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Mini glossary 📚</h2>
+        <ul>
+          <li><strong>Client:</strong> The app (browser/mobile) that sends requests.</li>
+          <li><strong>Backend:</strong> Cloud code/services that process requests.</li>
+          <li><strong>HTTP API:</strong> A web-accessible interface using HTTP requests/responses.</li>
+          <li><strong>Endpoint:</strong> A URL that receives requests (common term in REST).</li>
+          <li><strong>Resource:</strong> A thing you manage via an API (e.g., book, product, order).</li>
+          <li><strong>Over-fetching:</strong> Receiving more data than needed.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>One-sentence summary 🎯</h2>
+        <p>
+          Web/mobile apps often need to talk to cloud code and databases via HTTP APIs, typically designed as REST or GraphQL, and AWS can simplify REST APIs with API Gateway.
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    function toggleTips(){
+      var tips = document.getElementById('tips');
+      var btn = document.getElementById('tipsBtn');
+      if(!tips || !btn) return;
+      var isHidden = tips.style.display === 'none';
+      tips.style.display = isHidden ? '' : 'none';
+      btn.textContent = isHidden ? 'Hide Tips 💡' : 'Show Tips 💡';
+    }
+  </script>
+</body>
+</html>

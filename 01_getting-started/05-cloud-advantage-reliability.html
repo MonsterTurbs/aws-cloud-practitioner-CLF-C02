@@ -1,0 +1,260 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 05 Cloud Advantage: Reliability</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .qna strong{ display:block; margin: 10px 0 4px; }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Getting Started</p>
+      <h1>05 — Cloud Advantage: Reliability ✅</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Lecture Goal</h2>
+        <p>Understand how cloud computing (and AWS) helps solve common on-premise problems and why <strong>reliability</strong> is a major cloud advantage.</p>
+        <div class="callout">
+          <p><strong>Big idea ✅</strong> AWS manages infrastructure for you (maintenance, upgrades, capacity), and gives tools so you can build <strong>reliable applications</strong> that stay available under changing demand and failures.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🛠️ What AWS Removes From Your To-Do List</h2>
+        <p>Compared to running your own data center, AWS helps because AWS takes care of the underlying infrastructure tasks:</p>
+        <ul>
+          <li>🔧 Infrastructure maintenance</li>
+          <li>📈 Capacity planning and scaling challenges</li>
+          <li>⬆️ Hardware/software upgrades (infrastructure level)</li>
+          <li>🛡️ Securing the infrastructure (facility + hardware level)</li>
+        </ul>
+        <div class="mini">
+          <p><strong>Beginner note 💡</strong> You still secure your applications and configuration, but AWS operates and protects the physical layer.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ What “Reliability” Means in the Cloud</h2>
+        <p>In this lecture, reliability has two related meanings:</p>
+        <div class="grid">
+          <div class="mini">
+            <h3>1) You can rely on AWS 🏢</h3>
+            <ul>
+              <li>AWS manages the infrastructure and aims to keep services available.</li>
+              <li>Some services come with <strong>SLAs</strong> (Service Level Agreements), which are formal availability commitments.</li>
+            </ul>
+          </div>
+
+          <div class="mini">
+            <h3>2) You can build reliable applications 🧩</h3>
+            <ul>
+              <li>AWS provides services and features to design apps that keep working even when demand or failures happen.</li>
+              <li>Reliability also means your customers can rely on your app to behave consistently.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>📈 Example: Auto Scaling for Reliability</h2>
+        <p>AWS provides services that can <strong>add or remove servers automatically</strong> as demand changes (traffic increases or decreases).</p>
+        <div class="callout">
+          <p><strong>Simple example 💡</strong> If your website gets a traffic spike, AWS can scale out by adding more server capacity so the site stays responsive. When traffic drops, it can scale back in to reduce cost.</p>
+        </div>
+        <p><strong>Why this improves reliability ✅</strong> Your app is less likely to crash or slow down when demand changes unexpectedly.</p>
+      </section>
+
+      <section>
+        <h2>🌍 Global Reach = Better Resilience</h2>
+        <p>AWS operates a worldwide network of data centers. This enables strategies like failing over to another region if one location has a major issue.</p>
+        <ul>
+          <li>🌐 Multiple regions help reduce reliance on one physical location.</li>
+          <li>🚨 If a catastrophe affects one region/data center, workloads can move to another region.</li>
+          <li>⏱️ Moving in the cloud can be faster (minutes/hours, sometimes seconds) compared to traditional data centers (days/weeks).</li>
+        </ul>
+        <div class="mini">
+          <p><strong>Beginner note 💡</strong> This is the core reason cloud is often more resilient than a single-company data center: you can design for redundancy across locations.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms to Remember</h2>
+        <span class="tag">Reliability</span>
+        <span class="tag">SLA</span>
+        <span class="tag">Availability</span>
+        <span class="tag">Auto Scaling</span>
+        <span class="tag">Global Reach</span>
+        <span class="tag">Region</span>
+        <span class="tag">Failover</span>
+        <span class="tag">Workload</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="qna">
+          <strong>Q1: Name three infrastructure responsibilities AWS reduces for you.</strong>
+          <p>A: Maintenance, capacity planning/upgrades, and securing the infrastructure.</p>
+
+          <strong>Q2: Reliability in the cloud means what two things in this lecture?</strong>
+          <p>A: You can rely on AWS infrastructure (sometimes backed by SLAs) and you can build reliable applications using AWS services.</p>
+
+          <strong>Q3: How does auto scaling improve reliability?</strong>
+          <p>A: It adds/removes capacity automatically so your app can keep up with demand changes.</p>
+
+          <strong>Q4: Why does global reach improve reliability?</strong>
+          <p>A: You can fail over to another region if one region is affected, helping keep workloads running.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page uses print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

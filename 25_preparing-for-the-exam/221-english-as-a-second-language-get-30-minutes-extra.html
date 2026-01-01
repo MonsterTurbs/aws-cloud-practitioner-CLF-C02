@@ -1,0 +1,322 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — English as a Second Language (ESL) +30 Minutes</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --link: #0b57d0;
+      --focus: #1a73e8;
+      --ok: #0a7b34;
+      --warn: #8a4b00;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      font-size: 16px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    a:focus {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 24px 18px 56px;
+    }
+
+    header {
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    .kicker {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: .2px;
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin: 0 0 8px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 18px 0 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 10px 0; }
+
+    ul, ol { margin: 10px 0 10px 22px; }
+    li { margin: 6px 0; }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    .callout {
+      border-left: 5px solid var(--border);
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+    }
+
+    .callout.ok { border-left-color: var(--ok); }
+    .callout.warn { border-left-color: var(--warn); }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      border: 0;
+      margin: 18px 0;
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .checklist li { list-style: none; margin-left: -22px; }
+    .checklist li::before { content: "☐ "; }
+
+    .fill {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .line {
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #fff;
+    }
+
+    .line b { display: inline-block; min-width: 170px; }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+    }
+
+    pre {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      overflow: auto;
+      margin: 10px 0;
+      white-space: pre-wrap;
+    }
+
+    /* Print rules */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { font-size: 11.5pt; line-height: 1.45; }
+      .page { max-width: none; padding: 0; }
+      a { color: #000; text-decoration: none; }
+
+      /* Print full URLs next to links */
+      a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 9.5pt;
+        color: #333;
+        word-break: break-all;
+      }
+
+      .panel, .callout, pre, .line {
+        break-inside: avoid;
+      }
+
+      header { margin-bottom: 12px; }
+      .badge { border-color: #ccc; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="kicker">AWS CLF-C02 • Exam Tips • Accessibility/Accommodation</p>
+      <h1>English as a Second Language (ESL): Get +30 Minutes ⏱️</h1>
+      <p class="subtitle">Reviewer / study guide for AWS exam-takers who are non-native English speakers. Single-column, A4 print-ready.</p>
+    </header>
+
+    <section class="callout ok">
+      <h2>Core idea (memorize this) ✅</h2>
+      <p>
+        If you’re taking an AWS certification exam <b>in a language that is not your native language</b>, AWS offers an accommodation called
+        <b>“English as a Second Language (ESL)”</b> that can add <b>30 extra minutes</b> to your exam time.
+      </p>
+      <p class="small">Think of it as a time buffer for reading/processing questions in English (or another non-native language).</p>
+    </section>
+
+    <section>
+      <h2>Official policy page 🔗</h2>
+      <div class="panel">
+        <p style="margin:0;">
+          AWS Certification Policies (Before Testing) — English as a Second Language (ESL):
+          <br />
+          <a href="https://aws.amazon.com/certification/policies/before-testing/#English_as_a_second_language_">https://aws.amazon.com/certification/policies/before-testing/#English_as_a_second_language_</a>
+        </p>
+      </div>
+      <p class="small">
+        Notes: Policies can change. Always confirm the latest wording on the page above before booking or sitting the exam.
+      </p>
+    </section>
+
+    <section>
+      <h2>Who should request ESL time? 🗣️🙂</h2>
+      <ul>
+        <li>✅ You are a <b>non-native English speaker</b> (or the exam language is not your native language).</li>
+        <li>✅ You’ll take the exam in <b>English</b> (or another non-native language you choose).</li>
+        <li>✅ You want extra time for reading long scenario questions, keywords, and tricky choices.</li>
+      </ul>
+
+      <div class="callout warn">
+        <h3>Important reminder ⚠️</h3>
+        <p>
+          ESL is an <b>accommodation</b> (time extension). It’s not a “hint” system and it doesn’t change the questions.
+          It simply gives you more time to read, analyze, and answer.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>How it helps (simple example) 🧠</h2>
+      <div class="panel">
+        <p><b>Scenario:</b> You get a long question about security + networking + cost. You understand the concepts, but it takes extra time to read.</p>
+        <p><b>Without ESL:</b> You may rush and miss keywords like <i>“most cost-effective”</i>, <i>“least operational overhead”</i>, or <i>“multi-account”</i>.</p>
+        <p><b>With ESL (+30 min):</b> You can re-read the question once, eliminate distractors, and still have time to review flagged items.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Practical checklist (use before booking) 🧾✅</h2>
+      <ul class="checklist">
+        <li>Confirm you qualify as ESL (non-native language vs exam language).</li>
+        <li>Open the official policy page and read the ESL section.</li>
+        <li>When scheduling your exam, look for the <b>ESL time accommodation</b> option (wording depends on test provider).</li>
+        <li>Verify your appointment confirmation shows the <b>extended time</b>.</li>
+        <li>If your confirmation does not show extra time, contact the test provider support before exam day.</li>
+      </ul>
+
+      <div class="callout">
+        <h3>Pro tip 📌</h3>
+        <p>
+          Use the extra time strategically: flag tough questions, finish the easy ones first, then come back with a calm mind.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Quick notes you can write on paper ✍️</h2>
+      <p class="small">Print this page and fill it in while planning your exam schedule.</p>
+      <div class="fill">
+        <div class="line"><b>Exam:</b> ________________________________</div>
+        <div class="line"><b>Provider (Pearson VUE / PSI):</b> ________________________________</div>
+        <div class="line"><b>Scheduled date & time:</b> ________________________________</div>
+        <div class="line"><b>ESL accommodation confirmed?</b> ☐ Yes ☐ No</div>
+        <div class="line"><b>Confirmation/Receipt reference:</b> ________________________________</div>
+      </div>
+    </section>
+
+    <hr class="hr" />
+
+    <section>
+      <h2>Mini self-quiz (CLF-C02 style) 🧩</h2>
+      <ol>
+        <li>
+          <b>Question:</b> Where do you confirm what you’re allowed to do and what accommodations exist for AWS exams?
+          <br />
+          <b>Expected answer:</b> AWS certification policies (including the “Before Testing” policy page).
+        </li>
+        <li>
+          <b>Question:</b> What does ESL accommodation change?
+          <br />
+          <b>Expected answer:</b> It adds time (e.g., +30 minutes). It does <i>not</i> change questions or difficulty.
+        </li>
+      </ol>
+    </section>
+
+    <section class="panel">
+      <h2 style="margin-top:0;">Summary (one-liner) ✅</h2>
+      <p style="margin:0;">
+        If you’re a non-native English speaker taking AWS exams in English, you can typically request <b>+30 minutes</b> (ESL).
+        Always confirm the latest rules on the official policy page.
+      </p>
+    </section>
+
+    <p class="small">Last updated: <time datetime="2025-12-23">December 23, 2025</time></p>
+  </main>
+</body>
+</html>

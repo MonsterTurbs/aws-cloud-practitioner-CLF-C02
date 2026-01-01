@@ -1,0 +1,401 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — CodeDeploy (Deployments)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #666666;
+      --border: #e5e5e5;
+      --panel: #fafafa;
+      --chip: #f2f2f2;
+      --link: #0b57d0;
+      --focus: #1a73e8;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+    }
+
+    header {
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      background: var(--chip);
+      border-radius: 999px;
+      font-size: 0.92rem;
+      color: #222;
+    }
+
+    .toolbar {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 8px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-size: 0.96rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:focus {
+      outline: 3px solid rgba(26, 115, 232, 0.25);
+      outline-offset: 2px;
+      border-color: var(--focus);
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    section {
+      margin-top: 18px;
+      padding: 14px 14px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+    }
+
+    h2 {
+      font-size: 1.18rem;
+      margin: 0 0 10px;
+    }
+
+    h3 {
+      font-size: 1.04rem;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 0 0 10px; }
+
+    ul { margin: 8px 0 10px 22px; }
+    li { margin: 6px 0; }
+
+    .callout {
+      border-left: 4px solid #d0d0d0;
+      background: #fff;
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      padding: 1px 6px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    pre {
+      margin: 10px 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    .muted { color: var(--muted); }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    .checklist li { margin: 8px 0; }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      .toolbar { display: none !important; }
+      section {
+        background: #fff;
+        border: 1px solid #ccc;
+        break-inside: avoid;
+      }
+      a { color: #000; text-decoration: none; }
+      pre { white-space: pre-wrap; overflow: visible; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header>
+      <h1>🚀 AWS CodeDeploy — Deployments (CLF‑C02 Reviewer)</h1>
+      <p class="subtitle">Beginner-friendly notes on how AWS helps you deploy new application versions to compute targets reliably and repeatedly.</p>
+      <div class="meta">
+        <span class="chip">🧠 Topic: Developer Tools</span>
+        <span class="chip">🎯 Focus: Deploying to EC2 / ECS / Lambda</span>
+        <span class="chip">🖨️ A4 Print-ready</span>
+      </div>
+      <div class="toolbar">
+        <button class="btn" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <span class="muted">Tip: Use your browser print dialog and select A4, 100% scale.</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>✅ What is CodeDeploy?</h2>
+      <p><strong>CodeDeploy</strong> is a <strong>managed deployment service</strong> that helps you <strong>deploy new versions of your application</strong> to supported targets, with options to <strong>control the rollout</strong>, <strong>monitor success/failure</strong>, and <strong>rollback</strong> if something goes wrong.</p>
+
+      <div class="callout">
+        <p><strong>Simple definition (exam-safe):</strong> 🧩 <em>“CodeDeploy automates application deployments to EC2, ECS, and Lambda using configurable strategies, with monitoring and rollback support.”</em></p>
+      </div>
+
+      <h3>Why it matters</h3>
+      <ul>
+        <li>🧯 <strong>Reduce risk</strong>: deploy gradually instead of “big bang” releases.</li>
+        <li>🔁 <strong>Repeatable deployments</strong>: consistent steps every time.</li>
+        <li>📉 <strong>Rollback capability</strong>: quickly return to the last good version.</li>
+        <li>👀 <strong>Visibility</strong>: track progress and failures.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>🎯 Where can CodeDeploy deploy?</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>🖥️ EC2 / On-Premises</h3>
+          <p>Deploy code to a <strong>fleet of servers</strong> (EC2 instances or on-prem servers). You typically deploy an “app revision” (files/scripts) and run lifecycle hooks.</p>
+          <ul>
+            <li>Good for traditional apps (web servers, APIs, background workers).</li>
+            <li>Often uses the <strong>CodeDeploy Agent</strong> (software installed on the server).</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>🧩 ECS</h3>
+          <p>Deploy containerized apps by shifting traffic between task sets (commonly associated with <strong>blue/green</strong> style releases).</p>
+          <ul>
+            <li>Good for microservices and container apps.</li>
+            <li>Traffic shifting often involves a load balancer.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>⚡ Lambda</h3>
+          <p>Deploy new versions of Lambda functions using <strong>traffic shifting</strong> strategies (gradual rollout).</p>
+          <ul>
+            <li>Good for serverless APIs and event-driven workloads.</li>
+            <li>Can reduce risk by moving only a % of traffic to the new version first.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="muted"><strong>CLF-C02 reminder:</strong> You do <em>not</em> need deep configuration details; focus on the purpose, targets, and the fact that it supports controlled deployments and rollback.</p>
+    </section>
+
+    <section>
+      <h2>🧠 Deployment Strategies (High-Level)</h2>
+      <p>CodeDeploy supports different rollout strategies. For the exam, the important idea is:</p>
+      <ul>
+        <li>🚦 You can deploy <strong>all at once</strong> (fast, higher risk).</li>
+        <li>🪜 You can deploy <strong>gradually</strong> (safer, slower).</li>
+        <li>🧯 You can <strong>rollback</strong> if the new release fails health checks/alarms.</li>
+      </ul>
+
+      <div class="grid">
+        <div class="card">
+          <h3>🔄 In-place (rolling update idea)</h3>
+          <p>Update existing instances <strong>step by step</strong> (replace code on the same servers). Useful when you want to keep the same fleet and update it gradually.</p>
+          <p class="muted">Think: update instance A → test → update instance B → test → …</p>
+        </div>
+
+        <div class="card">
+          <h3>🔵🟢 Blue/Green (switch over idea)</h3>
+          <p>Create a <strong>new environment</strong> (green) with the new version, then <strong>switch traffic</strong> from the old environment (blue) to the new one.</p>
+          <p class="muted">Think: run two versions side-by-side; flip traffic when ready.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Beginner mental model:</strong> 🧠 Blue/Green is like having a “backup stage” ready before the performance starts; in-place is like changing parts of the stage while the show is running (carefully, one section at a time).</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧱 Key Building Blocks (Vocabulary)</h2>
+      <ul>
+        <li>📦 <strong>Application / Revision</strong>: the “version” you are deploying (code bundle, container definition change, Lambda version).</li>
+        <li>🎯 <strong>Deployment Group / Target Group</strong>: which servers/services receive the deployment.</li>
+        <li>⚙️ <strong>Deployment Configuration</strong>: rules for how fast/slow deployment happens (e.g., all-at-once vs gradual).</li>
+        <li>🧾 <strong>AppSpec file</strong>: instructions that tell CodeDeploy <em>what to do</em> during deployment (common in EC2/on-prem; also used for ECS/Lambda styles).</li>
+        <li>🧰 <strong>Lifecycle Hooks</strong>: optional scripts/steps like <em>BeforeInstall</em>, <em>AfterInstall</em>, <em>ApplicationStart</em>, <em>ValidateService</em> (names vary by platform).</li>
+        <li>🧭 <strong>Monitoring</strong>: observe deployment success/failure; if failing, stop or rollback.</li>
+      </ul>
+
+      <div class="callout">
+        <p><strong>Exam-friendly takeaway:</strong> 🧩 CodeDeploy is about <strong>automating deployments</strong> with <strong>control</strong> (strategies), <strong>visibility</strong> (monitoring), and <strong>safety</strong> (rollback).</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧪 Beginner Example: EC2 Deployment (Conceptual)</h2>
+      <p>Scenario: You have a simple Node.js web app running on 4 EC2 instances behind a load balancer. You want to deploy version 2 safely.</p>
+      <ol>
+        <li>🗂️ Package your app as a revision (zip file) and store it (often in S3 or a repo).</li>
+        <li>🧩 Create a CodeDeploy deployment that targets your 4 instances (deployment group).</li>
+        <li>🪜 Choose a gradual strategy (deploy 1–2 instances at a time).</li>
+        <li>🧰 Run hooks/scripts to stop the app, copy files, start the app again, then validate.</li>
+        <li>👀 Monitor results; if failures happen, rollback to v1.</li>
+      </ol>
+
+      <h3>Mini AppSpec-style illustration (simplified)</h3>
+      <p class="muted">This is only to help you remember the concept. You do not need to memorize the exact syntax for CLF-C02.</p>
+      <pre><code>version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/myapp
+hooks:
+  AfterInstall:
+    - location: scripts/install_deps.sh
+  ApplicationStart:
+    - location: scripts/start_app.sh
+  ValidateService:
+    - location: scripts/health_check.sh</code></pre>
+
+      <div class="callout">
+        <p><strong>What to notice:</strong> 🧠 CodeDeploy can run <strong>repeatable steps</strong> during deployment (install, start, validate) and helps reduce human error.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🔎 Monitoring, Retry, and Rollback</h2>
+      <ul class="checklist">
+        <li>👀 <strong>Monitor</strong>: watch deployments as they run (success/failure per target).</li>
+        <li>🔁 <strong>Retry</strong>: re-run a failed deployment after fixing an issue.</li>
+        <li>↩️ <strong>Rollback</strong>: deploy a previous known-good version if the new version is broken.</li>
+      </ul>
+
+      <div class="callout">
+        <p><strong>Why rollback is important:</strong> 🧯 Deployments can fail due to config mistakes, missing dependencies, or app bugs. Rollback reduces downtime and business impact.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>📝 CLF-C02 Quick Review (What to Memorize)</h2>
+      <ul>
+        <li>✅ CodeDeploy is for <strong>deploying</strong> application updates.</li>
+        <li>✅ It supports targets like <strong>EC2</strong>, <strong>ECS</strong>, and <strong>Lambda</strong>.</li>
+        <li>✅ It supports <strong>deployment strategies</strong> (gradual vs all-at-once concepts).</li>
+        <li>✅ It supports <strong>monitoring</strong>, <strong>retry</strong>, and <strong>rollback</strong>.</li>
+        <li>✅ It helps make deployments <strong>repeatable</strong> and <strong>less error-prone</strong>.</li>
+      </ul>
+
+      <div class="divider"></div>
+      <p><strong>One-liner to remember:</strong> 📌 <em>“CodeDeploy automates safe application deployments with strategies and rollback.”</em></p>
+    </section>
+
+    <section>
+      <h2>🔗 How this fits with the other AWS Developer Tools</h2>
+      <ul>
+        <li>🧑‍💻 <strong>Cloud9</strong>: write code in a cloud IDE.</li>
+        <li>🗃️ <strong>CodeCommit</strong>: store code in a private Git repository.</li>
+        <li>🧪🏗️ <strong>CodeBuild</strong>: run tests and build packages/artifacts.</li>
+        <li>🚀 <strong>CodeDeploy</strong>: deploy the built artifact to your runtime targets.</li>
+        <li>🔁 <strong>CodePipeline</strong>: orchestrate the full CI/CD flow end-to-end.</li>
+      </ul>
+      <p class="muted">These tools can be used together, but each also works independently depending on your workflow.</p>
+    </section>
+
+    <footer class="muted" style="margin-top: 16px;">
+      <p>End of page — CodeDeploy (Deployments). Print this page on A4 for your reviewer binder.</p>
+    </footer>
+  </main>
+</body>
+
+</html>

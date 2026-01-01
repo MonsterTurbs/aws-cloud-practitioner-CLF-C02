@@ -1,0 +1,362 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Monitoring Workloads (Introduction)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --ok: #137333;
+      --warn: #b06000;
+      --bad: #b00020;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 18px 42px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 10px;
+    }
+
+    .kicker {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      font-size: 22px;
+      line-height: 1.25;
+      margin: 0 0 8px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn:hover { border-color: #cfcfcf; }
+
+    .meta {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    main { margin-top: 16px; }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 12px 0;
+      background: #fff;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    h2 {
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.25;
+    }
+
+    h3 {
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.25;
+    }
+
+    p { margin: 8px 0; }
+
+    ul { margin: 8px 0 0 18px; padding: 0; }
+    li { margin: 6px 0; }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 2px 8px;
+      border-radius: 999px;
+      color: var(--muted);
+      margin-right: 6px;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      padding: 12px 12px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    .small { color: var(--muted); font-size: 13px; }
+
+    .ok { color: var(--ok); font-weight: 700; }
+    .warn { color: var(--warn); font-weight: 700; }
+    .bad { color: var(--bad); font-weight: 700; }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      background: #fcfcfc;
+      border: 1px solid var(--border);
+      padding: 10px 10px;
+      border-radius: 8px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      white-space: pre-wrap;
+      margin: 8px 0 0;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 14px;
+    }
+
+    /* Print styles: A4, clean margins, no UI chrome */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { font-size: 11pt; line-height: 1.45; }
+      .page { max-width: none; padding: 0; }
+      header { border-radius: 0; }
+      section, .card { box-shadow: none; }
+      .toolbar { display: none !important; }
+      a { color: var(--text); text-decoration: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Module 136</p>
+      <h1>Monitoring Workloads: Introduction</h1>
+      <p class="subtitle">Reviewer / study guide with beginner-friendly explanations (single-column, A4 print-ready).</p>
+
+      <div class="toolbar" aria-hidden="false">
+        <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Jump to Quick Check</button>
+      </div>
+
+      <p class="meta">
+        <span class="tag">📌 Topic</span> Monitoring goals & requirements
+        <span class="tag">🛠️ Main AWS service</span> CloudWatch (plus related services)
+      </p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Big idea (what this section is about)</h2>
+        <p>
+          Whether your workloads run <strong>in AWS</strong> or <strong>anywhere else</strong>, monitoring is critical.
+          You monitor so you can <strong>detect issues early</strong>, understand <strong>what went wrong</strong>, and
+          <strong>fix problems before they become bigger incidents</strong>.
+        </p>
+        <div class="callout">
+          <p><strong>Key takeaway:</strong> AWS actively supports monitoring of both <strong>AWS services</strong> and the <strong>apps running on top</strong> of them. The core service you’ll hear most is <strong>Amazon CloudWatch</strong>. 👀</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Why monitoring matters</h2>
+        <ul>
+          <li>🧯 <strong>Prevent incidents from growing</strong>: catch errors early and act before users feel it.</li>
+          <li>🔎 <strong>Reduce guesswork</strong>: see what happened (and when) instead of relying on assumptions.</li>
+          <li>📉 <strong>Improve reliability</strong>: identify weak points and fix recurring patterns.</li>
+          <li>💸 <strong>Control cost</strong>: detect inefficient workloads (e.g., over-provisioned resources).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧩 What you typically monitor</h2>
+        <p class="small">Think of monitoring as answering: “Is it healthy, and if not, why?”</p>
+
+        <div class="grid">
+          <div class="card">
+            <div class="card-title">📊 Metrics <span class="small">(numbers over time)</span></div>
+            <ul>
+              <li>CPU usage, memory usage, disk space</li>
+              <li>Request count, error count, latency</li>
+              <li>Queue depth, database connections</li>
+            </ul>
+            <p class="small"><span class="ok">Example:</span> “Latency jumped from 120ms to 900ms.”</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🧾 Logs <span class="small">(detailed events / messages)</span></div>
+            <ul>
+              <li>Application errors and stack traces</li>
+              <li>Access logs (who called what, when)</li>
+              <li>System / service logs</li>
+            </ul>
+            <p class="small"><span class="ok">Example:</span> “Database connection timed out after 30s.”</p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🧭 Health & alerts <span class="small">(automatic notifications)</span></div>
+            <ul>
+              <li>Alert when something crosses a threshold</li>
+              <li>Alert when a service becomes unhealthy</li>
+              <li>Alert when errors suddenly spike</li>
+            </ul>
+            <p class="small"><span class="warn">Example:</span> “If error rate &gt; 1% for 5 minutes → notify team.”</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p>
+            🧠 <strong>Beginner mental model:</strong> Metrics tell you <em>something is wrong</em>; logs help you learn <em>what exactly</em> went wrong.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>☁️ AWS monitoring support (what the lecture highlights)</h2>
+        <p>
+          AWS provides monitoring tools that integrate with many AWS services and can also monitor workloads running on those services.
+          In this section of the course, the key service is:
+        </p>
+
+        <div class="card">
+          <div class="card-title">👁️ Amazon CloudWatch</div>
+          <p class="small">
+            CloudWatch is AWS’s central monitoring service. It helps you observe your services and applications so you can detect problems early.
+            (The course will go deeper into CloudWatch next.)
+          </p>
+          <ul>
+            <li>📈 Collects and visualizes metrics</li>
+            <li>🧾 Central place for logs (depending on setup)</li>
+            <li>🚨 Helps you create alarms/alerts</li>
+            <li>🧩 Integrates with many other AWS services</li>
+          </ul>
+        </div>
+
+        <p class="small">
+          The lecture also mentions that there are “related services” you’ll see alongside CloudWatch. (These will be introduced as the module continues.)
+        </p>
+      </section>
+
+      <section>
+        <h2>🧪 Simple example scenario</h2>
+        <p>
+          Imagine you’re running a web workload in AWS and users complain the site is slow 😟.
+          A practical monitoring approach looks like this:
+        </p>
+        <ul>
+          <li>Step 1: Check <strong>metrics</strong> — did latency or error rate increase?</li>
+          <li>Step 2: Check <strong>logs</strong> — do you see timeouts, failures, or resource errors?</li>
+          <li>Step 3: Add/adjust <strong>alerts</strong> — next time, you get notified automatically.</li>
+        </ul>
+        <div class="mono">Example alarm rule (plain English)
+IF average latency &gt; 800ms for 5 minutes
+THEN send alert to the on-call channel
+</div>
+      </section>
+
+      <section id="quick-check">
+        <h2>✅ Quick Check (exam-friendly)</h2>
+        <ul>
+          <li>📌 Monitoring is essential to <strong>track workloads</strong>, detect issues early, and prevent bigger problems.</li>
+          <li>☁️ AWS supports monitoring for <strong>AWS services</strong> and <strong>your apps</strong> running on top of them.</li>
+          <li>👁️ The key AWS monitoring service introduced here is <strong>Amazon CloudWatch</strong>.</li>
+          <li>🧠 Expect this module to connect CloudWatch to other AWS services and show how monitoring integrates across AWS.</li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>
+          Tip: When printing, use “A4” and enable “Background graphics” if your browser supports it.
+          The layout is designed to keep content from being cut off and to avoid breaking cards across pages.
+        </p>
+      </footer>
+    </main>
+  </div>
+</body>
+
+</html>

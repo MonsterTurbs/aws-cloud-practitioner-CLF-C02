@@ -1,0 +1,334 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 43 Module Summary (Compute & EC2)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --ok:#0f7b0f;
+      --warn:#b00020;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single column layout */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      background:#fff;
+    }
+
+    code{
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Compute • Section Summary</p>
+      <h1>43 — Module Summary: Compute Services & EC2 🧠🖥️</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>✅ Big Picture Recap</h2>
+        <p>
+          This section introduced <strong>AWS compute services</strong> and focused heavily on <strong>EC2</strong>
+          (Elastic Compute Cloud). You should now understand what EC2 is, how instances work at a high level,
+          and which supporting concepts (AMI, instance type, security groups, connectivity, pricing models) matter.
+        </p>
+        <div class="callout">
+          <p><strong>Exam mindset 🎯</strong> Know what each compute option is <em>for</em>, and when to choose it.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>☁️ Compute Services You Met</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>EC2 — Elastic Compute Cloud 🖥️</h3>
+            <p>
+              Fully customizable virtual servers (instances). You choose OS, size, networking, and what software runs.
+            </p>
+          </div>
+          <div class="card">
+            <h3>ECS / EKS — Containers 📦</h3>
+            <p>
+              For running <strong>containerized workloads</strong>. Think “deploy container packages” instead of managing a full VM.
+              (<strong>EKS</strong> is Kubernetes-based; details are not required at CLF level.)
+            </p>
+          </div>
+          <div class="card">
+            <h3>Lambda — Serverless ⚡</h3>
+            <p>
+              Run code without managing servers. You provide code + trigger conditions; AWS manages infrastructure and scaling.
+            </p>
+          </div>
+        </div>
+        <div class="good">
+          <p><strong>Simple memory aid ✅</strong> EC2 = server you manage • ECS/EKS = containers • Lambda = code-only execution.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧩 EC2 Core Concepts (Must-Know)</h2>
+        <ul>
+          <li><strong>Instance</strong> = a virtual server (AWS calls it an “EC2 instance”).</li>
+          <li><strong>Virtualization</strong>: An instance is typically a <strong>slice</strong> of a powerful physical machine.</li>
+          <li><strong>Isolation</strong>: Instances are isolated from each other; you get dedicated allocated resources.</li>
+          <li><strong>Region</strong>: EC2 is a <strong>regional</strong> service — you choose where it runs (affects price, latency, compliance).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧱 Launch Configuration Checklist</h2>
+        <p>When launching an EC2 instance, you made choices like these:</p>
+        <ul>
+          <li><strong>AMI (Amazon Machine Image)</strong> 🧰 — base OS + preinstalled software</li>
+          <li><strong>Instance type</strong> 🧠 — hardware profile (CPU, RAM, network, etc.)</li>
+          <li><strong>Storage</strong> 💾 — disk size/type attached to the instance</li>
+          <li><strong>Security group</strong> 🧱 — firewall rules (e.g., allow SSH, allow HTTP/HTTPS)</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Beginner example 👶</strong> If you want a simple website server: allow <code>HTTP (80)</code> and maybe <code>HTTPS (443)</code>. If you need remote admin: allow <code>SSH (22)</code>.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔑 Connecting & Managing Instances</h2>
+        <ul>
+          <li><strong>SSH</strong> 🔐 — standard way to connect from your computer (usually needs a key pair).</li>
+          <li><strong>EC2 Instance Connect</strong> 🌐 — browser-based terminal option (convenient for quick demos).</li>
+          <li><strong>User Data</strong> 🧾 — startup script that runs on first boot (e.g., auto-install a web server).</li>
+        </ul>
+        <div class="good">
+          <p><strong>Why User Data matters ✅</strong> You can automate setup so you don’t need to log in just to install packages and start services.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🛑 Stop vs Terminate (Cost + Lifecycle)</h2>
+        <ul>
+          <li><strong>Stop</strong> ⏸️ — instance is powered off; you can restart later (compute charges stop; other charges may still apply depending on resources).</li>
+          <li><strong>Terminate</strong> 🗑️ — instance is deleted; use when you’re done for good.</li>
+          <li><strong>Hibernate</strong> 💤 — advanced option (like stop, but preserves memory state) if enabled.</li>
+        </ul>
+        <div class="warning">
+          <p><strong>Cost habit ⚠️</strong> Don’t leave demo instances running. Always stop/terminate after labs.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>💸 EC2 Pricing Models You Learned</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>On-Demand ⏱️</h3>
+            <p>Default. Pay for what you use. Flexible, no commitment.</p>
+          </div>
+          <div class="card">
+            <h3>Spot ⚡</h3>
+            <p>Discounted spare capacity, but can be interrupted. Best for restartable jobs.</p>
+          </div>
+          <div class="card">
+            <h3>Savings Plans 📉</h3>
+            <p>Discount for committing to compute usage (often 1–3 years). More predictable workloads.</p>
+          </div>
+          <div class="card">
+            <h3>Reserved Instances 🧾</h3>
+            <p>Commit to specific instance attributes for discount (less flexible than Savings Plans).</p>
+          </div>
+        </div>
+        <div class="callout">
+          <p><strong>Exam phrase ✅</strong> “Trade flexibility for discount.”</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Keywords to Memorize</h2>
+        <span class="tag">EC2 Instance</span>
+        <span class="tag">AMI</span>
+        <span class="tag">Instance Type</span>
+        <span class="tag">Security Group</span>
+        <span class="tag">SSH</span>
+        <span class="tag">User Data</span>
+        <span class="tag">On-Demand</span>
+        <span class="tag">Spot</span>
+        <span class="tag">Savings Plans</span>
+        <span class="tag">Reserved Instances</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="callout">
+          <h3>Answer quickly (exam-style) ✍️</h3>
+          <ul>
+            <li>What is an AMI and why is it important when launching EC2?</li>
+            <li>What does a security group do?</li>
+            <li>When should you prefer Spot Instances?</li>
+            <li>Difference between stopping and terminating an instance?</li>
+          </ul>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Browser Print → Paper Size: <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

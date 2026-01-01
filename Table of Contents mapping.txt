@@ -1,0 +1,274 @@
+01_getting-started
+    01-welcome-to-this-course.html
+    02-what-is-aws-what-is-cloud-computing.html
+    03-join-our-learning-community.html
+    04-a-world-without-cloud-computing.html
+    05-cloud-advantage-reliability.html
+    06-cloud-advantages-agility-elasticity-and-scalability.html
+    07-cloud-advantage-pay-as-you-go-pricing.html
+    08-cloud-advantage-global-reach.html
+    09-cloud-advantages-aws-summaries.html
+    10-the-aws-infrastructure-regions-and-availability-zones.html
+    11-self-service-vs-managed-services.html
+    12-service-categories.html
+    13-course-slides.html
+
+02_accessing-and-using-aws-services
+    14-module-introduction.html
+    15-creating-an-aws-account.html
+    16-the-management-console.html
+    17-different-ways-of-using-aws-services-cli-sdks-and-the-aws-api.html
+    18-using-the-cli-and-cloudshell.html
+    19-important-aws-pricing.html
+    20-get-started-for-free-with-the-free-tier.html
+    21-cost-management-and-working-with-budgets.html
+    22-important-pricing-and-selecting-regions.html
+    23-get-help-aws-support-personal-health-dashboard-and-documentation.html
+    24-service-quotas.html
+    25-module-summary.html
+
+03_account-security-permissions-and-the-iam-service-identity-and-access-management
+    26-module-introduction.html
+    27-the-aws-security-model-the-shared-responsibility-model.html
+    28-protecting-your-account.html
+    29-understanding-iam-users-user-groups-and-roles.html
+    30-creating-users-and-assigning-permissions.html
+    31-understanding-roles.html
+    32-how-policies-and-permissions-are-evaluated.html
+    33-granting-least-privilege.html
+    34-module-summary.html
+
+04_getting-started-with-compute-services-and-ec2
+    35-module-introduction.html
+    36-key-compute-services-an-overview.html
+    37-understanding-ec2-and-ec2-instances.html
+    38-configuring-and-launching-ec2-instances.html
+    39-inspecting-instances-and-connecting-to-instances.html
+    40-connecting-via-local-ssh-and-key-pairs.html
+    41-running-a-web-server-via-ec2.html
+    42-ec2-pricing-models.html
+    43-module-summary.html
+
+05_managing-cloud-networks-via-vpcs-virtual-private-cloud
+    44-module-introduction.html
+    45-whats-the-problem-and-how-do-vpcs-help.html
+    46-vpcs-and-subnets.html
+    47-creating-a-vpc.html
+    48-connecting-subnets-and-ec2-instances.html
+    49-beyond-ec2-instances.html
+    50-understanding-ip-ranges-cidr-blocks-and-why-they-exist.html
+    51-public-ip-addresses-and-elastic-ip-addresses.html
+    52-working-with-security-groups.html
+    53-understanding-network-access-control-lists-nacls.html
+    54-security-groups-vs-nacls.html
+    55-vpc-peering-and-transit-gateways.html
+    56-private-connections-via-privatelink-and-vpc-endpoints.html
+    57-module-summary.html
+
+06_scaling-and-load-balancing-from-small-to-big-and-back
+    58-module-introduction.html
+    59-why-dynamic-scaling-is-important.html
+    60-scaling-with-aws-auto-scaling.html
+    61-working-with-autoscaling-groups.html
+    62-using-elastic-load-balancers-alb-and-nlb.html
+    63-creating-load-balancers-and-combining-them-with-scaling.html
+    64-module-summary.html
+
+07_storing-files-with-ebs-and-efs-elastic-block-store-and-elastic-file-system
+    65-module-introduction.html
+    66-why-file-storage-is-important.html
+    67-different-kinds-of-file-storage-and-aws-services.html
+    68-understanding-ebs-elastic-block-store.html
+    69-ec2-instance-store-and-ebs.html
+    70-understanding-efs-and-efs-vs-ebs.html
+    71-using-efs-and-exploring-fsx-file-system-services.html
+    72-module-summary.html
+
+08_s3-simple-storage-service-storing-any-objects-from-anywhere
+    73-module-introduction.html
+    74-s3-an-overview.html
+    75-working-with-s3-and-buckets.html
+    76-understanding-s3-storage-classes-incl-glacier.html
+    77-highlighting-s3-glacier.html
+    78-advanced-s3-features.html
+    79-demo-public-buckets-and-static-website-hosting.html
+    80-s3-vs-ebs-vs-efs.html
+    81-module-summary.html
+
+09_databases-in-the-cloud-rds-aurora-elasticache-and-dynamodb
+    82-module-introduction.html
+    83-databases-and-the-cloud-you-got-multiple-options.html
+    84-rds-relational-database-service-an-overview.html
+    85-rds-configuration-and-in-action.html
+    86-exploring-aurora.html
+    87-databases-and-vpcs.html
+    88-caching-and-elasticache.html
+    89-understanding-dynamodb-nosql-database.html
+    90-dynamodb-in-action.html
+    91-dynamodb-advanced-features.html
+    92-other-aws-database-services.html
+    93-saving-data-with-aws-backup.html
+    94-module-summary.html
+
+10_global-networking-and-content-delivery-with-route53-cloudfront-and-more
+    95-module-introduction.html
+    96-understanding-domains-and-dns-domain-name-systems.html
+    97-route-53-custom-domains-and-domain-routing.html
+    98-understanding-cdns-edge-locations-and-cloudfront.html
+    99-using-cloudfront.html
+    100-more-aws-infrastructure-local-zones-outposts-and-wavelength.html
+    101-speed-boosts-via-global-accelerator-and-s3-transfer-acceleration.html
+    102-using-global-accelerator-as-a-load-balancer.html
+    103-encrypting-network-traffic-via-ssl-and-acm-aws-certificate-manager.html
+    104-module-summary.html
+
+
+11_more-compute-serverless-and-container-services-lambda-ecs-eks-ecr
+    105-module-introduction.html
+    106-introducing-serverless-services-and-aws-lambda.html
+    107-aws-lambda-theory.html
+    108-using-aws-lambda.html
+    109-ec2-vs-lambda.html
+    110-working-with-containers-and-understanding-the-idea-behind-containers.html
+    111-ecs-and-eks-elastic-container-service-and-elastic-kubernetes-service.html
+    112-understanding-ecs-and-fargate.html
+    113-managing-images-via-ecr-elastic-container-registry.html
+    114-module-summary.html
+
+12_building-serverless-rest-and-graphql-apis-via-api-gateway-and-appsync
+    115-module-introduction.html
+    116-why-apis.html
+    117-building-rest-apis-via-api-gateway.html
+    118-building-graphql-apis-via-appsync.html
+    119-adding-user-authentication-via-cognito.html
+    120-frontend-plus-aws-equals-amplify.html
+    121-module-summary.html
+
+13_simplifying-application-deployment-via-elastic-beanstalk-lightsail-and-apprunner
+    122-module-introduction.html
+    123-using-elastic-beanstalk-for-deploying-application-environments.html
+    124-lightsail-turning-aws-into-a-simple-web-hosting-provider.html
+    125-simplifying-container-deployment-via-apprunner.html
+    126-module-summary.html
+
+14_app-integration-with-sqs-sns-and-eventbridge
+    127-module-introduction.html
+    128-whats-the-problem-why-app-integration.html
+    129-key-aws-app-integration-services-an-overview.html
+    130-sqs-sns-and-eventbridge-in-action.html
+    131-amazon-mq.html
+    132-a-brief-look-at-ses.html
+    133-introducing-cloudmap.html
+    134-understanding-step-functions.html
+    135-module-summary.html
+
+15_monitoring-workloads
+    136-module-introduction.html
+    137-why-monitoring-matters.html
+    138-cloudwatch-theory.html
+    139-cloudwatch-in-action.html
+    140-beyond-the-basics-and-x-ray.html
+    141-vpc-flow-logs-and-enabling-advanced-monitoring-in-services.html
+    142-module-summary.html
+
+16_managing-compute-resources-at-scale
+    143-module-introduction.html
+    144-aws-batch-for-batch-jobs.html
+    145-optimizing-compute-resources-with-compute-optimizer.html
+    146-introducing-systems-manager.html
+    147-systems-manager-appconfig-and-parameter-store.html
+    148-aws-opsworks.html
+    149-standardizing-service-implementations-and-solutions.html
+    150-module-summary.html
+
+17_cloud-migration-and-hybrid-cloud-solutions
+    151-module-introduction.html
+    152-what-and-why.html
+    153-cloud-migration-challenges.html
+    154-cloud-migration-solutions.html
+    155-key-migration-services.html
+    156-the-snow-family-and-snowball-edge.html
+    157-hybrid-cloud-computing-key-services.html
+    158-connecting-to-the-aws-cloud-via-vpn-and-directconnect.html
+    159-module-summary.html
+
+18_data-analytics-and-data-science
+    160-module-introduction.html
+    161-data-analytics-typical-tasks-and-problems.html
+    162-introducing-aws-kinesis.html
+    163-data-warehouses-redshift-and-data-lakes.html
+    164-a-closer-look-at-redshift.html
+    165-extracting-data-with-glue.html
+    166-self-managed-big-data-workloads-with-emr.html
+    167-analysing-data-with-quicksight-and-athena.html
+    168-searching-and-visualizing-data.html
+    169-module-summary.html
+
+19_cloud-management
+    170-module-introduction.html
+    171-introducing-aws-organizations-multi-account-environments.html
+    172-getting-started-with-control-tower.html
+    173-very-important-cost-management.html
+    174-using-tags.html
+    175-consolidated-billing.html
+    176-introducing-cloudformation-for-reproducible-cloud-resources.html
+    177-managing-service-and-app-configurations.html
+    178-module-summary.html
+
+20_security-a-closer-look
+    179-module-introduction.html
+    180-what-should-be-secured.html
+    181-re-introducing-iam.html
+    182-user-authentication-sso-and-managed-directory.html
+    183-track-account-usage-via-cloudtrail-and-guardduty.html
+    184-compliance-and-legal-requirements.html
+    185-app-protection-with-inspector-and-detective.html
+    186-protecting-traffic-with-waf-and-network-firewall.html
+    187-protecting-against-ddos-attacks-with-shield.html
+    188-encrypting-data-at-rest-and-in-transit.html
+    189-managing-code-secrets-with-secrets-manager.html
+    190-protecting-data-with-macie.html
+    191-introducing-security-hub.html
+    192-module-summary.html
+
+21_developing-for-with-and-in-the-cloud
+    193-module-introduction.html
+    194-a-typical-development-workflow.html
+    195-writing-code-with-cloud9-and-using-codecommit.html
+    196-building-code-with-codebuild-and-codeartifact.html
+    197-deployments-with-codedeploy.html
+    198-automated-code-workflows-with-codepipeline-and-codestar.html
+    199-introducing-codeguru-and-devopsguru.html
+    200-a-brief-note-about-the-aws-cdk.html
+    201-module-summary.html
+
+22_other-services
+    202-module-introduction.html
+    203-machine-learning-on-aws.html
+    204-artificial-intelligence-services.html
+    205-internet-of-things-iot-on-aws.html
+    206-business-applications.html
+    207-media-services.html
+    208-amazon-connect-a-cloud-call-center.html
+
+23_cloud-best-practices
+    209-module-introduction.html
+    210-the-well-architected-framework.html
+    211-the-well-architected-tool.html
+    212-automated-suggestions-with-trusted-advisor.html
+    213-allowed-or-not-allowed-acceptable-use-policy.html
+
+24_beyond-aws-services-additional-offerings
+    214-module-introduction.html
+    215-the-aws-partner-network-apn.html
+    216-the-aws-marketplace.html
+    217-aws-professional-and-managed-services.html
+
+25_preparing-for-the-exam
+    218-how-to-prepare-for-the-exam.html
+    219-cloud-practitioner-exam-content-and-structure.html
+    220-exam-preparation-additional-reading.html
+    221-english-as-a-second-language-get-30-minutes-extra.html
+    222-exam-recommendations-and-share-your-success.html
+    223-an-example-question-and-how-to-approach-exam-questions.html
+    224-bonus-lecture.html

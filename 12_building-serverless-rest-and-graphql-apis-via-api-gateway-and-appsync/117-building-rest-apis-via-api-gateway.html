@@ -1,0 +1,392 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>AWS CLF-C02 Study Guide — API Gateway (REST APIs)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --link: #0b57d0;
+      --focus: #1a73e8;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    a:focus { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+    /* Single-column page container */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px 52px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 16px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .title {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    /* Button row */
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn:hover { box-shadow: var(--shadow); }
+    .btn:focus { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+    main { margin-top: 18px; }
+
+    section {
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+n
+    h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 15px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul { margin: 8px 0 0; padding-left: 20px; }
+    li { margin: 6px 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .callout strong { display: inline-block; margin-bottom: 4px; }
+
+    .kv {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .kv th, .kv td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .kv th {
+      background: var(--panel);
+      width: 34%;
+    }
+
+    .code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      background: #fff;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    .small { color: var(--muted); font-size: 12px; }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      :root { --panel: #ffffff; --shadow: none; }
+
+      body { font-size: 11pt; line-height: 1.45; }
+      .page { max-width: none; padding: 0; }
+
+      header, section {
+        box-shadow: none;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      a { color: #000; text-decoration: underline; }
+
+      .btn, .actions { display: none !important; }
+
+      /* Avoid awkward breaks */
+      h2, h3 { break-after: avoid; page-break-after: avoid; }
+      ul, .callout, .code, table { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1 class="title">API Gateway (REST APIs) — Reviewer / Study Guide</h1>
+      <p class="subtitle">Beginner-friendly notes for AWS CLF-C02: what API Gateway is, why it matters, and how it commonly integrates with Lambda.</p>
+      <div class="meta">
+        <span class="pill">🧠 Topic: Serverless APIs</span>
+        <span class="pill">🧩 Focus: REST via API Gateway</span>
+        <span class="pill">📍 Regional service</span>
+        <span class="pill">🧪 Console-friendly testing</span>
+      </div>
+      <div class="actions">
+        <button class="btn" onclick="window.print()" aria-label="Print this page">🖨️ Print / Save as PDF</button>
+      </div>
+      <p class="small">Tip: For best results, use your browser print dialog and keep margins enabled (A4).</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) What is API Gateway?</h2>
+        <div class="grid">
+          <div class="callout">
+            <strong>✅ Simple definition</strong>
+            <p>API Gateway is an AWS service that helps you build and run <b>HTTP/REST APIs</b> without having to write all the “plumbing” code for handling requests and responses.</p>
+          </div>
+          <div class="callout">
+            <strong>🎯 Main benefit</strong>
+            <p>You focus on the <b>business logic</b> (what should happen when a request arrives), while API Gateway handles common API tasks like routing, validation, and response formatting.</p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>What “boilerplate code” does API Gateway reduce?</h3>
+        <ul>
+          <li>📌 Matching requests to the correct <b>path</b> (resource) and <b>HTTP method</b> (GET/POST/etc.).</li>
+          <li>🧰 Basic request checks: <b>query parameters</b>, required headers, request structure.</li>
+          <li>🔐 Enforcing <b>authentication</b> (when configured).</li>
+          <li>🧾 Returning the correct <b>status code</b> and a structured response (when configured).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2) The “mental model”</h2>
+        <p>Think of API Gateway as the <b>front door</b> for your backend. It receives HTTP requests, applies rules, then forwards the request to a backend integration (commonly AWS Lambda), and finally sends a response back to the client.</p>
+
+        <div class="callout">
+          <strong>🧠 Common flow</strong>
+          <div class="code">Client (Web/Mobile) → API Gateway (routes + checks) → Lambda (your code) → API Gateway (build response) → Client</div>
+        </div>
+
+        <h3>Beginner example</h3>
+        <p>Imagine you want a simple endpoint:</p>
+        <div class="code">GET /products</div>
+        <ul>
+          <li>API Gateway receives the request.</li>
+          <li>If needed, it checks auth and validates inputs.</li>
+          <li>It triggers a Lambda function that fetches products (e.g., from a database).</li>
+          <li>API Gateway returns the Lambda output to the client as JSON.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3) What you “define” in API Gateway</h2>
+        <table class="kv" role="table" aria-label="API Gateway configuration summary">
+          <tr>
+            <th scope="row">🧭 API structure</th>
+            <td>Resources / paths (e.g., <span class="code">/books</span>, <span class="code">/books/{id}</span>) and HTTP methods (GET, POST, PUT, DELETE).</td>
+          </tr>
+          <tr>
+            <th scope="row">🔎 Request requirements</th>
+            <td>Query params, headers, and (in some cases) schemas/validation rules to enforce inputs.</td>
+          </tr>
+          <tr>
+            <th scope="row">🔐 Authentication</th>
+            <td>Rules to require authenticated requests (how authentication is set up depends on your chosen approach).</td>
+          </tr>
+          <tr>
+            <th scope="row">🧾 Responses</th>
+            <td>Status codes (200/400/401/500, etc.) and response formatting rules.</td>
+          </tr>
+          <tr>
+            <th scope="row">⚙️ Integrations</th>
+            <td>Where the request goes next (commonly Lambda). API Gateway can also integrate with other AWS services.</td>
+          </tr>
+          <tr>
+            <th scope="row">🧪 Testing & deployment</th>
+            <td>Test in the console and deploy via <b>stages</b> (e.g., <span class="code">dev</span>, <span class="code">prod</span>).</td>
+          </tr>
+        </table>
+
+        <div class="divider"></div>
+
+        <div class="callout">
+          <strong>💡 Key point</strong>
+          <p>API Gateway can automatically <b>extract</b> data from requests (like path params or query params) and pass it to your backend integration, reducing custom parsing code.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Why API Gateway pairs well with Lambda</h2>
+        <p>Lambda is “on-demand code execution.” API Gateway can act as the HTTP interface, and Lambda can do the work. This combination is common because:</p>
+        <ul>
+          <li>⚡ You don’t run or manage servers for your API runtime.</li>
+          <li>🧩 API Gateway handles routing and request filtering; Lambda focuses on business logic.</li>
+          <li>💸 You typically pay based on usage (requests + execution), not server uptime.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Example scenario (practical)</strong>
+          <p>📦 <b>POST /orders</b> → API Gateway checks auth → triggers Lambda → Lambda writes order to DB → returns result → API Gateway responds with <b>201 Created</b>.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>5) REST API vs HTTP API vs WebSocket API (exam-level)</h2>
+        <p>When creating an API in API Gateway, you’ll see different API types:</p>
+        <ul>
+          <li>🔁 <b>WebSocket API</b>: for real-time, two-way communication (persistent connection).</li>
+          <li>🌐 <b>HTTP API</b>: typically simpler/leaner to set up.</li>
+          <li>🧰 <b>REST API</b>: more feature-rich “classic” API Gateway option.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>✅ Exam takeaway</strong>
+          <p>API Gateway is used to build APIs. <b>REST APIs</b> are more feature-rich; <b>HTTP APIs</b> are simpler; <b>WebSocket APIs</b> are for real-time apps.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Testing, stages, and deployment</h2>
+        <ul>
+          <li>🧪 <b>Testing</b>: You can test endpoints from the AWS console while building (helpful during learning).</li>
+          <li>🚦 <b>Stages</b>: You can deploy multiple versions/environments (e.g., <span class="code">dev</span>, <span class="code">staging</span>, <span class="code">prod</span>).</li>
+          <li>🧩 <b>Versioning mindset</b>: Different clients can use different stages (e.g., internal testers use <span class="code">dev</span>).</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Beginner tip</strong>
+          <p>🧭 Use stages like separate “URLs for environments.” It keeps experiments away from production.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>7) Cost & free tier note</h2>
+        <p>API Gateway is usage-based. You can start small and learn with minimal cost, but as traffic grows, costs grow too.</p>
+        <ul>
+          <li>🧾 Costs depend on request volume and features used.</li>
+          <li>🆓 There is a free tier to help you get started (check AWS pricing for current limits).</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Why it can be cost-effective</strong>
+          <p>💰 You don’t need to rent and run an always-on server (like EC2) just to expose endpoints—API Gateway can remove that operational burden.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>8) Quick self-check (mini reviewer)</h2>
+        <ul>
+          <li>✅ API Gateway helps build <b>REST/HTTP APIs</b> with less boilerplate.</li>
+          <li>✅ You define <b>paths + methods</b>, request rules, auth (optional), and integrations.</li>
+          <li>✅ A very common integration is <b>Lambda</b> for request handling.</li>
+          <li>✅ API Gateway supports <b>stages</b> (dev/prod versions).</li>
+          <li>✅ It is a <b>regional service</b> (APIs are created per region).</li>
+          <li>✅ WebSocket APIs are for <b>real-time</b> applications.</li>
+        </ul>
+
+        <p class="small">End of notes for this lecture. Continue with the next lesson when ready.</p>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>

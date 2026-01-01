@@ -1,0 +1,439 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Containers (Docker, Images, Containers)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.65;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 18px 48px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .toolbar {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn:hover { border-color: #cfcfcf; }
+
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    main { margin-top: 16px; }
+
+    section {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 12px 0;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 16.5px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 14.5px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul { margin: 8px 0 0 18px; padding: 0; }
+    li { margin: 6px 0; }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .kv {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 8px 12px;
+      align-items: start;
+    }
+
+    .kv div:nth-child(odd) {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+    }
+
+    pre {
+      margin: 10px 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .mini {
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 10px 0;
+    }
+
+    .qa {
+      padding-left: 0;
+      list-style: none;
+      margin-left: 0;
+    }
+
+    .qa li {
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+    }
+
+    .answer {
+      margin-top: 8px;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      .toolbar { display: none !important; }
+      header, section { box-shadow: none !important; }
+      body { font-size: 11pt; line-height: 1.5; }
+      h1 { font-size: 18pt; }
+      h2 { font-size: 13.5pt; }
+      h3 { font-size: 12pt; }
+
+      /* Prevent awkward breaks */
+      section, .card, pre, .callout, .qa li {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      a { color: #000; text-decoration: none; }
+      .pill { border-color: #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>📦 Containers (Docker) — Reviewer / Study Guide</h1>
+      <p class="subtitle">
+        Topic: Understanding containers, images, and why AWS provides dedicated container services (ECS/EKS/ECR).
+        This page is optimized for A4 printing.
+      </p>
+      <div class="toolbar" role="toolbar" aria-label="Actions">
+        <button class="btn" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <span class="pill">Single-column • White background • A4-ready</span>
+        <span class="pill">Icons + examples included</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Picture: Why Containers Matter 🧠</h2>
+        <p>
+          AWS Lambda is great for <strong>event-driven code execution</strong> (run code when something happens). Containers solve a different
+          problem: they let you ship an application together with the environment it needs to run.
+        </p>
+        <div class="callout">
+          <strong>Key idea 💡</strong> — A container is a <em>package</em> that includes:
+          <ul>
+            <li>✅ Your application code</li>
+            <li>✅ Runtime + dependencies (e.g., Node.js, Python libs)</li>
+            <li>✅ Configuration needed to run it</li>
+            <li>✅ A consistent execution environment (so it runs the same everywhere)</li>
+          </ul>
+        </div>
+        <p>
+          This means you don’t start from a “blank server” and manually install everything each time. Instead, you deploy a ready-to-run package.
+        </p>
+      </section>
+
+      <section>
+        <h2>2) Core Terms You Must Know (Exam-Friendly) ✅</h2>
+        <div class="card">
+          <div class="kv" role="list">
+            <div role="listitem">🖼️ Image</div>
+            <div>A blueprint/template that defines what goes into the container (app + dependencies + setup).</div>
+
+            <div role="listitem">▶️ Container</div>
+            <div>A running instance created from an image (like “an app process” running with the packaged environment).</div>
+
+            <div role="listitem">🐳 Docker</div>
+            <div>The most common tool used to build images and run containers.</div>
+
+            <div role="listitem">📦 Single-image app</div>
+            <div>One image contains the whole app stack (example: web server + app code, possibly even DB inside).</div>
+
+            <div role="listitem">🧩 Multi-image app</div>
+            <div>Different images for different parts (example: web container + database container).</div>
+
+            <div role="listitem">📈 Scaling</div>
+            <div>Run multiple containers from the same image to handle more traffic (similar idea to multiple EC2 instances).</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Quick memory trick 🧠</strong><br />
+          <strong>Image</strong> = “recipe” (what to build) • <strong>Container</strong> = “meal on the table” (running result).
+        </div>
+      </section>
+
+      <section>
+        <h2>3) How Containers Work (Beginner Explanation) 🧩</h2>
+        <p>
+          When building container-based apps, you don’t only write code. You also define <strong>how to package it</strong> into an image.
+          That image is then used to create one or more containers.
+        </p>
+
+        <h3>Typical workflow (high-level)</h3>
+        <ul>
+          <li>🧱 Build an image from your app (includes dependencies)</li>
+          <li>▶️ Run one or more containers based on that image</li>
+          <li>🔁 Update the image when you change the app, then redeploy</li>
+        </ul>
+
+        <h3>Mini example: Dockerfile (blueprint)</h3>
+        <p class="mini">You don’t need Docker mastery for CLF-C02, but seeing the idea helps.</p>
+        <pre><code># Example idea only
+FROM node:20
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["node", "server.js"]
+</code></pre>
+
+        <h3>Mini example: Running containers</h3>
+        <pre><code># build image
+docker build -t my-web-app:1 .
+
+# run container
+docker run -p 3000:3000 my-web-app:1
+
+# scale (run another container)
+docker run -p 3001:3000 my-web-app:1
+</code></pre>
+
+        <div class="callout">
+          <strong>Why this is useful 💡</strong> — The environment is packaged with the app, so it behaves consistently across:
+          <ul>
+            <li>your laptop</li>
+            <li>a test server</li>
+            <li>AWS (container services)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Single-Image vs Multi-Image Applications ⚖️</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>📦 Single-image</h3>
+            <ul>
+              <li>Everything is inside one image (simpler packaging).</li>
+              <li>You can still run multiple containers to scale.</li>
+              <li>⚠️ Not ideal for large apps (updates are “all or nothing”).</li>
+            </ul>
+            <p class="mini"><strong>Example:</strong> a simple website + web server packaged together.</p>
+          </div>
+          <div class="card">
+            <h3>🧩 Multi-image</h3>
+            <ul>
+              <li>Different images for different components (more modular).</li>
+              <li>Each part can be updated and deployed independently.</li>
+              <li>Great fit for <strong>microservices</strong> architectures.</li>
+            </ul>
+            <p class="mini"><strong>Example:</strong> web container + database container (separate images).</p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>Microservices (why it’s often mentioned with containers) 🧠</h3>
+        <p>
+          A <strong>microservices architecture</strong> is when an application is split into smaller services (auth, payments, catalog, etc.).
+          Containers make this easier because you can ship and scale each service independently.
+        </p>
+      </section>
+
+      <section>
+        <h2>5) Containers vs EC2 vs Lambda (Simple Decision Thinking) 🎯</h2>
+        <p>
+          This is not “one is always best.” It depends on the workload.
+        </p>
+        <ul>
+          <li><strong>EC2 🖥️</strong>: most flexible. You manage the server OS and install anything you want.</li>
+          <li><strong>Lambda ⚡</strong>: event-driven, short-running tasks. You upload code and pay per execution time.</li>
+          <li><strong>Containers 📦</strong>: package app + dependencies for consistent deployment; commonly used for web apps and services.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Beginner example 💡</strong>
+          <ul>
+            <li>🖼️ “Resize images when uploaded to S3” → Lambda (event-driven)</li>
+            <li>🌐 “Run a web API with custom dependencies” → Containers (ECS/EKS) or EC2</li>
+            <li>🗄️ “Run a database server you manage” → EC2 (or use managed DB like RDS)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Where AWS Fits In (High-Level) ☁️</h2>
+        <p>
+          AWS provides dedicated services to run and manage containers at scale. You will typically hear these names:
+        </p>
+        <ul>
+          <li>🧰 <strong>ECS</strong> — Elastic Container Service (AWS-managed container orchestration)</li>
+          <li>☸️ <strong>EKS</strong> — Elastic Kubernetes Service (managed Kubernetes)</li>
+          <li>📦 <strong>ECR</strong> — Elastic Container Registry (store container images)</li>
+        </ul>
+        <p class="mini">
+          Note: You can run containers “by yourself” on EC2 with Docker, but these services help you run them reliably at scale.
+        </p>
+      </section>
+
+      <section>
+        <h2>7) Quick Self-Check Questions 🧪</h2>
+        <ol class="qa">
+          <li>
+            <strong>Q1:</strong> What is the difference between an image and a container? 🖼️▶️
+            <div class="answer"><strong>A:</strong> An image is the blueprint/template; a container is a running instance created from that image.</div>
+          </li>
+          <li>
+            <strong>Q2:</strong> Why are containers popular for deployment? 📦
+            <div class="answer"><strong>A:</strong> They package the app and its dependencies so it runs consistently across environments.</div>
+          </li>
+          <li>
+            <strong>Q3:</strong> What is a common reason to split an app into multiple images? 🧩
+            <div class="answer"><strong>A:</strong> Modularity and independent deployment (microservices), e.g., web tier separate from database tier.</div>
+          </li>
+          <li>
+            <strong>Q4:</strong> Are containers the same as Lambda? ⚡📦
+            <div class="answer"><strong>A:</strong> No. Lambda is event-driven function execution; containers are packaged applications typically managed by ECS/EKS (or run on EC2).</div>
+          </li>
+        </ol>
+      </section>
+
+      <footer>
+        <p>
+          Tip for printing: open in a browser → click <strong>Print / Save as PDF</strong> → choose <strong>A4</strong> and enable background graphics only if you want the light gray panels.
+        </p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

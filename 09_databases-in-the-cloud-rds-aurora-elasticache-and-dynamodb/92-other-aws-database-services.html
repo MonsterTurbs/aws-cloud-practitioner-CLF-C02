@@ -1,0 +1,444 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Other AWS Database Services</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #5f6368;
+      --border: #e5e5e5;
+      --panel: #fafafa;
+      --callout: #f6f8ff;
+      --good: #0b7a2f;
+      --warn: #8a5a00;
+      --link: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
+    }
+
+    /* Single-column, print-friendly container */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 22px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    .kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0 0;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn:focus { outline: 2px solid var(--link); outline-offset: 2px; }
+
+    section {
+      margin: 18px 0;
+      padding: 0;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 18px 0 8px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      font-size: 15px;
+      margin: 14px 0 6px;
+      line-height: 1.35;
+    }
+
+    p { margin: 8px 0; }
+
+    ul, ol {
+      margin: 8px 0 10px 22px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      background: var(--callout);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--link);
+      padding: 12px 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .callout strong { display: inline-block; }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 12px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin: 10px 0;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .card h3 { margin-top: 0; }
+
+    .meta {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: -2px;
+    }
+
+    .example {
+      background: var(--panel);
+      border: 1px dashed var(--border);
+      padding: 10px;
+      border-radius: 10px;
+      margin: 10px 0 0;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .example code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 0;
+      font-size: 13px;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      text-align: left;
+      padding: 8px;
+      vertical-align: top;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: var(--panel);
+      font-weight: 700;
+    }
+
+    .muted { color: var(--muted); }
+
+    .qa {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .qa h3 { margin-top: 0; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 18px;
+      padding-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      .page { padding: 0; max-width: none; }
+      .toolbar { display: none !important; }
+      a { color: var(--text); text-decoration: none; }
+      h1, h2, h3 { break-after: avoid-page; }
+      p, li { orphans: 3; widows: 3; }
+      .card, .callout, .qa, table { page-break-inside: avoid; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer</p>
+      <h1>Other AWS Database Services (Quick Overview)</h1>
+      <p class="subtitle">Beyond RDS/Aurora, ElastiCache, and DynamoDB — the “you should have heard about them” databases.</p>
+      <div class="toolbar">
+        <button class="btn" onclick="window.print()" type="button">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})" type="button">✅ Jump to Quick Check</button>
+      </div>
+    </header>
+
+    <section>
+      <div class="callout">
+        <strong>🎯 Exam mindset:</strong>
+        This lecture is mainly recognition-based. You typically don’t need deep configuration details.
+        Focus on: <strong>name → database type → best-fit use case</strong>.
+      </div>
+
+      <h2>Big Picture: Why so many database services?</h2>
+      <ul>
+        <li>Different apps produce different data shapes: <strong>documents</strong>, <strong>graphs</strong>, <strong>time-series</strong>, <strong>wide columns</strong>, or <strong>immutable ledgers</strong>.</li>
+        <li>AWS offers specialized databases so you can match the <strong>engine</strong> to the <strong>problem</strong> (performance, latency, query style, compliance).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Cheat Sheet: “Other” AWS Database Services</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>🧠 MemoryDB <span class="pill">Persistent In‑Memory</span></h3>
+          <p class="meta">Think: “Redis-like, but durable as a primary database.”</p>
+          <ul>
+            <li><strong>What it is:</strong> a persistent in-memory database (data lives in memory, but is also stored durably).</li>
+            <li><strong>How it differs from ElastiCache:</strong> ElastiCache is mainly a <em>cache layer</em> (usually paired with another DB). MemoryDB is designed to be <em>standalone</em> as a primary store.</li>
+            <li><strong>Use when:</strong> you need very low latency, but also need persistence (not “cache only”).</li>
+          </ul>
+          <div class="example">
+            <strong>Example 💡</strong>
+            <p class="muted">A gaming leaderboard or session store that must be fast like cache, but must not lose data on restart.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>📄 Amazon DocumentDB <span class="pill">Document DB</span></h3>
+          <p class="meta">Think: “MongoDB-style documents on AWS.”</p>
+          <ul>
+            <li><strong>What it is:</strong> a document database for nested / JSON-like structures.</li>
+            <li><strong>Compatibility:</strong> commonly described as MongoDB compatible (AWS’s managed alternative).</li>
+            <li><strong>Use when:</strong> your data is naturally hierarchical (profiles, catalogs, content) and you prefer documents over tables.</li>
+          </ul>
+          <div class="example">
+            <strong>Example 💡</strong>
+            <p class="muted">Product catalog where each product has nested attributes (variants, tags, reviews, metadata).</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>🧱 Amazon Keyspaces <span class="pill">Wide‑Column</span></h3>
+          <p class="meta">Think: “Flexible columns; not strict relational schema.”</p>
+          <ul>
+            <li><strong>What it is:</strong> a wide-column database (rows can have flexible columns vs. strict SQL schemas).</li>
+            <li><strong>Use when:</strong> you want scalable storage for large datasets with variable attributes per row.</li>
+          </ul>
+          <div class="example">
+            <strong>Example 💡</strong>
+            <p class="muted">Telemetry data where different device models send slightly different fields, but you still want structured querying by key.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>🕸️ Amazon Neptune <span class="pill">Graph DB</span></h3>
+          <p class="meta">Think: “Relationships are first-class.”</p>
+          <ul>
+            <li><strong>What it is:</strong> a graph database for highly connected data.</li>
+            <li><strong>Use when:</strong> you frequently query relationships and paths (friends-of-friends, recommendations, fraud rings).</li>
+          </ul>
+          <div class="example">
+            <strong>Example 💡</strong>
+            <p class="muted">Social network: users ↔ friends ↔ groups; queries like “mutual connections” or “shortest path”.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>⏱️ Amazon Timestream <span class="pill">Time‑Series</span></h3>
+          <p class="meta">Think: “Events + timestamp, built for time-based queries.”</p>
+          <ul>
+            <li><strong>What it is:</strong> a database optimized for time-series data (timestamped measurements/events).</li>
+            <li><strong>Use when:</strong> data arrives continuously (every second/minute) and you query by time windows.</li>
+          </ul>
+          <div class="example">
+            <strong>Example 💡</strong>
+            <p class="muted">IoT sensors sending temperature readings each second; queries like “avg temp per 5 minutes”.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>📜 Amazon QLDB <span class="pill">Immutable Ledger</span></h3>
+          <p class="meta">Think: “Tamper-evident history of changes.”</p>
+          <ul>
+            <li><strong>What it is:</strong> a ledger database for immutable, verifiable change logs.</li>
+            <li><strong>Conceptual link:</strong> similar idea to blockchain: change history is tracked and cannot be quietly altered.</li>
+            <li><strong>Use when:</strong> you need an audit trail and strong integrity guarantees (compliance, financial records).</li>
+          </ul>
+          <div class="example">
+            <strong>Example 💡</strong>
+            <p class="muted">Track ownership transfers or transaction logs where you must prove data wasn’t edited later.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Fast Comparison Table</h2>
+      <table aria-label="Comparison of other AWS database services">
+        <thead>
+          <tr>
+            <th style="width: 22%">Service</th>
+            <th style="width: 24%">Database Style</th>
+            <th style="width: 28%">Best For</th>
+            <th style="width: 26%">Simple Memory Trick</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MemoryDB</td>
+            <td>Persistent in-memory</td>
+            <td>Ultra-low latency + durability</td>
+            <td>“Cache speed, DB persistence”</td>
+          </tr>
+          <tr>
+            <td>DocumentDB</td>
+            <td>Document (nested structures)</td>
+            <td>JSON-like app data, content/catalogs</td>
+            <td>“Docs = documents”</td>
+          </tr>
+          <tr>
+            <td>Keyspaces</td>
+            <td>Wide-column</td>
+            <td>Large datasets, flexible columns</td>
+            <td>“Key + flexible columns”</td>
+          </tr>
+          <tr>
+            <td>Neptune</td>
+            <td>Graph</td>
+            <td>Highly connected relationships</td>
+            <td>“Neptune = network of nodes”</td>
+          </tr>
+          <tr>
+            <td>Timestream</td>
+            <td>Time-series</td>
+            <td>Metric/event data over time</td>
+            <td>“Time is the main index”</td>
+          </tr>
+          <tr>
+            <td>QLDB</td>
+            <td>Ledger / immutable log</td>
+            <td>Audit trail, integrity, compliance</td>
+            <td>“Q = Quietly can’t change”</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="muted">Note: This is a high-level CLF-C02 view; exact capabilities and pricing vary by configuration.</p>
+    </section>
+
+    <section>
+      <h2>How to Answer Exam-Style Questions</h2>
+      <div class="qa">
+        <h3>✅ Pattern to memorize</h3>
+        <ol>
+          <li><strong>Identify the data shape:</strong> documents? relationships? timestamps? immutable history?</li>
+          <li><strong>Match the AWS database family:</strong> DocumentDB / Neptune / Timestream / QLDB / Keyspaces / MemoryDB</li>
+          <li><strong>Eliminate wrong answers:</strong> don’t pick a relational DB if the question screams “graph” or “time-series”.</li>
+        </ol>
+      </div>
+
+      <div class="qa" id="quick-check">
+        <h3>🧪 Quick Check (Self‑Test)</h3>
+        <ul>
+          <li>“We need to store nested JSON user profiles, like MongoDB.” → <strong>📄 DocumentDB</strong></li>
+          <li>“We need to query relationships: recommendations, fraud rings, social graph.” → <strong>🕸️ Neptune</strong></li>
+          <li>“We collect sensor readings every second; queries are time-window based.” → <strong>⏱️ Timestream</strong></li>
+          <li>“We need a tamper-evident audit log of changes.” → <strong>📜 QLDB</strong></li>
+          <li>“We want in-memory performance, but as a primary durable database.” → <strong>🧠 MemoryDB</strong></li>
+          <li>“We need a flexible-column database for large scale.” → <strong>🧱 Keyspaces</strong></li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <strong>🔎 Tip:</strong> If the question says “AWS database overview page” or “AWS has many DB types,” the expected takeaway is usually:
+        <strong>choose the specialized database that matches the data model</strong> (not “use RDS for everything”).
+      </div>
+    </section>
+
+    <section>
+      <h2>One Extra Name You’ll See Later</h2>
+      <p><strong>📊 Amazon Redshift</strong> is often referenced in AWS learning paths as a data warehousing/analytics service. This course will revisit it later.</p>
+    </section>
+
+    <footer>
+      <p><strong>Print tip:</strong> Use your browser’s Print dialog → Destination: “Save as PDF” → Paper size: A4 → Margins: Default.</p>
+      <p class="muted">Source: Reviewer created from your lecture transcript (Other AWS Database Services).</p>
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,454 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — AWS Backup (Centralized Backups)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --soft: #f7f7f7;
+      --accent: #0b57d0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    /* Single-column page */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 18px 60px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--soft);
+      padding: 16px 16px 14px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta {
+      margintext-align: left;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+
+    h2 {
+      font-size: 16px;
+      margin: 22px 0 10px;
+    }
+
+    h3 {
+      font-size: 14px;
+      margin: 16px 0 8px;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    ul {
+      margin: 8px 0 10px 18px;
+      padding: 0;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    .box {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 12px 10px;
+      background: #fff;
+      margin: 12px 0;
+    }
+
+    .box.soft {
+      background: var(--soft);
+    }
+
+    .box .title {
+      font-weight: 700;
+      margin: 0 0 6px;
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kvs {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 8px 12px;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+
+    .k {
+      color: var(--muted);
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+    }
+
+    pre {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--border);
+      text-align: left;
+      padding: 8px;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--soft);
+      font-weight: 700;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 18px 0;
+      border: 0;
+    }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      header,
+      .box,
+      table,
+      pre {
+        break-inside: avoid;
+      }
+
+      h2,
+      h3 {
+        break-after: avoid;
+      }
+
+      p,
+      li {
+        orphans: 3;
+        widows: 3;
+      }
+
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+
+      .pill {
+        background: #fff;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header>
+      <h1>🗄️ AWS Backup — Centralized Backup Management (CLF-C02 Reviewer)</h1>
+      <p class="subtitle">Beginner-friendly notes from the lecture: why backups matter, how RDS handles backups, and how <strong>AWS Backup</strong> centralizes backup plans across services.</p>
+      <div class="meta">
+        <span class="pill">Single-column</span>
+        <span class="pill">A4 print-ready</span>
+        <span class="pill">White background</span>
+        <span class="pill">Icons for recall</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>🎯 What you must understand</h2>
+      <div class="box soft">
+        <p class="title">Core idea (exam-level)</p>
+        <ul>
+          <li>✅ Backups are critical for databases and other AWS resources (mistakes happen, failures happen).</li>
+          <li>✅ Some services (like <strong>RDS</strong>) do backups automatically — you mainly configure <strong>retention</strong>.</li>
+          <li>✅ If you have many resources across multiple services, <strong>AWS Backup</strong> gives you <strong>one place</strong> to define and manage backup rules.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <p class="title">Quick definition</p>
+        <div class="kvs">
+          <div class="k">Backup</div>
+          <div class="v">A recoverable copy of data/state you can restore later (after deletion, corruption, outage, or human error).</div>
+          <div class="k">Retention</div>
+          <div class="v">How long backups are kept before they expire (e.g., keep daily backups for 35 days).</div>
+          <div class="k">Centralized backups</div>
+          <div class="v">One service and one plan to manage backups across many AWS resources.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧠 Why backups matter in real life</h2>
+      <ul>
+        <li>😬 Someone deletes a table / database accidentally.</li>
+        <li>⚠️ A deployment corrupts data (bug writes wrong values).</li>
+        <li>💥 A component fails (hardware or AZ disruption) and you need to restore.</li>
+        <li>📋 Compliance requires keeping records for years (audits, legal retention).</li>
+      </ul>
+
+      <div class="box soft">
+        <p class="title">Beginner example</p>
+        <p>
+          Imagine you run a small online store. Orders are saved in a database.
+          If the database gets corrupted, you need a backup to restore yesterday’s data and continue business.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🛠️ RDS backups (what the lecture emphasized)</h2>
+      <div class="box">
+        <p class="title">Key takeaway</p>
+        <p>
+          With <strong>RDS</strong>, backups are <strong>automatic</strong>. The key choice you typically make is <strong>how long AWS should retain them</strong>.
+          Backups are created by AWS behind the scenes.
+        </p>
+      </div>
+
+      <h3>✅ What you configure in the RDS wizard (conceptually)</h3>
+      <ul>
+        <li>🕒 <strong>Retention period</strong>: how many days to keep automated backups.</li>
+        <li>📆 <strong>Backup window</strong>: when backups are preferred to run (often configured/available depending on engine/settings).</li>
+        <li>🔐 <strong>Encryption</strong> (optional): protect stored data and backups.</li>
+      </ul>
+
+      <div class="box soft">
+        <p class="title">Exam hint</p>
+        <p>
+          If a question implies “RDS backups,” assume AWS helps heavily: it’s not “do you want backups?”, it’s usually “how long should backups be retained?”
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧰 AWS Backup (the centralized service)</h2>
+      <div class="box">
+        <p class="title">What AWS Backup is</p>
+        <p>
+          <strong>AWS Backup</strong> is a service that lets you define <strong>backup plans</strong> in one place and then <strong>assign AWS resources</strong>
+          (like RDS databases and DynamoDB tables) to those plans.
+        </p>
+      </div>
+
+      <h3>🧩 What’s inside a “backup plan”</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Plan setting</th>
+            <th>What it means (simple)</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>⏱️ Backup frequency</td>
+            <td>How often backups should be created.</td>
+            <td>Every day at 01:00</td>
+          </tr>
+          <tr>
+            <td>🗓️ Retention period</td>
+            <td>How long backups should be kept.</td>
+            <td>Keep for 35 days</td>
+          </tr>
+          <tr>
+            <td>📦 Destination</td>
+            <td>Where backups are stored (conceptually: a backup storage location/vault).</td>
+            <td>Store in a backup vault for production</td>
+          </tr>
+          <tr>
+            <td>🕰️ Timeframes / windows</td>
+            <td>When backups run (so they don’t collide with peak traffic).</td>
+            <td>Run during off-peak hours</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="box soft">
+        <p class="title">Beginner example</p>
+        <p>
+          You have:
+          <strong>2 RDS databases</strong> (production + staging) and <strong>3 DynamoDB tables</strong>.
+          You create:
+        </p>
+        <ul>
+          <li>📌 Plan A (Production): nightly backups, keep 35 days</li>
+          <li>🧪 Plan B (Staging): weekly backups, keep 7 days</li>
+        </ul>
+        <p class="muted">Then you assign the right resources to each plan.</p>
+      </div>
+
+      <h3>🧷 Assigning resources to a plan</h3>
+      <ul>
+        <li>🧱 You can create <strong>multiple plans</strong> (different rules for different environments/teams).</li>
+        <li>🏷️ You can assign resources such as <strong>RDS instances</strong> and <strong>DynamoDB tables</strong> to those plans.</li>
+        <li>♻️ You can restore backups from inside the AWS Backup service when needed.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>🔎 RDS vs AWS Backup — when do you need AWS Backup?</h2>
+      <div class="box">
+        <p class="title">Simple way to remember</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>What you typically do</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Only 1–2 RDS databases</td>
+              <td>✅ RDS automated backups may be enough (configure retention).</td>
+            </tr>
+            <tr>
+              <td>Many resources across services (RDS + DynamoDB + more)</td>
+              <td>🗂️ Use AWS Backup to manage backup schedules/retention centrally.</td>
+            </tr>
+            <tr>
+              <td>Different rules per environment (Prod vs Dev)</td>
+              <td>📌 Create multiple AWS Backup plans and assign resources accordingly.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="box soft">
+        <p class="title">Memory anchor</p>
+        <p>
+          🧠 <strong>RDS:</strong> “Backups happen automatically; I tune retention.”
+          <br />
+          🧠 <strong>AWS Backup:</strong> “I want one control center for backups across resources.”
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧪 Mini self-test (quick reviewer)</h2>
+      <div class="box">
+        <ol>
+          <li><strong>RDS backups:</strong> Is it mainly “enable backups” or “configure retention”? <span class="muted">(Answer: retention/config settings; backups are automatic.)</span></li>
+          <li>What is the main advantage of <strong>AWS Backup</strong>? <span class="muted">(Answer: centralized plans and management across resources.)</span></li>
+          <li>Name 3 common backup plan settings. <span class="muted">(Answer: frequency, retention, destination/time window.)</span></li>
+          <li>Can you restore backups from AWS Backup? <span class="muted">(Answer: yes, you can access/restore via the service.)</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <hr class="hr" />
+
+    <section>
+      <h2>📝 Ultra-short summary (for last-minute review)</h2>
+      <div class="box soft">
+        <ul>
+          <li>✅ Backups are essential for databases.</li>
+          <li>✅ RDS performs automatic backups; you typically configure <strong>retention</strong>.</li>
+          <li>✅ AWS Backup provides <strong>centralized backup plans</strong> (frequency, retention, destination, windows) and lets you assign resources like RDS and DynamoDB.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

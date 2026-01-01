@@ -1,0 +1,428 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Re-introducing IAM (Account Protection)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent-2: #1565c0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 18px 44px;
+    }
+
+    header {
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: .2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      font-size: 12.5px;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: #111;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13.5px;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      border-color: var(--accent);
+      color: #fff;
+      background: var(--accent);
+    }
+
+    .btn:focus {
+      outline: 3px solid rgba(11, 87, 208, 0.25);
+      outline-offset: 2px;
+    }
+
+    main { margin-top: 16px; }
+
+    h2 {
+      margin: 18px 0 8px;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 14px 0 6px;
+      font-size: 14.5px;
+      line-height: 1.25;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 10px;
+      padding-left: 18px;
+    }
+
+    li { margin: 6px 0; }
+
+    .box {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    .box.soft {
+      background: var(--panel);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kvs {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kv {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #fff;
+    }
+
+    .kv .k {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .muted { color: var(--muted); }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin: 12px 0;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      overflow-wrap: anywhere;
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+      border: 0;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm 14mm 16mm 14mm;
+    }
+
+    @media print {
+      .page { max-width: none; padding: 0; }
+      header { border-radius: 0; }
+      .btn, .actions { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      .box, .kv, header, .callout { break-inside: avoid; page-break-inside: avoid; }
+      h1 { font-size: 20px; }
+      h2 { font-size: 16px; }
+      h3 { font-size: 14px; }
+      body { font-size: 11.5pt; line-height: 1.45; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🔐 Re-introducing IAM (Account Protection) — Reviewer / Study Guide</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) • Single-column • A4 print-ready</p>
+      <div class="meta" aria-label="Quick info">
+        <span class="chip">🧠 Topic: IAM Basics + Advanced Pointers</span>
+        <span class="chip">🎯 Goal: Understand identities, policies, and key IAM tools</span>
+        <span class="chip">🖨️ Print: Optimized for A4 white bond paper</span>
+      </div>
+      <div class="actions">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Jump to Quick Check</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>🌟 What IAM is (in plain words)</h2>
+        <p>
+          <strong>IAM (Identity and Access Management)</strong> is the AWS service you use to control
+          <strong>who</strong> can access your AWS account and <strong>what</strong> they are allowed to do.
+          Think of it like a <strong>security guard + rulebook</strong> for AWS.
+        </p>
+
+        <div class="box soft">
+          <p><strong>Simple analogy:</strong> 🏢</p>
+          <ul>
+            <li><strong>Identities</strong> = people and “work badges” (users, groups, roles)</li>
+            <li><strong>Policies</strong> = written rules about what badge holders can do</li>
+            <li><strong>Services</strong> = rooms in the building (S3, EC2, RDS, etc.)</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <strong>Exam mindset:</strong> IAM is one of the most important “account protection” topics.
+          You should be comfortable with identities + permission logic.
+        </div>
+      </section>
+
+      <hr class="hr" />
+
+      <section>
+        <h2>👥 IAM identities: Users, Groups, Roles</h2>
+        <div class="kvs">
+          <div class="kv">
+            <div class="k">🙋‍♂️ Users</div>
+            <div class="v">Human identities (employees) that log in and work in AWS.</div>
+            <ul>
+              <li>Usually have a username/password for console access and/or access keys for CLI/SDK.</li>
+              <li>Best practice: avoid using the <strong>root user</strong> for daily tasks.</li>
+            </ul>
+          </div>
+
+          <div class="kv">
+            <div class="k">👨‍👩‍👧‍👦 Groups</div>
+            <div class="v">A way to manage permissions for multiple users at once.</div>
+            <ul>
+              <li>Add users to a group → they inherit the group’s policies.</li>
+              <li>Example: “Developers” group gets read-only access to CloudWatch + limited S3 access.</li>
+            </ul>
+          </div>
+
+          <div class="kv">
+            <div class="k">🎭 Roles</div>
+            <div class="v">Identities typically assumed by AWS services or trusted users for temporary access.</div>
+            <ul>
+              <li>Common for services: e.g., <strong>EC2 role</strong> that allows EC2 to read S3 objects.</li>
+              <li>Also used for cross-account access (advanced, but good to recognize).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="box">
+          <h3>🧪 Mini example</h3>
+          <p>
+            You have an app running on EC2 that needs to upload logs to S3.
+            Instead of storing S3 credentials inside your app code (bad idea 😬), you attach an
+            <strong>IAM role</strong> to the EC2 instance with a policy that allows <strong>s3:PutObject</strong>
+            to a specific bucket.
+          </p>
+        </div>
+      </section>
+
+      <hr class="hr" />
+
+      <section>
+        <h2>📜 Policies: the permission rulebook</h2>
+        <p>
+          IAM permissions are typically defined using <strong>policies</strong> (JSON documents) that contain
+          <strong>permission statements</strong>.
+        </p>
+
+        <div class="box soft">
+          <h3>✅ Key rule to memorize</h3>
+          <ul>
+            <li>By default, a new identity has <strong>no permissions</strong> (implicit deny).</li>
+            <li>You must explicitly <strong>allow</strong> actions using policies.</li>
+            <li>An <strong>explicit deny</strong> always overrides an allow.</li>
+          </ul>
+        </div>
+
+        <h3>🧩 AWS managed vs Customer managed policies</h3>
+        <ul>
+          <li><strong>AWS managed policies</strong> (pre-built): quick for common use cases (e.g., ReadOnlyAccess).</li>
+          <li><strong>Customer managed policies</strong> (your own): best for real-world least-privilege setups.</li>
+          <li>You can attach <strong>multiple policies</strong> to a user/role/group (permissions combine).</li>
+        </ul>
+
+        <div class="box">
+          <h3>🔎 Very small JSON example (concept only)</h3>
+          <p class="muted">You don’t need to write JSON for CLF-C02, but recognize that policies are JSON-based.</p>
+          <pre class="mono" aria-label="Policy JSON example">{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["s3:ListBucket"],
+      "Resource": ["arn:aws:s3:::example-bucket"]
+    }
+  ]
+}</pre>
+        </div>
+      </section>
+
+      <hr class="hr" />
+
+      <section>
+        <h2>🧠 How IAM decides: Allow vs Deny (quick mental model)</h2>
+        <div class="box soft">
+          <ol>
+            <li>Start with <strong>implicit deny</strong> (no access by default).</li>
+            <li>If any statement <strong>allows</strong> the action → access may be granted…</li>
+            <li>…but if any statement has <strong>explicit deny</strong> → access is denied (deny wins).</li>
+          </ol>
+        </div>
+        <p class="muted">
+          For the exam, remember: <strong>explicit deny overrides explicit allow</strong>.
+        </p>
+      </section>
+
+      <hr class="hr" />
+
+      <section>
+        <h2>🛠️ IAM features to know (highlighted in the lecture)</h2>
+
+        <h3>1) 🧱 Creating policies: Visual editor vs JSON editor</h3>
+        <ul>
+          <li><strong>Visual editor</strong>: pick a service → choose actions → set resources/conditions (great for beginners 🙂).</li>
+          <li><strong>JSON editor</strong>: directly write policy JSON (common for advanced users).</li>
+        </ul>
+
+        <h3>2) 🧭 Access Advisor (per identity)</h3>
+        <div class="box">
+          <p>
+            <strong>Access Advisor</strong> helps you see which services an identity (user/role) has access to
+            and when those permissions were <strong>last used</strong>.
+          </p>
+          <p class="muted">
+            Why it matters: you can discover permissions that were granted but never used → remove them to follow
+            <strong>least privilege</strong> ✅
+          </p>
+        </div>
+
+        <h3>3) 🕵️ Access Analyzer (zone of trust)</h3>
+        <div class="box">
+          <p>
+            <strong>Access Analyzer</strong> helps identify policies that might allow access to resources
+            from <strong>outside your account / outside your trusted boundary</strong> (your “zone of trust”).
+          </p>
+          <ul>
+            <li>Useful for finding overly broad access that could cause accidental exposure.</li>
+            <li>Think: “Did we accidentally allow external access?” 😬</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <strong>Practical takeaway:</strong> Use Access Advisor to remove unused permissions, and Access Analyzer
+          to catch unintended external access.
+        </div>
+      </section>
+
+      <hr class="hr" />
+
+      <section id="quick-check">
+        <h2>✅ Quick Check (exam-style recall)</h2>
+        <div class="box soft">
+          <ul>
+            <li>Q: What are the three IAM identity types? <br /><strong>A:</strong> Users, Groups, Roles.</li>
+            <li>Q: What’s the default permission state of a new IAM user? <br /><strong>A:</strong> No permissions (implicit deny).</li>
+            <li>Q: What overrides an Allow? <br /><strong>A:</strong> Explicit Deny.</li>
+            <li>Q: Which tool helps find permissions that were granted but not used? <br /><strong>A:</strong> Access Advisor.</li>
+            <li>Q: Which tool helps detect access from outside your trusted boundary? <br /><strong>A:</strong> Access Analyzer.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧷 CLF-C02 exam tips (high value)</h2>
+        <ul>
+          <li>Always associate <strong>IAM</strong> with <strong>account protection</strong> and <strong>least privilege</strong> 🔒</li>
+          <li>Remember the difference: <strong>Users = humans</strong>, <strong>Roles = assumed access</strong> (often services).</li>
+          <li>Policies are JSON documents with statements; you don’t need to write them, but recognize them.</li>
+        </ul>
+      </section>
+
+      <footer class="muted" style="margin-top: 16px; font-size: 12.5px;">
+        <hr class="hr" />
+        <p>
+          End of notes for <strong>Re-introducing IAM</strong>. You can paste the next transcript and I’ll produce the next
+          print-ready page in the same style.
+        </p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

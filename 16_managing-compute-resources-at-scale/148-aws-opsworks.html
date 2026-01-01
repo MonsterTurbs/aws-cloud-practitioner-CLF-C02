@@ -1,0 +1,332 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — AWS OpsWorks</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --chip: #f3f4f6;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column, print-friendly layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 44px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 18px 14px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      border: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    .toolbar {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 8px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    button:hover { background: #f8f8f8; }
+
+    main {
+      margin-top: 14px;
+    }
+
+    section {
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    section > .hd {
+      padding: 10px 14px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    section > .bd {
+      padding: 12px 14px;
+      font-size: 13.5px;
+    }
+
+    p { margin: 0 0 10px; }
+    ul { margin: 8px 0 0; padding-left: 18px; }
+    li { margin: 6px 0; }
+
+    .callout {
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #fff;
+      margin: 10px 0 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .qa {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+    }
+
+    .qa b { display: block; margin-bottom: 6px; }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      background: #f7f7f7;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    code {
+      padding: 1px 6px;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    pre {
+      padding: 10px;
+      margin: 8px 0 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .tiny {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    footer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* Print-specific CSS */
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
+
+    @media print {
+      .page { max-width: none; padding: 0; }
+      header, section { border-color: #d9d9d9; }
+      .toolbar { display: none !important; }
+      a[href]::after { content: ""; }
+      body { font-size: 12px; }
+      section { break-inside: avoid; page-break-inside: avoid; }
+      .qa { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🛠️ AWS OpsWorks — Reviewer / Study Guide</h1>
+      <p class="subtitle">CLF-C02 focus: what it is, why it exists, and how it compares to Systems Manager.</p>
+
+      <div class="meta">
+        <span class="chip">✅ Single-column</span>
+        <span class="chip">🖨️ A4 print-ready</span>
+        <span class="chip">📘 Beginner-friendly</span>
+        <span class="chip">🧠 Exam cues</span>
+      </div>
+
+      <div class="toolbar" aria-label="Actions">
+        <button type="button" onclick="window.print()">Print (A4)</button>
+        <button type="button" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Jump to Quick Quiz</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <div class="hd">1) Big Picture (What OpsWorks is) 🧩</div>
+        <div class="bd">
+          <p><b>AWS OpsWorks</b> is a (relatively) niche AWS service that helps you <b>automate server operations</b> using <b>Puppet</b> or <b>Chef</b>.</p>
+          <p>Think of it like: “I want to configure and manage servers using <b>automation code</b> (Puppet/Chef), but I want AWS to host and manage the service that runs those automation tools.”</p>
+
+          <div class="callout">
+            <p><b>Key idea:</b> Puppet and Chef are <b>not AWS-created</b>. They are popular automation platforms that use code to define how servers should be configured.</p>
+            <p class="tiny">In exam terms: OpsWorks = AWS-managed way to use Puppet/Chef for configuration management.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="hd">2) The Problem It Solves 🎯</div>
+        <div class="bd">
+          <p>When you have many servers (e.g., EC2 instances), you often need to repeatedly do tasks like:</p>
+          <ul>
+            <li>Install and update software packages</li>
+            <li>Apply consistent configuration (files, ports, users, services)</li>
+            <li>Enforce standards across environments (dev/test/prod)</li>
+            <li>Automate “server setup” instead of doing it manually</li>
+          </ul>
+
+          <p>OpsWorks helps automate those operations using established automation ecosystems (Puppet/Chef).</p>
+        </div>
+      </section>
+
+      <section>
+        <div class="hd">3) OpsWorks vs Systems Manager (How to remember it) 🧠</div>
+        <div class="bd">
+          <p>A quick exam-friendly comparison:</p>
+          <ul>
+            <li>🧰 <b>Systems Manager (SSM)</b>: AWS-native toolkit for fleet management, patching, automation, Parameter Store, Session Manager, etc.</li>
+            <li>🧑‍🍳 <b>OpsWorks</b>: AWS-managed service to run <b>Puppet/Chef</b> workflows (configuration management via those tools).</li>
+          </ul>
+
+          <div class="callout">
+            <p><b>Simple memory hook:</b> <b>OpsWorks = Puppet/Chef on AWS</b>. If the question mentions Puppet/Chef, your brain should immediately think “OpsWorks.” 😄</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="hd">4) When OpsWorks Makes Sense ✅</div>
+        <div class="bd">
+          <p>OpsWorks can be valuable when a company:</p>
+          <ul>
+            <li>Already uses <b>Puppet</b> or <b>Chef</b> and wants to continue using those tools</li>
+            <li>Prefers (or is required) to use existing automation standards (company policy, legacy tooling)</li>
+            <li>Does not want to migrate automation to Systems Manager features</li>
+          </ul>
+
+          <div class="callout">
+            <p><b>Exam wording you might see:</b> “customer has existing Chef/Puppet recipes/manifests and wants AWS-managed support” → <b>OpsWorks</b>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="hd">5) Beginner-Friendly Example 🧪</div>
+        <div class="bd">
+          <p><b>Scenario:</b> You have 50 EC2 instances that must all run the same web server configuration.</p>
+          <ul>
+            <li>Without automation: You manually SSH into each server and install/configure (slow + error-prone) 😵</li>
+            <li>With Puppet/Chef: You write configuration rules once (as code), then apply it to all servers ✅</li>
+            <li>With OpsWorks: AWS provides a managed way to use Puppet/Chef to apply those rules at scale 🛠️</li>
+          </ul>
+
+          <p class="tiny">You do not need Puppet/Chef syntax for CLF-C02. Just know what they are and that OpsWorks supports them.</p>
+        </div>
+      </section>
+
+      <section id="quiz">
+        <div class="hd">6) Quick Quiz (CLF-C02 Style) 📝</div>
+        <div class="bd">
+          <div class="grid">
+            <div class="qa">
+              <b>Q1: A company already uses Chef to manage server configuration. They want an AWS-managed way to keep using Chef. Which service fits best?</b>
+              <div>✅ <b>AWS OpsWorks</b></div>
+            </div>
+
+            <div class="qa">
+              <b>Q2: Which is AWS-native for fleet operations like patching, Session Manager access, and Parameter Store?</b>
+              <div>✅ <b>AWS Systems Manager</b></div>
+            </div>
+
+            <div class="qa">
+              <b>Q3: True/False — OpsWorks is primarily for application users authentication.</b>
+              <div>❌ <b>False</b>. That’s more aligned with Cognito (app user auth). OpsWorks focuses on server operations via Puppet/Chef.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="hd">7) Key Takeaways (Must Remember) ✅</div>
+        <div class="bd">
+          <ul>
+            <li>🛠️ <b>AWS OpsWorks</b> helps automate server operations using <b>Puppet</b> or <b>Chef</b>.</li>
+            <li>📌 Puppet/Chef are <b>non-AWS</b> automation tools; OpsWorks is the AWS-managed way to use them.</li>
+            <li>🧰 If you want AWS-native fleet management features, think <b>Systems Manager</b>.</li>
+            <li>🧠 Exam cue: <b>“Chef / Puppet” → OpsWorks</b>.</li>
+          </ul>
+        </div>
+      </section>
+
+      <footer>
+        <div>Print tip: use A4, margins “Default”, and enable “Background graphics” only if you want the light gray panels.</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

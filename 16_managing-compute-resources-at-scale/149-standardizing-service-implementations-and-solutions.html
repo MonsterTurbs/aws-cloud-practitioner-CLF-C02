@@ -1,0 +1,399 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Standardizing Service Implementations (Service Catalog, Proton, Launch Wizard)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent2: #1a73e8;
+      --ok: #0f7b3a;
+      --warn: #8a5a00;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      overflow-wrap: anywhere; /* strong word-wrap for long tokens */
+      word-break: break-word;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 18px 48px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 18px 16px;
+    }
+
+    .kicker {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .2px;
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 0 0 8px;
+      line-height: 1.2;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn:focus {
+      outline: 3px solid rgba(26,115,232,.25);
+      outline-offset: 2px;
+    }
+
+    main { margin-top: 18px; }
+
+    h2 {
+      font-size: 18px;
+      margin: 18px 0 10px;
+      padding-top: 6px;
+      border-top: 2px solid var(--border);
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 12px 22px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 14px;
+      background: #fff;
+      margin: 12px 0;
+    }
+
+    .note {
+      border-left: 5px solid var(--accent2);
+      background: #f7faff;
+    }
+
+    .good {
+      border-left: 5px solid var(--ok);
+      background: #f4fbf6;
+    }
+
+    .warn {
+      border-left: 5px solid var(--warn);
+      background: #fff8ec;
+    }
+
+    .label {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 2px 10px;
+      margin-bottom: 8px;
+      background: var(--panel);
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 0 6px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .qa {
+      padding-left: 0;
+      margin-left: 0;
+      list-style: none;
+    }
+
+    .qa li {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 12px;
+      margin: 10px 0;
+      background: #fff;
+      page-break-inside: avoid;
+    }
+
+    .q {
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    .a {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    /* Print-specific CSS (A4) */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .page { max-width: none; padding: 0; }
+      header { border-radius: 0; }
+      .toolbar { display: none !important; }
+      a { color: inherit; text-decoration: none; }
+      .card, .qa li { page-break-inside: avoid; }
+      h2, h3 { page-break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide</p>
+      <h1>Standardizing Service Implementations & Solutions 🧩</h1>
+      <p class="sub">
+        Topic focus: <strong>Service Catalog</strong>, <strong>Proton</strong>, and <strong>Launch Wizard</strong> — why enterprises use templates to avoid “everyone builds it differently.”
+      </p>
+      <div class="toolbar">
+        <button class="btn primary" type="button" onclick="window.print()">Print (A4) 🖨️</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-test').scrollIntoView({behavior:'smooth'})">Jump to Quick Test ✅</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card note">
+        <div class="label">Big idea 💡</div>
+        <p>
+          In large AWS environments, many teams and many users create resources. Without standards, you get
+          inconsistent VPCs, clusters, security settings, and costs. AWS provides services that let you build
+          <strong>approved, reusable templates</strong> so people can deploy consistent solutions safely.
+        </p>
+      </section>
+
+      <h2>Why standardization matters 🧱</h2>
+      <ul>
+        <li>✅ <strong>Consistency:</strong> same network/security patterns across teams.</li>
+        <li>✅ <strong>Speed:</strong> teams deploy faster by reusing a known-good template.</li>
+        <li>✅ <strong>Governance:</strong> limit what can be deployed and how it’s configured.</li>
+        <li>✅ <strong>Cost control:</strong> prevent “accidentally huge” resources or risky architectures.</li>
+        <li>✅ <strong>Supportability:</strong> ops teams can troubleshoot fewer “unique snowflake” setups.</li>
+      </ul>
+
+      <section class="card warn">
+        <div class="label">Common enterprise problem ⚠️</div>
+        <p>
+          Two engineers solve the same need (e.g., run a container task), but one builds a VPC + ECS cluster with one
+          security posture, and another builds it differently. Multiply that by dozens of teams and you get a messy
+          environment that is hard to secure and maintain.
+        </p>
+      </section>
+
+      <h2>Service Catalog 🧰 (standard products for your AWS account)</h2>
+      <section class="card">
+        <div class="label">What it is</div>
+        <p>
+          <strong>Service Catalog</strong> lets an AWS account offer <em>standardized, configurable “products”</em>.
+          A “product” is basically a template that deploys a known set of resources (example: VPC + EC2 + RDS), with
+          a few safe options (example: choose instance type from an approved list).
+        </p>
+        <p>
+          Think of it like an internal company “app store” 🏪 where the platform team publishes approved blueprints,
+          and other teams deploy them.
+        </p>
+      </section>
+
+      <h3>How it works (beginner-friendly) 🧠</h3>
+      <ul>
+        <li>👩‍💼 <strong>Admins/platform team</strong> create products in the admin area.</li>
+        <li>🧑‍💻 <strong>Users/developers</strong> go to the provisioning area and deploy those products.</li>
+        <li>🔐 <strong>IAM permissions</strong> control who can create vs. who can only deploy.</li>
+        <li>📦 Products are commonly built using <span class="mono">CloudFormation</span> templates (covered later in your course).</li>
+      </ul>
+
+      <section class="card good">
+        <div class="label">Simple example 🧪</div>
+        <p>
+          Your company wants every “web app environment” to include:
+        </p>
+        <ul>
+          <li>🌐 A VPC with standard subnets and security groups</li>
+          <li>🖥️ An EC2 instance (only allow <span class="mono">t3.small</span> or <span class="mono">t3.medium</span>)</li>
+          <li>🗄️ An RDS database with encryption enabled</li>
+        </ul>
+        <p>
+          With Service Catalog, you publish that as a product. Teams deploy it quickly without inventing their own architecture each time.
+        </p>
+      </section>
+
+      <h2>Proton 🧪 (templates for container & serverless environments)</h2>
+      <section class="card">
+        <div class="label">What it is</div>
+        <p>
+          <strong>AWS Proton</strong> is also about standardization, but it’s more focused: it helps create and manage
+          templates for <strong>serverless</strong> and <strong>container-based</strong> deployments.
+        </p>
+        <p>
+          If Service Catalog is a general “template shop” for many types of solutions, Proton is a more specialized
+          option for modern application platforms built on containers and serverless workloads.
+        </p>
+      </section>
+
+      <h3>Where Proton fits (quick mental model) 🧭</h3>
+      <ul>
+        <li>📦 Standardize <strong>environment templates</strong> (e.g., VPC + ECS cluster + Fargate defaults).</li>
+        <li>🚀 Make it easy for teams to deploy a consistent container/serverless setup.</li>
+        <li>🧩 Can be combined with Service Catalog (example: Proton handles the container platform; Service Catalog adds database or extra resources).</li>
+      </ul>
+
+      <section class="card good">
+        <div class="label">Example 🧪</div>
+        <p>
+          Platform team defines a Proton template for a standard container app:
+        </p>
+        <ul>
+          <li>🧱 VPC defaults (subnets, routing patterns)</li>
+          <li>🐳 ECS + Fargate (serverless containers) with standard logging/monitoring</li>
+          <li>🔐 Standard IAM roles for task execution</li>
+        </ul>
+        <p>
+          App teams deploy into that environment without customizing everything from scratch.
+        </p>
+      </section>
+
+      <h2>Launch Wizard 🧙 (AWS-built solution deployments)</h2>
+      <section class="card">
+        <div class="label">What it is</div>
+        <p>
+          <strong>Launch Wizard</strong> helps you deploy certain <strong>pre-built AWS solution patterns</strong>.
+          Unlike Service Catalog/Proton, you typically <strong>do not create your own templates</strong> here.
+          Instead, AWS guides you through deploying common enterprise workloads (example: SAP) using an AWS-managed wizard.
+        </p>
+      </section>
+
+      <section class="card warn">
+        <div class="label">Exam trap ⚠️</div>
+        <p>
+          Launch Wizard is <strong>not</strong> the EC2 “launch instance wizard.” It’s a separate service for deploying
+          specific solution types with AWS-provided guidance.
+        </p>
+      </section>
+
+      <h2>Quick comparison 🆚</h2>
+      <section class="card">
+        <ul>
+          <li>🧰 <strong>Service Catalog:</strong> You create <em>your company’s</em> approved products/templates; others deploy them.</li>
+          <li>🧪 <strong>Proton:</strong> Standardization focused on <em>containers/serverless platforms</em>; environment templates for modern app teams.</li>
+          <li>🧙 <strong>Launch Wizard:</strong> AWS provides pre-built solution deployment flows; you configure and deploy (you don’t design the template set).</li>
+        </ul>
+      </section>
+
+      <h2>Beginner-friendly “story” example 📖</h2>
+      <section class="card">
+        <p>
+          Imagine a big company with 200 developers.
+        </p>
+        <ul>
+          <li>Without templates: every team builds “their own version” of VPC + compute + database → inconsistent security and cost surprises 😵</li>
+          <li>With Service Catalog: platform team publishes “Web App Environment v1” → teams deploy consistently ✅</li>
+          <li>With Proton: platform team publishes “Container Platform v1” → teams deploy container services on a standardized ECS/Fargate setup ✅</li>
+          <li>With Launch Wizard: the company needs SAP on AWS → use AWS’s guided deployment to reduce mistakes ✅</li>
+        </ul>
+      </section>
+
+      <h2 id="quick-test">Quick Test (CLF-C02 style) ✅</h2>
+      <ul class="qa">
+        <li>
+          <p class="q">1) A platform team wants to offer approved infrastructure blueprints (VPC + EC2 + RDS) to other teams inside the same AWS account. Which service matches best? 🧩</p>
+          <p class="a">✅ <strong>Service Catalog</strong> — it provides standardized “products” that other users can provision.</p>
+        </li>
+        <li>
+          <p class="q">2) Which service is more focused on standardizing container and serverless deployments for teams? 🐳</p>
+          <p class="a">✅ <strong>AWS Proton</strong> — targeted at templates for container/serverless environments.</p>
+        </li>
+        <li>
+          <p class="q">3) You want a guided AWS-provided wizard to deploy a complex enterprise workload (e.g., SAP). Which service is described? 🧙</p>
+          <p class="a">✅ <strong>Launch Wizard</strong> — AWS-built deployment flows for certain solution types.</p>
+        </li>
+        <li>
+          <p class="q">4) Service Catalog products are commonly created using which templating service mentioned here (covered later in the course)? 📦</p>
+          <p class="a">✅ <strong>CloudFormation</strong>.</p>
+        </li>
+      </ul>
+
+      <h2>Key takeaways 🎯</h2>
+      <ul>
+        <li>🏢 Big orgs need <strong>standard templates</strong> to avoid inconsistent architectures.</li>
+        <li>🧰 <strong>Service Catalog</strong> = your internal AWS “product catalog” (approved templates).</li>
+        <li>🧪 <strong>Proton</strong> = focused standardization for container/serverless environments.</li>
+        <li>🧙 <strong>Launch Wizard</strong> = AWS-guided deployment for certain pre-built solution patterns (not your own templates).</li>
+      </ul>
+
+      <footer>
+        <div>Print tip: Use your browser print dialog → Paper size: <strong>A4</strong> → Margins: <strong>Default</strong> (or “Custom” if required). Background graphics can be ON for nicer callouts.</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

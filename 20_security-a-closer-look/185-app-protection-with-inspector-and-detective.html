@@ -1,0 +1,351 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — App Protection (Inspector & Detective)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --accent2:#1a73e8;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.6;
+      font-size:16px;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px 44px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 16px;
+      border-radius: 12px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: -0.2px;
+    }
+
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-block;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      padding:8px 12px;
+      border-radius: 10px;
+      text-decoration:none;
+      font-size: 14px;
+      cursor:pointer;
+    }
+    .btn.primary{
+      border-color: rgba(11,87,208,.35);
+      background: rgba(11,87,208,.06);
+      color: #0b57d0;
+    }
+    .btn:focus{ outline: 3px solid rgba(26,115,232,.25); outline-offset: 2px; }
+
+    main{ margin-top: 18px; }
+
+    h2{
+      margin: 22px 0 10px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+    h3{
+      margin: 16px 0 8px;
+      font-size: 15.5px;
+      line-height: 1.25;
+    }
+
+    p{ margin: 10px 0; }
+
+    /* Strong wrapping for print */
+    p, li, code, pre, .callout{
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    .callout{
+      border:1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 14px;
+      margin: 12px 0;
+    }
+    .callout .label{
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    ul{ margin: 8px 0 10px 22px; }
+    li{ margin: 6px 0; }
+
+    .grid{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      overflow:hidden;
+      margin: 12px 0;
+    }
+    .grid .row{
+      display:block;
+      padding: 12px 14px;
+      border-top: 1px solid var(--border);
+      background:#fff;
+    }
+    .grid .row:first-child{ border-top:0; background: var(--panel); }
+    .grid .row b{ display:block; margin-bottom: 4px; }
+    .muted{ color: var(--muted); }
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 0.95em;
+      background: #f3f3f3;
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    details{
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 10px 0;
+      background:#fff;
+    }
+    summary{ cursor:pointer; font-weight:700; }
+
+    .divider{ height:1px; background: var(--border); margin: 18px 0; }
+
+    .footer{
+      margin-top: 18px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+    @media print {
+      body{ font-size: 11.5pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ border:0; background: transparent; padding: 0 0 8px 0; }
+      .toolbar, .no-print{ display:none !important; }
+      a{ color: #000; text-decoration: none; }
+      details{ border:1px solid #ddd; }
+      summary{ list-style: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🛡️ App Protection in AWS: Inspector & Detective</h1>
+      <p class="subtitle">CLF-C02 Reviewer • Beginner-friendly notes + examples • A4 print-ready (single column)</p>
+      <div class="toolbar no-print">
+        <button class="btn primary" onclick="window.print()">🖨️ Print (A4)</button>
+        <button class="btn" onclick="window.scrollTo({top:0, behavior:'smooth'})">⬆️ Back to Top</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 What you must understand (Exam Focus)</h2>
+        <div class="callout">
+          <div class="label">Big idea</div>
+          <p>
+            Security is not only about protecting your AWS account (IAM, MFA, CloudTrail). You must also protect
+            <b>workloads</b> (EC2, containers, etc.) and be able to <b>investigate incidents</b> when suspicious activity happens.
+          </p>
+        </div>
+        <ul>
+          <li><b>Amazon Inspector</b> = find vulnerabilities <span class="muted">(before attackers exploit them)</span> 🔍</li>
+          <li><b>Amazon Detective</b> = investigate incidents <span class="muted">(after something suspicious happens)</span> 🕵️</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🔍 Amazon Inspector (Vulnerability Scanning)</h2>
+        <p>
+          <b>Amazon Inspector</b> provides <b>automated vulnerability management</b>. When enabled, it scans your workloads for
+          known issues so you can patch and fix problems early.
+        </p>
+
+        <div class="grid" role="group" aria-label="Inspector quick facts">
+          <div class="row"><b>✅ What it does</b><span class="muted">Automatically scans EC2 instances and containers to discover vulnerabilities and surface findings.</span></div>
+          <div class="row"><b>🎯 What it helps you answer</b><span class="muted">“Which instances/containers are vulnerable, and what should I patch or remediate?”</span></div>
+          <div class="row"><b>🧠 Think of it as</b><span class="muted">A “security health check” for your compute workloads.</span></div>
+        </div>
+
+        <h3>Beginner-friendly example</h3>
+        <div class="callout">
+          <div class="label">Example: vulnerable software package</div>
+          <p>
+            You run an app on an EC2 instance. The instance has a software package with a known security issue.
+            Inspector detects the vulnerability and shows:
+          </p>
+          <ul>
+            <li>Which EC2 instance/container is affected</li>
+            <li>Which vulnerability was found (and why it matters)</li>
+            <li>Recommended remediation (e.g., apply a patch / upgrade a package)</li>
+          </ul>
+          <p class="muted">Goal: fix the issue before it gets abused.</p>
+        </div>
+
+        <h3>Key takeaway</h3>
+        <p>
+          Inspector is mainly about <b>prevention</b>: continuously finding weaknesses so you can reduce risk.
+        </p>
+      </section>
+
+      <section>
+        <h2>🕵️ Amazon Detective (Incident Investigation)</h2>
+        <p>
+          Even with strong prevention, suspicious activity can still occur (compromised credentials, exploited vulnerabilities,
+          misconfigurations). <b>Amazon Detective</b> helps you investigate: what happened, when it happened, and what resources were involved.
+        </p>
+
+        <div class="grid" role="group" aria-label="Detective quick facts">
+          <div class="row"><b>✅ What it does</b><span class="muted">Assists with investigating security incidents by exploring activity around AWS resources and surfacing findings.</span></div>
+          <div class="row"><b>🎯 What it helps you answer</b><span class="muted">“What actions occurred, which resources were touched, and what timeline explains the incident?”</span></div>
+          <div class="row"><b>🧩 Think of it as</b><span class="muted">A guided investigation workspace that gives context and “breadcrumbs” for suspicious activity.</span></div>
+        </div>
+
+        <h3>Beginner-friendly example</h3>
+        <div class="callout">
+          <div class="label">Example: suspicious outbound traffic</div>
+          <p>
+            You notice suspicious behavior (e.g., an EC2 instance making outbound requests to an unfamiliar IP address).
+            With Detective, you can:
+          </p>
+          <ul>
+            <li>Search and pivot on a resource (user, role, instance, etc.)</li>
+            <li>Review related findings that AWS surfaces for that resource</li>
+            <li>Trace “who/what did what” and build a timeline (dates, resources involved)</li>
+          </ul>
+          <p class="muted">Goal: understand impact, fix damage, and prevent recurrence.</p>
+        </div>
+
+        <h3>Detective vs CloudTrail (common confusion)</h3>
+        <div class="callout">
+          <div class="label">🧠 Quick comparison</div>
+          <ul>
+            <li><b>CloudTrail</b> = records AWS API calls (who called what API, when).</li>
+            <li><b>Detective</b> = helps you investigate incidents by connecting context and surfacing findings.
+              <span class="muted">It’s not just “logs”; it’s analysis support.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧭 When to use which service?</h2>
+        <div class="callout">
+          <div class="label">Rule of thumb</div>
+          <ul>
+            <li><b>Prevent</b> issues early → use <b>Inspector</b> 🔍</li>
+            <li><b>Investigate</b> suspicious activity / incidents → use <b>Detective</b> 🕵️</li>
+          </ul>
+        </div>
+
+        <div class="grid" role="group" aria-label="Decision guide">
+          <div class="row"><b>Scenario</b><span class="muted"><b>Best fit</b></span></div>
+          <div class="row"><b>“Which EC2 instances have known vulnerabilities?”</b><span class="muted">Inspector</span></div>
+          <div class="row"><b>“A workload behaved oddly—what happened?”</b><span class="muted">Detective</span></div>
+          <div class="row"><b>“Which user performed suspicious actions?”</b><span class="muted">Detective (and CloudTrail as evidence source)</span></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Quick Review Checklist</h2>
+        <ul>
+          <li>Inspector = <b>automated vulnerability detection</b> for EC2/containers</li>
+          <li>Inspector findings often point to <b>known package/software vulnerabilities</b> and remediation</li>
+          <li>Detective = <b>incident investigation</b> tool to explore suspicious activity and related findings</li>
+          <li>Detective helps build context: <b>timeline</b>, resources involved, and “what happened”</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧪 Mini Quiz (CLF-C02 style)</h2>
+
+        <ol>
+          <li>
+            Your EC2 instances run software packages with known security issues. Which service helps you discover and remediate these vulnerabilities automatically?
+          </li>
+          <li>
+            You suspect an EC2 instance is compromised and is communicating with a strange IP address. Which service helps you investigate what happened?
+          </li>
+          <li>
+            True or False: Inspector is primarily used to investigate incidents after suspicious activity has already occurred.
+          </li>
+        </ol>
+
+        <details>
+          <summary>Show answers ✅</summary>
+          <ol>
+            <li><b>Amazon Inspector</b></li>
+            <li><b>Amazon Detective</b></li>
+            <li><b>False</b> — Inspector focuses on <b>finding vulnerabilities</b> (prevention). Investigation is the role of Detective.</li>
+          </ol>
+        </details>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>📌 Key Terms to Memorize</h2>
+        <ul>
+          <li><b>Vulnerability</b> — a weakness in software/configuration that can be exploited ⚠️</li>
+          <li><b>Finding</b> — a detected issue/event surfaced by a security service 🔎</li>
+          <li><b>Remediation</b> — the fix (patch/upgrade/config change) ✅</li>
+          <li><b>Incident investigation</b> — understanding “what happened” after suspicious activity 🧩</li>
+        </ul>
+      </section>
+
+      <p class="footer">
+        Print tip: Use your browser print dialog and keep scaling at 100% for the cleanest A4 output.
+      </p>
+    </main>
+  </div>
+</body>
+</html>

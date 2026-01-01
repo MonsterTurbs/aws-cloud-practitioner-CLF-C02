@@ -1,0 +1,423 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — DynamoDB (NoSQL Key-Value Database)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #666;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Single-column container */
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 28px 18px 42px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 16px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.55rem;
+      line-height: 1.25;
+      letter-spacing: -0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 0.86rem;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    main { margin-top: 16px; }
+
+    h2 {
+      margin: 18px 0 8px;
+      font-size: 1.2rem;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 14px 0 6px;
+      font-size: 1.05rem;
+      line-height: 1.25;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 12px;
+      padding-left: 18px;
+    }
+
+    li { margin: 6px 0; }
+
+    .card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 14px;
+      margin: 12px 0;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 12px 12px;
+      border-radius: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kbox {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .kbox strong { display: block; margin-bottom: 4px; }
+
+    .mini {
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    /* Word wrapping safeguards */
+    p, li, code, pre, .tag {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 6px;
+      padding: 0 6px;
+      white-space: nowrap;
+    }
+
+    .qa {
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .qa details { margin: 8px 0; }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .btnbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm 14mm;
+    }
+
+    @media print {
+      body {
+        background: #fff !important;
+        color: #000 !important;
+        font-size: 11pt;
+        line-height: 1.35;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      header, .card, .kbox, .qa {
+        box-shadow: none !important;
+      }
+
+      .btnbar { display: none !important; }
+
+      a, a:visited { color: #000; text-decoration: none; }
+
+      /* Avoid awkward page breaks */
+      h2, h3 { break-after: avoid; page-break-after: avoid; }
+      .card, .kbox, .callout, .qa { break-inside: avoid; page-break-inside: avoid; }
+
+      /* Expand details so answers print */
+      details { break-inside: avoid; }
+      details[open] summary { margin-bottom: 6px; }
+      details:not([open]) > *:not(summary) { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🗃️ DynamoDB Reviewer (CLF-C02) — NoSQL Key-Value Database</h1>
+      <p class="subtitle">Beginner-friendly notes based on the lecture transcript: why DynamoDB exists, how tables work, and how pricing & access differ from SQL databases.</p>
+      <div class="meta">
+        <span class="tag">📌 Topic: DynamoDB</span>
+        <span class="tag">🧠 Focus: Concepts + exam cues</span>
+        <span class="tag">🖨️ A4 Print-Ready</span>
+        <span class="tag">📄 Single-column layout</span>
+      </div>
+      <div class="btnbar" aria-hidden="true">
+        <button class="btn" onclick="window.print()">🖨️ Print</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>1) Big idea: When would you use a NoSQL database? 🤔</h2>
+        <p>
+          Relational databases (SQL) are great when you want a <strong>strict schema</strong> and data spread across <strong>multiple related tables</strong>.
+          But sometimes you <strong>don’t want that structure</strong>.
+        </p>
+        <div class="callout">
+          <p><strong>✅ DynamoDB is useful when:</strong></p>
+          <ul>
+            <li>🧱 You don’t want a strict schema (records can have different “shapes”).</li>
+            <li>🗂️ You don’t want to split data across many tables (you prefer fewer, wider tables).</li>
+            <li>⚡ You want strong performance at scale when used correctly.</li>
+          </ul>
+        </div>
+        <p class="mini">Note: “Schema-less” doesn’t mean “no planning” — it means you’re not forced into rigid table definitions like in SQL.</p>
+      </section>
+
+      <section class="card">
+        <h2>2) What is DynamoDB? 🧾</h2>
+        <ul>
+          <li>🏁 <strong>Fully managed</strong> NoSQL <strong>key-value</strong> database service.</li>
+          <li>🏗️ Like Aurora, it’s built by Amazon for AWS (cloud-native engine).</li>
+          <li>🧰 You work primarily with <strong>tables</strong> (not “databases” you manage yourself).</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Core mental model:</strong> In DynamoDB, you typically <strong>do not create a database server</strong>. You <strong>create tables</strong>, and AWS manages the underlying infrastructure behind the scenes.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>3) DynamoDB structure: Tables → Items → Attributes 🧩</h2>
+        <div class="grid">
+          <div class="kbox">
+            <strong>📦 Table</strong>
+            <div class="mini">A collection of records (similar to a table in SQL).</div>
+          </div>
+          <div class="kbox">
+            <strong>🧾 Item</strong>
+            <div class="mini">A single record/row in the table.</div>
+          </div>
+          <div class="kbox">
+            <strong>🏷️ Attributes</strong>
+            <div class="mini">Fields/columns inside an item (items can have different attributes).</div>
+          </div>
+        </div>
+
+        <h3>Keys (how items are identified) 🔑</h3>
+        <p>
+          When creating a table, you choose the <strong>key(s)</strong> used to identify entries.
+          Think of it like: <em>“How do I uniquely find this item?”</em>
+        </p>
+        <div class="callout">
+          <p><strong>Beginner example (key-value idea):</strong></p>
+          <ul>
+            <li>Key: <code>userId</code> → Value: user data (name, email, preferences, etc.)</li>
+            <li>Different users can have different optional fields (e.g., <code>middleName</code> exists for some users, not for others).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>4) DynamoDB vs SQL: What feels different? ⚖️</h2>
+        <ul>
+          <li>🏛️ <strong>SQL databases</strong>: you connect, then create databases + tables, and query with SQL.</li>
+          <li>🧱 <strong>DynamoDB</strong>: you create <strong>tables directly</strong> in AWS. No “database server” you manage.</li>
+          <li>🧠 <strong>Data modeling</strong>: fewer tables, more flexible item shapes (can be “chaotic” at first, but common and powerful).</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Exam cue ✅</strong>: If a question hints at “NoSQL / key-value / schema-less / fully managed,” DynamoDB is a prime candidate.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>5) Pricing & capacity modes 💸</h2>
+        <p>
+          DynamoDB doesn’t run a visible database instance “all the time” like a classic server.
+          Instead, you pay based on how you choose to handle <strong>read/write capacity</strong>.
+        </p>
+
+        <div class="grid">
+          <div class="kbox">
+            <strong>📈 Provisioned capacity</strong>
+            <div class="mini">You estimate expected read/write capacity in advance. Can save money if your usage is predictable.</div>
+          </div>
+          <div class="kbox">
+            <strong>🧾 On-demand</strong>
+            <div class="mini">You pay for actual reads/writes as they happen. Great flexibility when usage is unpredictable or low.</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p><strong>Simple rule of thumb 🧠</strong>:</p>
+          <ul>
+            <li>Predictable workload → consider <strong>Provisioned</strong> (often cheaper).</li>
+            <li>Spiky/unpredictable workload → consider <strong>On-demand</strong> (less planning, pay per use).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>6) Security & encryption 🔒</h2>
+        <ul>
+          <li>🔐 You can choose <strong>encryption settings per table</strong>.</li>
+          <li>🛡️ AWS manages the underlying database operations (hardware, much of the maintenance complexity, etc.).</li>
+        </ul>
+        <p class="mini">The transcript emphasizes: you focus on table configuration instead of database server administration.</p>
+      </section>
+
+      <section class="card">
+        <h2>7) How do you read/write data? 🧰</h2>
+        <p>
+          DynamoDB is AWS-native: you typically interact with it using AWS tooling.
+        </p>
+        <ul>
+          <li>🧑‍💻 AWS SDKs (in your code)</li>
+          <li>🧾 AWS CLI</li>
+          <li>🌐 AWS APIs</li>
+          <li>🖥️ AWS Console (for manual testing)</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Key difference vs SQL ✅</strong>: You’re not using a general SQL query language. You’re using AWS tooling to read/write items in tables.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>8) Beginner-friendly example: “User profiles” table 👤</h2>
+        <p>
+          Imagine a mobile app with user profiles. In SQL, you might split data into multiple tables.
+          In DynamoDB, you might keep it simple with fewer tables.
+        </p>
+        <div class="callout">
+          <p><strong>Example items (same table, different shapes):</strong></p>
+          <ul>
+            <li>🧾 User A: <code>{ userId: "u-101", name: "Ana", email: "ana@...", plan: "free" }</code></li>
+            <li>🧾 User B: <code>{ userId: "u-102", name: "Ben", email: "ben@...", plan: "pro", company: "ABC Corp" }</code></li>
+          </ul>
+          <p class="mini">Same table, but items can store different attributes as needed.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>9) Quick exam-ready summary ✅</h2>
+        <ul>
+          <li>🗃️ <strong>DynamoDB</strong> = fully managed NoSQL key-value database.</li>
+          <li>🧱 Flexible structure: items can have different fields (schema-less feel).</li>
+          <li>📦 You create and work with <strong>tables</strong> directly (AWS manages databases behind the scenes).</li>
+          <li>💸 Capacity/pricing: <strong>Provisioned</strong> (estimate) vs <strong>On-demand</strong> (pay per use).</li>
+          <li>🔒 Table-level encryption options exist.</li>
+          <li>🧰 Access via AWS tools (SDK/CLI/API), not a generic SQL query language.</li>
+        </ul>
+      </section>
+
+      <section class="qa">
+        <h2>Mini-check (self-test) 📝</h2>
+        <details>
+          <summary><strong>Q1:</strong> In DynamoDB, do you create a “database server” like in RDS?</summary>
+          <p><strong>A:</strong> No. You typically create <strong>tables</strong> directly; AWS manages the underlying infrastructure.</p>
+        </details>
+        <details>
+          <summary><strong>Q2:</strong> What’s the benefit of On-demand mode?</summary>
+          <p><strong>A:</strong> You pay for actual reads/writes, which is useful for unpredictable or low traffic patterns.</p>
+        </details>
+        <details>
+          <summary><strong>Q3:</strong> What type of database is DynamoDB?</summary>
+          <p><strong>A:</strong> A fully managed <strong>NoSQL key-value</strong> database service.</p>
+        </details>
+      </section>
+
+      <p class="footer">
+        Tip: Keep DynamoDB mentally grouped with “managed, schema-flexible, key-value NoSQL” when reviewing exam questions.
+      </p>
+    </main>
+  </div>
+</body>
+</html>

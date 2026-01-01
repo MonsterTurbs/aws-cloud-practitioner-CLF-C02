@@ -1,0 +1,290 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Managing Compute Resources at Scale (Module 143)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --accent2:#0f766e;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      overflow-wrap:anywhere;
+      word-break:normal;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 18px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding:16px 16px 12px;
+      border-radius:12px;
+    }
+
+    h1{font-size: 22px; margin:0 0 6px; line-height:1.25;}
+    .subtitle{margin:0; color:var(--muted); font-size: 13.5px;}
+
+    .meta{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .pill{
+      border:1px solid var(--border);
+      background:#fff;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12.5px;
+      color:#222;
+      white-space:nowrap;
+    }
+
+    main{margin-top:14px;}
+
+    h2{
+      font-size: 17px;
+      margin: 18px 0 8px;
+      line-height:1.3;
+    }
+
+    p{margin: 10px 0;}
+
+    .card{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:14px 14px 12px;
+      background:#fff;
+      margin: 12px 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .callout{
+      border-left: 4px solid var(--accent);
+      background: #f5f9ff;
+    }
+
+    .callout-success{
+      border-left-color: var(--accent2);
+      background: #f1fffb;
+    }
+
+    ul{margin: 8px 0 0 18px; padding:0;}
+    li{margin: 6px 0;}
+
+    .kvs{
+      margin-top: 8px;
+      border-top:1px dashed var(--border);
+      padding-top:10px;
+    }
+
+    .kvs .row{
+      display:flex;
+      gap:10px;
+      padding: 6px 0;
+      border-bottom: 1px dotted #eee;
+    }
+    .kvs .row:last-child{border-bottom:none;}
+    .k{min-width: 170px; font-weight:700;}
+    .v{color:#222;}
+
+    .mini{
+      color:var(--muted);
+      font-size: 13px;
+    }
+
+    .quiz-q{margin:10px 0 6px; font-weight:700;}
+    .answer{
+      display:none;
+      margin:8px 0 0;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      background: #fcfcfc;
+      border-radius:10px;
+    }
+
+    .btnbar{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+    button{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:#111;
+      padding:8px 10px;
+      border-radius:10px;
+      font-size:13px;
+      cursor:pointer;
+    }
+    button:hover{border-color:#cfcfcf;}
+
+    footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    /* Print styles for clean A4 output */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 16mm;
+    }
+    @media print{
+      body{background:#fff;}
+      .page{max-width:none; padding:0;}
+      header, .card{border-radius:0;}
+      header{background:#fff;}
+      .btnbar{display:none !important;}
+      a{color:#000; text-decoration:none;}
+      .answer{display:block !important;}
+      .pill{border-color:#ddd;}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🧭 Managing Compute Resources at Scale (Module 143)</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide (Print-Friendly, Single Column)</p>
+      <div class="meta">
+        <span class="pill">🖨️ A4 print-ready</span>
+        <span class="pill">📄 Single-column layout</span>
+        <span class="pill">✅ Beginner-friendly</span>
+        <span class="pill">🧠 Key concepts + examples</span>
+      </div>
+      <div class="btnbar" aria-label="Actions">
+        <button type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button type="button" onclick="toggleAnswers()">👀 Show/Hide Answers</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="card callout">
+        <h2>🎯 Module Goal</h2>
+        <p>
+          Monitoring is important (CloudWatch, alarms, logs). But at <strong>enterprise scale</strong>, you also need the ability to
+          <strong>stay in control of many compute workloads</strong>—not just one EC2 instance.
+        </p>
+        <p>
+          This module introduces what it means to run compute tasks <strong>at scale</strong> (dozens → thousands of instances, containers,
+          and Lambda functions), and why you need central tooling to keep operations manageable.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>🌍 What “At Scale” Really Means</h2>
+        <ul>
+          <li>🖥️ <strong>Many servers</strong>: Hundreds/thousands of EC2 instances running different apps.</li>
+          <li>📦 <strong>Containers + serverless</strong>: Thousands of containers (ECS/EKS) mixed with Lambda functions.</li>
+          <li>🏢 <strong>Enterprise operations</strong>: Multiple teams, multiple environments (dev/test/prod), frequent deployments.</li>
+          <li>🧩 <strong>Coordination problem</strong>: You can’t “click around” the console for every change anymore.</li>
+        </ul>
+        <p class="mini">Key idea: once you have many workloads, the hard part becomes <em>control</em>, <em>consistency</em>, and <em>automation</em>.</p>
+      </section>
+
+      <section class="card callout-success">
+        <h2>🛠️ The Core Problems You Must Solve</h2>
+        <div class="kvs" role="list">
+          <div class="row" role="listitem"><div class="k">⚙️ Configuration</div><div class="v">How do you change settings for <strong>many</strong> workloads at once (e.g., env vars, startup scripts, ports)?</div></div>
+          <div class="row" role="listitem"><div class="k">🔁 Updates & Patching</div><div class="v">How do you keep OS/packages up to date across a fleet without manually SSH-ing into every box?</div></div>
+          <div class="row" role="listitem"><div class="k">📈 Scaling</div><div class="v">How do you automatically add/remove compute when demand changes (traffic spikes, batch jobs)?</div></div>
+          <div class="row" role="listitem"><div class="k">🔐 Governance</div><div class="v">How do you keep permissions and processes consistent across teams and environments?</div></div>
+          <div class="row" role="listitem"><div class="k">🧯 Reliability</div><div class="v">How do you reduce manual mistakes and keep systems healthy while growing?</div></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>🧠 Beginner-Friendly Example</h2>
+        <p><strong>Scenario:</strong> You manage an app running on 500 EC2 instances.</p>
+        <ul>
+          <li>⚠️ A security update is required today.</li>
+          <li>😵 Doing it manually means: 500 logins, 500 installs, 500 chances to miss one instance.</li>
+          <li>✅ At scale, you want a <strong>central tool</strong> that can apply the same action consistently (and report results).</li>
+        </ul>
+        <p class="mini">Takeaway: “Scale” is not just more servers—it’s a different operational approach.</p>
+      </section>
+
+      <section class="card">
+        <h2>📌 What AWS Will Typically Provide for “Scale Management”</h2>
+        <p>
+          In this module, you’ll focus on AWS tools that help you manage many workloads from a central place.
+          Depending on the course path, expect services and features like:
+        </p>
+        <ul>
+          <li>📈 <strong>Auto Scaling</strong> — automatically add/remove instances when load changes.</li>
+          <li>🧭 <strong>Systems Manager (SSM)</strong> — manage fleets (run commands, patching, inventory) without manual SSH.</li>
+          <li>🧱 <strong>Infrastructure as Code (e.g., CloudFormation)</strong> — create/update environments consistently via templates.</li>
+          <li>🚦 <strong>Load balancing & health checks</strong> — keep traffic flowing to healthy compute resources.</li>
+        </ul>
+        <p class="mini">Note: You don’t need to memorize every console click for CLF-C02, but you should recognize what each tool is for.</p>
+      </section>
+
+      <section class="card">
+        <h2>📝 Quick Reviewer</h2>
+        <ul>
+          <li>✅ Monitoring tells you <strong>what’s happening</strong> (logs/metrics/alarms).</li>
+          <li>✅ Managing at scale helps you <strong>control and operate</strong> compute across many workloads.</li>
+          <li>✅ At scale, manual changes don’t work well—automation and central management become necessary.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>🧪 Self-Check Quiz</h2>
+
+        <div class="quiz-q">1) Why does “at scale” change how you manage compute workloads?</div>
+        <ul>
+          <li>A. Because AWS doesn’t allow SSH anymore</li>
+          <li>B. Because manual actions don’t scale; you need central tools + automation</li>
+          <li>C. Because EC2 stops working after 10 instances</li>
+        </ul>
+        <div class="answer" data-answer>
+          ✅ Correct: <strong>B</strong>. At scale, the main issue is consistency and operational control across many resources.
+        </div>
+
+        <div class="quiz-q">2) Give one example of a “scale management” task.</div>
+        <div class="answer" data-answer>
+          ✅ Examples: patching many instances, changing configuration across a fleet, automatic scaling during traffic spikes, centralized command execution.
+        </div>
+
+        <div class="quiz-q">3) Monitoring vs. managing at scale — what’s the difference?</div>
+        <div class="answer" data-answer>
+          ✅ Monitoring = observe/alert (CloudWatch metrics/logs/alarms). Managing at scale = operate/control many workloads efficiently (automation, fleet tools, consistent deployments).
+        </div>
+      </section>
+
+      <footer>
+        <p>
+          Tip: When printing, answers will be automatically shown so your reviewer includes solutions. Use “Print / Save as PDF” for a clean A4 copy.
+        </p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    function toggleAnswers(){
+      const answers = document.querySelectorAll('[data-answer]');
+      const anyHidden = Array.from(answers).some(a => getComputedStyle(a).display === 'none');
+      answers.forEach(a => a.style.display = anyHidden ? 'block' : 'none');
+    }
+  </script>
+</body>
+</html>

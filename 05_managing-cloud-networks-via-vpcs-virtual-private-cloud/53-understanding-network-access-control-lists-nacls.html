@@ -1,0 +1,383 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Reviewer — Network ACLs (NACLs)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --good:#0a7a2f;
+      --warn:#b45309;
+      --bad:#b42318;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 18px 64px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 12px;
+    }
+
+    h1{
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+
+    .meta{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .pill{
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .toolbar{
+      margin: 14px 0 0;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .btn.primary{
+      border-color: rgba(11,87,208,.35);
+      color: var(--accent);
+    }
+
+    main{ margin-top: 16px; }
+
+    section{
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: #fff;
+    }
+
+    h2{
+      margin: 0 0 10px;
+      font-size: 16.5px;
+    }
+
+    h3{
+      margin: 14px 0 8px;
+      font-size: 14.5px;
+    }
+
+    p{ margin: 0 0 10px; }
+
+    ul{ margin: 8px 0 0 18px; padding: 0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+    }
+
+    .callout.good{ border-color: rgba(10,122,47,.25); }
+    .callout.warn{ border-color: rgba(180,83,9,.25); }
+    .callout.bad{ border-color: rgba(180,35,24,.22); }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: #fff;
+      white-space: nowrap;
+    }
+
+    .two-up{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .box{
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .box .title{
+      margin: 0 0 6px;
+      font-weight: 700;
+      font-size: 13.5px;
+    }
+
+    .mini{
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    .hr{
+      height:1px;
+      background: var(--border);
+      border:0;
+      margin: 12px 0;
+    }
+
+    .checklist li{ margin: 7px 0; }
+
+    /* Print styles */
+    @page{
+      size: A4;
+      margin: 16mm;
+    }
+
+    @media print{
+      body{ font-size: 11.5pt; }
+      .page{ max-width: none; padding: 0; }
+      header, section{ break-inside: avoid; box-shadow:none; }
+      .toolbar{ display:none !important; }
+      a{ color: var(--text); text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🔐 AWS Reviewer: Network Access Control Lists (NACLs)</h1>
+      <p class="subtitle">
+        CLF-C02 study notes — print-friendly, single-column. Topic: how NACLs differ from Security Groups and how they relate to Public/Private Subnets.
+      </p>
+      <div class="meta">
+        <span class="pill">🧠 Beginner-friendly</span>
+        <span class="pill">🧾 A4 print-ready</span>
+        <span class="pill">📌 VPC • Subnets • Traffic control</span>
+        <span class="pill">✅ Exam keywords: NACL, subnet-level, inbound/outbound</span>
+      </div>
+      <div class="toolbar">
+        <button class="btn primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quick-review').scrollIntoView({behavior:'smooth'});">📌 Jump to Quick Review</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) What is a NACL?</h2>
+        <p>
+          A <strong>Network Access Control List (NACL)</strong> is a set of network rules that controls traffic at the <strong>subnet level</strong>.
+          Think of it as a “gatekeeper” placed at the entrance/exit of a subnet.
+        </p>
+        <div class="callout good">
+          <strong>Key idea ✅</strong><br />
+          <strong>Security Group</strong> = controls traffic for a <strong>single instance</strong> (or ENI).<br />
+          <strong>NACL</strong> = controls traffic for an <strong>entire subnet</strong> (affects all instances inside it).
+        </div>
+
+        <h3>Where it is attached</h3>
+        <ul>
+          <li>📍 <strong>NACL</strong> is <strong>associated with a subnet</strong>.</li>
+          <li>🖥️ <strong>Security Group</strong> is <strong>attached to instances</strong> (technically, their network interface).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2) Inbound vs Outbound rules</h2>
+        <p>
+          Just like Security Groups, NACLs have <strong>Inbound</strong> and <strong>Outbound</strong> rules.
+          But the defaults are different.
+        </p>
+        <div class="two-up">
+          <div class="box">
+            <p class="title">🧱 Default NACL behavior (common default)</p>
+            <ul>
+              <li><strong>Inbound:</strong> allow all traffic (by default)</li>
+              <li><strong>Outbound:</strong> allow all traffic (by default)</li>
+            </ul>
+            <p class="mini">This matches the lecture: default NACL is permissive in both directions.</p>
+          </div>
+          <div class="box">
+            <p class="title">🛡️ Security Group default behavior (typical)</p>
+            <ul>
+              <li><strong>Outbound:</strong> allow all traffic (by default)</li>
+              <li><strong>Inbound:</strong> restricted (often none or minimal until you add rules)</li>
+            </ul>
+            <p class="mini">This matches the lecture: SG defaults are more restrictive for inbound traffic.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) NACLs vs Security Groups vs Subnet type</h2>
+        <p>
+          You now have multiple “traffic control” concepts in AWS networking. Here’s the clean mental model.
+        </p>
+
+        <div class="box">
+          <p class="title">🌐 Public vs Private Subnet (connectivity)</p>
+          <ul>
+            <li><strong>Public subnet:</strong> has a route to an <strong>Internet Gateway (IGW)</strong> → can have internet connectivity.</li>
+            <li><strong>Private subnet:</strong> no direct IGW route → <strong>no direct internet connectivity</strong>.</li>
+          </ul>
+          <div class="callout warn">
+            <strong>Important ⚠️</strong><br />
+            Subnet type is about <strong>network connectivity</strong>. Even if you “allow HTTP” in a security group, an instance in a <strong>private subnet</strong> still won’t be reachable from the public internet.
+          </div>
+        </div>
+
+        <hr class="hr" />
+
+        <div class="box">
+          <p class="title">🧩 NACL vs Security Group (control layer)</p>
+          <ul>
+            <li><strong>NACL:</strong> subnet-wide rule set (one-to-many effect)</li>
+            <li><strong>Security Group:</strong> instance-level firewall</li>
+          </ul>
+          <div class="callout good">
+            <strong>Common best practice ✅</strong><br />
+            In many real setups, Security Groups are the primary day-to-day control mechanism, while NACLs are used for broader subnet-level guardrails.
+          </div>
+        </div>
+
+        <hr class="hr" />
+
+        <div class="box">
+          <p class="title">🧠 Extra exam-relevant details (easy to remember)</p>
+          <ul>
+            <li>🔁 <strong>Security Groups are stateful</strong>: if inbound is allowed, return traffic is automatically allowed.</li>
+            <li>↔️ <strong>NACLs are stateless</strong>: you must allow traffic in <strong>both directions</strong> (inbound and outbound) as needed.</li>
+            <li>🧾 <strong>NACL rules support ALLOW and DENY</strong>; Security Groups are allow-based (you block by not allowing).</li>
+          </ul>
+          <p class="mini">
+            These help you distinguish NACL questions in exams: “stateless”, “subnet-level”, “explicit deny”, “rule order”.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Simple examples</h2>
+
+        <h3>Example A: Web subnet + DB subnet</h3>
+        <p>
+          Imagine a classic setup:
+        </p>
+        <ul>
+          <li>🖥️ <strong>Web EC2</strong> in a <strong>public subnet</strong> (needs inbound HTTP/HTTPS from the internet)</li>
+          <li>🗄️ <strong>DB EC2</strong> in a <strong>private subnet</strong> (should NOT accept inbound from the internet)</li>
+        </ul>
+        <div class="callout">
+          <strong>How controls work 🧭</strong>
+          <ul>
+            <li><strong>Public/Private subnet</strong> decides if internet connectivity exists.</li>
+            <li><strong>NACL</strong> can apply a subnet-wide guardrail (e.g., block a risky port across the whole subnet).</li>
+            <li><strong>Security Group</strong> fine-tunes which ports are allowed per instance (e.g., web allows 80/443; DB allows only DB port from web subnet).</li>
+          </ul>
+        </div>
+
+        <h3>Example B: Block a port for the entire subnet</h3>
+        <p>
+          Suppose you want to ensure that <strong>no one</strong> inside a subnet can ever receive inbound traffic on a specific port (e.g., a legacy admin port).
+          A NACL is a good “broad brush” tool for this.
+        </p>
+        <ul>
+          <li>🚫 Add an inbound <strong>DENY</strong> rule on that port at the subnet’s NACL.</li>
+          <li>✅ Even if someone later misconfigures a Security Group, the NACL still blocks at the subnet boundary.</li>
+        </ul>
+        <div class="callout warn">
+          <strong>Reminder ⚠️</strong><br />
+          Because NACLs are <strong>stateless</strong>, you must also consider outbound rules and return paths, depending on the flow.
+        </div>
+      </section>
+
+      <section id="quick-review">
+        <h2>5) Quick Review (Exam-style)</h2>
+        <ul class="checklist">
+          <li>✅ NACLs are associated with <strong>subnets</strong>, not individual instances.</li>
+          <li>✅ NACLs have <strong>inbound</strong> and <strong>outbound</strong> rules.</li>
+          <li>✅ Default NACL often allows <strong>all inbound</strong> and <strong>all outbound</strong> traffic.</li>
+          <li>✅ Security Groups are usually the recommended day-to-day control mechanism for instances.</li>
+          <li>✅ Public/Private subnet is about <strong>internet connectivity</strong> (route to IGW), not just “ports allowed”.</li>
+          <li>✅ Security Groups are <strong>stateful</strong>; NACLs are <strong>stateless</strong>.</li>
+          <li>✅ NACLs can have <strong>explicit DENY</strong> rules (useful as subnet-wide guardrails).</li>
+        </ul>
+
+        <div class="callout bad">
+          <strong>Common confusion ❌</strong><br />
+          “I allowed HTTP in the Security Group, so my private subnet instance should be reachable.”
+          <br />
+          Not true — the subnet’s routing (public vs private) still controls internet reachability.
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Mini-glossary</h2>
+        <ul>
+          <li><strong>VPC</strong> 🏢 — your virtual network in AWS (regional).</li>
+          <li><strong>Subnet</strong> 🧱 — a smaller network segment inside a VPC (lives in a single AZ).</li>
+          <li><strong>NACL</strong> 🧾 — subnet-level traffic rules (inbound/outbound).</li>
+          <li><strong>Security Group</strong> 🛡️ — instance-level firewall rules.</li>
+          <li><strong>IGW</strong> 🌍 — Internet Gateway (connects VPC to the internet).</li>
+        </ul>
+
+        <p class="mini">
+          Tip: If an exam question says “<em>subnet-level rules</em>” or “<em>stateless</em>” or “<em>explicit deny</em>”, think <strong>NACL</strong>.
+          If it says “<em>instance firewall</em>” or “<em>stateful</em>”, think <strong>Security Group</strong>.
+        </p>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

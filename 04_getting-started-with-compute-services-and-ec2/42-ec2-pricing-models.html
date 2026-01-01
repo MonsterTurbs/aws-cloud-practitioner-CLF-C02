@@ -1,0 +1,369 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 42 EC2 Pricing Models</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+      --ok:#0f7b0f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 10px;
+    }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    code{
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      background:#fff;
+    }
+
+    .card h3{ margin: 0 0 8px; }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Compute • EC2</p>
+      <h1>42 — EC2 Pricing Models 💸🖥️</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 What You Need to Know (Exam-Level)</h2>
+        <p>
+          AWS EC2 offers multiple pricing / purchasing options. For the Cloud Practitioner exam,
+          focus on the <strong>purpose</strong> of each model, the <strong>trade-offs</strong>, and
+          which workloads fit each option.
+        </p>
+        <div class="callout">
+          <p><strong>Rule of thumb ✅</strong> More flexibility usually means less discount. More commitment usually means more discount.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Model #1: On-Demand Instances (Default) ⏱️</h2>
+        <p>
+          <strong>On-Demand</strong> is the default option when you launch an instance normally.
+          You pay for usage (commonly per second/minute/hour depending on instance + OS), and you stop paying when you stop/terminate.
+        </p>
+        <div class="mini">
+          <h3>Why it’s popular 👍</h3>
+          <ul>
+            <li><strong>Highest flexibility</strong> — start/stop anytime</li>
+            <li><strong>No long-term commitment</strong></li>
+            <li>Great for <strong>short-term</strong>, <strong>unknown</strong>, or <strong>spiky</strong> workloads</li>
+          </ul>
+        </div>
+        <div class="warning">
+          <p><strong>Reminder ⚠️</strong> Pricing depends on <strong>Region</strong>, <strong>instance type</strong>, OS, and other factors. Always check the EC2 pricing page for exact numbers.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Model #2: Spot Instances ⚡💰</h2>
+        <p>
+          <strong>Spot Instances</strong> let you use AWS spare capacity at a discount.
+          The trade-off: AWS can <strong>reclaim / interrupt</strong> the instance when capacity is needed.
+        </p>
+
+        <div class="mini">
+          <h3>Best fit ✅</h3>
+          <ul>
+            <li>Batch jobs / short utility tasks</li>
+            <li>Workloads that are <strong>interruptible</strong> and can be restarted</li>
+            <li>Big cost savings when you can tolerate interruptions</li>
+          </ul>
+        </div>
+
+        <div class="warning">
+          <p><strong>Not ideal ⚠️</strong> for always-on workloads (e.g., typical web servers) because interruptions can cause downtime.</p>
+        </div>
+
+        <div class="callout">
+          <p><strong>Exam phrase ✅</strong> “Spare capacity, discounted, but can be interrupted.”</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Model #3: Savings Plans 📉📅</h2>
+        <p>
+          <strong>Savings Plans</strong> provide discounts when you commit to a certain amount of compute usage over time
+          (commonly <strong>1 year</strong> or <strong>3 years</strong>). You buy these via the Billing / Cost Management area.
+        </p>
+
+        <div class="mini">
+          <h3>Key idea 🔒➡️💰</h3>
+          <ul>
+            <li>You commit to a steady level of compute usage (a “spend/usage commitment”)</li>
+            <li>You get a discount because you commit long-term</li>
+            <li>You can still use more (extra usage can be On-Demand), but the committed part is paid anyway</li>
+          </ul>
+        </div>
+
+        <div class="good">
+          <p><strong>Best fit ✅</strong> Predictable, long-running workloads where you know you’ll keep using compute for months/years.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Model #4: Reserved Instances (RIs) 🧾🗓️</h2>
+        <p>
+          <strong>Reserved Instances</strong> are similar to Savings Plans in that they trade commitment for discount,
+          but the commitment is tied more directly to specific instance attributes (like instance type/config).
+        </p>
+
+        <div class="mini">
+          <h3>How to think about it 🧩</h3>
+          <ul>
+            <li><strong>RIs:</strong> commit to a more specific instance configuration</li>
+            <li><strong>Savings Plans:</strong> usually more flexible than RIs (commitment is less tied to a single type)</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <p><strong>Exam takeaway ✅</strong> Both are “commitment for discount,” but Savings Plans are often described as more flexible.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>📌 Quick Comparison Cheat Sheet</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>On-Demand ⏱️</h3>
+            <ul>
+              <li>Most flexible</li>
+              <li>No commitment</li>
+              <li>No special discount</li>
+              <li>Good for unknown / short-term usage</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Spot ⚡</h3>
+            <ul>
+              <li>Cheaper (discounted spare capacity)</li>
+              <li>Can be interrupted</li>
+              <li>Good for batch/interruptible workloads</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Savings Plans 📉</h3>
+            <ul>
+              <li>Discount for 1–3 year commitment</li>
+              <li>Often more flexible than RIs</li>
+              <li>Good for steady usage</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Reserved Instances 🧾</h3>
+            <ul>
+              <li>Discount for 1–3 year commitment</li>
+              <li>More tied to specific instance attributes</li>
+              <li>Good for predictable instance needs</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms to Remember</h2>
+        <span class="tag">On-Demand</span>
+        <span class="tag">Spot (interruptible)</span>
+        <span class="tag">Savings Plans</span>
+        <span class="tag">Reserved Instances</span>
+        <span class="tag">Region-based pricing</span>
+        <span class="tag">Instance type</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="mini">
+          <h3>Answer in 1 sentence each ✍️</h3>
+          <ul>
+            <li>Why is On-Demand considered the “default” pricing model?</li>
+            <li>What is the main risk of Spot Instances?</li>
+            <li>When would Savings Plans make sense?</li>
+            <li>How are Reserved Instances different from Savings Plans (high-level)?</li>
+          </ul>
+          <div class="good">
+            <p><strong>Expected ✅</strong> Default launch behavior • interruptions • predictable long-term usage • RIs tie commitment to specific instance attributes vs more flexible Savings Plans.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

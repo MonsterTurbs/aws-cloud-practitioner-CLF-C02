@@ -1,0 +1,434 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Serverless APIs (Module 115: Introduction)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent-2: #0f766e;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .tools {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn:hover { border-color: #cfcfcf; }
+
+    main { margin-top: 16px; }
+
+    h2 {
+      margin: 20px 0 8px;
+      font-size: 18px;
+    }
+
+    h3 {
+      margin: 14px 0 6px;
+      font-size: 15px;
+    }
+
+    p { margin: 8px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-left: 5px solid var(--accent);
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin: 12px 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .callout .title {
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px 12px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    ul, ol {
+      margin: 8px 0 8px 22px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+    }
+
+    pre {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 10px 10px;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      margin: 10px 0;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 12px;
+      color: var(--muted);
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    .muted { color: var(--muted); }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Print settings: A4, clean margins, no UI controls */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+      header {
+        background: #fff;
+        border: 1px solid #000;
+      }
+      .tools { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      .card, .callout, pre {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      h2, h3 { break-after: avoid; page-break-after: avoid; }
+      p, li { orphans: 3; widows: 3; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Module 115 — Building Serverless REST & GraphQL APIs (Introduction)</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) • Print-friendly reviewer / study guide • Single column • A4-ready</p>
+
+      <div class="tools" aria-label="page tools">
+        <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="toggleTips()" id="tipsBtn">💡 Hide tips</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="callout" id="lecture">
+        <p class="title">🎯 What this module is about</p>
+        <p>
+          You already learned that code can run in the cloud using different compute models:
+          <strong>EC2</strong> (rent servers), <strong>Lambda</strong> (serverless functions), and <strong>containers</strong> (ECS/EKS).
+          Now we shift focus to the <strong>users</strong> who rely on that code—especially for <strong>web and mobile applications</strong>.
+        </p>
+        <p>
+          This section focuses on building <strong>serverless APIs</strong> so your apps can call your cloud code securely and reliably.
+        </p>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <h2>✅ Learning goals (what you should be able to explain)</h2>
+          <ul>
+            <li>📡 What a <strong>web API</strong> is and why web/mobile apps need it.</li>
+            <li>🧭 The basic idea of <strong>REST</strong> vs <strong>GraphQL</strong> (high-level exam understanding).</li>
+            <li>⚙️ How “serverless APIs” usually work with services like <strong>API Gateway</strong> and <strong>Lambda</strong>.</li>
+            <li>🔐 The difference between <strong>AWS account users</strong> vs <strong>app end-users</strong> (customers of your product).</li>
+            <li>🛡️ Which AWS services commonly help with <strong>user authentication</strong> for your apps.</li>
+            <li>🧰 How frontend apps can use AWS services via SDKs / tooling (conceptual understanding).</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>🧠 Key terms (quick reviewer)</h2>
+          <p class="muted">You don’t need to memorize every detail—focus on definitions and “when to use.”</p>
+          <div>
+            <span class="pill">API</span>
+            <span class="pill">REST</span>
+            <span class="pill">GraphQL</span>
+            <span class="pill">API Gateway</span>
+            <span class="pill">AWS Lambda</span>
+            <span class="pill">App user vs AWS user</span>
+            <span class="pill">Authentication</span>
+            <span class="pill">Authorization</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>🌐 Why do we need APIs for web & mobile apps?</h2>
+        <p>
+          A web or mobile app usually needs <strong>data</strong> and <strong>business logic</strong> that should not live purely on the user’s device.
+          For example: saving a profile, checking an order, uploading a photo, or logging in.
+        </p>
+        <p>
+          An <strong>API</strong> (Application Programming Interface) is a controlled way for an app to talk to your backend code.
+          Typically, the app sends an <strong>HTTP request</strong> to an endpoint, and the backend returns a response.
+        </p>
+
+        <div class="callout" id="tips">
+          <p class="title">💡 Beginner-friendly mental model</p>
+          <p>
+            Think of an API like a restaurant menu:
+            the menu shows what you <em>can</em> order (allowed requests),
+            and the kitchen (backend code) prepares the result.
+            Users should not walk into the kitchen directly.
+          </p>
+        </div>
+
+        <h3>🧪 Simple example</h3>
+        <pre>
+Mobile App  →  HTTPS Request  →  API Endpoint  →  Cloud Code  →  Database
+        </pre>
+        <ul>
+          <li>📲 App sends: <code>POST /login</code> with email + password</li>
+          <li>☁️ Cloud code validates credentials</li>
+          <li>🔐 Cloud returns a token (so user stays logged in)</li>
+        </ul>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>🧱 REST vs GraphQL (high-level)</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>🔷 REST API (common, resource-based)</h3>
+            <ul>
+              <li>REST uses multiple URLs (“endpoints”) for resources.</li>
+              <li>Typical operations: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>.</li>
+              <li>Example: <code>GET /products</code>, <code>GET /products/123</code>.</li>
+            </ul>
+            <pre>
+GET /products/123
+→ returns the product details for ID 123
+            </pre>
+          </div>
+
+          <div class="card">
+            <h3>🟣 GraphQL API (query-based)</h3>
+            <ul>
+              <li>GraphQL often uses a single endpoint (conceptually) and lets the client ask for exactly the fields it needs.</li>
+              <li>Useful when different screens need different shapes of data.</li>
+              <li>Example: ask for <code>id</code> and <code>name</code> only (not the entire product record).</li>
+            </ul>
+            <pre>
+query {
+  product(id: "123") {
+    id
+    name
+  }
+}
+            </pre>
+          </div>
+        </div>
+
+        <p class="muted">
+          Exam mindset: you mainly need to recognize that AWS supports both styles and has services that help build them.
+        </p>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>☁️ What “serverless API” means in AWS (concept)</h2>
+        <p>
+          A serverless API typically means you can expose endpoints to users without provisioning servers.
+          A common pattern is:
+        </p>
+        <pre>
+Client (Web/Mobile)
+   ↓ HTTPS
+API Layer (e.g., API Gateway)
+   ↓ triggers
+Compute (e.g., AWS Lambda)
+   ↓ reads/writes
+Data Store (e.g., DynamoDB / RDS)
+        </pre>
+        <ul>
+          <li>⚡ Scales automatically (within service limits).</li>
+          <li>💸 Pay-per-use is common (instead of paying for server uptime).</li>
+          <li>🧩 Often combined with other services (auth, storage, database).</li>
+        </ul>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>👤 AWS account users vs app users (very important)</h2>
+        <div class="card">
+          <p><strong>Two different “user types” exist:</strong></p>
+          <ul>
+            <li>🧑‍💼 <strong>AWS account users</strong>: admins/developers/operators who manage AWS resources (IAM users/roles).</li>
+            <li>🧑‍🤝‍🧑 <strong>Application end-users</strong>: customers who use your website/mobile app (they should NOT access your AWS account).</li>
+          </ul>
+          <p class="muted">
+            This module focuses on building experiences for <strong>app end-users</strong>: authentication, API access, and calling cloud code.
+          </p>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>🔐 Authentication for user-facing apps (what to expect)</h2>
+        <p>
+          User authentication means your app can verify a user’s identity (login/signup), then allow access to protected APIs.
+          In AWS, a common service for this area is <strong>Amazon Cognito</strong> (user pools / identity pools), though the specific service details may come later in your course.
+        </p>
+        <div class="callout">
+          <p class="title">🛡️ Quick distinction</p>
+          <ul>
+            <li><strong>Authentication</strong> = “Who are you?”</li>
+            <li><strong>Authorization</strong> = “What are you allowed to do?”</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>🧰 Using AWS services from frontend code</h2>
+        <p>
+          Your web/mobile app can interact with AWS services through the <strong>AWS SDKs</strong> or helper tooling.
+          The key idea is: the frontend should not contain long-term secrets.
+          Instead, it should use secure authentication flows and temporary credentials/tokens.
+        </p>
+        <ul>
+          <li>📲 Frontend calls API endpoints over HTTPS</li>
+          <li>🔑 Auth returns tokens/credentials</li>
+          <li>✅ Tokens are used to access protected resources</li>
+        </ul>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>📝 Quick self-check (review questions)</h2>
+        <ol>
+          <li>What problem does an API solve for web/mobile apps?</li>
+          <li>In one sentence, how is REST different from GraphQL?</li>
+          <li>What makes an API “serverless” in AWS?</li>
+          <li>Why is it important to distinguish AWS account users from application end-users?</li>
+          <li>What is the difference between authentication and authorization?</li>
+        </ol>
+      </section>
+
+      <section class="footer">
+        <p>
+          Tip for printing: Use browser Print → “Save as PDF” → Paper size A4 → Margins “Default.”
+          This page is designed to avoid cut-offs and keep cards together when printing.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function toggleTips() {
+      const tips = document.getElementById('tips');
+      const btn = document.getElementById('tipsBtn');
+      if (!tips || !btn) return;
+
+      const isHidden = tips.style.display === 'none';
+      tips.style.display = isHidden ? '' : 'none';
+      btn.textContent = isHidden ? '💡 Hide tips' : '💡 Show tips';
+    }
+  </script>
+</body>
+</html>

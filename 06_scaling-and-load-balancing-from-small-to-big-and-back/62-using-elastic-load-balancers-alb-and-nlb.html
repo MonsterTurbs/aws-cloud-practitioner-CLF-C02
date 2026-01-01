@@ -1,0 +1,357 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Elastic Load Balancers (ALB vs NLB)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --callout:#f6f8ff;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 18px 48px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding: 18px 18px 14px;
+      border-radius: 10px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: 14px;
+    }
+
+    .meta{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .chip{
+      font-size: 12px;
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 999px;
+      padding: 6px 10px;
+      color:#222;
+      white-space: nowrap;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:#111;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor:pointer;
+    }
+
+    .btn:focus{ outline: 3px solid #cfe3ff; outline-offset: 2px; }
+
+    main{ margin-top:18px; }
+
+    h2{
+      margin: 18px 0 10px;
+      font-size: 18px;
+      line-height:1.3;
+    }
+
+    h3{
+      margin: 14px 0 8px;
+      font-size: 15.5px;
+      line-height:1.35;
+    }
+
+    p{ margin: 8px 0; }
+
+    ul{
+      margin: 8px 0 12px 20px;
+      padding:0;
+    }
+
+    li{ margin: 6px 0; }
+
+    .callout{
+      margin: 14px 0;
+      padding: 14px 14px;
+      border: 1px solid var(--border);
+      background: var(--callout);
+      border-radius: 10px;
+    }
+
+    .callout strong{ display:inline-block; margin-bottom:4px; }
+
+    .rule{
+      border:0;
+      border-top: 1px solid var(--border);
+      margin: 18px 0;
+    }
+
+    .mini{
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .keyterm{
+      display:inline-block;
+      padding: 1px 6px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      white-space: nowrap;
+    }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin: 10px 0 14px;
+      table-layout: fixed;
+    }
+
+    th, td{
+      border: 1px solid var(--border);
+      padding: 10px;
+      vertical-align: top;
+      word-wrap: break-word;
+    }
+
+    th{
+      background: var(--panel);
+      text-align: left;
+      font-size: 13px;
+    }
+
+    td{ font-size: 13px; }
+
+    .footer{
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    /* Print styling */
+    @page{
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print{
+      body{ background:#fff; }
+      .page{ max-width: none; padding: 0; }
+      header{ border: 1px solid #000; background:#fff; border-radius:0; }
+      .toolbar{ display:none !important; }
+      .chip{ border: 1px solid #000; }
+      .callout{ background:#fff; }
+      a{ color:#000; text-decoration: underline; }
+      h2, h3{ break-after: avoid; page-break-after: avoid; }
+      table, .callout{ break-inside: avoid; page-break-inside: avoid; }
+      ul, li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Elastic Load Balancers (ELB): ALB vs NLB — Reviewer</h1>
+      <p class="subtitle">Beginner-friendly notes for AWS Cloud Practitioner (CLF-C02): what load balancers do, and how <strong>Application Load Balancer</strong> differs from <strong>Network Load Balancer</strong>.</p>
+      <div class="meta">
+        <span class="chip">🧠 Focus: Concepts & exam recognition</span>
+        <span class="chip">☁️ AWS: Elastic Load Balancing</span>
+        <span class="chip">🧾 Print-ready: A4 • single column</span>
+      </div>
+      <div class="toolbar" aria-label="actions">
+        <button class="btn" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+      </div>
+      <p class="mini">Tip: In your browser, choose <span class="keyterm">Print</span> → <span class="keyterm">Save as PDF</span> for a clean reviewer copy.</p>
+    </header>
+
+    <main>
+      <h2>1) What is a Load Balancer? ⚖️</h2>
+      <p>A <strong>load balancer</strong> is a service that sits in front of your servers (often <strong>EC2 instances</strong>) and <strong>distributes incoming traffic</strong> across them so that:</p>
+      <ul>
+        <li>✅ No single server gets overwhelmed</li>
+        <li>✅ Your app stays available even during traffic spikes</li>
+        <li>✅ You can scale out (add instances) and still serve users smoothly</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Memory hook 🧩</strong>
+        <p>Think of a load balancer like a <strong>traffic enforcer</strong> in a busy mall entrance: it directs people to multiple counters so lines stay short.</p>
+      </div>
+
+      <hr class="rule" />
+
+      <h2>2) AWS “Main” Load Balancers in this section 🏗️</h2>
+      <p>AWS commonly highlights two load balancers for EC2 traffic distribution:</p>
+      <ul>
+        <li><strong>Application Load Balancer (ALB)</strong> — usually the default choice for <strong>web apps</strong> (HTTP/HTTPS).</li>
+        <li><strong>Network Load Balancer (NLB)</strong> — leaner, great for <strong>non-HTTP</strong> traffic and when you need a <strong>static IP</strong>.</li>
+      </ul>
+
+      <h2>3) Quick Comparison Table: ALB vs NLB 🧾</h2>
+      <table aria-label="ALB vs NLB comparison">
+        <thead>
+          <tr>
+            <th style="width:34%">Feature / Question</th>
+            <th style="width:33%">Application Load Balancer (ALB)</th>
+            <th style="width:33%">Network Load Balancer (NLB)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Main traffic type</strong></td>
+            <td>🌐 Best for <strong>HTTP / HTTPS</strong></td>
+            <td>🔌 Best for <strong>non-HTTP</strong> (general network traffic)</td>
+          </tr>
+          <tr>
+            <td><strong>Routing “smarts”</strong></td>
+            <td>✅ Very feature-rich (path, cookies, host-based rules)</td>
+            <td>⚙️ More limited routing features (leaner design)</td>
+          </tr>
+          <tr>
+            <td><strong>SSL/TLS termination</strong></td>
+            <td>✅ Yes — commonly used for this</td>
+            <td>✅ Possible as well</td>
+          </tr>
+          <tr>
+            <td><strong>Static / fixed IP</strong></td>
+            <td>❌ Typically no fixed IP</td>
+            <td>✅ Yes — provides a <strong>fixed IP</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Default pick for websites?</strong></td>
+            <td>✅ Usually yes</td>
+            <td>➖ Only if you specifically need NLB benefits</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr class="rule" />
+
+      <h2>4) Application Load Balancer (ALB) — What to remember 🌐</h2>
+      <p><strong>ALB is feature-rich</strong> and is usually your best option for a typical web application.</p>
+
+      <h3>Key capabilities ✅</h3>
+      <ul>
+        <li>🔎 <strong>Understands HTTP</strong>: it can inspect requests and make decisions based on details like:
+          <ul>
+            <li>🍪 Cookies</li>
+            <li>🧭 URL path (e.g., <span class="keyterm">/api</span> vs <span class="keyterm">/images</span>)</li>
+            <li>🏷️ Hostname rules (e.g., <span class="keyterm">app.example.com</span> vs <span class="keyterm">admin.example.com</span>)</li>
+          </ul>
+        </li>
+        <li>🧩 Can reduce application complexity: the load balancer can handle routing logic so your app servers stay simpler.</li>
+        <li>🔐 Supports <strong>SSL/TLS termination</strong> (see next section).</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Beginner example 🧪</strong>
+        <p>You have two EC2 instances:</p>
+        <ul>
+          <li>Instance A handles <span class="keyterm">/api</span> requests</li>
+          <li>Instance B handles <span class="keyterm">/images</span> requests</li>
+        </ul>
+        <p>An <strong>ALB</strong> can route incoming requests to the correct instance based on the URL path.</p>
+      </div>
+
+      <h2>5) What is “SSL Termination”? 🔐</h2>
+      <p><strong>SSL/TLS termination</strong> means the load balancer becomes the <strong>endpoint</strong> for encrypted <span class="keyterm">HTTPS</span> traffic:</p>
+      <ul>
+        <li>👤 User sends encrypted HTTPS request to the Load Balancer</li>
+        <li>🔓 Load Balancer decrypts it (using the certificate)</li>
+        <li>➡️ Load Balancer forwards the request to your EC2 instance <em>inside AWS</em> (often as plain HTTP)</li>
+      </ul>
+      <p>This is typically fine because the traffic from the load balancer to your instances stays within AWS networking boundaries.</p>
+
+      <div class="callout">
+        <strong>Why this is useful 🎯</strong>
+        <p>Your EC2 instances (web servers) don’t need to manage certificates and encryption details. The load balancer does it for them, simplifying your servers.</p>
+      </div>
+
+      <hr class="rule" />
+
+      <h2>6) Network Load Balancer (NLB) — What to remember 🔌</h2>
+      <p><strong>NLB is leaner</strong> and often chosen for:</p>
+      <ul>
+        <li>⚡ Performance-focused needs (less overhead, fewer features)</li>
+        <li>🧱 <strong>Non-HTTP traffic</strong> (not web requests)</li>
+        <li>📌 Scenarios where you <strong>must have a fixed IP</strong></li>
+      </ul>
+
+      <div class="callout">
+        <strong>Beginner example 🧪</strong>
+        <p>You’re not running a website. Instead, you have a custom service receiving non-HTTP traffic. You still want to distribute load across multiple EC2 instances. In that case, an <strong>NLB</strong> can be a better fit.</p>
+      </div>
+
+      <h2>7) Fixed IP: Why it matters (sometimes) 📌</h2>
+      <p>One highlighted difference is that <strong>NLB provides a fixed IP address</strong>. That can matter for systems that require allow-listing a stable IP.</p>
+      <p class="mini">Note: For many website use cases, you’ll often use a domain name pointing to the load balancer, so the lack of a fixed IP on ALB is usually not a problem.</p>
+
+      <hr class="rule" />
+
+      <h2>8) Exam-focused takeaways 📝</h2>
+      <ul>
+        <li>✅ <strong>ALB</strong> = default for <strong>web apps</strong> (HTTP/HTTPS), richer features, smart routing rules.</li>
+        <li>✅ <strong>NLB</strong> = leaner, great for <strong>non-HTTP</strong> traffic and can provide a <strong>static IP</strong>.</li>
+        <li>✅ <strong>SSL termination</strong> = load balancer handles HTTPS decryption so your instances can be simpler.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Fast recall ⚡</strong>
+        <p><strong>ALB</strong> = “Application/Web smart routing” 🌐<br />
+        <strong>NLB</strong> = “Network-level + Fixed IP” 🔌📌</p>
+      </div>
+
+      <p class="footer">End of reviewer. Next topics usually connect load balancers with Auto Scaling and health checks (high availability and elasticity).</p>
+    </main>
+  </div>
+</body>
+</html>

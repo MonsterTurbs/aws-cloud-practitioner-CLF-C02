@@ -1,0 +1,380 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Data Analytics & Data Science (Module Introduction)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-text-size-adjust: 100%;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Single-column, print-safe layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 6px 0;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    main {
+      margin-top: 14px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 18px 0 8px;
+    }
+
+    h3 {
+      font-size: 15px;
+      margin: 14px 0 6px;
+    }
+
+    p { margin: 10px 0; }
+
+    /* Strong wrapping so printing doesn’t cut words */
+    p, li, code, pre, .note, .callout {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    ul { margin: 8px 0 12px 22px; }
+    li { margin: 6px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 12px 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .callout .label {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .box {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 12px;
+      border-radius: 10px;
+    }
+
+    .box strong { color: #000; }
+
+    .tiny {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin: 10px 0;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .answers {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .btnrow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 8px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    button:hover { border-color: #cfcfcf; }
+
+    /* Print rules (A4 clean output) */
+    @media print {
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+
+      body { background: #fff; }
+
+      .page {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      header, .callout, details, .box {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      /* Ensure answers show on print */
+      details .answers { display: block !important; }
+
+      /* Remove UI-only buttons */
+      .btnrow { display: none !important; }
+
+      /* Keep typography print-friendly */
+      h1 { font-size: 20px; }
+      h2 { font-size: 16px; }
+      h3 { font-size: 14px; }
+      p, li { font-size: 12.5px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>📊 Data Analytics & Data Science on AWS — Module Introduction</h1>
+      <p class="subtitle">CLF-C02 reviewer / study guide (beginner-friendly, print-ready, single column)</p>
+      <div class="meta">
+        <span class="pill">🖨️ A4 print-ready</span>
+        <span class="pill">📄 Single-column layout</span>
+        <span class="pill">✅ Beginner-friendly</span>
+        <span class="pill">🧠 Key terms + examples</span>
+      </div>
+      <div class="btnrow" aria-hidden="true">
+        <button type="button" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="callout">
+        <div class="label">🎯 Goal of this module (in one sentence)</div>
+        <p>
+          AWS is not only for running apps (EC2, containers, Lambda). It also provides services to <strong>ingest</strong>,
+          <strong>stream</strong>, <strong>transform</strong>, and <strong>analyze</strong> data in the cloud so you can do
+          <strong>analytics</strong> and <strong>data science</strong> at scale.
+        </p>
+      </div>
+
+      <h2>1) Big picture: “Apps + Data” is only part of the story</h2>
+      <p>
+        Throughout the course, you used AWS as a place to run applications (like on <strong>EC2</strong> or containers)
+        and store data (like in <strong>S3</strong> or databases). That’s a major use case.
+      </p>
+      <p>
+        But AWS also has a separate “toolbox” for <strong>data analytics</strong> and <strong>data science</strong>.
+        These tools help you handle large datasets and generate insights, dashboards, predictions, or automation.
+      </p>
+
+      <div class="grid">
+        <div class="box">
+          <h3>🧩 Think of it like a pipeline</h3>
+          <ul>
+            <li><strong>Ingest</strong> data → get it into AWS (from apps, logs, sensors, databases)</li>
+            <li><strong>Stream</strong> data → process data as it arrives (near real-time)</li>
+            <li><strong>Transform</strong> data → clean, join, format (make it analysis-ready)</li>
+            <li><strong>Analyze</strong> data → queries, dashboards, ML experiments</li>
+          </ul>
+          <p class="tiny">🧠 Memory trick: <strong>I → S → T → A</strong> = Ingest, Stream, Transform, Analyze</p>
+        </div>
+
+        <div class="box">
+          <h3>🙋 Beginner question: “Why not just do it inside my app?”</h3>
+          <ul>
+            <li>Apps are optimized for serving users; analytics often needs heavy processing.</li>
+            <li>Data tools can scale independently (compute + storage) and can be cost-optimized.</li>
+            <li>Specialized services reduce boilerplate and operational complexity.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <h2>2) Key terms you should recognize</h2>
+
+      <div class="callout">
+        <div class="label">📥 Data ingestion (getting data in)</div>
+        <p>
+          <strong>Ingestion</strong> means collecting data from different sources and moving it into AWS.
+          Example: your web app writes logs, user actions, or transactions, and you want those events stored in the cloud.
+        </p>
+      </div>
+
+      <div class="callout">
+        <div class="label">🌊 Streaming data (data that keeps coming)</div>
+        <p>
+          <strong>Streaming</strong> means data arrives continuously (like click events, sensor readings, live metrics).
+          Instead of waiting for a “batch file” once per day, you can process data as it comes.
+        </p>
+      </div>
+
+      <div class="callout">
+        <div class="label">🧹 Transforming data (cleaning + preparing)</div>
+        <p>
+          <strong>Transformation</strong> includes cleaning, filtering, converting formats (CSV → Parquet),
+          joining multiple sources, and standardizing fields so the data becomes consistent and analysis-ready.
+        </p>
+      </div>
+
+      <div class="callout">
+        <div class="label">🔎 Analyzing data (finding answers)</div>
+        <p>
+          <strong>Analysis</strong> is where you query, aggregate, visualize, or apply ML.
+          Example: “Which products sell best per region?” or “Do we detect unusual traffic spikes?”
+        </p>
+      </div>
+
+      <div class="hr"></div>
+
+      <h2>3) Concrete examples (simple, beginner-friendly)</h2>
+
+      <div class="box">
+        <h3>🛒 Example A: Online shop analytics</h3>
+        <ul>
+          <li>Users browse products → events like <em>view_product</em>, <em>add_to_cart</em>, <em>checkout</em>.</li>
+          <li>Those events are ingested into AWS (📥).</li>
+          <li>You might stream them for near real-time dashboards (🌊).</li>
+          <li>Transform them (🧹) to fix missing fields or standardize product IDs.</li>
+          <li>Analyze results (🔎) to find conversion rate, top products, peak times.</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h3>📱 Example B: Mobile app usage tracking</h3>
+        <ul>
+          <li>Mobile app sends events: screen views, button clicks, errors.</li>
+          <li>Store raw data first, then transform to a clean dataset.</li>
+          <li>Run analytics to discover which screens cause users to quit.</li>
+        </ul>
+      </div>
+
+      <div class="hr"></div>
+
+      <h2>4) Quick reviewer checklist (CLF-C02 level)</h2>
+      <ul>
+        <li>✅ AWS can run apps (<strong>EC2 / containers / Lambda</strong>) <em>and</em> provide analytics & data science services.</li>
+        <li>✅ You should recognize the “pipeline idea”: <strong>ingest → stream → transform → analyze</strong>.</li>
+        <li>✅ These services exist to simplify scaling, reduce ops overhead, and handle big data workloads.</li>
+      </ul>
+
+      <details>
+        <summary>🧠 Mini-Quiz (tap to view) — answers show when printing</summary>
+        <ol>
+          <li>
+            What’s the main purpose of analytics/data science services compared to EC2/Lambda?
+            <div class="answers"><strong>Answer:</strong> They focus on ingesting, processing, transforming, and analyzing large datasets to produce insights (not just serving app requests).</div>
+          </li>
+          <li>
+            What does “streaming data” imply?
+            <div class="answers"><strong>Answer:</strong> Data arrives continuously (near real-time), so processing can happen as events occur.</div>
+          </li>
+          <li>
+            Give one example of data transformation.
+            <div class="answers"><strong>Answer:</strong> Cleaning missing fields, converting CSV → Parquet, standardizing IDs, or joining datasets.</div>
+          </li>
+        </ol>
+        <p class="tiny">Tip: If you print this page, answers will be visible automatically.</p>
+      </details>
+
+      <div class="callout">
+        <div class="label">📝 Your key takeaway</div>
+        <p>
+          AWS is more than “compute + storage.” It also offers end-to-end services for analytics and data science.
+          This module will introduce the core services and how they fit into the data pipeline.
+        </p>
+      </div>
+
+      <p class="tiny">Footer: Single-column A4 print layout with wrapping enabled. Use <span class="kbd">Ctrl</span> + <span class="kbd">P</span> (Windows) or <span class="kbd">Cmd</span> + <span class="kbd">P</span> (Mac) to print.</p>
+    </main>
+  </div>
+</body>
+
+</html>

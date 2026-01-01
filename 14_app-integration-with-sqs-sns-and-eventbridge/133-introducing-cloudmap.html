@@ -1,0 +1,360 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Cloud Map (Service Discovery)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      overflow-wrap:anywhere;
+      word-break:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background:var(--panel);
+      padding:16px 16px 14px;
+      border-radius:12px;
+    }
+
+    h1{
+      margin:0 0 6px;
+      font-size: 1.45rem;
+      line-height:1.25;
+    }
+
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      color:var(--muted);
+      font-size:0.92rem;
+    }
+
+    .pill{
+      border:1px solid var(--border);
+      background:#fff;
+      padding:4px 10px;
+      border-radius:999px;
+    }
+
+    .actions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      padding:8px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    .btn:hover{ border-color:#cfcfcf; }
+    .btn.primary{
+      border-color: rgba(11,87,208,.35);
+      background: rgba(11,87,208,.06);
+      color:#0b57d0;
+    }
+
+    nav{
+      margin:16px 0 0;
+      border-top:1px dashed var(--border);
+      padding-top:12px;
+    }
+
+    nav a{
+      color:var(--accent);
+      text-decoration:none;
+    }
+    nav a:hover{ text-decoration:underline; }
+
+    main{ margin-top:16px; }
+
+    section{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:16px;
+      margin:14px 0;
+      background:#fff;
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size:1.15rem;
+      line-height:1.25;
+    }
+
+    h3{
+      margin:14px 0 8px;
+      font-size:1.02rem;
+    }
+
+    p{ margin: 8px 0; }
+
+    ul{ margin: 8px 0 0; padding-left: 20px; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      border-left: 4px solid rgba(11,87,208,.45);
+      background: rgba(11,87,208,.05);
+      padding: 10px 12px;
+      border-radius:10px;
+      margin: 10px 0;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+
+    .mini{
+      border:1px dashed var(--border);
+      border-radius:10px;
+      padding:12px;
+      background:#fff;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.93em;
+      background:#f5f5f5;
+      border:1px solid #e1e1e1;
+      padding:2px 6px;
+      border-radius:6px;
+      white-space:nowrap;
+    }
+
+    .hr{
+      height:1px;
+      background:var(--border);
+      margin:10px 0;
+    }
+
+    footer{
+      color:var(--muted);
+      font-size:0.92rem;
+      margin-top:14px;
+      text-align:center;
+    }
+
+    /* Print styles: A4, clean margins, no cut-offs */
+    @media print {
+      @page { size: A4; margin: 14mm 14mm 16mm; }
+      body{ font-size: 11pt; line-height:1.45; }
+      .page{ max-width: none; padding: 0; }
+      header, section{ border: 1px solid #dcdcdc; border-radius: 0; }
+      header{ background:#fff; }
+      .actions, nav{ display:none !important; }
+      a{ color: #000; text-decoration:none; }
+      .callout{ background:#fff; border-left: 3px solid #888; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🧭 AWS Cloud Map — Reviewer / Study Guide (CLF-C02)</h1>
+      <p class="subtitle">Service discovery for complex apps (especially microservices): give workloads names 🏷️ so other apps can find and talk to them safely.</p>
+      <div class="meta">
+        <span class="pill">Single-column</span>
+        <span class="pill">A4 print-ready</span>
+        <span class="pill">Beginner-friendly</span>
+        <span class="pill">Topic: App Integration</span>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('toc').scrollIntoView({behavior:'smooth'})">📌 Jump to Topics</button>
+      </div>
+      <nav id="toc" aria-label="Table of contents">
+        <strong>📌 Contents:</strong>
+        <div style="margin-top:6px; display:flex; flex-wrap:wrap; gap:10px;">
+          <a href="#what">What Cloud Map is</a>
+          <a href="#why">Why it exists</a>
+          <a href="#how">How it works (simple mental model)</a>
+          <a href="#example">Beginner examples</a>
+          <a href="#when">When to use / not use</a>
+          <a href="#compare">Quick comparisons</a>
+          <a href="#exam">Exam cues</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section id="what">
+        <h2>1) ✅ What is AWS Cloud Map?</h2>
+        <p><strong>AWS Cloud Map</strong> is a service for <strong>service discovery</strong> 🔎.</p>
+        <p>In simple terms: it helps you <strong>assign names</strong> 🏷️ to your cloud workloads (apps/services) so that other workloads can <strong>find</strong> them by name and get the info needed to communicate with them.</p>
+
+        <div class="callout">
+          <strong>Think of it like this:</strong> Cloud Map is a “phonebook” 📒 for your microservices.
+          Instead of hard-coding IP addresses (which can change), you look up a <em>service name</em> and get the current location/details.
+        </div>
+
+        <h3>Key phrase to remember 🧠</h3>
+        <p><strong>Cloud Map = advanced application discovery + easier service-to-service communication</strong>.</p>
+      </section>
+
+      <section id="why">
+        <h2>2) 🤔 Why does Cloud Map exist?</h2>
+        <p>In microservices architectures 🧩, you can have many small services running across:</p>
+        <ul>
+          <li>EC2 instances</li>
+          <li>Containers (ECS/EKS)</li>
+          <li>Multiple environments (dev / staging / prod)</li>
+          <li>Potentially multiple networks</li>
+        </ul>
+        <p>These services may <strong>scale</strong> up/down and <strong>move</strong> between machines. That means <strong>IP addresses and endpoints can change</strong> 🔁.</p>
+
+        <div class="callout">
+          <strong>Problem:</strong> If Service B needs to call Service A, but Service A’s location changes, you need a reliable way to find it.
+          <br/>
+          <strong>Solution:</strong> Register Service A under a stable name (e.g., <span class="kbd">orders-service</span>) and let others discover it.
+        </div>
+      </section>
+
+      <section id="how">
+        <h2>3) ⚙️ How Cloud Map works (simple mental model)</h2>
+        <div class="grid">
+          <div class="mini">
+            <strong>Step A — Register services 🏷️</strong>
+            <p>You create names for workloads (apps/services). Example names:</p>
+            <ul>
+              <li><span class="kbd">users-service</span></li>
+              <li><span class="kbd">payments-service</span></li>
+              <li><span class="kbd">inventory-service</span></li>
+            </ul>
+          </div>
+
+          <div class="mini">
+            <strong>Step B — Cloud Map stores discovery info 🗂️</strong>
+            <p>Cloud Map stores the lookup information for those names so other apps can ask:</p>
+            <p>“Where is <span class="kbd">payments-service</span> right now?”</p>
+          </div>
+
+          <div class="mini">
+            <strong>Step C — Other services query by name 🔎</strong>
+            <p>Instead of hardcoding an IP, Service B queries Cloud Map using the service name, then uses the returned info to communicate.</p>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <p><strong>Important vibe:</strong> Cloud Map is described as more “advanced” because it’s typically used when your architecture gets large/complex (microservices, many moving parts). 🧠</p>
+      </section>
+
+      <section id="example">
+        <h2>4) 🧪 Beginner-friendly examples</h2>
+
+        <h3>Example 1 — Microservices calling each other 📦➡️📦</h3>
+        <p>You have multiple services:</p>
+        <ul>
+          <li><strong>Service A</strong>: Product Catalog</li>
+          <li><strong>Service B</strong>: Checkout</li>
+        </ul>
+        <p>Checkout needs to ask Product Catalog for prices and stock. But Product Catalog runs on containers that scale and move.</p>
+        <p><strong>With Cloud Map:</strong> Checkout calls <span class="kbd">catalog-service</span> (name), discovers the latest location, then sends the request.</p>
+
+        <h3>Example 2 — Many EC2 instances behind one “service name” 🖥️🖥️🖥️</h3>
+        <p>You run multiple EC2 instances that all host the same internal API (for speed and redundancy).</p>
+        <p><strong>With Cloud Map:</strong> They can be registered under one name (e.g., <span class="kbd">internal-api</span>) so other apps don’t care which instance is currently used.</p>
+
+        <div class="callout">
+          <strong>Quick reminder 🙂:</strong> Cloud Map helps you find and reference services by <em>name</em> so your architecture is less fragile.
+        </div>
+      </section>
+
+      <section id="when">
+        <h2>5) ✅ When to use Cloud Map (and when not to)</h2>
+
+        <h3>Use Cloud Map when ✅</h3>
+        <ul>
+          <li>You have <strong>microservices</strong> 🧩 and services need to discover each other dynamically</li>
+          <li>You have many moving parts (containers/instances) where <strong>endpoints change</strong> 🔁</li>
+          <li>You want a <strong>central registry</strong> for service names and discovery info 📒</li>
+        </ul>
+
+        <h3>Usually not needed when ❌</h3>
+        <ul>
+          <li>You have a small/simple architecture (few apps, stable endpoints)</li>
+          <li>A single load balancer + fixed endpoints already solves your discovery need</li>
+          <li>You only need async messaging patterns (then SQS/SNS/EventBridge may be more relevant)</li>
+        </ul>
+      </section>
+
+      <section id="compare">
+        <h2>6) 🔁 Quick comparisons (don’t mix these up)</h2>
+
+        <h3>Cloud Map vs SQS / SNS / EventBridge</h3>
+        <ul>
+          <li><strong>SQS</strong> = queue messages 🧾 (async pull)</li>
+          <li><strong>SNS</strong> = push notifications/messages 📣 (fan-out)</li>
+          <li><strong>EventBridge</strong> = event bus + rules 🚌 (react to events, trigger targets)</li>
+          <li><strong>Cloud Map</strong> = <em>service discovery</em> 🔎 (find services by name)</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Memory trick 🧠:</strong>
+          <ul>
+            <li>SQS/SNS/EventBridge = “Send info/events between apps”</li>
+            <li>Cloud Map = “Find apps/services so they can talk”</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="exam">
+        <h2>7) 📝 Exam cues (CLF-C02 friendly)</h2>
+        <ul>
+          <li>If you see <strong>microservices</strong>, <strong>service discovery</strong>, <strong>naming services</strong>, or “<strong>how can services find each other?</strong>” → think <strong>Cloud Map</strong> 🧭</li>
+          <li>If you see “<strong>send messages</strong> between apps” → think <strong>SQS/SNS</strong> ✉️</li>
+          <li>If you see “<strong>react to events</strong> and route them to targets” → think <strong>EventBridge</strong> 🚌</li>
+        </ul>
+        <p class="callout"><strong>Keep it simple 🙂:</strong> Cloud Map is advanced, but the core idea is easy: <strong>name your services so others can find them</strong>.</p>
+      </section>
+
+      <footer>
+        <p>End of reviewer — Cloud Map 🧭 | Print tip: use <strong>Margins: Default</strong> or <strong>Minimum</strong> for best A4 fit.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

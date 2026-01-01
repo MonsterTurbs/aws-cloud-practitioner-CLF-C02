@@ -1,0 +1,366 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Amazon MQ</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e5e5e5;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 20px 18px 32px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      font-size: 1.35rem;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .toolbar {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .btn:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    main { margin-top: 16px; }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      background: #fff;
+      margin: 12px 0;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 1.0rem;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      border: 1px dashed var(--border);
+      background: var(--panel);
+      padding: 12px 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .box {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .kvs {
+      margin: 10px 0 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .kvs .row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      border-top: 1px solid var(--border);
+    }
+
+    .kvs .row:first-child { border-top: none; }
+
+    .kvs .k {
+      padding: 10px 12px;
+      background: var(--panel);
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .kvs .v {
+      padding: 10px 12px;
+      background: #fff;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.92em;
+    }
+
+    pre {
+      margin: 10px 0 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    .footnote {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Print styles (A4, clean margins, no UI clutter) */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      header { background: #fff; border: 1px solid var(--border); }
+      .toolbar { display: none !important; }
+      section { break-inside: avoid; page-break-inside: avoid; }
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Amazon MQ — Reviewer / Study Guide</h1>
+      <p class="subtitle">Topic: App Integration (Messaging) • CLF-C02 essentials • Single-column, A4 print-ready</p>
+
+      <div class="meta">
+        <span class="chip">🧠 Key idea: Managed open-source brokers</span>
+        <span class="chip">✅ Exam focus: When to choose MQ vs SQS/SNS</span>
+        <span class="chip">🧩 Brokers: ActiveMQ & RabbitMQ</span>
+      </div>
+
+      <div class="toolbar" aria-label="Actions">
+        <button class="btn" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) What Amazon MQ is (in simple terms) 📬</h2>
+        <p>
+          <strong>Amazon MQ</strong> is AWS’s managed service for running <strong>open-source message brokers</strong>
+          (specifically <strong>Apache ActiveMQ</strong> and <strong>RabbitMQ</strong>).
+        </p>
+        <p>
+          Think of a <strong>message broker</strong> as a “post office” between applications:
+          one app sends a message, and another app receives it—without both apps needing to talk directly.
+        </p>
+
+        <div class="kvs" role="list">
+          <div class="row" role="listitem">
+            <div class="k">You use it when…</div>
+            <div class="v">You want a <strong>broker you already know</strong> (ActiveMQ/RabbitMQ) but managed by AWS.</div>
+          </div>
+          <div class="row" role="listitem">
+            <div class="k">What AWS manages</div>
+            <div class="v">Broker infrastructure (setup, maintenance, availability options), so you don’t run it on your own EC2.</div>
+          </div>
+          <div class="row" role="listitem">
+            <div class="k">Key contrast</div>
+            <div class="v">Amazon MQ = <strong>open-source broker</strong>. SQS/SNS/EventBridge = <strong>AWS cloud-native messaging</strong>.</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) Why Amazon MQ exists (the “reason” question) 🎯</h2>
+        <p>
+          AWS already has its own messaging services like <strong>SQS</strong> (queues) and <strong>SNS</strong> (pub/sub).
+          So why Amazon MQ?
+        </p>
+        <ul>
+          <li>✅ <strong>Compatibility / migration:</strong> Many companies already use ActiveMQ or RabbitMQ on-premises.</li>
+          <li>✅ <strong>Vendor constraints:</strong> Some systems require specific broker protocols or features.</li>
+          <li>✅ <strong>Preference:</strong> Teams may want the familiar broker ecosystem/tools and keep the same mental model.</li>
+        </ul>
+        <div class="callout">
+          <strong>Exam-friendly phrasing:</strong> Amazon MQ primarily helps customers that <em>don’t want to</em> (or <em>can’t</em>) use AWS’s cloud-native solution such as SQS.
+        </div>
+      </section>
+
+      <section>
+        <h2>3) Quick comparison: Amazon MQ vs SQS/SNS (high-level) ⚖️</h2>
+        <div class="grid">
+          <div class="box">
+            <h3>Amazon MQ (ActiveMQ/RabbitMQ) 🐇</h3>
+            <ul>
+              <li>Managed <strong>message broker</strong> service using open-source engines</li>
+              <li>Good for <strong>lift-and-shift</strong> or protocol compatibility needs</li>
+              <li>You’re adopting a <strong>broker model</strong> (with broker concepts)</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>SQS (Queue) 📥</h3>
+            <ul>
+              <li>AWS-native <strong>queue</strong> for asynchronous processing</li>
+              <li>Producers send messages, consumers <strong>poll</strong> and delete when processed</li>
+              <li>Great for decoupling, smoothing spikes, and worker pipelines</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>SNS (Pub/Sub) 📣</h3>
+            <ul>
+              <li>AWS-native <strong>push</strong> notifications to subscribers</li>
+              <li>One message can fan out to multiple targets (email, Lambda, SQS, HTTP endpoints, etc.)</li>
+              <li>Useful when receivers should react quickly</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <p><strong>Rule of thumb (for CLF-C02):</strong></p>
+        <ul>
+          <li>Use <strong>SQS/SNS/EventBridge</strong> when you want AWS-native managed messaging with minimal broker management.</li>
+          <li>Use <strong>Amazon MQ</strong> when you specifically need <strong>ActiveMQ/RabbitMQ compatibility</strong> or are migrating existing broker-based systems.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4) Beginner example (simple scenario) 🧪</h2>
+        <p>
+          Imagine you have an order system:
+        </p>
+        <ul>
+          <li>🛒 <strong>Order Service</strong> creates an order</li>
+          <li>📦 <strong>Shipping Service</strong> prepares shipment</li>
+          <li>📧 <strong>Email Service</strong> sends confirmation</li>
+        </ul>
+        <p>
+          Instead of calling each other directly, Order Service can publish a message like:
+        </p>
+        <pre>{
+  "event": "OrderCreated",
+  "orderId": "ORD-12345",
+  "customerId": "C-42"
+}</pre>
+        <p>
+          With <strong>Amazon MQ</strong>, these services can use a familiar broker (ActiveMQ/RabbitMQ) to route messages.
+          With <strong>SNS</strong>, Order Service could publish once and fan out to multiple subscribers.
+          With <strong>SQS</strong>, each worker could pull messages when ready.
+        </p>
+      </section>
+
+      <section>
+        <h2>5) What to remember for the exam ✅</h2>
+        <ul>
+          <li>✅ <strong>Amazon MQ</strong> = Managed <strong>Apache ActiveMQ</strong> and <strong>RabbitMQ</strong> on AWS.</li>
+          <li>✅ It exists mainly for <strong>compatibility</strong> (customers that can’t/don’t want SQS).</li>
+          <li>✅ <strong>SQS</strong> is AWS’s own queue (cloud-native). Amazon MQ is an <strong>open-source broker alternative</strong>.</li>
+        </ul>
+        <p class="footnote">
+          Note: For CLF-C02, the key is understanding the positioning and why you’d pick it—not the deep operational details.
+        </p>
+      </section>
+
+      <section>
+        <h2>6) Mini self-check (1 minute) 📝</h2>
+        <ul>
+          <li>Q: If a company already uses RabbitMQ and wants minimal code changes when moving to AWS, which service fits? ➜ <strong>Amazon MQ</strong></li>
+          <li>Q: If you want AWS-native queueing for asynchronous workers, which service fits? ➜ <strong>SQS</strong></li>
+          <li>Q: If you want to push one message to multiple subscribers quickly, which service fits? ➜ <strong>SNS</strong></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

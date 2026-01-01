@@ -1,0 +1,268 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 11 Self-Service vs Managed Services</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .qna strong{ display:block; margin: 10px 0 4px; }
+
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Getting Started</p>
+      <h1>11 — Self-Service vs Managed Services 🧩</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Lecture Goal</h2>
+        <p>Learn the two broad categories of AWS services used throughout the course: <strong>self-service</strong> services and <strong>managed</strong> services. This mental model helps you reason about AWS offerings and makes exam questions easier.</p>
+        <div class="callout">
+          <p><strong>Big idea ✅</strong> With self-service services, you manage more things yourself. With managed services, AWS manages more of the “hard parts” for you.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Two Main Categories (High-Level)</h2>
+        <div class="grid">
+          <div class="mini">
+            <h3>1) Self-service services 🛠️</h3>
+            <p>You control the environment and configuration. AWS mainly provides the underlying hardware and cloud platform.</p>
+          </div>
+          <div class="mini">
+            <h3>2) Managed services 🤝</h3>
+            <p>AWS takes care of many operational tasks (maintenance, patching, backups, running the service), while you focus on configuration and usage.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🛠️ Self-Service Example: EC2 (Virtual Servers)</h2>
+        <p>In the lecture, <strong>EC2</strong> is used as the example of a self-service service.</p>
+        <ul>
+          <li>🖥️ You configure and launch a server (virtual machine).</li>
+          <li>🔐 You connect to it and install any software you want.</li>
+          <li>⚙️ You decide how it’s configured and what workloads run there.</li>
+          <li>🏗️ AWS manages the underlying physical hardware.</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Beginner mental model 💡</strong> EC2 is like renting a computer in the cloud. AWS owns the building and physical server; you control the OS/software inside your “rented computer.”</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🤝 Managed Services Example: Managed Databases</h2>
+        <p>The lecture contrasts EC2 with <strong>managed database</strong> services.</p>
+        <ul>
+          <li>🧩 You still configure some aspects (settings, capacity, access rules).</li>
+          <li>🩹 AWS handles <strong>patching</strong> the database software.</li>
+          <li>💾 AWS handles <strong>backups</strong> (and often other operational tasks).</li>
+          <li>🧰 AWS runs the database servers behind the scenes.</li>
+        </ul>
+        <div class="mini">
+          <p><strong>Beginner mental model 💡</strong> Managed database = you use the database; AWS operates the database engine like a service.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧩 Mix & Match Services</h2>
+        <p>You are not forced to choose only one category. You can combine both types depending on what you need.</p>
+        <div class="callout">
+          <p><strong>Example 💡</strong> Run your app on EC2 (self-service) while using a managed database (managed). This can reduce operational work while keeping flexibility where you need it.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>✅ Why This Matters (Course + Exam)</h2>
+        <ul>
+          <li>🧠 Helps you reason about AWS services as you learn more later.</li>
+          <li>📝 Exam questions often test what AWS manages vs what you manage.</li>
+          <li>⚖️ Helps you choose services based on trade-offs: control vs convenience.</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Rule of thumb ✅</strong> Managed services usually reduce your operational work. Self-service usually gives you more control (but more responsibility).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Exam Focus)</h2>
+        <span class="tag">Self-Service</span>
+        <span class="tag">Managed Service</span>
+        <span class="tag">EC2</span>
+        <span class="tag">Virtual Machine</span>
+        <span class="tag">Patching</span>
+        <span class="tag">Backups</span>
+        <span class="tag">Operations</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="qna">
+          <strong>Q1: What is the core difference between self-service and managed services?</strong>
+          <p>A: Self-service means you manage more configuration and operations; managed services mean AWS manages more of the operational tasks for you.</p>
+
+          <strong>Q2: Why is EC2 considered self-service?</strong>
+          <p>A: You configure the server, connect to it, and manage the software/workload; AWS mainly manages the underlying hardware.</p>
+
+          <strong>Q3: Give two operational tasks AWS can handle in managed database services.</strong>
+          <p>A: Patching and backups (and running/operating the database server).</p>
+
+          <strong>Q4: Can you combine self-service and managed services?</strong>
+          <p>A: Yes. You can mix and match services based on your needs.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

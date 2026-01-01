@@ -1,0 +1,375 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Reviewer — Creating Load Balancers + Auto Scaling</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Single-column, print-friendly container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 20px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 18px 18px;
+      border-radius: 10px;
+    }
+
+    h1{
+      margin: 0 0 6px 0;
+      font-size: 24px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta{
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .chip{
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    .toolbar{
+      margin: 14px 0 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button{
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover{ border-color:#cfcfcf; }
+
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    main{
+      margin-top: 16px;
+    }
+
+    section{
+      margin: 14px 0;
+      padding: 16px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    h2{
+      margin: 0 0 10px 0;
+      font-size: 18px;
+    }
+
+    h3{
+      margin: 14px 0 8px;
+      font-size: 15px;
+    }
+
+    p{ margin: 8px 0; }
+
+    ul{ margin: 8px 0 0 22px; padding: 0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      border-left: 5px solid var(--accent);
+      background: var(--panel);
+      padding: 12px 12px;
+      border-radius: 10px;
+    }
+
+    .small{
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 2px 6px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    pre, code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+    }
+
+    pre{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 12px;
+      border-radius: 10px;
+      overflow: hidden;
+      white-space: pre-wrap;      /* wrap long lines */
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      margin: 10px 0 0;
+    }
+
+    /* Global word-wrapping safeguards for printing */
+    .page, section, p, li{
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .divider{
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    /* Print-specific CSS (A4) */
+    @page{
+      size: A4;
+      margin: 14mm 14mm;
+    }
+
+    @media print{
+      body{ font-size: 12pt; }
+      .page{ max-width: none; padding: 0; }
+      header, section{ border: 0; border-radius: 0; padding: 0; background: transparent; }
+      header{ margin-bottom: 10mm; }
+      .toolbar{ display:none !important; }
+      a{ color: #000; text-decoration: none; }
+      .callout{ border-left: 3px solid #000; }
+      pre{ border: 1px solid #000; background: #fff; }
+      .chip{ border: 1px solid #000; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Creating Load Balancers + Combining Them with Auto Scaling</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide (Beginner-friendly)</p>
+      <div class="meta">
+        <span class="chip">🧠 Focus: Core concepts, not deep setup</span>
+        <span class="chip">⚙️ Topics: Target Groups, Health Checks, Scaling Rules</span>
+        <span class="chip">🧾 Print-ready: A4 / single column</span>
+      </div>
+      <div class="toolbar" aria-label="tools">
+        <button type="button" onclick="window.print()">Print / Save as PDF</button>
+        <button type="button" onclick="document.getElementById('quick').scrollIntoView({behavior:'smooth'});">Jump to Quick Review</button>
+      </div>
+      <p class="small" style="margin-top:10px;">Tip: In your browser, choose <span class="kbd">Print</span> → Destination <span class="kbd">Save as PDF</span> for clean notes.</p>
+    </header>
+
+    <main>
+      <section id="quick">
+        <h2>🧭 Quick Review (what you must understand)</h2>
+        <ul>
+          <li><strong>Load Balancer</strong> distributes incoming traffic across instances so no single server gets overwhelmed. ⚖️</li>
+          <li><strong>Target Group</strong> is the set of instances the Load Balancer forwards requests to. 🎯</li>
+          <li><strong>Health Checks</strong> decide if an instance is “healthy” and should receive traffic. ❤️‍🩹</li>
+          <li><strong>Auto Scaling Group</strong> automatically adds/removes EC2 instances based on your rules/metrics. 📈📉</li>
+          <li>When combined: Auto Scaling adds instances → Load Balancer routes traffic to them automatically (via the Target Group). 🔁</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧱 Where can you create a Load Balancer?</h2>
+        <p>You have two common entry points:</p>
+        <ul>
+          <li><strong>Inside the EC2 Auto Scaling “Create group” wizard</strong> — convenient when building everything together. 🧩</li>
+          <li><strong>From the EC2 Dashboard</strong> → <strong>Load Balancers</strong> — create one first, then attach it later. 🛠️</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Exam mindset:</strong> Auto Scaling = manages <em>how many</em> instances exist. Load Balancer = manages <em>where traffic goes</em>. Together they solve scale + distribution.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🌐 Choosing the Load Balancer type (basic)</h2>
+        <p>For web servers (HTTP/HTTPS), you typically choose an <strong>Application Load Balancer (ALB)</strong>. 🌍</p>
+        <ul>
+          <li><strong>ALB</strong>: best for HTTP/HTTPS traffic; can route based on URL paths, cookies, etc.</li>
+          <li><strong>NLB</strong>: better for non-HTTP traffic or when you need a fixed IP (more advanced).</li>
+        </ul>
+        <p class="small">For CLF-C02, it’s usually enough to know: ALB = web traffic, NLB = network-level / other protocols.</p>
+      </section>
+
+      <section>
+        <h2>🏷️ Internet-facing vs Internal</h2>
+        <p>When you create a Load Balancer, you pick whether it is:</p>
+        <ul>
+          <li><strong>Internet-facing</strong> 🌍 — accepts requests from the public internet (common for websites).</li>
+          <li><strong>Internal</strong> 🏢 — only reachable inside your VPC (common for private services, internal APIs, etc.).</li>
+        </ul>
+        <div class="divider"></div>
+        <p><strong>Beginner example:</strong></p>
+        <ul>
+          <li>Your public website → internet-facing ALB → forwards to EC2 instances in public subnets.</li>
+          <li>Your private database/admin tool → internal LB → only your internal network can reach it.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🗺️ VPC + Subnets must match (important)</h2>
+        <p>When combining a Load Balancer with an Auto Scaling Group:</p>
+        <ul>
+          <li>The Load Balancer must be created in the <strong>same VPC</strong> as the instances. ✅</li>
+          <li>The Load Balancer must use <strong>subnets that can reach those instances</strong> (usually the same subnets you allow Auto Scaling to launch into). ✅</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Simple rule:</strong> If the Load Balancer can’t “see” the instances (wrong VPC/subnets), it can’t forward traffic. 🚫</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>👂 Listener rules (what traffic does the LB accept?)</h2>
+        <p>You define what the Load Balancer “listens” to. For a typical web app:</p>
+        <ul>
+          <li><strong>HTTP (port 80)</strong> for unencrypted web traffic</li>
+          <li><strong>HTTPS (port 443)</strong> for encrypted traffic</li>
+        </ul>
+        <p class="small">In the lecture, the example uses HTTP as the listener.</p>
+      </section>
+
+      <section>
+        <h2>🎯 Target Groups (where requests are forwarded)</h2>
+        <p>A <strong>Target Group</strong> is basically a named collection of targets (often EC2 instances) that can receive traffic from the Load Balancer.</p>
+        <h3>How it works with Auto Scaling 🔁</h3>
+        <ul>
+          <li>You create/choose a target group for the Load Balancer.</li>
+          <li>If the Load Balancer is attached to an Auto Scaling Group, <strong>instances launched by Auto Scaling are automatically added</strong> to that target group. ✅</li>
+          <li>This means you don’t manually maintain the list of servers.</li>
+        </ul>
+        <pre><code>LB (internet-facing)  →  Target Group  →  EC2 instances created by Auto Scaling
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>❤️ Health Checks (keep traffic away from broken instances)</h2>
+        <p>Health checks are how AWS decides whether a target (instance) should receive requests.</p>
+        <ul>
+          <li>If an instance fails health checks, the Load Balancer can stop routing traffic to it. 🚑</li>
+          <li>Auto Scaling can also replace unhealthy instances (depending on your configuration). 🔄</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Beginner example:</strong> If your web server process crashes on one instance, health checks fail → the Load Balancer avoids it → users still get served by the healthy instances.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>📏 Auto Scaling capacities (Desired / Min / Max)</h2>
+        <p>These settings define the size boundaries of your Auto Scaling Group:</p>
+        <ul>
+          <li><strong>Desired capacity</strong> 🎯 — the “normal/default” number of instances you want running.</li>
+          <li><strong>Minimum capacity</strong> 🧱 — you never go below this number.</li>
+          <li><strong>Maximum capacity</strong> سقف — you never go above this number (prevents runaway costs).</li>
+        </ul>
+        <p><strong>Example:</strong> Desired = 1, Min = 1, Max = 4 → you always have at least one instance, and you can scale up to 4 if needed.</p>
+      </section>
+
+      <section>
+        <h2>📈 Scaling policies (WHEN do we add/remove instances?)</h2>
+        <p>You typically define scaling based on metrics. A common one is <strong>Average CPU Utilization</strong>.</p>
+        <h3>Beginner-friendly example 🤓</h3>
+        <ul>
+          <li>If average CPU across instances goes <strong>above 50%</strong> → scale out (add instances).</li>
+          <li>If average CPU goes <strong>below the target</strong> → scale in (remove instances).</li>
+        </ul>
+        <pre><code>IF avg CPU &gt; 50%  → add instances (scale out)
+IF avg CPU drops   → remove instances (scale in)
+        </code></pre>
+        <p class="small">This gives elasticity: you adapt to traffic without permanently paying for peak capacity.</p>
+      </section>
+
+      <section>
+        <h2>🔔 Notifications + 🏷️ Tags</h2>
+        <ul>
+          <li><strong>Notifications</strong>: you can send emails (or other alerts) when instances scale up/down, so you know what’s changing. 📬</li>
+          <li><strong>Tags</strong>: label resources for organization and cost tracking (e.g., <em>Project=Demo</em>, <em>Env=Dev</em>). 🏷️</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧪 Mini “Step-by-step” summary (from the lecture)</h2>
+        <ol style="margin: 8px 0 0 22px;">
+          <li>Create/choose an <strong>Auto Scaling Group</strong> and a <strong>Launch Template</strong> (how instances should be configured).</li>
+          <li>Create/attach a <strong>Load Balancer</strong> (usually ALB for web apps).</li>
+          <li>Choose <strong>VPC + subnets</strong> (must align so the LB can reach instances).</li>
+          <li>Configure <strong>Listener</strong> (e.g., HTTP).</li>
+          <li>Create/choose <strong>Target Group</strong> (Auto Scaling will auto-register instances).</li>
+          <li>Configure <strong>Health Checks</strong> (detect broken instances).</li>
+          <li>Set <strong>Desired / Min / Max</strong> capacity.</li>
+          <li>Add <strong>Scaling Policies</strong> (e.g., CPU threshold).</li>
+          <li>(Optional) Add notifications and tags.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>📝 Quick self-test (CLF-C02 style)</h2>
+        <ul>
+          <li>Q: What automatically distributes traffic across multiple EC2 instances? ✅ <strong>Load Balancer</strong></li>
+          <li>Q: What automatically adds/removes EC2 instances based on demand? ✅ <strong>EC2 Auto Scaling</strong></li>
+          <li>Q: What groups the instances that receive traffic from a Load Balancer? ✅ <strong>Target Group</strong></li>
+          <li>Q: What helps avoid routing traffic to crashed instances? ✅ <strong>Health Checks</strong></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>✅ Final takeaway</h2>
+        <div class="callout">
+          <p><strong>Core idea:</strong> Auto Scaling ensures you have the right <em>number</em> of instances. Load Balancing ensures traffic is routed to the right <em>instances</em> (and only healthy ones). Together, you get scalability + availability + cost control.</p>
+        </div>
+        <p class="small">This is the level of understanding typically expected for Cloud Practitioner. Implementation details are deeper-level exams.</p>
+      </section>
+
+      <p class="small" style="margin: 16px 0 0;">End of reviewer.</p>
+    </main>
+  </div>
+</body>
+</html>

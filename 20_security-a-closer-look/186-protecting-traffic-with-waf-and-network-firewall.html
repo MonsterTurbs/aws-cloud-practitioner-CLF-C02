@@ -1,0 +1,384 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS Security — Protecting Traffic (WAF, Network Firewall, Firewall Manager)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #5a5a5a;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 18px 60px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 14px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    main { margin-top: 16px; }
+
+    h2 {
+      margin: 18px 0 8px;
+      font-size: 18px;
+    }
+
+    h3 {
+      margin: 14px 0 6px;
+      font-size: 15.5px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0 10px;
+      padding-left: 18px;
+    }
+
+    li { margin: 6px 0; }
+
+    .box {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin: 12px 0;
+    }
+
+    .box.soft {
+      background: var(--panel);
+    }
+
+    .kicker {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .callout .title {
+      font-weight: 700;
+      margin: 0 0 6px;
+    }
+
+    .muted { color: var(--muted); }
+
+    /* Make printing safe: no overflow */
+    a, p, li, code, .chip, .box, .callout {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 12px;
+      margin: -24px -18px 14px;
+    }
+
+    .toolbar-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .btn:hover { border-color: #cfcfcf; }
+
+    .btn.primary {
+      border-color: #c9ddff;
+      background: #eef5ff;
+    }
+
+    .btn:active { transform: translateY(1px); }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      .toolbar { display: none !important; }
+      .page {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+      header, .box, .callout {
+        border-radius: 0;
+      }
+      a {
+        color: var(--text);
+        text-decoration: underline;
+      }
+      a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 10px;
+        color: var(--muted);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar" aria-hidden="false">
+    <div class="toolbar-inner">
+      <div class="muted">🖨️ Print-ready reviewer</div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn primary" onclick="window.print()">Print / Save as PDF</button>
+        <button class="btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to top</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <header>
+      <h1>🛡️ Protecting Traffic in AWS: WAF, Network Firewall, Firewall Manager</h1>
+      <p class="subtitle">Beginner-friendly study guide (CLF-C02) — how AWS blocks malicious traffic <em>before</em> it reaches your apps.</p>
+      <div class="meta">
+        <span class="chip">Single column</span>
+        <span class="chip">A4 print-ready</span>
+        <span class="chip">Focus: Network protection</span>
+        <span class="chip">Exam-friendly takeaways</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="box soft">
+        <div class="kicker">🎯 Big idea</div>
+        <p>
+          Protecting your account (IAM) and workloads (Inspector) matters — but it’s even better if <strong>malicious traffic never reaches your application</strong> in the first place.
+          AWS provides multiple layers of network/traffic protection, from simple port filtering to deep request inspection.
+        </p>
+      </section>
+
+      <h2>1) Quick refresher: Security Groups vs NACLs</h2>
+      <div class="box">
+        <p><strong>Security Groups (SG)</strong> 🔐</p>
+        <ul>
+          <li>Firewall attached to <strong>ENIs / EC2 / ALB / some services</strong>.</li>
+          <li>Usually described as <strong>stateful</strong> (if inbound is allowed, response is allowed out).</li>
+          <li>Great for: “Allow HTTPS (443) to this instance.” ✅</li>
+        </ul>
+        <p><strong>Network ACLs (NACL)</strong> 🧱</p>
+        <ul>
+          <li>Firewall attached to a <strong>subnet</strong> (network-level guardrail).</li>
+          <li>Rules are evaluated in order; typically used for broad allow/deny at subnet boundary.</li>
+          <li>Great for: “Block a known bad IP range at the subnet.” 🚫</li>
+        </ul>
+        <p class="muted">
+          Important limitation: SGs/NACLs mostly decide based on <strong>IP, port, protocol</strong> — not the <strong>content inside the request</strong>.
+        </p>
+      </div>
+
+      <h2>2) AWS WAF (Web Application Firewall) 🌐🧯</h2>
+      <div class="callout">
+        <p class="title">What it is</p>
+        <p>
+          <strong>AWS WAF</strong> inspects <strong>web requests</strong> (metadata + request body patterns) and blocks or allows them based on rules.
+          It’s commonly attached to services like <strong>CloudFront</strong> (and other supported web-facing entry points).
+        </p>
+      </div>
+
+      <h3>Why WAF exists</h3>
+      <ul>
+        <li>SG/NACL allow traffic to a valid port, but the request can still be malicious. ⚠️</li>
+        <li>WAF can block requests based on <strong>what’s inside</strong> the request (headers, query string, body patterns, etc.). 🔍</li>
+      </ul>
+
+      <div class="box">
+        <div class="kicker">🧠 What WAF can catch (classic examples)</div>
+        <ul>
+          <li><strong>SQL Injection</strong> (often written as “SQLi”) — attacker tries to inject SQL into inputs. 🧪</li>
+          <li><strong>Cross-Site Scripting (XSS)</strong> — attacker injects malicious scripts into pages. 🕸️</li>
+          <li>Custom rules: block/allow based on headers, IP reputation lists, request size, user agent patterns, etc. 🧩</li>
+        </ul>
+      </div>
+
+      <div class="box soft">
+        <div class="kicker">🧾 Simple mental model</div>
+        <p>
+          Think of WAF as a “bouncer” for your web app: not only checking <em>who</em> is entering (IP/metadata) but also <em>what</em> they’re bringing in (request content).
+        </p>
+      </div>
+
+      <h2>3) AWS Network Firewall 🧱🛰️</h2>
+      <div class="callout">
+        <p class="title">What it is</p>
+        <p>
+          <strong>AWS Network Firewall</strong> is a managed firewall to protect <strong>entire VPC networks</strong> by inspecting traffic more deeply than a basic subnet rule list.
+          You can create detailed rules using attributes like <strong>source/destination IP</strong>, <strong>ports</strong>, and <strong>protocols</strong>.
+        </p>
+      </div>
+
+      <h3>What makes it different from NACLs?</h3>
+      <ul>
+        <li>More advanced inspection and more flexible rule capabilities. 🔍</li>
+        <li>Supports both <strong>stateless</strong> and <strong>stateful</strong> rule behavior. ⚙️</li>
+      </ul>
+
+      <div class="box">
+        <div class="kicker">⚙️ Stateful vs Stateless (easy explanation)</div>
+        <ul>
+          <li><strong>Stateful</strong> ✅: If inbound is allowed, the return traffic is automatically allowed (similar idea to Security Groups).</li>
+          <li><strong>Stateless</strong> 🚦: Inbound allowed does <em>not</em> automatically allow outbound response; you explicitly control both directions.</li>
+        </ul>
+        <p class="muted">
+          Exam tip: remember that AWS mentions “stateful” often for Security Groups; Network Firewall can do both.
+        </p>
+      </div>
+
+      <h2>4) Using layers together (defense in depth) 🧅</h2>
+      <div class="box soft">
+        <div class="kicker">✅ Best practice mindset</div>
+        <p>
+          AWS does not expect you to pick only one. In real setups, you often combine protections:
+        </p>
+        <ul>
+          <li><strong>Security Groups</strong>: tight inbound ports (e.g., only 443) 🔐</li>
+          <li><strong>NACLs</strong>: subnet-level guardrails / broad deny rules 🧱</li>
+          <li><strong>WAF</strong>: web request inspection for app-layer attacks 🌐</li>
+          <li><strong>Network Firewall</strong>: VPC-wide managed firewall with richer control 🛰️</li>
+        </ul>
+      </div>
+
+      <h2>5) AWS Firewall Manager 🧑‍✈️📌</h2>
+      <div class="callout">
+        <p class="title">What it is</p>
+        <p>
+          <strong>Firewall Manager</strong> is a centralized service to manage firewall rules/policies (like WAF / Network Firewall policies) across an account — and commonly across <strong>multiple accounts</strong> in larger environments.
+        </p>
+      </div>
+
+      <h2>6) Mini scenarios (beginner-friendly examples) 🧪</h2>
+      <div class="box">
+        <h3>Scenario A: “My app is public via CloudFront and getting SQL injection attempts.”</h3>
+        <ul>
+          <li>Use <strong>AWS WAF</strong> on CloudFront to detect/block SQLi patterns. 🛡️</li>
+          <li>Keep SGs strict (only needed ports to origin). ✅</li>
+        </ul>
+
+        <h3>Scenario B: “I need deeper control over traffic inside a VPC.”</h3>
+        <ul>
+          <li>Use <strong>AWS Network Firewall</strong> for VPC-level managed protection. 🧱</li>
+          <li>Use stateful rules for typical app flows; use stateless where you want explicit control. ⚙️</li>
+        </ul>
+
+        <h3>Scenario C: “We have many accounts and want consistent firewall policies.”</h3>
+        <ul>
+          <li>Use <strong>AWS Firewall Manager</strong> to apply/standardize policies centrally. 🧑‍✈️</li>
+        </ul>
+      </div>
+
+      <h2>7) CLF-C02 memory cues 🧠</h2>
+      <div class="box soft">
+        <ul>
+          <li>WAF = <strong>web request inspection</strong> (helps with SQLi, XSS). 🌐</li>
+          <li>Network Firewall = <strong>managed VPC firewall</strong>, stateful + stateless rules. 🧱</li>
+          <li>Firewall Manager = <strong>central management</strong> across accounts. 🧑‍✈️</li>
+          <li>SG/NACL = basic network controls (IP/port/protocol); WAF adds content awareness. 🔎</li>
+        </ul>
+      </div>
+
+      <div class="footer">
+        <p><strong>Reviewer notes:</strong> This page is designed for clean A4 printing (single column). If text looks tight on your printer, try “Margins: Default” and “Scale: Fit to printable area”.</p>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

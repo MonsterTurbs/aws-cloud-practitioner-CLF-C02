@@ -1,0 +1,487 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Module Summary (Serverless REST & GraphQL APIs)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --chip: #f3f4f6;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single-column page container */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 18px 16px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.55rem;
+      line-height: 1.2;
+      letter-spacing: -0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .meta {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .chip {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      background: var(--chip);
+      border-radius: 999px;
+      font-size: 0.92rem;
+      color: #1f2937;
+      white-space: nowrap;
+    }
+
+    .toolbar {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn.primary {
+      border-color: #cfe0ff;
+      background: #eef4ff;
+      color: #123a8c;
+    }
+
+    .btn:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    main {
+      margin-top: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      line-height: 1.2;
+    }
+
+    h3 {
+      margin: 14px 0 8px;
+      font-size: 1.05rem;
+      line-height: 1.2;
+    }
+
+    p { margin: 8px 0; }
+
+    ul { margin: 8px 0 0; padding-left: 18px; }
+    li { margin: 6px 0; }
+
+    .callout {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid #cfe0ff;
+      border-radius: 12px;
+      padding: 12px 12px;
+      margin-top: 10px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .two {
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 760px) {
+      .two { grid-template-columns: 1fr 1fr; }
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .label {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.93rem;
+    }
+
+    pre {
+      margin: 10px 0 0;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fcfcfc;
+      overflow: auto;
+      white-space: pre-wrap;      /* wraps lines */
+      word-break: break-word;     /* avoids cut-off */
+      overflow-wrap: anywhere;
+    }
+
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    /* Critical: prevent print cutoffs */
+    p, li, h1, h2, h3, pre, code {
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 16mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      header, section { box-shadow: none; }
+      header { background: #fff; }
+      .toolbar { display: none !important; }
+      a { color: inherit; text-decoration: none; }
+      section { break-inside: avoid; page-break-inside: avoid; }
+      pre { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>📘 Module Summary — Building Serverless REST & GraphQL APIs (AWS)</h1>
+      <p class="subtitle">Reviewer / Study Guide (Beginner-friendly) — API Gateway, AppSync, Cognito, Amplify</p>
+      <div class="meta">
+        <span class="chip">🧠 Focus: Exam-ready concepts</span>
+        <span class="chip">🧾 Layout: Single-column, print-first</span>
+        <span class="chip">⚪ Background: White, A4-ready</span>
+      </div>
+      <div class="toolbar" aria-label="Page tools">
+        <button class="btn primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Quick Check</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big Picture 🗺️</h2>
+        <p>
+          In real applications, your <strong>front end</strong> (web / mobile / desktop) needs to talk to your <strong>cloud back end</strong>
+          to fetch data (e.g., products) or trigger actions (e.g., upload an image, place an order). This typically happens via <strong>HTTP APIs</strong>.
+        </p>
+
+        <div class="callout">
+          <p><strong>Key idea 💡:</strong> You <em>can</em> build REST/GraphQL APIs with your own code and host them (EC2/containers), but AWS also offers managed services so you don’t need to run API servers yourself.</p>
+        </div>
+
+        <h3>Typical flow (conceptual) 🔁</h3>
+        <pre>
+User App (Browser / Mobile)
+  ↓ HTTP request
+API Layer (API Gateway for REST OR AppSync for GraphQL)
+  ↓ triggers
+AWS Lambda (business logic)
+  ↓ reads/writes
+Database (e.g., DynamoDB / RDS)
+  ↓
+Response back to the user
+        </pre>
+      </section>
+
+      <section>
+        <h2>2) REST vs GraphQL (What’s the difference?) ⚖️</h2>
+        <div class="grid two">
+          <div class="card">
+            <div class="label">🌐 REST API (common, URL-based)</div>
+            <ul>
+              <li>Uses <strong>multiple endpoints</strong> (URLs) such as <code>/books/1</code>.</li>
+              <li>Uses HTTP methods like <strong>GET</strong>, <strong>POST</strong>, <strong>PUT</strong>, <strong>DELETE</strong>.</li>
+              <li>Often returns a full “resource” payload (sometimes more data than needed).</li>
+            </ul>
+            <pre>
+GET /products/123
+→ returns product 123 (often a full object)
+
+POST /orders
+→ creates an order
+            </pre>
+          </div>
+          <div class="card">
+            <div class="label">🧩 GraphQL API (query-based)</div>
+            <ul>
+              <li>Usually uses a <strong>single endpoint</strong> (one URL).</li>
+              <li>You send a <strong>query</strong> describing exactly what fields you want.</li>
+              <li>Can reduce “over-fetching” (less redundant data).</li>
+            </ul>
+            <pre>
+query {
+  product(id: "123") {
+    id
+    title
+    price
+  }
+}
+            </pre>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p><strong>Exam-friendly takeaway ✅:</strong> REST = multiple URLs + HTTP methods. GraphQL = one endpoint + query in the request asking for specific fields.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>3) API Gateway — Managed Serverless REST APIs 🚪</h2>
+        <p>
+          <strong>API Gateway</strong> helps you build and run <strong>REST (and HTTP) APIs</strong> without hosting your own API servers.
+          It handles a lot of “boilerplate” work: request parsing, routing, validation, auth hooks, and response formatting.
+        </p>
+
+        <h3>What you define in API Gateway ✍️</h3>
+        <ul>
+          <li>Resources / paths (e.g., <code>/products</code>, <code>/orders</code>)</li>
+          <li>Methods (GET/POST/…)</li>
+          <li>Request/response rules, parameters, schemas (optional)</li>
+          <li>Integration target (commonly <strong>Lambda</strong>)</li>
+          <li>Stages (deploy different versions/environments)</li>
+        </ul>
+
+        <h3>Beginner example 🧪</h3>
+        <pre>
+Goal: Mobile app fetches products.
+
+1) API Gateway route: GET /products
+2) API Gateway triggers: Lambda function "GetProducts"
+3) Lambda reads products from DynamoDB
+4) API Gateway returns JSON response to the app
+        </pre>
+
+        <div class="callout">
+          <p><strong>Memory hook 🧷:</strong> API Gateway = “I want endpoints without running an API server.” 🙂</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) AppSync — Managed GraphQL APIs 🧠</h2>
+        <p>
+          <strong>AWS AppSync</strong> is the managed service for building <strong>GraphQL APIs</strong> without writing the “API server” part.
+          You focus on the <em>schema</em> (what data can be requested) and how each query/mutation gets resolved.
+        </p>
+
+        <h3>What you define in AppSync 🧩</h3>
+        <ul>
+          <li><strong>Schema</strong> (types, queries, mutations)</li>
+          <li><strong>Resolvers</strong> (how AppSync fetches the data)</li>
+          <li>Data sources (often DynamoDB, Lambda, etc.)</li>
+          <li>Auth settings + optional caching/optimization</li>
+        </ul>
+
+        <h3>Beginner example 🧪</h3>
+        <pre>
+Goal: App requests only fields it needs.
+
+Client sends GraphQL query:
+  product(id:"123") { id title }
+
+AppSync:
+  - matches it to schema
+  - runs a resolver (often Lambda or DynamoDB)
+  - returns only requested fields
+        </pre>
+
+        <div class="callout">
+          <p><strong>Memory hook 🧷:</strong> AppSync = “GraphQL, schema-first, managed.” 😄</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>5) Cognito — Authentication for Your App Users 🔐</h2>
+        <p>
+          <strong>Cognito</strong> is for <strong>users of your application</strong> (customers/end-users), not for AWS account users.
+          Don’t confuse it with IAM.
+        </p>
+
+        <div class="grid two">
+          <div class="card">
+            <div class="label">👤 IAM (Account access)</div>
+            <ul>
+              <li>For admins/devs/services that need access to AWS resources.</li>
+              <li>Controls permissions inside your AWS account.</li>
+              <li>Not meant for your app’s customers.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="label">🧑‍💻 Cognito (App user auth)</div>
+            <ul>
+              <li>Manages sign-up / sign-in (email + password, MFA, etc.).</li>
+              <li>Stores users in <strong>User Pools</strong> (managed user directory).</li>
+              <li>Can integrate social logins (Google/Facebook/Apple) via federated identities.</li>
+              <li>Can provide <strong>temporary AWS permissions</strong> when needed (narrow, controlled access).</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Beginner example 🧪</h3>
+        <pre>
+Scenario: App lets users upload profile photos to S3.
+
+1) User logs in (Cognito)
+2) App receives tokens / auth state
+3) App can upload to S3 with controlled, temporary permissions
+   (only if you configure it that way)
+        </pre>
+
+        <div class="callout">
+          <p><strong>Memory hook 🧷:</strong> IAM = “AWS account access.” Cognito = “My app’s users.” 🔑</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Amplify — “Front End + AWS” Made Easier 🧰</h2>
+        <p>
+          <strong>AWS Amplify</strong> is a platform / toolset that makes it easier to build apps that use AWS.
+          It helps in two main ways:
+        </p>
+        <ul>
+          <li><strong>Back end support</strong>: Amplify can create/configure AWS resources for you (example: set up a database, auth, hosting).</li>
+          <li><strong>Front end SDKs</strong>: Amplify provides SDKs (JavaScript, etc.) so your app can easily talk to services like Cognito.</li>
+        </ul>
+
+        <h3>Beginner example: using Amplify SDK for Cognito 🧪</h3>
+        <p>Conceptually, you use Amplify libraries in your front end so you don’t manually handle all the auth plumbing.</p>
+        <pre>
+// Conceptual (not exam-required)
+// Your app uses Amplify SDK to authenticate with Cognito.
+
+import { Auth } from 'aws-amplify';
+
+await Auth.signIn(email, password);
+const user = await Auth.currentAuthenticatedUser();
+        </pre>
+
+        <div class="callout">
+          <p><strong>Memory hook 🧷:</strong> Amplify = “Developer-friendly toolkit for building AWS-backed apps.” 🧩</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <p>
+          Amplify can also provide a more complete workflow (including a CMS-like experience via Amplify Studio),
+          so you can manage back end resources <em>and</em> application data more conveniently.
+        </p>
+      </section>
+
+      <section id="quick-check">
+        <h2>7) Quick Check ✅ (Exam-style prompts)</h2>
+        <ul>
+          <li>🟦 <strong>Which service builds managed REST APIs?</strong> → API Gateway</li>
+          <li>🟪 <strong>Which service builds managed GraphQL APIs?</strong> → AppSync</li>
+          <li>🔐 <strong>Which service manages authentication for your app’s end-users?</strong> → Cognito</li>
+          <li>🧰 <strong>Which platform provides SDKs + simplifies AWS-backed app development?</strong> → Amplify</li>
+          <li>⚙️ <strong>Where does your “business logic” often run?</strong> → Lambda (commonly used behind API Gateway/AppSync)</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>Final reminder 🎯:</strong> API Gateway and AppSync remove the need to run API servers. You focus on routing/schema + business logic (often Lambda) and data sources (databases).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>8) Ultra-short Summary (1-minute review) ⏱️</h2>
+        <ul>
+          <li>🌍 Front ends talk to cloud back ends via <strong>HTTP APIs</strong>.</li>
+          <li>🚪 <strong>API Gateway</strong> = managed, serverless <strong>REST/HTTP</strong> APIs.</li>
+          <li>🧠 <strong>AppSync</strong> = managed <strong>GraphQL</strong> APIs (schema + resolvers).</li>
+          <li>🔐 <strong>Cognito</strong> = auth for <strong>your app users</strong> (not IAM users).</li>
+          <li>🧰 <strong>Amplify</strong> = toolset + SDKs to simplify building AWS-backed apps.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

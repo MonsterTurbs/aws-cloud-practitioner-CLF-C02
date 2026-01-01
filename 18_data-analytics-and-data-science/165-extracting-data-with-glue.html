@@ -1,0 +1,425 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS Glue — ETL (Extract, Transform, Load) | Study Guide (Print-Friendly)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --chip: #f3f4f6;
+      --accent: #0b57d0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 22px 18px 40px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 18px 14px;
+      margin-bottom: 14px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .chip {
+      background: var(--chip);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: #111;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    button:hover { border-color: #cfcfcf; }
+    button.primary { border-color: #bcd3ff; background: #eef4ff; }
+
+    main { display: grid; gap: 12px; }
+
+    section {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    h3 {
+      margin: 12px 0 6px;
+      font-size: 14px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 6px 0; }
+
+    .callout {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 12px 12px;
+      margin-top: 10px;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .kvs {
+      display: grid;
+      gap: 8px;
+    }
+
+    .kv {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+    }
+
+    .kv .k { font-weight: 700; }
+    .kv .v { color: var(--muted); margin-top: 4px; }
+
+    .mini {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 10px 0;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+    }
+
+    pre {
+      margin: 8px 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fcfcfc;
+      overflow: hidden;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .qa details {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+      margin-top: 8px;
+    }
+
+    .qa summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+    }
+
+    .qa summary::-webkit-details-marker { display: none; }
+
+    footer {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 15mm;
+    }
+
+    @media print {
+      .page { max-width: none; padding: 0; }
+      header, section { border-radius: 0; }
+      .actions { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      section { break-inside: avoid; page-break-inside: avoid; }
+      pre, .callout, .kv, .qa details { break-inside: avoid; page-break-inside: avoid; }
+    }
+
+    /* Small screens */
+    @media (max-width: 520px) {
+      .page { padding: 16px 12px 28px; }
+      h1 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="title-row">
+        <div>
+          <h1>🧪 AWS Glue — ETL (Extract, Transform, Load) Reviewer</h1>
+          <p class="subtitle">
+            Beginner-friendly notes on how AWS Glue helps you extract, transform, and load data for analytics (Data Lake + Redshift).
+          </p>
+        </div>
+        <div class="actions">
+          <button class="primary" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        </div>
+      </div>
+      <div class="meta" aria-label="Quick tags">
+        <span class="chip">📄 A4 print-ready</span>
+        <span class="chip">🧠 Beginner explanations</span>
+        <span class="chip">🧰 AWS Analytics</span>
+        <span class="chip">⏱️ Serverless (pay-per-use)</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Why do we need Glue? (The problem)</h2>
+        <p>
+          Storing data is not enough. If you want to <strong>analyze</strong> data, you usually need to <strong>clean</strong> it,
+          <strong>standardize</strong> it, or <strong>convert formats</strong> first.
+        </p>
+        <div class="callout">
+          <p><strong>Typical situation:</strong> You collected raw data in S3 (Data Lake) or a database, but it is messy.</p>
+          <ul>
+            <li>🧹 Extra columns you don’t need</li>
+            <li>🔤 Different field names across files (e.g., <code>userId</code> vs <code>user_id</code>)</li>
+            <li>📅 Dates stored as text instead of real date types</li>
+            <li>🧩 Mixed formats (CSV, JSON, Parquet) that must be unified</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) What is AWS Glue?</h2>
+        <p>
+          <strong>AWS Glue</strong> is a <strong>serverless, managed ETL service</strong>. ETL means:
+        </p>
+        <div class="kvs">
+          <div class="kv">
+            <div class="k">📥 Extract</div>
+            <div class="v">Read data from a source (S3, databases, etc.).</div>
+          </div>
+          <div class="kv">
+            <div class="k">🔧 Transform</div>
+            <div class="v">Clean / filter / reshape the data (e.g., remove fields, convert types).</div>
+          </div>
+          <div class="kv">
+            <div class="k">📤 Load</div>
+            <div class="v">Write the transformed data to a target (e.g., Redshift, S3, another DB).</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <p>
+          ✅ <strong>Serverless</strong> means you don’t pick EC2 instance types or manage servers.
+          You mostly pay when Glue is running jobs.
+        </p>
+      </section>
+
+      <section>
+        <h2>3) Glue in one picture (mental model)</h2>
+        <p class="mini">Think of Glue as a “data kitchen” 🍳: you bring raw ingredients (raw data), Glue cooks/cleans it, and outputs a ready-to-eat meal (analytics-ready data).</p>
+        <div class="callout">
+          <p><strong>Common flow:</strong></p>
+          <ul>
+            <li>🪣 Raw files in <strong>S3</strong> (Data Lake) →</li>
+            <li>🧪 <strong>Glue</strong> crawls + transforms →</li>
+            <li>🏭 Clean data goes to <strong>Redshift</strong> (Data Warehouse) or back to <strong>S3</strong> in a better format</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Key Glue features mentioned in the lecture</h2>
+        <h3>4.1 🕷️ Glue Crawler (auto-detect schema)</h3>
+        <p>
+          Glue can automatically <strong>crawl</strong> your data and infer a <strong>schema</strong> (columns + types).
+          This reduces manual work when your data is new or changing.
+        </p>
+
+        <h3>4.2 🧾 Schema / Catalog idea (what you’re building)</h3>
+        <p>
+          After crawling, you get a structured understanding of your data.
+          This makes transformations and downstream analytics tools easier.
+        </p>
+
+        <h3>4.3 🧰 Transformation Jobs</h3>
+        <p>
+          You define jobs that transform the data: remove fields, rename columns, convert types, join datasets, etc.
+        </p>
+
+        <h3>4.4 🧩 Visual Job Editor</h3>
+        <p>
+          Glue has a <strong>visual editor</strong> so you can build ETL steps without writing everything from scratch.
+          This is helpful for beginners and for quick pipelines.
+        </p>
+      </section>
+
+      <section>
+        <h2>5) Beginner-friendly example</h2>
+        <p>
+          Imagine you store website events in S3 as raw JSON. Example record:
+        </p>
+        <pre>{
+  "userId": "U123",
+  "event": "purchase",
+  "amount": "499.00",
+  "timestamp": "2025-12-22T10:15:30Z",
+  "debug": "some extra field we don't need"
+}</pre>
+
+        <p><strong>Goal:</strong> Make the data analytics-ready and load it into Redshift.</p>
+        <ul>
+          <li>📥 <strong>Extract</strong>: Read JSON files from S3</li>
+          <li>🔧 <strong>Transform</strong>:
+            <ul>
+              <li>🧹 Remove <code>debug</code></li>
+              <li>🔢 Convert <code>amount</code> from text to number</li>
+              <li>📅 Convert <code>timestamp</code> to a real timestamp type</li>
+              <li>🏷️ Standardize naming: <code>userId</code> → <code>user_id</code></li>
+            </ul>
+          </li>
+          <li>📤 <strong>Load</strong>: Put cleaned data into Redshift (warehouse table)</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>Why this matters:</strong> Redshift analytics queries become faster and simpler when data is consistent.</p>
+          <pre>-- Example analytics query (conceptual)
+SELECT user_id, SUM(amount) AS total_spent
+FROM purchases
+GROUP BY user_id
+ORDER BY total_spent DESC;</pre>
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Exam-friendly takeaways</h2>
+        <ul>
+          <li>🧪 <strong>AWS Glue = serverless managed ETL</strong> (Extract, Transform, Load).</li>
+          <li>🕷️ Glue can <strong>crawl data</strong> and <strong>infer a schema</strong> automatically.</li>
+          <li>🧰 Glue can run <strong>transformation jobs</strong> and even supports a <strong>visual job editor</strong>.</li>
+          <li>🏭 Glue is commonly used to prep data for <strong>analytics</strong> (e.g., before loading into <strong>Redshift</strong>).</li>
+          <li>💸 Serverless model: if Glue isn’t doing work, you typically don’t pay for idle servers.</li>
+        </ul>
+      </section>
+
+      <section class="qa">
+        <h2>7) Quick self-check (mini quiz) ✅</h2>
+
+        <details>
+          <summary>Q1) What does ETL stand for?</summary>
+          <p><strong>Answer:</strong> Extract, Transform, Load.</p>
+        </details>
+
+        <details>
+          <summary>Q2) What Glue feature can infer a schema from data automatically?</summary>
+          <p><strong>Answer:</strong> The <strong>Glue Crawler</strong>.</p>
+        </details>
+
+        <details>
+          <summary>Q3) Why might you run Glue before loading data into Redshift?</summary>
+          <p><strong>Answer:</strong> To clean and standardize raw data (types, columns, formats) so Redshift analytics queries are reliable and efficient.</p>
+        </details>
+
+        <details>
+          <summary>Q4) Is Glue serverless? What does that imply?</summary>
+          <p><strong>Answer:</strong> Yes. You don’t manage servers/instance types; you primarily pay for job execution/usage instead of idle infrastructure.</p>
+        </details>
+      </section>
+
+      <footer>
+        <div class="callout">
+          <p><strong>Tip for printing:</strong> Use your browser’s Print dialog → choose <em>“Save as PDF”</em> for a clean reviewer copy. This page is formatted for A4.</p>
+          <p class="mini">This reviewer is based on your provided transcript segment about AWS Glue (ETL, crawlers, visual job editor, serverless nature).</p>
+        </div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

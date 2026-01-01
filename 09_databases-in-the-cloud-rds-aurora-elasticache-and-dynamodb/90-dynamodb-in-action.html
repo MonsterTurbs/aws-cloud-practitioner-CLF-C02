@@ -1,0 +1,400 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — DynamoDB in Action (NoSQL)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#555;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    /* Single-column layout */
+    .page{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+    }
+
+    header{
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    h1{
+      font-size: 1.55rem;
+      margin: 0 0 6px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+
+    .meta{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    h2{
+      font-size: 1.18rem;
+      margin: 22px 0 10px;
+      padding-top: 6px;
+      border-top: 1px solid var(--border);
+    }
+
+    h3{
+      font-size: 1.02rem;
+      margin: 16px 0 8px;
+    }
+
+    p{ margin: 10px 0; }
+
+    ul,ol{ margin: 8px 0 12px 22px; padding: 0; }
+    li{ margin: 6px 0; }
+
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    .callout{
+      border-left: 4px solid var(--accent);
+      background: #f4f8ff;
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .badge{
+      display: inline-block;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: .86rem;
+      color: var(--muted);
+      margin-right: 8px;
+      white-space: nowrap;
+    }
+
+    .kicker{ color: var(--muted); font-size: .95rem; }
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .94em;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1px 6px;
+      word-break: break-word;
+    }
+
+    pre{
+      margin: 10px 0;
+      padding: 12px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      overflow: auto;
+      white-space: pre-wrap;      /* wrap long lines */
+      word-break: break-word;
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .qa{
+      padding: 10px 12px;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .qa b{ display:block; margin-bottom: 6px; }
+
+    .btnbar{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn:hover{ border-color:#cfcfcf; }
+
+    .muted{ color: var(--muted); }
+
+    .hr{
+      height: 1px;
+      background: var(--border);
+      margin: 18px 0;
+    }
+
+    /* Keep content print-safe */
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    /* Print styles */
+    @page{
+      size: A4;
+      margin: 14mm 14mm 16mm;
+    }
+
+    @media print{
+      :root{ --panel:#ffffff; }
+      body{ color:#000; }
+      .page{ max-width: none; padding: 0; }
+      .btnbar{ display:none !important; }
+      a{ color:#000; text-decoration:none; }
+      .card, .callout{ border-color:#cfcfcf; }
+      h2{ break-after: avoid-page; }
+      h2, h3{ page-break-after: avoid; }
+      .card, .callout, pre, .qa{ break-inside: avoid; page-break-inside: avoid; }
+      ul, ol{ break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>📦 DynamoDB in Action — Reviewer / Study Guide (Beginner-Friendly)</h1>
+      <p class="subtitle">Focus: How DynamoDB works in the AWS Console, how tables/items are created, and what “capacity” means for billing and exam scenarios.</p>
+      <p class="meta"><span class="badge">AWS CLF-C02</span><span class="badge">NoSQL</span><span class="badge">Managed Service</span><span class="badge">Single-column • A4 print-ready</span></p>
+      <div class="btnbar" aria-label="Actions">
+        <button class="btn" type="button" onclick="window.print()">🖨️ Print</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Quick Check</button>
+        <button class="btn" type="button" onclick="document.getElementById('exam-tips').scrollIntoView({behavior:'smooth'})">🧠 Exam Tips</button>
+      </div>
+    </header>
+
+    <section class="callout">
+      <p><b>Core idea (easy memory):</b> DynamoDB is “<b>tables-first</b>” NoSQL. You don’t create a database server/instance. You create a <b>table</b>, define the <b>primary key</b>, then store <b>items</b> (records). ✅</p>
+      <p class="muted">🙂 Think of it like: <b>Spreadsheet + ID rule</b>, but managed, scalable, and API-driven.</p>
+    </section>
+
+    <section>
+      <h2>1) Why DynamoDB feels different vs RDS / ElastiCache</h2>
+      <div class="card">
+        <ul>
+          <li>🧱 <b>RDS</b>: you create a <b>database instance</b> (managed server), choose an engine (MySQL, PostgreSQL, etc.), then create databases/tables inside it.</li>
+          <li>⚡ <b>ElastiCache</b>: you create a <b>cache cluster</b> (Redis/Memcached) for fast in-memory lookups.</li>
+          <li>📦 <b>DynamoDB</b>: you create <b>tables directly</b>. AWS manages the underlying infrastructure automatically.</li>
+        </ul>
+      </div>
+      <p><b>Beginner takeaway:</b> In DynamoDB, your “main building block” is the <b>table</b>, not the server.</p>
+    </section>
+
+    <section>
+      <h2>2) DynamoDB table basics</h2>
+
+      <h3>2.1 Primary key</h3>
+      <div class="card">
+        <ul>
+          <li>🔑 Every item (row) must be uniquely identifiable using a <b>primary key</b>.</li>
+          <li>🧩 At minimum you choose a <b>Partition key</b> (also called the <b>hash key</b>).</li>
+          <li>➕ Optionally you add a <b>Sort key</b> to make a <b>composite key</b> (Partition + Sort).</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <p><b>Quick mental model:</b></p>
+        <ul>
+          <li>Partition key = “main ID field” (e.g., <code>ProductId</code>)</li>
+          <li>Sort key = “2nd dimension” for ordering/grouping (e.g., <code>ReleaseDate</code>)</li>
+        </ul>
+      </div>
+
+      <h3>2.2 Schema flexibility</h3>
+      <div class="card">
+        <p>🧺 DynamoDB is NoSQL. Items in the same table can have different attributes (fields) — <b>no rigid schema</b>.</p>
+        <ul>
+          <li>✅ All items must include the key attribute(s).</li>
+          <li>✅ Everything else can vary per item.</li>
+        </ul>
+      </div>
+
+      <h3>2.3 Data types</h3>
+      <div class="card">
+        <p>For keys, you pick a type such as:</p>
+        <ul>
+          <li>📝 <b>String</b> (text)</li>
+          <li>🔢 <b>Number</b></li>
+          <li>🧾 <b>Binary</b> (rare for beginners)</li>
+        </ul>
+        <p class="muted">For the exam, you mainly need to recognize that keys have a defined type.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>3) DynamoDB in the AWS Console — step by step</h2>
+      <p class="kicker">This matches what you saw in the lecture: start on the DynamoDB service page, then create a table, then add items.</p>
+
+      <div class="card">
+        <ol>
+          <li>🔎 Open <b>DynamoDB</b> in the AWS Management Console.</li>
+          <li>➕ Click <b>Create table</b>.</li>
+          <li>🏷️ Enter a <b>Table name</b> (example: <code>Products</code>).</li>
+          <li>🔑 Define the <b>Partition key</b> (example: <code>ProductId</code>, type <code>String</code>).</li>
+          <li>➕ (Optional) Add a <b>Sort key</b> (example: <code>ReleaseDate</code>, type <code>String</code>).</li>
+          <li>💳 Choose a <b>capacity mode</b> (Provisioned or On-Demand).</li>
+          <li>🔒 (Optional) Configure <b>encryption</b>.</li>
+          <li>✅ Create the table and wait until status is <b>ACTIVE</b>.</li>
+          <li>🧾 Go to <b>Explore table items</b> → <b>Create item</b> to insert data.</li>
+        </ol>
+      </div>
+
+      <h3>Example: Creating a Product item</h3>
+      <div class="card">
+        <p>🛒 Table: <code>Products</code>, key: <code>ProductId</code> (String)</p>
+        <pre>{
+  "ProductId": "ABC",
+  "Title": "A Carpet",
+  "Price": 1299,
+  "Category": "Home",
+  "InStock": true
+}</pre>
+        <p class="muted">🙂 DynamoDB lets you add attributes freely. Another item might have different fields (e.g., <code>Color</code>, <code>Size</code>) and that’s fine.</p>
+      </div>
+
+      <h3>Example: Mixed items in the same table</h3>
+      <div class="card">
+        <p>✅ Both items are valid as long as they have <code>ProductId</code>:</p>
+        <pre>{
+  "ProductId": "ABC",
+  "Title": "A Carpet"
+}
+
+{
+  "ProductId": "XYZ",
+  "Title": "Office Chair",
+  "MaxWeightKg": 120,
+  "Ergonomic": true
+}</pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>4) Capacity & pricing concept (Provisioned vs On-Demand)</h2>
+      <div class="card">
+        <ul>
+          <li>📊 <b>Provisioned capacity</b>: you estimate reads/writes and pay for that capacity even if you don’t use it.</li>
+          <li>🧾 <b>On-Demand</b>: you pay for actual reads/writes performed (great for unpredictable traffic or getting started).</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <p><b>Rule of thumb:</b></p>
+        <ul>
+          <li>🎯 Stable, predictable workload → <b>Provisioned</b> can be cheaper.</li>
+          <li>🌊 Spiky/unknown workload → <b>On-Demand</b> is simpler and safer.</li>
+        </ul>
+      </div>
+
+      <p class="muted">💡 The lecture mentions AWS pricing/free tier can change over time. Always verify current free tier limits on AWS pricing pages when doing hands-on practice.</p>
+    </section>
+
+    <section id="exam-tips">
+      <h2>5) Exam-focused notes (CLF-C02)</h2>
+      <div class="card">
+        <ul>
+          <li>🧠 DynamoDB = <b>fully managed NoSQL key-value</b> database service.</li>
+          <li>🏗️ You typically don’t manage servers/instances. You work with <b>tables</b> and <b>items</b>.</li>
+          <li>🔑 Must understand: <b>partition key</b> (required) and <b>sort key</b> (optional).</li>
+          <li>💳 Capacity modes: <b>Provisioned</b> vs <b>On-Demand</b>.</li>
+          <li>🛠️ Access patterns: you interact via AWS tools (Console/CLI/SDK/API), not by writing SQL like RDS.</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <p><b>Common trap question:</b> “Where do you create a DynamoDB database?”</p>
+        <p>✅ You don’t. You create <b>tables</b>. AWS manages the underlying database infrastructure.</p>
+      </div>
+    </section>
+
+    <section id="quick-check">
+      <h2>6) Quick check (self-review)</h2>
+      <div class="grid">
+        <div class="qa">
+          <b>Q1: What is the first thing you create in DynamoDB?</b>
+          <div>A: A <b>table</b> (not a database instance/cluster).</div>
+        </div>
+        <div class="qa">
+          <b>Q2: What key is required?</b>
+          <div>A: The <b>partition key</b>.</div>
+        </div>
+        <div class="qa">
+          <b>Q3: What does “schema-less” mean in DynamoDB?</b>
+          <div>A: Items can have different attributes, but they must include the key attribute(s).</div>
+        </div>
+        <div class="qa">
+          <b>Q4: When is Provisioned often cheaper?</b>
+          <div>A: When workload (reads/writes) is stable and predictable.</div>
+        </div>
+        <div class="qa">
+          <b>Q5: How do you insert items from the Console?</b>
+          <div>A: Select table → <b>Explore table items</b> → <b>Create item</b>.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>7) Mini glossary</h2>
+      <div class="card">
+        <ul>
+          <li>📦 <b>Table</b>: top-level container for DynamoDB records.</li>
+          <li>🧾 <b>Item</b>: a single record in a table (like a row).</li>
+          <li>🏷️ <b>Attribute</b>: a field in an item (like a column value).</li>
+          <li>🔑 <b>Partition key</b>: required primary key component used to identify items.</li>
+          <li>🧩 <b>Sort key</b>: optional key used with partition key to form a composite key.</li>
+          <li>💳 <b>Provisioned</b>: pay for reserved capacity.</li>
+          <li>🧾 <b>On-Demand</b>: pay per request (reads/writes).</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="hr"></div>
+
+    <footer class="muted">
+      <p><b>Print tip:</b> In the print dialog, choose <b>A4</b>, set margins to <b>Default</b>, and enable “Background graphics” only if you want the light callout shading. The page is designed to print cleanly either way.</p>
+    </footer>
+  </main>
+</body>
+</html>

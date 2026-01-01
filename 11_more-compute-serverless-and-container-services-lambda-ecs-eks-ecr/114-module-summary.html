@@ -1,0 +1,520 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 — Module Summary: Serverless & Containers (Lambda, ECS, EKS, ECR)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --accent: #0b57d0;
+      --accent-2: #1a73e8;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Single-column printable layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 22px 18px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      margin: 0 0 6px 0;
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn:hover { border-color: #cfcfcf; }
+    .btn.primary {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .meta {
+      display: grid;
+      gap: 6px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+
+    main { margin-top: 14px; }
+
+    .section {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 12px 0;
+      background: #fff;
+    }
+
+    .section h2 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .section h3 {
+      margin: 12px 0 6px 0;
+      font-size: 14px;
+    }
+
+    .section p { margin: 8px 0; }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .card .kicker {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    ul, ol {
+      margin: 8px 0 8px 22px;
+      padding: 0;
+    }
+
+    li { margin: 6px 0; }
+
+    .checks {
+      list-style: none;
+      margin-left: 0;
+    }
+
+    .checks li {
+      position: relative;
+      padding-left: 22px;
+    }
+
+    .checks li::before {
+      content: "☐";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      vertical-align: top;
+      text-align: left;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: var(--panel);
+      font-weight: 700;
+    }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+    }
+
+    pre {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+      overflow: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    a { color: var(--accent); }
+
+    /* Prevent text being cut off on print */
+    .page, .section, .card, pre, table {
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { font-size: 11.5pt; line-height: 1.45; }
+      .page { max-width: none; padding: 0; margin: 0; }
+      header, .section, .card { border-color: #d9d9d9; }
+      .toolbar { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      .section, header { break-inside: avoid; page-break-inside: avoid; }
+      table { break-inside: avoid; page-break-inside: avoid; }
+      pre { break-inside: avoid; page-break-inside: avoid; }
+    }
+
+    /* Small screens */
+    @media (max-width: 520px) {
+      .page { padding: 16px 12px; }
+      h1 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>📌 Module Summary — Compute Beyond EC2: Lambda + Containers</h1>
+      <p class="subtitle">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer / Study Guide (Print-ready A4, Single Column)</p>
+
+      <div class="toolbar" role="toolbar" aria-label="Actions">
+        <button class="btn primary" onclick="window.print()" type="button">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})" type="button">✅ Quick Check</button>
+        <button class="btn" onclick="document.getElementById('mini-quiz').scrollIntoView({behavior:'smooth'})" type="button">🧠 Mini Quiz</button>
+      </div>
+
+      <div class="meta">
+        <div><strong>Focus:</strong> EC2 vs Serverless (Lambda) vs Containers (ECS/EKS/Fargate) + Image Registry (ECR)</div>
+        <div><strong>Goal:</strong> Understand what each service does, when to use it, and the key exam keywords.</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" aria-label="Big Picture">
+        <h2>🧭 Big Picture (What this section was about)</h2>
+        <p>
+          This module introduced <strong>alternative compute models</strong> to running code on <strong>EC2 virtual servers</strong>.
+          You can often achieve the same business goal (run code) in different ways — but the <em>operational effort</em>, <em>pricing model</em>, and <em>best-fit workloads</em> differ.
+        </p>
+
+        <div class="callout">
+          <strong>Key idea:</strong> You can “mix and match” compute approaches. Many real systems use <strong>EC2 + Lambda + Containers</strong> together.
+          <span aria-hidden="true">🙂</span>
+        </div>
+
+        <ul>
+          <li>🖥️ <strong>EC2</strong> = rent servers (high control, more ops work)</li>
+          <li>⚡ <strong>Lambda</strong> = run code on-demand (event-driven, serverless)</li>
+          <li>📦 <strong>Containers</strong> = package code + runtime environment (portable, microservices-friendly)</li>
+          <li>🏷️ <strong>ECR</strong> = store container images so ECS/EKS can pull them</li>
+        </ul>
+      </section>
+
+      <section class="section" aria-label="EC2 vs Lambda vs Containers">
+        <h2>🔍 EC2 vs Lambda vs Containers (Core Differences)</h2>
+
+        <table aria-label="Comparison table">
+          <thead>
+            <tr>
+              <th style="width: 22%">Compute Option</th>
+              <th style="width: 39%">What you manage</th>
+              <th style="width: 39%">Best for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>EC2</strong> 🖥️</td>
+              <td>
+                OS + installed software + patches + long-running processes.
+                You choose instance type, networking, scaling approach.
+              </td>
+              <td>
+                Web servers, custom software stacks, legacy migrations, long-running jobs, custom networking needs.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Lambda</strong> ⚡</td>
+              <td>
+                You upload code + set triggers + configure runtime (memory, timeout, env vars).
+                No server management.
+              </td>
+              <td>
+                Event-driven tasks (file processing, automation), short-lived compute, “only pay when used”.
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Containers</strong> 📦</td>
+              <td>
+                Build images; define tasks/services; runtime managed by ECS/EKS.
+                Optional: use <strong>Fargate</strong> to avoid managing EC2 worker nodes.
+              </td>
+              <td>
+                Microservices, consistent deployments, portability (“works the same everywhere”), scaling web APIs.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>Exam pattern:</strong> If the scenario says “<em>event triggers code execution</em>” → think <strong>Lambda</strong> ⚡.
+          If it says “<em>package runtime + dependencies</em>” → think <strong>Containers</strong> 📦.
+          If it says “<em>full control over OS</em>” → think <strong>EC2</strong> 🖥️.
+        </div>
+      </section>
+
+      <section class="section" aria-label="Lambda summary">
+        <h2>⚡ AWS Lambda (Serverless, Event-Driven Compute)</h2>
+
+        <div class="grid">
+          <div class="card">
+            <div class="kicker">Definition</div>
+            <p><strong>Lambda</strong> runs your code <strong>in response to events</strong> without you provisioning or managing servers.</p>
+          </div>
+
+          <div class="card">
+            <div class="kicker">What you configure (typical)</div>
+            <ul>
+              <li>🧩 Function code (console editor, ZIP upload, or container image)</li>
+              <li>⏱️ Timeout (max execution time)</li>
+              <li>🧠 Memory (affects performance and cost)</li>
+              <li>🌱 Environment variables</li>
+              <li>🔐 IAM execution role (permissions)</li>
+              <li>🪝 Triggers (S3 events, API calls via other services, schedules, etc.)</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Beginner-friendly example</h3>
+        <p>
+          🖼️ <strong>Image processing workflow:</strong> A user uploads a JPG to an S3 bucket → that upload event triggers Lambda → Lambda resizes the image and saves it to another bucket.
+        </p>
+
+        <pre aria-label="Example pseudo-flow">Event: S3:ObjectCreated (new file)
+Lambda: resizeImage(file)
+Output: save resized file to another S3 bucket</pre>
+
+        <div class="callout">
+          <strong>Pricing intuition:</strong> You pay for <em>execution time</em> (milliseconds) and resources used — not for idle time.
+          Many accounts also have a recurring free-tier allowance each month. 💡
+        </div>
+      </section>
+
+      <section class="section" aria-label="Containers overview">
+        <h2>📦 Containers (Concept Refresher)</h2>
+        <p>
+          A <strong>container</strong> is a packaged unit that contains your <strong>application code</strong> plus the <strong>runtime environment</strong> it needs.
+          This helps ensure consistent behavior across environments (local → test → production).
+        </p>
+
+        <ul>
+          <li>🧱 <strong>Image</strong> = blueprint (what to run, dependencies, runtime)</li>
+          <li>🚀 <strong>Container</strong> = running instance of an image</li>
+          <li>🧩 Apps can be single-container or multi-container (microservices)</li>
+        </ul>
+
+        <div class="callout">
+          <strong>Common keyword:</strong> “Microservices” often appears with containers because each service can ship its own image independently. 🙂
+        </div>
+      </section>
+
+      <section class="section" aria-label="ECS EKS Fargate">
+        <h2>🧰 ECS vs EKS + Fargate (Running Containers on AWS)</h2>
+
+        <h3>ECS and EKS (What they are)</h3>
+        <ul>
+          <li><strong>ECS</strong> (Elastic Container Service) = AWS-managed container orchestration (AWS-native approach) 🧩</li>
+          <li><strong>EKS</strong> (Elastic Kubernetes Service) = managed Kubernetes on AWS (Kubernetes-based approach) ☸️</li>
+        </ul>
+
+        <h3>Fargate (Serverless container execution)</h3>
+        <p>
+          <strong>Fargate</strong> is a serverless compute engine for containers used with ECS/EKS.
+          It reduces infrastructure management: you don’t directly manage EC2 worker nodes; you focus on task-level config.
+        </p>
+
+        <table aria-label="ECS EKS Fargate quick compare">
+          <thead>
+            <tr>
+              <th style="width: 30%">Term</th>
+              <th style="width: 70%">What to remember</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Task Definition</strong> 🧾</td>
+              <td>Blueprint describing which image(s) to run and how (CPU/memory, ports, env vars).</td>
+            </tr>
+            <tr>
+              <td><strong>Task</strong> ⏳</td>
+              <td>Runs and finishes (batch-style / job-style).</td>
+            </tr>
+            <tr>
+              <td><strong>Service</strong> 🟢</td>
+              <td>Long-running tasks (e.g., web API) kept running and scaled to desired count.</td>
+            </tr>
+            <tr>
+              <td><strong>Fargate</strong> ☁️</td>
+              <td>“Serverless containers” — fewer instance choices; simplified compute management.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>Beginner-friendly example:</strong> You have a Node.js API as a container image. You run it as an <strong>ECS Service</strong> (always on) and scale it to 3 tasks behind a load balancer. 🌐
+        </div>
+      </section>
+
+      <section class="section" aria-label="ECR">
+        <h2>🏷️ ECR (Elastic Container Registry)</h2>
+        <p>
+          <strong>ECR</strong> is AWS’s managed container image registry.
+          It stores your Docker images in repositories so services like <strong>ECS</strong> and <strong>EKS</strong> can pull them during deployments.
+        </p>
+
+        <h3>Key points to remember</h3>
+        <ul>
+          <li>📁 Repositories can be <strong>private</strong> or <strong>public</strong></li>
+          <li>🔐 Supports security features like encryption and image scanning (conceptually)</li>
+          <li>🔁 Typical flow: build image → push to ECR → ECS/EKS pulls image → runs containers</li>
+        </ul>
+
+        <pre aria-label="ECR flow">Developer machine:
+  docker build -t my-app:1.0 .
+  docker push (to ECR repo)
+
+AWS side:
+  ECS/EKS pulls image from ECR
+  runs containers based on that image</pre>
+
+        <div class="callout">
+          <strong>Exam pattern:</strong> If the question says “store container images in AWS” → answer is usually <strong>ECR</strong>. ✅
+        </div>
+      </section>
+
+      <section class="section" id="quick-check" aria-label="Quick Check">
+        <h2>✅ Quick Check (Make sure you can say these out loud)</h2>
+        <ul class="checks">
+          <li>I can explain EC2 vs Lambda vs Containers in one sentence each. 🙂</li>
+          <li>I know Lambda is event-driven and short-lived (timeout-based). ⏱️</li>
+          <li>I know ECS/EKS run container clusters, and Fargate is “serverless containers”. ☁️</li>
+          <li>I know ECR stores container images (private or public repos). 🏷️</li>
+          <li>I know permissions matter: Lambda uses an IAM role; container tasks also need permissions. 🔐</li>
+        </ul>
+      </section>
+
+      <section class="section" id="mini-quiz" aria-label="Mini Quiz">
+        <h2>🧠 Mini Quiz (CLF-C02 style)</h2>
+        <ol>
+          <li>
+            A file upload to S3 should automatically trigger code to resize the image.
+            Which compute service fits best?
+            <div class="callout"><strong>Expected:</strong> Lambda ⚡</div>
+          </li>
+          <li>
+            You want to deploy a microservice that must run consistently with its dependencies and scale out.
+            Which approach fits best?
+            <div class="callout"><strong>Expected:</strong> Containers via ECS/EKS 📦</div>
+          </li>
+          <li>
+            You need a place to store your Docker images so ECS can deploy them.
+            Which service?
+            <div class="callout"><strong>Expected:</strong> ECR 🏷️</div>
+          </li>
+          <li>
+            You need full control over OS packages and want to run a long-running process.
+            Which compute option is most suitable?
+            <div class="callout"><strong>Expected:</strong> EC2 🖥️</div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section" aria-label="Key Terms">
+        <h2>📚 Key Terms (Fast Recall)</h2>
+        <ul>
+          <li><strong>Serverless</strong> = no server provisioning; pay mainly for usage (conceptually).</li>
+          <li><strong>Event-driven</strong> = an event (S3 upload, schedule, etc.) triggers compute.</li>
+          <li><strong>Lambda Function</strong> = the unit you create in Lambda containing your code.</li>
+          <li><strong>Container Image</strong> = blueprint that packages app + dependencies.</li>
+          <li><strong>ECS / EKS</strong> = orchestrate and manage container workloads.</li>
+          <li><strong>Fargate</strong> = serverless environment for running containers (ECS/EKS).</li>
+          <li><strong>ECR</strong> = AWS container image registry.</li>
+        </ul>
+      </section>
+
+      <section class="section" aria-label="One-line summary">
+        <h2>🧾 One-Line Summary</h2>
+        <p>
+          <strong>EC2</strong> gives maximum control (you manage servers), <strong>Lambda</strong> runs code on-demand via events (no servers), and <strong>ECS/EKS</strong> run containers (often with <strong>Fargate</strong>), with <strong>ECR</strong> storing the images.
+        </p>
+      </section>
+
+      <section class="section" aria-label="Footer">
+        <p style="margin:0; color: var(--muted); font-size: 12px;">
+          Tip: For printing, use your browser’s “Save as PDF” and keep margins enabled. This page is optimized for A4.
+        </p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

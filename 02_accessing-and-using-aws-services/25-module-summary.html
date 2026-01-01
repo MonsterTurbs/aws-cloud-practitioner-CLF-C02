@@ -1,0 +1,383 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 25 Module Summary (Accessing & Using AWS Services)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+      --ok:#0f7b0f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column page container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    a{ color: var(--accent); }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    .qna strong{ display:block; margin: 10px 0 4px; }
+
+    .steps{
+      margin: 8px 0 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .steps li{
+      margin: 8px 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      ul,li{ break-inside: avoid; page-break-inside: avoid; }
+      .steps li{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • Section Summary</p>
+      <h1>25 — Module Summary: Accessing & Using AWS Services ✅🧭</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 What This Section Covered</h2>
+        <p>This section focused on the basics you need to <strong>access AWS</strong>, <strong>use AWS services</strong>, and <strong>stay in charge of pricing and costs</strong>—so you can confidently dive deeper into AWS in the next sections.</p>
+        <div class="callout">
+          <p><strong>Big outcome ✅</strong> You now understand the main access methods, how AWS usage works “behind the scenes,” and how to avoid unexpected charges.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧑‍💻 Accessing AWS (3 Main Ways)</h2>
+        <p>You learned that there are multiple ways to use AWS services, and each has different use cases.</p>
+        <div class="grid">
+          <div class="mini">
+            <h3>1) AWS Management Console (Web UI) 🖱️</h3>
+            <ul>
+              <li>Best for getting started and exploring services</li>
+              <li>No setup beyond an account + a browser</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>2) AWS CLI (Command Line) ⌨️</h3>
+            <ul>
+              <li>More advanced</li>
+              <li>Good for repeated tasks and automation</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>3) AWS SDKs (Programmatic Access) 🧩</h3>
+            <ul>
+              <li>Write code that controls AWS services</li>
+              <li>Supports automation and infrastructure-as-code style workflows</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">
+          <p><strong>Behind the scenes ✅</strong> No matter which method you use, they all end up sending commands (API requests) to AWS.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧾 Pricing, Free Tier & Cost Control</h2>
+        <p>You learned how to avoid paying more than intended by using AWS’s pricing resources and cost monitoring tools.</p>
+
+        <div class="mini">
+          <h3>🔎 Pricing basics</h3>
+          <ul>
+            <li>Always check <strong>service pricing pages</strong> before using a service</li>
+            <li>Prices can differ by <strong>Region</strong>, so select Regions carefully</li>
+            <li>Use the <strong>AWS Pricing Calculator</strong> to estimate costs</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <h3>🆓 Free Tier</h3>
+          <ul>
+            <li>Many services can be free within the first <strong>12 months</strong> (within quotas)</li>
+            <li>Some services are <strong>always free</strong> within limits</li>
+            <li>Always confirm Free Tier quotas/limits before experimenting</li>
+          </ul>
+        </div>
+
+        <div class="warning">
+          <p><strong>Important ⚠️</strong> Free Tier is not unlimited. Going beyond quotas/limits can create charges.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>📊 Billing Dashboard + Cost Tools</h2>
+        <p>You learned that monitoring costs should be a regular habit.</p>
+        <div class="grid">
+          <div class="mini">
+            <h3>Billing Dashboard 🧾</h3>
+            <ul>
+              <li>Check current month bill before month end</li>
+              <li>See forecast and which services drive costs</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>Cost Explorer 📈</h3>
+            <ul>
+              <li>Analyze costs deeply (filters by region, service, tags, etc.)</li>
+              <li>Useful for accounts with multiple services</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>Budgets 🎯📧</h3>
+            <ul>
+              <li>Set a monthly target (e.g., $10)</li>
+              <li>Get email alerts (e.g., at 80%)</li>
+              <li><strong>Budgets alert you</strong>—they don’t block spending</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🆘 Getting Help & Learning More</h2>
+        <p>You learned the primary resources to troubleshoot issues and deepen your AWS knowledge.</p>
+        <div class="grid">
+          <div class="mini">
+            <h3>AWS Support 🧑‍💼</h3>
+            <p>Support plan levels can be changed. Higher paid levels offer more help (up to an account manager). Useful for account/billing issues and advanced scenarios.</p>
+          </div>
+          <div class="mini">
+            <h3>Health Dashboards 🚦</h3>
+            <ul>
+              <li><strong>Personal Health Dashboard</strong>: issues affecting your account</li>
+              <li><strong>Service Health Dashboard</strong>: global AWS issues and service status</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <h3>AWS Documentation 📖</h3>
+            <p>The most important resource for service details, configuration, tutorials, and troubleshooting. Quick method: search <strong>“AWS &lt;service&gt; documentation”</strong>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>📏 Service Quotas (Limits)</h2>
+        <p>You learned that AWS services have limits (quotas). Some quotas can be increased using the <strong>Service Quotas</strong> service.</p>
+        <div class="mini">
+          <ul>
+            <li>Example mentioned: EC2 Elastic IP limit (5 per account in the lecture example)</li>
+            <li>Some limits are hard; some allow increase requests</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Final Checklist Before Moving On</h2>
+        <ol class="steps">
+          <li>1) ✅ I know the 3 access methods: Console, CLI, SDKs</li>
+          <li>2) ✅ I understand they all send AWS API commands behind the scenes</li>
+          <li>3) ✅ I know how to check pricing pages + Free Tier quotas</li>
+          <li>4) ✅ I know how to monitor costs (Billing Dashboard, Cost Explorer, Budgets)</li>
+          <li>5) ✅ I know where to get help (Support, Health Dashboards, Docs)</li>
+          <li>6) ✅ I know AWS services have quotas and where to manage them</li>
+        </ol>
+        <div class="good">
+          <p><strong>Ready ✅</strong> With these basics, you’re prepared to dive deeper into AWS services and concepts in the next sections.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms (Exam Focus)</h2>
+        <span class="tag">Management Console</span>
+        <span class="tag">AWS CLI</span>
+        <span class="tag">AWS SDK</span>
+        <span class="tag">AWS API</span>
+        <span class="tag">Pricing Pages</span>
+        <span class="tag">Free Tier</span>
+        <span class="tag">Billing Dashboard</span>
+        <span class="tag">Cost Explorer</span>
+        <span class="tag">Budgets</span>
+        <span class="tag">AWS Support</span>
+        <span class="tag">Health Dashboards</span>
+        <span class="tag">Documentation</span>
+        <span class="tag">Service Quotas</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="qna">
+          <strong>Q1: Which access method is best for beginners?</strong>
+          <p>A: The AWS Management Console (web UI).</p>
+
+          <strong>Q2: What do Console, CLI, and SDKs have in common?</strong>
+          <p>A: They all send API commands to AWS behind the scenes.</p>
+
+          <strong>Q3: What are two key ways to avoid surprise charges?</strong>
+          <p>A: Monitor Billing Dashboard regularly and set Budgets with alerts.</p>
+
+          <strong>Q4: What should you check before starting a new service?</strong>
+          <p>A: The service pricing page, Free Tier quotas, and the selected Region.</p>
+
+          <strong>Q5: Where do you look if services are failing unexpectedly?</strong>
+          <p>A: Personal/Service Health Dashboards first, then documentation, and support if needed.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

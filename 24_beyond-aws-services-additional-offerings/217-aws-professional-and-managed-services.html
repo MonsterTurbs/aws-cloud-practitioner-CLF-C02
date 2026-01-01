@@ -1,0 +1,343 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS Professional Services & Managed Services — Study Guide (Print-Friendly)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111;
+      --muted: #555;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --chip: #f3f3f3;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px;
+    }
+
+    header {
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin: 0 0 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 18px 0 10px;
+    }
+
+    h3 {
+      font-size: 15px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 8px 0; }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin: 12px 0;
+      page-break-inside: avoid;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 0;
+    }
+
+    .chip {
+      background: var(--chip);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .callout {
+      border-left: 4px solid #111;
+      padding: 10px 12px;
+      margin: 12px 0;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      page-break-inside: avoid;
+    }
+
+    ul { margin: 8px 0 8px 20px; }
+    li { margin: 6px 0; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 13px;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th { background: #f6f6f6; }
+
+    .mini {
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .qa {
+      margin: 10px 0;
+      padding: 10px 12px;
+      border: 1px dashed #cfcfcf;
+      border-radius: 10px;
+      page-break-inside: avoid;
+    }
+
+    .qa b { display: inline-block; margin-bottom: 4px; }
+
+    /* Print settings */
+    @page {
+      size: A4;
+      margin: 14mm 14mm;
+    }
+
+    @media print {
+      .page { max-width: none; padding: 0; }
+      header { border-bottom: 1px solid var(--border); }
+      a { color: inherit; text-decoration: none; }
+      .panel, .callout, table, .qa { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>🤝 AWS Professional Services & Managed Services</h1>
+      <p class="subtitle">Reviewer / Study Guide (Beginner-Friendly, Single Column, A4 Print-Ready)</p>
+    </header>
+
+    <section class="panel">
+      <h2>🎯 Big Picture: “Beyond AWS Services”</h2>
+      <p>
+        AWS is known for its technical services (EC2, S3, Lambda, etc.), but it also has an <b>ecosystem</b> that helps you
+        <b>buy solutions</b> and <b>get expert help</b>.
+      </p>
+      <div class="chips" aria-label="Key ecosystem parts">
+        <span class="chip">🤝 AWS Partner Network (APN)</span>
+        <span class="chip">🛒 AWS Marketplace</span>
+        <span class="chip">🧑‍💼 AWS Professional Services</span>
+        <span class="chip">🛠️ AWS Managed Services</span>
+        <span class="chip">🎧 AWS Support</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧩 Key Terms (Simple Definitions)</h2>
+
+      <div class="callout">
+        <h3>🤝 AWS Professional Services (Project-based help)</h3>
+        <p>
+          Think: <b>“We have a project and we want AWS experts to help us do it right.”</b> ✅
+        </p>
+        <ul>
+          <li>Helps with migrations, architecture design, planning, building, and modernization.</li>
+          <li>Typically <b>time-bound</b> and <b>goal-based</b> (deliverables, milestones, outcomes).</li>
+          <li>Delivered by AWS professionals, sometimes with partner involvement when relevant.</li>
+        </ul>
+        <p class="mini">Memory tip: Professional Services = “finish this project.” 🏁</p>
+      </div>
+
+      <div class="callout">
+        <h3>🛠️ AWS Managed Services (Ongoing operations help)</h3>
+        <p>
+          Think: <b>“We run workloads on AWS and we want ongoing operational help.”</b> 🔁
+        </p>
+        <ul>
+          <li>Focus is <b>continuous support</b> for operations (e.g., incident management, operational processes, cost controls).</li>
+          <li>Not the same as AWS Support; it’s more like an operational partnership.</li>
+          <li>Useful if you want to improve how you operate AWS over time (and reduce operational burden).</li>
+        </ul>
+        <p class="mini">Memory tip: Managed Services = “help us run it day-to-day.” 🗓️</p>
+      </div>
+
+      <div class="callout">
+        <h3>🎧 AWS Support (Help when you have questions or issues)</h3>
+        <p>
+          Think: <b>“We need help with a specific AWS service/problem.”</b> ❓
+        </p>
+        <ul>
+          <li>Support plans (various tiers) provide guidance, troubleshooting, and response times.</li>
+          <li>Best for <b>reactive help</b>: questions, incidents, service issues.</li>
+        </ul>
+        <p class="mini">Memory tip: Support = “help me fix/understand this issue.” 🧯</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧠 How They Relate to APN & Marketplace</h2>
+      <div class="panel">
+        <p>
+          You can get help and solutions from multiple places:
+        </p>
+        <ul>
+          <li><b>APN (Partners)</b>: other companies that build on AWS (consulting, SaaS, tools, integrations).</li>
+          <li><b>Marketplace</b>: where you can buy software/SaaS and sometimes professional services from partners.</li>
+          <li><b>AWS Professional Services</b>: consulting-style help directly from AWS (often for major projects).</li>
+          <li><b>AWS Managed Services</b>: ongoing operational help directly from AWS specialists.</li>
+        </ul>
+      </div>
+
+      <div class="qa">
+        <b>Example (Beginner-Friendly):</b>
+        <p>
+          You want to migrate an app and database to AWS. You might:
+        </p>
+        <ul>
+          <li>Buy a partner solution from the <b>Marketplace</b> (e.g., monitoring/security tool) 🛒</li>
+          <li>Hire <b>AWS Professional Services</b> to design the migration plan and architecture 🧑‍💼</li>
+          <li>Use <b>AWS Managed Services</b> for ongoing operational improvements after go-live 🛠️</li>
+          <li>Use <b>AWS Support</b> when you hit a specific service issue during operations 🎧</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>📌 Quick Comparison Table (High Yield)</h2>
+      <table aria-label="Comparison of AWS Professional Services, Managed Services, and AWS Support">
+        <thead>
+          <tr>
+            <th>Offering</th>
+            <th>Main Goal</th>
+            <th>Timeframe</th>
+            <th>Best For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🧑‍💼 AWS Professional Services</td>
+            <td>Deliver a project outcome</td>
+            <td>Time-bound (project)</td>
+            <td>Migrations, architecture guidance, building/modernization</td>
+          </tr>
+          <tr>
+            <td>🛠️ AWS Managed Services</td>
+            <td>Improve/handle ongoing operations</td>
+            <td>Ongoing (continuous)</td>
+            <td>Ops processes, incident mgmt assistance, cost optimization support</td>
+          </tr>
+          <tr>
+            <td>🎧 AWS Support</td>
+            <td>Answer questions / troubleshoot issues</td>
+            <td>As-needed</td>
+            <td>Service issues, guidance on AWS products, incident response</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>📝 Exam-Style Reminders</h2>
+      <div class="panel">
+        <ul>
+          <li>✅ <b>AWS Marketplace</b> = buy software/SaaS/solutions (often partner-provided; sometimes includes pro services).</li>
+          <li>✅ <b>AWS Professional Services</b> = AWS-led consulting for <b>projects</b> (migration/build).</li>
+          <li>✅ <b>AWS Managed Services</b> = AWS-led <b>ongoing operational support</b> (day-2 operations help).</li>
+          <li>✅ <b>AWS Support</b> = support plans for <b>questions + troubleshooting</b> (not the same as Managed Services).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧪 Mini Self-Quiz (Fast Recall)</h2>
+
+      <div class="qa">
+        <b>Q1:</b> You need help planning and executing a migration to AWS. Which offering fits best?
+        <p><b>A:</b> 🧑‍💼 AWS Professional Services (project-focused).</p>
+      </div>
+
+      <div class="qa">
+        <b>Q2:</b> Your workload is running but operations are heavy; you want ongoing help with operations and processes.
+        <p><b>A:</b> 🛠️ AWS Managed Services.</p>
+      </div>
+
+      <div class="qa">
+        <b>Q3:</b> You have an AWS service issue and want troubleshooting help.
+        <p><b>A:</b> 🎧 AWS Support.</p>
+      </div>
+
+      <div class="qa">
+        <b>Q4:</b> Where can you buy partner software solutions that integrate with AWS?
+        <p><b>A:</b> 🛒 AWS Marketplace.</p>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-label="End divider"></div>
+
+    <section class="panel">
+      <h2>✅ One-Sentence Summary</h2>
+      <p>
+        <b>Professional Services</b> helps you <b>deliver a project</b> 🧑‍💼, <b>Managed Services</b> helps you <b>operate continuously</b> 🛠️,
+        and <b>Support</b> helps you <b>solve specific issues/questions</b> 🎧—all within the broader AWS ecosystem (APN + Marketplace).
+      </p>
+    </section>
+
+    <p class="mini">Print tip: Use your browser print dialog → Paper size: A4 → Margins: default (or none) → Background graphics: on (optional).</p>
+  </main>
+</body>
+</html>

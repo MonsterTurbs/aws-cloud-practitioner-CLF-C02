@@ -1,0 +1,376 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — Developing for, with, and in the Cloud (Module Summary)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #5a5a5a;
+      --border: #e6e6e6;
+      --panel: #fafafa;
+      --panel2: #f6f7f9;
+      --link: #0b57d0;
+      --focus: #1a73e8;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Single-column layout */
+    .page {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+    }
+
+    header {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 18px 18px 14px;
+    }
+
+    .kicker {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0 0 8px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn:focus {
+      outline: 3px solid rgba(26,115,232,.25);
+      outline-offset: 2px;
+      border-color: var(--focus);
+    }
+
+    main { margin-top: 14px; }
+
+    section {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      padding: 16px 18px;
+      margin: 12px 0;
+    }
+
+    h2 {
+      font-size: 17px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      font-size: 14px;
+      margin: 14px 0 8px;
+    }
+
+    p { margin: 8px 0; }
+
+    ul { margin: 8px 0 8px 20px; padding: 0; }
+    li { margin: 6px 0; }
+
+    .callout {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 12px;
+      margin: 10px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .mini {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      background: #fff;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .checklist li { list-style: none; margin-left: -20px; }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    footer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* Print styles */
+    @page {
+      size: A4;
+      margin: 14mm;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { padding: 0; max-width: none; }
+      header, section {
+        border-color: #cfcfcf;
+        box-shadow: none;
+      }
+      .toolbar { display: none !important; }
+      a { color: #000; text-decoration: none; }
+      .callout { background: #fff; }
+
+      /* Avoid awkward breaks */
+      h1, h2, h3 { page-break-after: avoid; }
+      section, .callout, ul, .mono { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) — Reviewer</p>
+      <h1>Module Summary: Developing for, with, and in the Cloud</h1>
+      <p class="subtitle">Single-column, print-ready notes (A4) with beginner-friendly explanations, examples, and memory cues.</p>
+
+      <div class="toolbar">
+        <button class="btn" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" type="button" onclick="document.getElementById('quick-check').scrollIntoView({behavior:'smooth'})">✅ Jump to Quick Check</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>1) Big idea (what this section is about) 🧠</h2>
+        <p>
+          Deploying applications is a <strong>multi-step workflow</strong>—not only on AWS, but anywhere.
+          The typical loop is:
+          <strong>write</strong> → <strong>store</strong> → <strong>test</strong> → <strong>build</strong> → <strong>deploy</strong> → repeat.
+        </p>
+        <div class="callout">
+          <p><strong>Memory cue:</strong> “WSTBD” (Write, Store, Test, Build, Deploy) — then do it again. 🔁</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>2) Why use cloud-based dev tools? ☁️⚙️</h2>
+        <ul>
+          <li><strong>Performance:</strong> a cloud build server can focus on builds/tests (no background apps like your laptop). 🚀</li>
+          <li><strong>Always available:</strong> schedule builds/deployments even at 2:00 AM without waking up. ⏰</li>
+          <li><strong>Team-friendly:</strong> teammates can access, trigger, monitor, and standardize processes in one place. 👥</li>
+          <li><strong>Consistency:</strong> same environment each time reduces “works on my machine” problems. ✅</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3) The AWS services you should know (and where they fit) 🧩</h2>
+        <p class="mini">Focus on “what it does” and “where it fits in the workflow.” You don’t need deep configuration details for CLF-C02.</p>
+
+        <div class="grid">
+          <div class="callout">
+            <h3>✍️ Write Code: <strong>Cloud9</strong> <span class="pill">IDE in the browser</span></h3>
+            <ul>
+              <li>Cloud-based development environment (IDE) inside the AWS console.</li>
+              <li>Runs on an underlying compute environment (historically EC2-backed in the course material).</li>
+            </ul>
+            <p class="mini"><strong>Example:</strong> You open Cloud9, edit a Node.js project, run commands in the built-in terminal, and commit changes.</p>
+          </div>
+
+          <div class="callout">
+            <h3>🗂️ Store Code: <strong>CodeCommit</strong> <span class="pill">Git repository</span></h3>
+            <ul>
+              <li>Private Git repositories managed in AWS.</li>
+              <li>Stores your code history (“commits”) so you can collaborate and roll back. 🧾</li>
+            </ul>
+            <p class="mini"><strong>Example:</strong> Push your <span class="mono">git push</span> to CodeCommit so teammates can pull the same code.</p>
+          </div>
+
+          <div class="callout">
+            <h3>📦 Packages: <strong>CodeArtifact</strong> <span class="pill">Package repository</span></h3>
+            <ul>
+              <li>Managed repository for software packages (public and private).</li>
+              <li>Useful when your company wants internal packages not available publicly. 🏢</li>
+            </ul>
+            <p class="mini"><strong>Example:</strong> Your team publishes a private “company-logging-lib” and CodeBuild pulls it during builds.</p>
+          </div>
+
+          <div class="callout">
+            <h3>🧪 Test + 🏗️ Build: <strong>CodeBuild</strong> <span class="pill">Managed build environment</span></h3>
+            <ul>
+              <li>Runs automated tests and builds in a managed environment.</li>
+              <li>Controlled by a <strong>buildspec</strong> file (commands + phases). 🧾</li>
+              <li>Build outputs (artifacts) are often stored in <strong>S3</strong>. 🪣</li>
+            </ul>
+            <div class="mono"># Example build steps (conceptual)
+Install dependencies
+Run tests
+Build the app
+Upload artifact to S3</div>
+          </div>
+
+          <div class="callout">
+            <h3>🚚 Deploy: <strong>CodeDeploy</strong> <span class="pill">To EC2 / ECS / Lambda</span></h3>
+            <ul>
+              <li>Deploys your built output to targets like EC2, ECS, or Lambda.</li>
+              <li>Supports deployment strategies and makes monitoring / retry / rollback easier. 🔁</li>
+            </ul>
+            <p class="mini"><strong>Example:</strong> Deploy a new version to EC2 instances and roll back if health checks fail.</p>
+          </div>
+
+          <div class="callout">
+            <h3>🔗 Orchestrate Everything: <strong>CodePipeline</strong> <span class="pill">CI/CD pipeline</span></h3>
+            <ul>
+              <li>Connects stages like Source → Test → Build → Deploy.</li>
+              <li>Triggered automatically (e.g., on push to the repository). ⚡</li>
+              <li>Can include manual approval steps. ✋</li>
+            </ul>
+            <p class="mini"><strong>Think:</strong> “Pipeline = the assembly line that runs the steps in order.”</p>
+          </div>
+
+          <div class="callout">
+            <h3>🎛️ Simplified Setup: <strong>CodeStar</strong> <span class="pill">Starter templates</span></h3>
+            <ul>
+              <li>Helps you get started quickly with a pre-configured CI/CD workflow.</li>
+              <li>Uses CodePipeline and related services under the hood. 🧱</li>
+            </ul>
+            <p class="mini"><strong>Exam-friendly summary:</strong> CodeStar = easier “starter kit” for a typical pipeline.</p>
+          </div>
+
+          <div class="callout">
+            <h3>🤖 Recommendations: <strong>CodeGuru</strong> + <strong>DevOps Guru</strong> <span class="pill">ML insights</span></h3>
+            <ul>
+              <li><strong>CodeGuru:</strong> analyzes code and recommends improvements/best practices. 🧠</li>
+              <li><strong>DevOps Guru:</strong> analyzes running apps/metrics/logs and flags operational issues. 📈</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>4) Beginner example: putting it together 🧑‍💻</h2>
+        <p><strong>Scenario:</strong> You have a small web API and want safer, repeatable deployments.</p>
+        <ol>
+          <li>Write code in VS Code (or Cloud9). ✍️</li>
+          <li>Push to CodeCommit (remote backup + collaboration). 🗂️</li>
+          <li>CodePipeline detects the push and triggers CodeBuild. 🔔</li>
+          <li>CodeBuild runs tests and builds the package; artifact goes to S3. 🧪🏗️</li>
+          <li>CodeDeploy deploys the new version to EC2/ECS/Lambda. 🚚</li>
+          <li>If deployment fails, roll back quickly. 🔁</li>
+        </ol>
+        <div class="callout">
+          <p><strong>Why this matters:</strong> you get repeatability (same steps every time), shared visibility, and less manual error. ✅</p>
+        </div>
+      </section>
+
+      <section id="quick-check">
+        <h2>5) Quick Check (exam-style recall) ✅</h2>
+        <ul class="checklist">
+          <li>✅ <strong>Cloud9</strong> = cloud IDE (write code in the browser).</li>
+          <li>✅ <strong>CodeCommit</strong> = Git repo (store code privately).</li>
+          <li>✅ <strong>CodeBuild</strong> = run tests/build in managed environment (buildspec controls steps).</li>
+          <li>✅ <strong>CodeDeploy</strong> = deploy to EC2 / ECS / Lambda (supports rollback/monitoring).</li>
+          <li>✅ <strong>CodePipeline</strong> = end-to-end CI/CD orchestration (stages + triggers).</li>
+          <li>✅ <strong>CodeStar</strong> = simplified “starter” project/pipeline setup (templates).</li>
+          <li>✅ <strong>CodeArtifact</strong> = managed packages repo (private + public packages).</li>
+          <li>✅ <strong>CodeGuru</strong> / <strong>DevOps Guru</strong> = ML-based recommendations (code vs running ops).</li>
+        </ul>
+
+        <div class="callout">
+          <h3>📌 Fast distinction</h3>
+          <ul>
+            <li><strong>Build</strong> = produce an output (package/image) from source code. 🏗️</li>
+            <li><strong>Deploy</strong> = move that output to where it runs (EC2/ECS/Lambda). 🚀</li>
+            <li><strong>Pipeline</strong> = automate the chain from source to deployment. 🔗</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>6) Mini self-test (answer in 30 seconds) ⏱️</h2>
+        <ol>
+          <li>You need a managed service to <strong>run tests and build</strong>. What is it?</li>
+          <li>You want a service that <strong>automates the workflow stages</strong> end-to-end. What is it?</li>
+          <li>You want an AWS service for a <strong>private Git repository</strong>. What is it?</li>
+          <li>You want a <strong>simple starter</strong> for CI/CD without deep setup. What is it?</li>
+        </ol>
+        <p class="mini"><strong>Expected:</strong> CodeBuild, CodePipeline, CodeCommit, CodeStar.</p>
+      </section>
+
+      <footer>
+        <p>Tip: When printing, choose “A4”, enable “Background graphics” only if you want light panels printed, and use default scaling for clean margins.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

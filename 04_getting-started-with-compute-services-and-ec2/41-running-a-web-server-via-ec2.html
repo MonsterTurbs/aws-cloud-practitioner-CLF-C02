@@ -1,0 +1,331 @@
+﻿
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AWS CLF-C02 Study Guide — 41 Running a Web Server via EC2</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#555555;
+      --border:#e6e6e6;
+      --panel:#f7f7f7;
+      --accent:#0b57d0;
+      --warn:#b00020;
+      --ok:#0f7b0f;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+      overflow-wrap:anywhere;
+      word-wrap:break-word;
+      hyphens:auto;
+    }
+
+    /* Single-column container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px 16px 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1{
+      font-size: 22px;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .meta{
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    main section{
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 0 0 14px;
+      background:#fff;
+    }
+
+    h2{
+      font-size: 16px;
+      margin: 0 0 10px;
+      line-height: 1.3;
+    }
+
+    h3{
+      font-size: 14px;
+      margin: 12px 0 8px;
+      line-height: 1.3;
+    }
+
+    p{ margin: 0 0 10px; }
+    p:last-child{ margin-bottom: 0; }
+
+    ul{ margin: 8px 0 0 18px; padding:0; }
+    li{ margin: 6px 0; }
+
+    .callout{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .warning{
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-left: 5px solid var(--warn);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .good{
+      background: #f5fff5;
+      border: 1px solid #d9f7d9;
+      border-left: 5px solid var(--ok);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .mini{
+      background:#fff;
+      border:1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 10px;
+    }
+
+    code, pre{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+    }
+
+    code{
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 6px;
+    }
+
+    pre{
+      background: #f3f3f3;
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 10px;
+      overflow: auto;
+      margin: 10px 0 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      margin: 0 6px 6px 0;
+      color: var(--muted);
+      background:#fff;
+    }
+
+    footer{
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    /* Print styles: A4, safe margins, no cut-off */
+    @page { size: A4; margin: 14mm; }
+    @media print {
+      body{ font-size: 11pt; line-height: 1.45; }
+      .page{ max-width: none; padding: 0; }
+      header{ background:#fff; }
+      header, main section{ border-color:#cfcfcf; box-shadow:none; }
+      .callout{ background:#fff; border-left: 4px solid #000; }
+      .warning{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      .good{ background:#fff; border-left: 4px solid #000; border-color:#cfcfcf; }
+      a{ color:#000; text-decoration:none; }
+      h1,h2,h3{ break-after: avoid; page-break-after: avoid; }
+      section{ break-inside: avoid; page-break-inside: avoid; }
+      pre{ border-color:#cfcfcf; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <p class="kicker">AWS Certified Cloud Practitioner (CLF-C02) • EC2 Practical Example</p>
+      <h1>41 — Running a Web Server via EC2 🌐🖥️</h1>
+      <p class="meta">Reviewer / Study Guide (single-column, A4 print-ready)</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Goal of This Lecture</h2>
+        <p>
+          This is a hands-on style example showing how an EC2 instance can host a simple website.
+          The key idea is: <strong>launch an instance</strong>, <strong>allow HTTP traffic</strong>, and use <strong>User Data</strong>
+          to automatically install & start a web server at boot.
+        </p>
+      </section>
+
+      <section>
+        <h2>🧱 Setup Overview (What the Instructor Does)</h2>
+        <div class="mini">
+          <h3>Instance configuration summary 🧾</h3>
+          <ul>
+            <li><strong>Name:</strong> none (optional)</li>
+            <li><strong>AMI:</strong> default Amazon Linux (beginner-friendly starting point) 🐧</li>
+            <li><strong>Instance type:</strong> <code>t2.micro</code> (Free Tier eligible in many setups) 🆓</li>
+            <li><strong>Key pair:</strong> none (because SSH won’t be used for setup) 🔑🚫</li>
+            <li><strong>Network / Security Group:</strong> allow SSH (optional here) + <strong>allow HTTP from the internet</strong> 🌍➡️🖥️</li>
+            <li><strong>Storage:</strong> keep defaults ✅</li>
+            <li><strong>Advanced details:</strong> add <strong>User Data</strong> script ⚙️</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <p><strong>Main learning ✅</strong> A Security Group acts like a firewall. If you want the public internet to access your web server, you must allow inbound HTTP (port 80).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>⚙️ User Data: The “Auto-Setup at Startup” Feature</h2>
+        <p>
+          <strong>User Data</strong> is a place where you can paste commands that run
+          <strong>automatically</strong> after the instance finishes starting.
+          This is useful because you can set up your workload without manually connecting via SSH.
+        </p>
+
+        <div class="mini">
+          <h3>What the User Data script typically does 🧰</h3>
+          <ul>
+            <li>Installs a web server (e.g., Apache / NGINX) 📦</li>
+            <li>Starts the web server service ▶️</li>
+            <li>Creates a basic web page file (HTML) 📝</li>
+            <li>The web server serves that file to anyone who visits the instance over HTTP 🌐</li>
+          </ul>
+        </div>
+
+        <div class="warning">
+          <p><strong>Important ⚠️</strong> User Data commands may take a short time to finish. The website might not load immediately after the instance becomes “running”.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🌐 How You Access the Website</h2>
+        <p>
+          After the instance is running and the User Data script has completed, you can use the instance’s:
+          <strong>Public DNS</strong> or <strong>Public IPv4</strong>
+          to open the website in a browser.
+        </p>
+
+        <div class="mini">
+          <h3>What you do (conceptually) 🔎</h3>
+          <ul>
+            <li>Go to EC2 → Instances → select your instance</li>
+            <li>Copy <strong>Public IPv4</strong> or <strong>Public DNS</strong></li>
+            <li>Open it in a browser using HTTP (e.g., <code>http://&lt;public-ip&gt;</code>)</li>
+          </ul>
+        </div>
+
+        <div class="good">
+          <p><strong>Success indicator ✅</strong> You see a simple webpage (generated by the User Data script). That’s a website hosted by your EC2 instance.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧹 Clean Up: Stop vs Terminate</h2>
+        <p>
+          Since this is a demo, the instructor terminates the instance after testing.
+        </p>
+        <ul>
+          <li><strong>Stop</strong> ⏸️ — can be started again later</li>
+          <li><strong>Terminate</strong> 🗑️ — deletes the instance (common for demos you no longer need)</li>
+        </ul>
+        <div class="warning">
+          <p><strong>Cost reminder ⚠️</strong> Leaving instances running can incur costs. For practice, terminate what you don’t need.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 IP Address & DNS Notes (High Level)</h2>
+        <p>
+          By default, public IP addresses can change when you stop/start or recreate an instance.
+          You can later add your own domain name and also use features that provide more stable addressing.
+        </p>
+        <div class="callout">
+          <p><strong>Keep in mind ✅</strong> For now, it’s enough to remember: <strong>Public DNS / Public IP</strong> can be used to reach a public workload like a website (when allowed by security rules).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🗂️ Key Terms to Remember</h2>
+        <span class="tag">HTTP (port 80)</span>
+        <span class="tag">Security Group</span>
+        <span class="tag">Inbound rules</span>
+        <span class="tag">User Data</span>
+        <span class="tag">Bootstrapping</span>
+        <span class="tag">Public DNS</span>
+        <span class="tag">Public IPv4</span>
+        <span class="tag">Web Server</span>
+        <span class="tag">Terminate</span>
+      </section>
+
+      <section>
+        <h2>✅ Quick Self-Check</h2>
+        <div class="mini">
+          <h3>Answer fast ⚡</h3>
+          <ul>
+            <li>Why must you allow HTTP traffic in the Security Group for a public website?</li>
+            <li>What is User Data used for?</li>
+            <li>Why might the website not work immediately after the instance becomes “running”?</li>
+            <li>What should you do with demo instances you no longer need?</li>
+          </ul>
+          <div class="good">
+            <p><strong>Expected ✅</strong> Firewall rules • Auto-run setup commands at boot • Script still running • Terminate to avoid costs.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Print tip:</strong> Use your browser Print dialog and select <strong>A4</strong>. This page includes print CSS for clean margins, readable spacing, and safe word-wrapping.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

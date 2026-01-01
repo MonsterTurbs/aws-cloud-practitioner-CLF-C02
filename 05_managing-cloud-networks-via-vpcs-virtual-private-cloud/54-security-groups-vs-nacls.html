@@ -1,0 +1,388 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>AWS CLF-C02 — Security Groups vs NACLs (Reviewer)</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111;
+      --muted:#666;
+      --border:#e6e6e6;
+      --panel:#fafafa;
+      --accent:#0b57d0;
+      --good:#137333;
+      --warn:#b06000;
+      --bad:#b3261e;
+      --shadow: 0 1px 0 rgba(0,0,0,.06);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height:1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Single-column, print-safe container */
+    .page{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 22px 40px;
+    }
+
+    header{
+      border:1px solid var(--border);
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 16px 16px 14px;
+      box-shadow: var(--shadow);
+    }
+
+    h1{
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 12px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--text);
+      padding:8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor:pointer;
+    }
+    .btn:hover{ border-color:#cfcfcf; }
+
+    main{ margin-top: 14px; }
+
+    section{
+      margin-top: 12px;
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 14px 12px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size: 17px;
+    }
+
+    h3{
+      margin: 12px 0 8px;
+      font-size: 15px;
+    }
+
+    p{ margin: 8px 0; }
+
+    .muted{ color:var(--muted); }
+
+    .chips{ display:flex; flex-wrap:wrap; gap:8px; margin: 8px 0 0; }
+    .chip{
+      border:1px solid var(--border);
+      background: var(--panel);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color:#222;
+      white-space: nowrap;
+    }
+
+    .callout{
+      border:1px solid var(--border);
+      background: var(--panel);
+      border-left: 6px solid #cfcfcf;
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin: 10px 0;
+    }
+    .callout.good{ border-left-color: var(--good); }
+    .callout.warn{ border-left-color: var(--warn); }
+    .callout.bad{ border-left-color: var(--bad); }
+
+    .list{
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+    .list li{ margin: 6px 0; }
+
+    /* Print-safe key-value blocks (avoid wide tables) */
+    .kv{
+      display:block;
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+      margin: 10px 0;
+    }
+    .kv .row{
+      padding: 8px 0;
+      border-top: 1px dashed var(--border);
+    }
+    .kv .row:first-child{ border-top:0; }
+    .k{ font-weight:700; }
+    .v{ margin-top: 2px; color:#222; }
+
+    .mini{
+      border:1px dashed var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+      margin: 10px 0;
+    }
+
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background: var(--panel);
+      padding: 1px 6px;
+      border:1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    /* Hard requirements: word wrapping + avoid print cutoffs */
+    body, p, li, h1, h2, h3, .chip, .kv, .callout, .mini{
+      overflow-wrap: anywhere;
+      word-break: normal;
+      hyphens: auto;
+    }
+
+    /* Print styles */
+    @page { size: A4; margin: 14mm; }
+
+    @media print{
+      body{ background:#fff; }
+      .page{ max-width: none; padding: 0; }
+      header, section{ box-shadow: none; }
+      header{ background:#fff; }
+      .btn{ display:none !important; }
+      a{ color: inherit; text-decoration: none; }
+      /* Clean print typography */
+      body{
+        font-size: 11pt;
+        line-height: 1.45;
+      }
+      h1{ font-size: 18pt; }
+      h2{ font-size: 14pt; }
+      h3{ font-size: 12pt; }
+      /* Avoid breaking important blocks across pages */
+      header, section, .callout, .kv, .mini{ break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>🛡️ Security Groups vs NACLs vs Subnets (AWS CLF‑C02 Reviewer)</h1>
+      <p class="subtitle">Single-column, A4 print-ready study guide with beginner-friendly explanations and quick examples.</p>
+      <div class="toolbar">
+        <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button class="btn" onclick="document.getElementById('quickcheck').scrollIntoView({behavior:'smooth'})">✅ Quick Check</button>
+      </div>
+      <div class="chips" aria-label="Key exam keywords">
+        <span class="chip">Stateful vs Stateless</span>
+        <span class="chip">Instance firewall</span>
+        <span class="chip">Subnet firewall</span>
+        <span class="chip">Public vs Private subnet</span>
+        <span class="chip">Connectivity vs Filtering</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>🎯 Big Idea (What you must remember)</h2>
+        <div class="callout good">
+          <strong>Think in layers:</strong>
+          <ul class="list">
+            <li>🌐 <strong>Public vs Private Subnet</strong> = <strong>Connectivity</strong> (can the internet reach it at all?)</li>
+            <li>🧱 <strong>NACL</strong> = <strong>Subnet-level rules</strong> (traffic filtering for the whole subnet)</li>
+            <li>🛡️ <strong>Security Group</strong> = <strong>Instance-level rules</strong> (fine-grained firewall per EC2 instance)</li>
+          </ul>
+        </div>
+        <p class="muted">In the exam, you typically identify which control belongs where: instance, subnet, or connectivity design.</p>
+      </section>
+
+      <section>
+        <h2>🛡️ Security Groups (SG) — Firewall for a single EC2 instance</h2>
+        <p><strong>Definition:</strong> Security groups are the main firewall mechanism for <strong>EC2 instances</strong>. They decide whether inbound/outbound traffic is allowed based on rules.</p>
+
+        <div class="kv">
+          <div class="row">
+            <div class="k">📌 Scope</div>
+            <div class="v">Applies to <strong>an instance</strong> (but you can reuse one SG across multiple instances).</div>
+          </div>
+          <div class="row">
+            <div class="k">🧠 Stateful</div>
+            <div class="v"><strong>If a request is allowed, the response is automatically allowed</strong>. No extra “return traffic” rule needed. 🙂</div>
+          </div>
+          <div class="row">
+            <div class="k">🎛️ Granularity</div>
+            <div class="v">More fine-grained. Typical: allow <code>SSH (22)</code> from “My IP”, allow <code>HTTP (80)</code> from anywhere, etc.</div>
+          </div>
+        </div>
+
+        <div class="mini">
+          <strong>Example (simple):</strong>
+          <ul class="list">
+            <li>✅ Allow <strong>HTTP (80)</strong> from <code>0.0.0.0/0</code> to serve a public website</li>
+            <li>✅ Allow <strong>SSH (22)</strong> from <em>your</em> IP only (safer than “anywhere”)</li>
+            <li>✅ Outbound: usually allow all so the server can download updates/packages</li>
+          </ul>
+        </div>
+
+        <div class="callout warn">
+          <strong>Exam cue:</strong> If the question says “instance firewall” or “stateful”, that is almost always <strong>Security Groups</strong>.
+        </div>
+      </section>
+
+      <section>
+        <h2>🧱 Network ACLs (NACLs) — Firewall for an entire subnet</h2>
+        <p><strong>Definition:</strong> NACLs control traffic at the <strong>subnet level</strong>. All instances inside the subnet are affected by the subnet’s NACL rules.</p>
+
+        <div class="kv">
+          <div class="row">
+            <div class="k">📌 Scope</div>
+            <div class="v">Applies to a <strong>subnet</strong>. One NACL can be linked to multiple subnets, but <strong>one subnet can only have one NACL</strong>.</div>
+          </div>
+          <div class="row">
+            <div class="k">🧠 Stateless</div>
+            <div class="v">You must allow both directions explicitly: <strong>request</strong> and <strong>response</strong>. If you allow outbound but don’t allow inbound return traffic, it breaks. 😅</div>
+          </div>
+          <div class="row">
+            <div class="k">🎛️ Granularity</div>
+            <div class="v">Less fine-grained than SGs in practice; commonly used as an additional guardrail, but SGs are typically preferred.</div>
+          </div>
+        </div>
+
+        <div class="mini">
+          <strong>Example (why stateless matters):</strong>
+          <ul class="list">
+            <li>You allow outbound web traffic so instances can download updates. ✅</li>
+            <li>If you forget inbound return rules, responses may be blocked. ❌</li>
+            <li>Fix: add inbound rules for the expected return traffic. ✅</li>
+          </ul>
+        </div>
+
+        <div class="callout warn">
+          <strong>Exam cue:</strong> If the question says “subnet rules” or “stateless”, think <strong>NACL</strong>.
+        </div>
+      </section>
+
+      <section>
+        <h2>🌐 Public vs Private Subnets — Connectivity (not rule filtering)</h2>
+        <p><strong>Core difference:</strong> This is not about “allow SSH but deny HTTP”. This is about whether the internet can reach the subnet at all.</p>
+
+        <div class="kv">
+          <div class="row">
+            <div class="k">🏙️ Public Subnet</div>
+            <div class="v">Has a route to an <strong>Internet Gateway (IGW)</strong>. Instances can be internet-reachable (usually with a public IP + SG rules).</div>
+          </div>
+          <div class="row">
+            <div class="k">🏡 Private Subnet</div>
+            <div class="v">No direct IGW route. <strong>Internet cannot directly reach instances</strong>. Great for databases.</div>
+          </div>
+          <div class="row">
+            <div class="k">🚪 NAT Gateway (optional)</div>
+            <div class="v">Lets private-subnet instances make <strong>outgoing</strong> internet requests (e.g., updates) while still preventing direct inbound internet access.</div>
+          </div>
+        </div>
+
+        <div class="callout good">
+          <strong>Beginner mental model:</strong>
+          <ul class="list">
+            <li>Public/Private subnet decides whether the “street” connects to your building. 🚦</li>
+            <li>SG/NACL decide which “doors/ports” are open once traffic arrives. 🚪</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="quickcheck">
+        <h2>✅ Quick Check (fast recall for exams)</h2>
+
+        <h3>1) What does each one protect?</h3>
+        <ul class="list">
+          <li>🛡️ Security Group → <strong>EC2 instance</strong> (fine-grained)</li>
+          <li>🧱 NACL → <strong>Subnet</strong> (broad guardrail)</li>
+          <li>🌐 Public/Private subnet → <strong>Connectivity</strong> (internet reachable or not)</li>
+        </ul>
+
+        <h3>2) Stateful vs Stateless</h3>
+        <ul class="list">
+          <li>🙂 SG = <strong>Stateful</strong> (responses auto-allowed)</li>
+          <li>😅 NACL = <strong>Stateless</strong> (must allow both request + response)</li>
+        </ul>
+
+        <h3>3) Typical best practice</h3>
+        <ul class="list">
+          <li>⭐ Prefer <strong>Security Groups</strong> for most instance-level control</li>
+          <li>🧱 Use <strong>NACLs</strong> when you need subnet-wide rules/guardrails</li>
+          <li>🏡 Put databases in <strong>private subnets</strong> (no direct internet access)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>🧪 Mini Scenario (common real-world pattern)</h2>
+        <p><strong>Scenario:</strong> A web app with a public web server and a private database.</p>
+        <ul class="list">
+          <li>🌐 Web server → <strong>Public subnet</strong> + public IP + SG allows <code>HTTP (80)</code>/<code>HTTPS (443)</code></li>
+          <li>🏡 Database → <strong>Private subnet</strong> + SG allows DB port only from the web server’s SG</li>
+          <li>🚪 Optional: NAT Gateway so the database server can download patches (outbound only)</li>
+        </ul>
+        <div class="callout warn">
+          <strong>Reminder:</strong> Even if you allow <code>HTTP</code> in the SG, an instance in a <strong>private subnet</strong> is still not directly reachable from the internet.
+        </div>
+      </section>
+
+      <section>
+        <h2>📝 Key Terms to Memorize</h2>
+        <ul class="list">
+          <li>Security Group = instance firewall, <strong>stateful</strong> 🛡️</li>
+          <li>NACL = subnet firewall, <strong>stateless</strong> 🧱</li>
+          <li>Public subnet = route to <strong>Internet Gateway</strong> 🌐</li>
+          <li>Private subnet = no direct internet route (use <strong>NAT</strong> for outbound-only) 🏡</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>📌 Clean One-Liner Summary</h2>
+        <div class="callout good">
+          <strong>Public/Private subnet decides if traffic can reach you; SG/NACL decide what happens when it tries.</strong>
+        </div>
+      </section>
+
+      <p class="muted" style="margin-top:12px;">
+        End of reviewer: Security Groups vs NACLs vs Subnets.
+      </p>
+    </main>
+  </div>
+
+  <script>
+    // Kept minimal for print-friendliness.
+  </script>
+</body>
+</html>
